@@ -1,0 +1,132 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+
+const servizi = [
+  {
+    nome: "Consulenza legale aziendale",
+    desc: "Contrattualistica, rapporti di fornitura, controversie commerciali. Ti seguiamo prima che servano gli avvocati in tribunale.",
+  },
+  {
+    nome: "Recupero crediti",
+    desc: "Solleciti stragiudiziali, decreti ingiuntivi, esecuzioni. Lavoriamo a successo: paghi quando incassi.",
+  },
+  {
+    nome: "Consulenza aziendale",
+    desc: "Strutturazione societaria, passaggi generazionali, ottimizzazione fiscale dei flussi.",
+  },
+  {
+    nome: "Bandi e finanza agevolata",
+    desc: "Bando ISI, Garanzia Giovani, fondi regionali. Dalla scrematura iniziale alla rendicontazione.",
+  },
+];
+---
+
+<Base
+  title="Consulenza legale"
+  description="Consulenza legale aziendale, recupero crediti, bandi e finanza agevolata."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Servizi · 04</p>
+      <h1>Consulenza legale.</h1>
+      <p class="lede">
+        Per le imprese che vogliono evitare i problemi prima che diventino cause.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Quattro ambiti</p>
+      <div class="list">
+        {servizi.map((s, i) => (
+          <article class="item">
+            <h2 class="item__nome">
+              <span class="item__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              {s.nome}
+            </h2>
+            <p class="item__desc">{s.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/legale-archivio-faldoni.webp"
+        alt="Dettaglio sobrio di archivio legale italiano: scaffalatura in legno scuro con faldoni rilegati in tela grigia ordinati per anno, etichette dattilografate in nero; in primo piano sfocata la mano adulta di un professionista che estrae un faldone; luce naturale obliqua di tardo pomeriggio attraverso veneziane orizzontali, ombre a fasce sul pavimento; palette molto desaturata, tono editoriale severo, no laptop, no scrivanie moderne, no avvocati in posa"
+      />
+    </div>
+  </section>
+
+  <section class="section recupero">
+    <div class="container recupero__grid">
+      <div>
+        <p class="eyebrow">Recupero crediti — a successo</p>
+        <h2>Paghi solo quando incassi.</h2>
+      </div>
+      <div>
+        <p>
+          Nessun anticipo, nessuna parcella fissa. Una percentuale sull'incassato, concordata in anticipo, senza sorprese. Il fascicolo si apre con una call di valutazione gratuita.
+        </p>
+        <a href="/contatti" class="link-cta">
+          Valuta il tuo caso
+          <span class="link-cta__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 50ch; }
+
+  .list { display: flex; flex-direction: column; }
+  .item {
+    padding-block: var(--space-lg);
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .item:last-child { border-bottom: var(--rule-hair) solid var(--color-rule); }
+  .item__nome {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2xs);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.8em;
+  }
+  .item__n { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-muted); font-weight: 400; }
+  .item__desc { color: var(--color-ink-2); max-width: 60ch; margin: 0; }
+
+  .recupero { background: var(--color-paper-2); }
+  .recupero__grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .recupero h2 { font-size: var(--text-3xl); margin: 0; max-width: 14ch; }
+  .recupero p { font-size: var(--text-lg); color: var(--color-ink-2); margin-bottom: var(--space-lg); }
+
+  @media (max-width: 56rem) {
+    .recupero__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 30rem) {
+    .item__nome { font-size: var(--text-lg); }
+  }
+</style>

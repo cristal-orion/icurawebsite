@@ -1,0 +1,128 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+
+const aree = [
+  {
+    nome: "Sicurezza sul lavoro",
+    desc: "DVR, valutazioni rischio, designazioni RSPP, sopralluoghi periodici. Tutto il D.Lgs. 81/08 in un unico contratto.",
+  },
+  {
+    nome: "Sicurezza nei cantieri",
+    desc: "PSC, POS, coordinamento per la sicurezza in fase progettuale ed esecutiva. Per imprese edili e committenti privati.",
+  },
+  {
+    nome: "Sicurezza alimentare (HACCP)",
+    desc: "Manuali, autocontrollo, formazione operatori. Per ristoranti, bar, mense, produzione alimentare.",
+  },
+  {
+    nome: "Medicina del lavoro",
+    desc: "Sorveglianza sanitaria, idoneità alla mansione, protocolli sanitari, medico competente.",
+  },
+  {
+    nome: "GDPR & Privacy",
+    desc: "DPO, registri trattamento, informative, audit. Per chi tratta dati personali in modo strutturato.",
+  },
+];
+---
+
+<Base
+  title="Sicurezza sul lavoro"
+  description="Consulenza completa per la sicurezza sul lavoro: D.Lgs. 81/08, cantieri, HACCP, medicina del lavoro, GDPR."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Servizi · 01</p>
+      <h1>Sicurezza sul lavoro.</h1>
+      <p class="lede">
+        Tutto quello che la legge chiede di fare, gestito da chi lo fa di mestiere.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="16/9"
+        src="/images/sicurezza-ispezione-capannone.webp"
+        alt="Ispezione di sicurezza in capannone logistico italiano: consulente adulto in elmetto bianco e giubbotto navy con clipboard digitale che osserva uno scaffale industriale; sullo sfondo carrelli elevatori fermi e zona delimitata da nastro giallo-nero; luce industriale fredda dall'alto, palette desaturata; fotografia documentaria, no posa frontale, no sorrisi"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Cosa copriamo</p>
+      <ol class="aree">
+        {aree.map((a, i) => (
+          <li class="area">
+            <h2 class="area__nome">
+              <span class="area__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              {a.nome}
+            </h2>
+            <p class="area__desc">{a.desc}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section closing-cta">
+    <div class="container">
+      <h2>Capiamo di cosa ha bisogno la tua impresa.</h2>
+      <p>Sopralluogo gratuito · risposta in 48h.</p>
+      <a href="/contatti" class="btn btn--primary">
+        Prenota sopralluogo
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 50ch; }
+
+  .aree { list-style: none; margin: 0; padding: 0; }
+  .area {
+    padding-block: var(--space-lg);
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .area:last-child { border-bottom: var(--rule-hair) solid var(--color-rule); }
+  .area__nome {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2xs);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.8em;
+  }
+  .area__n {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    font-weight: 400;
+  }
+  .area__desc { color: var(--color-ink-2); max-width: 60ch; margin: 0; }
+
+  .closing-cta {
+    text-align: center;
+    background: var(--color-paper-2);
+  }
+  .closing-cta h2 { font-size: var(--text-3xl); margin-bottom: var(--space-2xs); }
+  .closing-cta p { color: var(--color-muted); margin-bottom: var(--space-lg); margin-inline: auto; }
+
+  @media (max-width: 30rem) {
+    .area__nome { font-size: var(--text-lg); }
+  }
+</style>

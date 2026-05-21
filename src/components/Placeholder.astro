@@ -1,0 +1,29 @@
+---
+interface Props {
+  alt: string;
+  aspect?: "16/9" | "4/3" | "1/1" | "3/4" | "21/9";
+  src?: string;
+  class?: string;
+}
+const { alt, aspect = "16/9", src, class: className = "" } = Astro.props;
+---
+
+<figure
+  class={`placeholder ${className}`}
+  data-aspect={aspect}
+  data-has-image={src ? "true" : "false"}
+  role={src ? undefined : "img"}
+  aria-label={src ? undefined : alt}
+>
+  {src ? (
+    <img
+      class="placeholder__image"
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <span class="placeholder__label">[IMG] {alt}</span>
+  )}
+</figure>

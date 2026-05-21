@@ -1,0 +1,151 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+
+const corsi = [
+  {
+    formato: "In aula",
+    desc: "Formazione obbligatoria e specialistica con docenti qualificati. Sedi a Napoli e in azienda.",
+    target: "RSPP, RLS, dirigenti, preposti, addetti antincendio e primo soccorso.",
+  },
+  {
+    formato: "E-learning",
+    desc: "Piattaforma online accreditata per moduli teorici. Tracciabile, ripetibile, con attestato.",
+    target: "Lavoratori generici, formazione base e aggiornamenti periodici.",
+  },
+  {
+    formato: "HACCP",
+    desc: "Corsi specifici per il settore alimentare. Operatori, responsabili, livelli base e avanzati.",
+    target: "Ristoranti, bar, mense, GDO, produzione alimentare.",
+  },
+];
+---
+
+<Base
+  title="Formazione finanziata"
+  description="Corsi di formazione sulla sicurezza in aula, e-learning, HACCP. Spesso a costo zero tramite fondi interprofessionali."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Servizi · 02</p>
+      <h1>Formazione finanziata.</h1>
+      <p class="lede">
+        Aula, online, HACCP. Spesso a costo zero per l'azienda, tramite i fondi interprofessionali.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">I tre formati</p>
+      <div class="corsi">
+        {corsi.map((c, i) => (
+          <article class="corso">
+            <span class="corso__n">{String(i + 1).padStart(2, "0")}</span>
+            <h2 class="corso__formato">{c.formato}</h2>
+            <p class="corso__desc">{c.desc}</p>
+            <p class="corso__target"><strong>Per chi:</strong> {c.target}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/formazione-aula-adulti.webp"
+        alt="Aula di formazione professionale italiana vista dal fondo: sei adulti seduti in due file consultano dispense cartacee, di spalle alla camera; in primo piano sfocato la spalla di una docente che indica una lavagna a fogli mobili con uno schema di sicurezza disegnato a mano; luce naturale da finestre laterali alte, sedie ergonomiche scure, niente proiettori accesi; palette desaturata professionale, no studenti universitari, target adulti 30-55 anni"
+      />
+    </div>
+  </section>
+
+  <section class="section finanziamento">
+    <div class="container">
+      <div class="finanziamento__inner">
+        <p class="eyebrow">Costo zero</p>
+        <h2>La formazione finanziata, in pratica.</h2>
+        <p>
+          Ogni azienda versa già lo 0,30% del costo del lavoro ai fondi interprofessionali. Quei soldi tornano sotto forma di corsi. Noi ci occupiamo della domanda, della rendicontazione e dell'erogazione.
+        </p>
+        <a href="/contatti" class="btn btn--primary">
+          Verifica i fondi disponibili
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .corsi {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: var(--space-lg);
+  }
+  .corso {
+    padding: var(--space-lg);
+    border: var(--rule-hair) solid var(--color-rule);
+    margin-left: -1px;
+  }
+  .corso:first-child { margin-left: 0; }
+  .corso__n {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    display: block;
+    margin-bottom: var(--space-md);
+  }
+  .corso__formato {
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-sm);
+  }
+  .corso__desc {
+    color: var(--color-ink-2);
+    margin-bottom: var(--space-md);
+    line-height: 1.5;
+  }
+  .corso__target {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    margin: 0;
+    padding-top: var(--space-md);
+    border-top: var(--rule-hair) solid var(--color-rule-2);
+  }
+  .corso__target strong { color: var(--color-ink-2); font-weight: 600; }
+
+  .finanziamento {
+    background: var(--color-paper-3);
+  }
+  .finanziamento__inner { max-width: 60rem; }
+  .finanziamento h2 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-md);
+  }
+  .finanziamento p {
+    font-size: var(--text-lg);
+    color: var(--color-ink-2);
+    margin-bottom: var(--space-lg);
+  }
+
+  @media (max-width: 56rem) {
+    .corsi { grid-template-columns: 1fr; }
+    .corso { margin-left: 0; margin-top: -1px; }
+  }
+</style>

@@ -1,0 +1,182 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+---
+
+<Base
+  title="Contatti"
+  description="Scrivici, chiamaci, vieni a trovarci. Icuraimpresa, Corso Secondigliano 236, Napoli."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Contatti</p>
+      <h1>Scrivici, ti rispondiamo entro 48h.</h1>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/contatti-facciata-secondigliano.webp"
+        alt="Vista esterna diurna dell'ingresso di una palazzina uffici a Napoli, Corso Secondigliano 236: facciata in stile anni '70 ridipinta in toni grigio chiaro, portone in vetro e metallo con targa professionale incisa 'Icuraimpresa' visibile lateralmente; marciapiede pulito in primo piano, una scooter parcheggiata sfocata sulla destra, luce naturale di mattino feriale, palette desaturata urbana napoletana, no persone in posa, no graffiti, no auto sportive in primo piano"
+      />
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container contact-grid">
+      <aside class="info">
+        <div class="info__block">
+          <p class="info__label">Sede</p>
+          <p class="info__value">
+            Corso Secondigliano, 236<br />
+            80144 Napoli (NA)
+          </p>
+        </div>
+        <div class="info__block">
+          <p class="info__label">Telefono</p>
+          <p class="info__value"><a href="tel:+390816580779">081 658 0779</a></p>
+        </div>
+        <div class="info__block">
+          <p class="info__label">Email</p>
+          <p class="info__value"><a href="mailto:info@icuraimpresa.it">info@icuraimpresa.it</a></p>
+        </div>
+        <div class="info__block">
+          <p class="info__label">Orari</p>
+          <p class="info__value">Lun–Ven · 9:00–18:00</p>
+        </div>
+        <div class="info__block">
+          <p class="info__label">Lavora con noi</p>
+          <p class="info__value">
+            <a href="mailto:lavora@icuraimpresa.it">lavora@icuraimpresa.it</a>
+          </p>
+        </div>
+      </aside>
+
+      <form class="form" action="#" method="POST" novalidate>
+        <p class="eyebrow form__eyebrow">Scrivici</p>
+
+        <div class="field">
+          <label for="nome">Nome e cognome</label>
+          <input id="nome" name="nome" type="text" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <label for="oggetto">Oggetto</label>
+          <select id="oggetto" name="oggetto" required>
+            <option value="">Seleziona…</option>
+            <option>Sicurezza sul lavoro</option>
+            <option>Formazione</option>
+            <option>Bando ISI</option>
+            <option>Engineering / Ambiente</option>
+            <option>Consulenza legale</option>
+            <option>Altro</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="messaggio">Messaggio</label>
+          <textarea id="messaggio" name="messaggio" rows="5" required></textarea>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" name="privacy" required />
+          <span>Acconsento al trattamento dei dati secondo la <a href="/privacy">privacy policy</a>.</span>
+        </label>
+
+        <button type="submit" class="btn btn--primary">
+          Invia
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    max-width: 18ch;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .info { display: flex; flex-direction: column; gap: var(--space-lg); }
+  .info__block { display: flex; flex-direction: column; gap: 0.25rem; }
+  .info__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin: 0;
+  }
+  .info__value { font-size: var(--text-md); color: var(--color-ink); margin: 0; line-height: 1.5; }
+  .info__value a { color: var(--color-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    background: var(--color-paper-2);
+    border-radius: var(--radius-card);
+  }
+  .form__eyebrow { margin-bottom: 0; }
+  .field { display: flex; flex-direction: column; gap: var(--space-2xs); }
+  .field label { font-size: var(--text-sm); color: var(--color-ink-2); font-weight: 500; }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-input);
+    font-family: var(--font-body);
+    font-size: var(--text-md);
+    color: var(--color-ink);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--color-accent);
+    outline: 2px solid var(--color-focus);
+    outline-offset: 1px;
+  }
+  .field textarea { resize: vertical; min-height: 8rem; }
+
+  .consent {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    line-height: 1.5;
+  }
+  .consent input { margin-top: 0.25rem; }
+
+  .form .btn { align-self: flex-start; margin-top: var(--space-2xs); }
+
+  @media (max-width: 56rem) {
+    .contact-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+  }
+</style>

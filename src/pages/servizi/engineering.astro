@@ -1,0 +1,134 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+
+const aree = [
+  {
+    nome: "Progettazione edile",
+    desc: "Pratiche edilizie, ristrutturazioni, sopraelevazioni, accatastamenti. Dal progetto al collaudo.",
+  },
+  {
+    nome: "Impiantistica",
+    desc: "Elettrico, idraulico, termico, antincendio. Progetto, direzione lavori, dichiarazioni di conformità.",
+  },
+  {
+    nome: "Prevenzione incendi",
+    desc: "CPI, SCIA antincendio, valutazione del rischio. Per attività soggette al DPR 151/2011.",
+  },
+  {
+    nome: "Certificazioni ISO",
+    desc: "9001 qualità · 14001 ambiente · 45001 sicurezza. Implementazione, audit, mantenimento.",
+  },
+  {
+    nome: "Tutela ambientale",
+    desc: "Autorizzazioni AUA, gestione rifiuti, MUD, registri di carico/scarico, emissioni in atmosfera.",
+  },
+  {
+    nome: "Qualifiche e test materiali",
+    desc: "Prove di laboratorio, verifiche periodiche, qualifiche WPS/WPQR per saldature.",
+  },
+];
+---
+
+<Base
+  title="Engineering & Ambiente"
+  description="Progettazione edile e impiantistica, prevenzione incendi, certificazioni ISO, ambiente."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Servizi · 03</p>
+      <h1>Engineering &amp; Ambiente.</h1>
+      <p class="lede">
+        Quando il progetto, l'impianto o l'autorizzazione richiede una firma tecnica, ci pensiamo noi.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Sei aree integrate</p>
+      <div class="grid">
+        {aree.map((a) => (
+          <article class="cell">
+            <h2 class="cell__nome">{a.nome}</h2>
+            <p class="cell__desc">{a.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="16/9"
+        src="/images/engineering-render-cad-impianti.webp"
+        alt="Render tecnico di una sezione architettonica: vista assonometrica di un capannone industriale con impianti elettrici e antincendio evidenziati in linee colorate sottili su sfondo bianco-grigio chiaro; quote in grigio scuro tipografia tecnica; nessuna persona, nessun testo decorativo; stile drafting CAD moderno pulito, dettaglio leggibile, no rendering iperrealistico, no ombre fotografiche"
+      />
+    </div>
+  </section>
+
+  <section class="section closing-cta">
+    <div class="container">
+      <h2>Progetto, impianto, certificazione: parliamone.</h2>
+      <a href="/contatti" class="btn btn--primary">
+        Richiedi un sopralluogo
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 50ch; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: var(--rule-hair) solid var(--color-rule);
+    border-left: var(--rule-hair) solid var(--color-rule);
+    margin-top: var(--space-lg);
+  }
+  .cell {
+    padding: var(--space-lg);
+    border-right: var(--rule-hair) solid var(--color-rule);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+    min-height: 14rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+  .cell__nome {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .cell__desc { color: var(--color-ink-2); margin: 0; }
+
+  .closing-cta { text-align: center; }
+  .closing-cta h2 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-lg);
+    max-width: 24ch;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 56rem) {
+    .grid { grid-template-columns: 1fr; }
+    .cell { min-height: 0; }
+  }
+  @media (min-width: 56rem) and (max-width: 76rem) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+
+const competenze = [
+  { area: "Ingegneria", desc: "Sicurezza tecnica, progettazione, prevenzione incendi." },
+  { area: "Medicina del lavoro", desc: "Sorveglianza sanitaria, idoneità, protocolli." },
+  { area: "Diritto", desc: "Contrattualistica, recupero crediti, normativa." },
+  { area: "Economia", desc: "Consulenza aziendale, finanza agevolata, bandi." },
+];
+---
+
+<Base
+  title="Chi siamo"
+  description="Icuraimpresa: team multidisciplinare di consulenza per la sicurezza sul lavoro. Napoli, dal 2014."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Chi siamo</p>
+      <h1 class="page-header__title">
+        Quattro mestieri sotto un solo tetto.
+      </h1>
+      <p class="page-header__lede">
+        Nata nel 2014, S.r.l. dal 2018. Mettiamo insieme ingegneri, medici del lavoro, avvocati e commercialisti per dare alle imprese un unico interlocutore sulla sicurezza.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="competenze-heading">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">01 — Competenze</p>
+        <h2 id="competenze-heading">Quattro discipline, una sola filiera.</h2>
+      </div>
+      <ul class="comp-list">
+        {competenze.map((c) => (
+          <li class="comp">
+            <h3 class="comp__area">{c.area}</h3>
+            <p class="comp__desc">{c.desc}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="metodo-heading">
+    <div class="container metodo-grid">
+      <div>
+        <p class="eyebrow">02 — Metodo</p>
+        <h2 id="metodo-heading">Come lavoriamo.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Un cliente, un referente. Nessun rimbalzo tra studi separati. Quando un caso tocca più aree — un infortunio con risvolti civili e medici, ad esempio — coordiniamo internamente.
+        </p>
+        <p>
+          Il modello è quello del retainer annuale: documentazione, formazione, aggiornamenti normativi e supporto continuo a una tariffa prevedibile. Niente extra a sorpresa.
+        </p>
+      </div>
+      <Placeholder
+        aspect="3/4"
+        src="/images/chi-siamo-scrivania-firma.webp"
+        alt="Dettaglio di una scrivania da consulente professionista: due mani adulte di etnia mediterranea che firmano un documento cartaceo con penna stilografica nera; quaderno aperto con appunti tecnici a margine, una tazza di caffè espresso sul piattino, smartphone in posizione laterale; luce naturale laterale da finestra invernale napoletana; palette calda desaturata, no laptop visibile, no piante decorative, no posa da stock photo"
+        class="metodo-grid__photo"
+      />
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/chi-siamo-riunione-team.webp"
+        alt="Riunione operativa in ufficio professionale napoletano: cinque adulti di età 30-55 (mix uomini e donne, etnia mediterranea) seduti attorno a un tavolo riunioni rettangolare in legno chiaro, di tre quarti rispetto alla camera, alcuni con documenti cartacei davanti, uno indica un foglio tecnico al collega; pareti tinteggiate in grigio chiaro caldo, una finestra alta sulla sinistra che lascia entrare luce naturale di mezza mattina; nessuno guarda in camera, atmosfera di lavoro concentrato non di posa; palette desaturata sobria con vestiti in toni navy/grigio/beige; fotografia editoriale documentaria, no sorrisi forzati, no laptop aperti in primo piano, no caffè decorativi"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container closing-cta">
+      <h2>Vuoi conoscerci?</h2>
+      <p>Una call gratuita di 30 minuti per capire se possiamo essere utili.</p>
+      <a href="/contatti" class="btn btn--primary">
+        Prenota la call
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header__title {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-lg);
+    max-width: 18ch;
+  }
+  .page-header__lede {
+    font-size: var(--text-lg);
+    color: var(--color-ink-2);
+    max-width: 56ch;
+    line-height: 1.5;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .metodo-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) minmax(0, 3fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .metodo-grid__photo { align-self: stretch; }
+
+  .comp-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-xl);
+  }
+  .comp__area {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2xs);
+  }
+  .comp__desc { font-size: var(--text-md); color: var(--color-ink-2); margin: 0; }
+
+  .prose p {
+    font-size: var(--text-lg);
+    color: var(--color-ink-2);
+    line-height: 1.55;
+    max-width: 60ch;
+  }
+
+  .closing-cta {
+    text-align: center;
+    padding-block: var(--space-2xl);
+  }
+  .closing-cta h2 { font-size: var(--text-3xl); margin-bottom: var(--space-sm); }
+  .closing-cta p { color: var(--color-muted); margin-bottom: var(--space-lg); margin-inline: auto; }
+
+  @media (max-width: 64rem) {
+    .metodo-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+    .metodo-grid__photo { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+    .metodo-grid { grid-template-columns: 1fr; }
+    .comp-list { grid-template-columns: 1fr; gap: var(--space-md); }
+  }
+</style>

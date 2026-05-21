@@ -1,0 +1,139 @@
+---
+const { pathname } = Astro.url;
+const isActive = (path: string) =>
+  path === "/" ? pathname === "/" : pathname.startsWith(path);
+
+const links = [
+  { href: "/chi-siamo", label: "Chi siamo" },
+  { href: "/servizi/sicurezza", label: "Servizi" },
+  { href: "/bando-isi", label: "Bando ISI" },
+  { href: "/contatti", label: "Contatti" },
+];
+---
+
+<a href="#main" class="skip-link">Salta al contenuto</a>
+
+<nav class="nav-pill" aria-label="Navigazione principale">
+  <a href="/" class="nav-pill__wordmark" aria-label="Icuraimpresa, homepage">
+    <span>Icuraimpresa</span>
+  </a>
+
+  <ul class="nav-pill__links">
+    {links.map((l) => (
+      <li>
+        <a
+          href={l.href}
+          class={`nav-pill__link${isActive(l.href) ? " is-active" : ""}`}
+          aria-current={isActive(l.href) ? "page" : undefined}
+        >
+          {l.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <a href="/contatti" class="nav-pill__cta">
+    Richiedi consulenza
+    <span aria-hidden="true">→</span>
+  </a>
+</nav>
+
+<style>
+  .nav-pill {
+    position: fixed;
+    top: var(--space-md);
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    background: color-mix(in oklch, var(--color-paper) 80%, transparent);
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 8px 24px -16px oklch(0% 0 0 / 0.18);
+    z-index: 50;
+    max-width: calc(100% - var(--page-gutter) * 2);
+  }
+
+  .nav-pill__wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    text-decoration: none;
+    padding-right: 0.25rem;
+  }
+  .nav-pill__wordmark:hover { text-decoration: none; }
+
+  .nav-pill__links {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-sm);
+    border-left: var(--rule-hair) solid var(--color-rule);
+    border-right: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .nav-pill__link {
+    position: relative;
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    text-decoration: none;
+    padding: 0.35rem 0;
+    transition: color var(--dur-fast) var(--ease-out);
+    white-space: nowrap;
+  }
+  .nav-pill__link:hover { color: var(--color-ink); text-decoration: none; }
+  .nav-pill__link.is-active { color: var(--color-ink); }
+  .nav-pill__link.is-active::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -0.7em;
+    transform: translateY(-50%);
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--color-highlight);
+  }
+
+  .nav-pill__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.5rem 1rem;
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-out);
+    white-space: nowrap;
+  }
+  .nav-pill__cta:hover {
+    background: var(--color-accent-hover);
+    text-decoration: none;
+  }
+
+  /* Mobile — collapse to wordmark + CTA, drop link list */
+  @media (max-width: 56rem) {
+    .nav-pill { gap: var(--space-sm); padding: 0.45rem 0.45rem 0.45rem 0.85rem; }
+    .nav-pill__links { display: none; }
+    .nav-pill__cta { padding: 0.5rem 0.85rem; }
+  }
+
+  @media (max-width: 30rem) {
+    .nav-pill__wordmark span:last-child {
+      display: none;
+    }
+    .nav-pill__cta { font-size: var(--text-xs); }
+  }
+</style>

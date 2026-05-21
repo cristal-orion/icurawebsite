@@ -1,0 +1,42 @@
+---
+import "@styles/global.css";
+import Nav from "@components/Nav.astro";
+import Footer from "@components/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  pageClass?: string;
+}
+
+const {
+  title,
+  description = "Icuraimpresa — consulenza per la sicurezza sul lavoro, formazione, engineering e adempimenti normativi. Napoli, dal 2014.",
+  pageClass = "",
+} = Astro.props;
+
+const fullTitle = title === "Icuraimpresa" ? title : `${title} · Icuraimpresa`;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b1a3b" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class={pageClass}>
+    <Nav />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

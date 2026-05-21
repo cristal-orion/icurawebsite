@@ -1,0 +1,147 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="foot-mast">
+  <div class="container">
+    <hr class="rule" />
+
+    <div class="foot-mast__top">
+      <div class="foot-mast__brand">
+        <p class="foot-mast__wordmark">
+          <img
+            class="foot-mast__mark"
+            src="/images/brand/brand-mark-generated.png"
+            alt=""
+            width="360"
+            height="423"
+            loading="lazy"
+            decoding="async"
+            aria-hidden="true"
+          />
+          Icuraimpresa
+        </p>
+        <p class="foot-mast__tagline">Vivi Sicuro!</p>
+      </div>
+
+      <address class="foot-mast__address">
+        Corso Secondigliano, 236<br />
+        80144 Napoli (NA) · Italia<br />
+        <a href="tel:+390816580779">081 658 0779</a> ·
+        <a href="mailto:info@icuraimpresa.it">info@icuraimpresa.it</a>
+      </address>
+
+      <ul class="foot-mast__links" aria-label="Link rapidi">
+        <li><a href="/chi-siamo">Chi siamo</a></li>
+        <li><a href="/servizi/sicurezza">Sicurezza</a></li>
+        <li><a href="/servizi/formazione">Formazione</a></li>
+        <li><a href="/servizi/engineering">Engineering</a></li>
+        <li><a href="/servizi/legale">Legale</a></li>
+        <li><a href="/bando-isi">Bando ISI</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+      </ul>
+    </div>
+
+    <div class="foot-mast__meta">
+      <span>© {year} Icuraimpresa S.r.l.</span>
+      <span aria-hidden="true">·</span>
+      <a href="/privacy">Privacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/cookie">Cookie</a>
+      <span aria-hidden="true">·</span>
+      <span>P.IVA placeholder</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot-mast {
+    margin-top: var(--space-3xl);
+    padding-block: var(--space-2xl) var(--space-lg);
+    background: var(--color-paper);
+  }
+
+  .foot-mast__top {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: var(--space-xl);
+    padding-top: var(--space-xl);
+    align-items: start;
+  }
+
+  .foot-mast__brand { display: flex; flex-direction: column; gap: var(--space-2xs); }
+
+  .foot-mast__wordmark {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .foot-mast__mark {
+    width: 25px;
+    height: 30px;
+    object-fit: contain;
+    flex: 0 0 auto;
+  }
+
+  .foot-mast__tagline {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-style: italic;
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .foot-mast__address {
+    font-style: normal;
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    line-height: 1.7;
+  }
+  .foot-mast__address a { color: var(--color-ink-2); }
+  .foot-mast__address a:hover { color: var(--color-ink); }
+
+  .foot-mast__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1rem;
+    font-size: var(--text-sm);
+  }
+  .foot-mast__links a { color: var(--color-ink-2); text-decoration: none; }
+  .foot-mast__links a:hover { color: var(--color-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+
+  .foot-mast__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    align-items: center;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: var(--rule-hair) solid var(--color-rule-2);
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+  }
+  .foot-mast__meta a { color: var(--color-muted); text-decoration: none; }
+  .foot-mast__meta a:hover { color: var(--color-ink-2); text-decoration: underline; }
+
+  @media (max-width: 56rem) {
+    .foot-mast__top {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .foot-mast__links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 30rem) {
+    .foot-mast__links { grid-template-columns: 1fr; }
+  }
+</style>
