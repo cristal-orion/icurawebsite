@@ -1,0 +1,161 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+
+const aree = [
+  {
+    nome: "ISO 9001 — Qualità",
+    desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori, un requisito sempre più richiesto da clienti e committenti.",
+  },
+  {
+    nome: "ISO 14001 — Ambiente",
+    desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.",
+  },
+  {
+    nome: "ISO 45001 — Sicurezza",
+    desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e formalizza le buone prassi.",
+  },
+  {
+    nome: "Attestazione SOA",
+    desc: "Requisito obbligatorio per partecipare alle gare di lavori pubblici. Attesta la capacità dell'impresa di eseguire opere pubbliche.",
+  },
+  {
+    nome: "Procedure di gara & avvalimenti",
+    desc: "Supporto alla partecipazione a bandi pubblici e privati, con avvalimenti e reperimento dei requisiti tecnici ed economici.",
+  },
+];
+---
+
+<Base
+  title="Certificazioni"
+  description="Certificazioni ISO 9001, 14001, 45001, Attestazione SOA e supporto alle procedure di gara. Affiancamento dall'analisi iniziale all'audit finale."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Servizi · 05</p>
+      <h1>Certificazioni.</h1>
+      <p class="lede">
+        Le certificazioni aprono gare, rassicurano i clienti e mettono ordine nei processi. Ti accompagniamo dall'analisi iniziale all'audit finale.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Cosa certifichiamo</p>
+      <ol class="aree">
+        {aree.map((a, i) => (
+          <li class="area">
+            <h2 class="area__nome">
+              <span class="area__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              {a.nome}
+            </h2>
+            <p class="area__desc">{a.desc}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/certificazioni-audit-iso.webp"
+        alt="Audit di certificazione ISO in azienda italiana: due professionisti adulti seduti a un tavolo riunioni confrontano una checklist cartacea con timbri e un registro di sistema di gestione; sullo sfondo sfocato uno scaffale con raccoglitori etichettati e una finestra con luce naturale di mattina; palette desaturata sobria, abiti in toni navy e grigio; fotografia documentaria professionale, no posa frontale, no strette di mano da stock, no loghi enti"
+      />
+    </div>
+  </section>
+
+  <section class="section metodo">
+    <div class="container metodo__grid">
+      <div>
+        <p class="eyebrow">Come lavoriamo</p>
+        <h2>Affiancamento, non solo carte.</h2>
+      </div>
+      <div class="metodo__body">
+        <p>
+          Analizziamo lo stato dell'azienda, costruiamo la documentazione su misura e prepariamo le persone all'audit dell'ente. Tempi tipici: 3–5 mesi, contro i 6–12 di un percorso non seguito.
+        </p>
+        <p>
+          Niente moduli copia-incolla: il sistema di gestione deve reggere la verifica e restare utile dopo il certificato.
+        </p>
+        <a href="/contatti" class="link-cta">
+          Parla con un consulente
+          <span class="link-cta__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section closing-cta">
+    <div class="container">
+      <h2>Quale certificazione ti serve davvero?</h2>
+      <p>Te lo diciamo con onestà, senza venderti percorsi inutili.</p>
+      <a href="/contatti" class="btn btn--primary">
+        Richiedi una valutazione
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 54ch; }
+
+  .aree { list-style: none; margin: 0; padding: 0; }
+  .area {
+    padding-block: var(--space-lg);
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .area:last-child { border-bottom: var(--rule-hair) solid var(--color-rule); }
+  .area__nome {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2xs);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.8em;
+  }
+  .area__n {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    font-weight: 400;
+  }
+  .area__desc { color: var(--color-ink-2); max-width: 60ch; margin: 0; }
+
+  .metodo { background: var(--color-paper-2); }
+  .metodo__grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .metodo h2 { font-size: var(--text-3xl); margin: 0; max-width: 14ch; }
+  .metodo__body p { font-size: var(--text-lg); color: var(--color-ink-2); margin: 0 0 var(--space-md); line-height: 1.55; max-width: 56ch; }
+
+  .closing-cta {
+    text-align: center;
+  }
+  .closing-cta h2 { font-size: var(--text-3xl); margin-bottom: var(--space-2xs); }
+  .closing-cta p { color: var(--color-muted); margin-bottom: var(--space-lg); margin-inline: auto; }
+
+  @media (max-width: 56rem) {
+    .metodo__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 30rem) {
+    .area__nome { font-size: var(--text-lg); }
+  }
+</style>

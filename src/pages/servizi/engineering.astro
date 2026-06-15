@@ -16,14 +16,6 @@ const aree = [
     desc: "CPI, SCIA antincendio, valutazione del rischio. Per attività soggette al DPR 151/2011.",
   },
   {
-    nome: "Certificazioni ISO",
-    desc: "9001 qualità · 14001 ambiente · 45001 sicurezza. Implementazione, audit, mantenimento.",
-  },
-  {
-    nome: "Tutela ambientale",
-    desc: "Autorizzazioni AUA, gestione rifiuti, MUD, registri di carico/scarico, emissioni in atmosfera.",
-  },
-  {
     nome: "Qualifiche e test materiali",
     desc: "Prove di laboratorio, verifiche periodiche, qualifiche WPS/WPQR per saldature.",
   },
@@ -31,13 +23,13 @@ const aree = [
 ---
 
 <Base
-  title="Engineering & Ambiente"
-  description="Progettazione edile e impiantistica, prevenzione incendi, certificazioni ISO, ambiente."
+  title="Engineering"
+  description="Progettazione edile e impiantistica, prevenzione incendi, qualifiche e test materiali."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 03</p>
-      <h1>Engineering &amp; Ambiente.</h1>
+      <h1>Engineering.</h1>
       <p class="lede">
         Quando il progetto, l'impianto o l'autorizzazione richiede una firma tecnica, ci pensiamo noi.
       </p>
@@ -48,7 +40,7 @@ const aree = [
 
   <section class="section">
     <div class="container">
-      <p class="eyebrow">Sei aree integrate</p>
+      <p class="eyebrow">Quattro aree integrate</p>
       <div class="grid">
         {aree.map((a) => (
           <article class="cell">
@@ -94,7 +86,7 @@ const aree = [
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     border-top: var(--rule-hair) solid var(--color-rule);
     border-left: var(--rule-hair) solid var(--color-rule);
     margin-top: var(--space-lg);
@@ -127,8 +119,5 @@ const aree = [
   @media (max-width: 56rem) {
     .grid { grid-template-columns: 1fr; }
     .cell { min-height: 0; }
-  }
-  @media (min-width: 56rem) and (max-width: 76rem) {
-    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>

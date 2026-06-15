@@ -1,0 +1,196 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+
+const aree = [
+  {
+    nome: "Bando ISI INAIL",
+    desc: "Fino al 65% a fondo perduto (max 130.000 €) per investimenti in sicurezza. Ti seguiamo dal pre-check al click-day.",
+    href: "/bando-isi",
+    cta: "Approfondisci il Bando ISI",
+  },
+  {
+    nome: "Sgravi INAIL — oscillazione OT23",
+    desc: "Riduzione del premio assicurativo per le imprese che adottano interventi di prevenzione. Predisponiamo domanda e documentazione.",
+  },
+  {
+    nome: "Formazione finanziata",
+    desc: "Fondi interprofessionali per formare il personale a costo zero. Domanda, erogazione e rendicontazione gestite da noi.",
+    href: "/servizi/formazione",
+    cta: "Vai alla formazione",
+  },
+  {
+    nome: "Bandi regionali e nazionali",
+    desc: "Contributi a fondo perduto e finanziamenti agevolati per investimenti, innovazione e crescita d'impresa. Scrematura, domanda, monitoraggio.",
+  },
+  {
+    nome: "Credito d'imposta",
+    desc: "Beni strumentali, formazione 4.0, transizione 5.0. Verifichiamo l'ammissibilità e prepariamo la documentazione tecnica.",
+  },
+];
+
+const fasi = [
+  { n: "01", titolo: "Pre-check", desc: "Verifichiamo idoneità dell'impresa e del progetto. Gratuito." },
+  { n: "02", titolo: "Progettazione", desc: "Definiamo l'intervento e prepariamo la documentazione tecnica." },
+  { n: "03", titolo: "Domanda", desc: "Compilazione e invio nei tempi e sui portali previsti dal bando." },
+  { n: "04", titolo: "Rendicontazione", desc: "Esecuzione, monitoraggio e chiusura della pratica all'ente." },
+];
+---
+
+<Base
+  title="Finanza agevolata"
+  description="Bando ISI, sgravi INAIL, fondi interprofessionali, bandi regionali e nazionali, credito d'imposta. Icuraimpresa ti accompagna dalla domanda alla rendicontazione."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Servizi · 04</p>
+      <h1>Finanza agevolata.</h1>
+      <p class="lede">
+        Contributi, fondi e crediti d'imposta esistono. Il difficile è intercettarli e portarli a casa senza errori. Lo facciamo noi.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/bando-linea-produzione.webp"
+        alt="Linea di produzione metalmeccanica italiana modernizzata: una pressa industriale nuova in primo piano con barriere fotoelettriche di sicurezza ben visibili e segnaletica gialla a terra; sullo sfondo sfocato un operatore in DPI completi consulta un tablet rugged; capannone ben illuminato luce diurna mista, palette desaturata con accenti arancio sui DPI; fotografia editoriale industriale, no posa marketing, no slogan visibili"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Cosa intercettiamo</p>
+      <ol class="aree">
+        {aree.map((a, i) => (
+          <li class="area">
+            <h2 class="area__nome">
+              <span class="area__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              {a.nome}
+            </h2>
+            <p class="area__desc">{a.desc}</p>
+            {a.href && (
+              <a href={a.href} class="link-cta area__link">
+                {a.cta}
+                <span class="link-cta__arrow" aria-hidden="true">→</span>
+              </a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">02 — Come funziona</p>
+      <h2 class="fasi__heading">Quattro fasi, una persona di riferimento.</h2>
+      <ol class="fasi">
+        {fasi.map((f) => (
+          <li class="fase">
+            <span class="fase__n">{f.n}</span>
+            <h3 class="fase__titolo">{f.titolo}</h3>
+            <p class="fase__desc">{f.desc}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section closing-cta">
+    <div class="container">
+      <h2>Capiamo insieme cosa puoi ottenere.</h2>
+      <p>Il pre-check è gratuito · risposta in 48h.</p>
+      <a href="/contatti" class="btn btn--primary">
+        Verifica le opportunità
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 52ch; }
+
+  .aree { list-style: none; margin: 0; padding: 0; }
+  .area {
+    padding-block: var(--space-lg);
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .area:last-child { border-bottom: var(--rule-hair) solid var(--color-rule); }
+  .area__nome {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2xs);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.8em;
+  }
+  .area__n {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    font-weight: 400;
+  }
+  .area__desc { color: var(--color-ink-2); max-width: 60ch; margin: 0; }
+  .area__link { margin-top: var(--space-sm); }
+
+  .fasi__heading { font-size: var(--text-3xl); margin-bottom: var(--space-xl); max-width: 22ch; }
+  .fasi {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .fase {
+    padding: var(--space-lg);
+    border: var(--rule-hair) solid var(--color-rule);
+    margin-left: -1px;
+  }
+  .fase:first-child { margin-left: 0; }
+  .fase__n {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    display: block;
+    margin-bottom: var(--space-md);
+  }
+  .fase__titolo { font-size: var(--text-xl); margin: 0 0 var(--space-2xs); font-weight: 500; }
+  .fase__desc { color: var(--color-ink-2); margin: 0; font-size: var(--text-md); }
+
+  .closing-cta {
+    text-align: center;
+    background: var(--color-paper-2);
+  }
+  .closing-cta h2 { font-size: var(--text-3xl); margin-bottom: var(--space-2xs); }
+  .closing-cta p { color: var(--color-muted); margin-bottom: var(--space-lg); margin-inline: auto; }
+
+  @media (max-width: 56rem) {
+    .fasi { grid-template-columns: 1fr; }
+    .fase { margin-left: 0; margin-top: -1px; }
+  }
+  @media (min-width: 56rem) and (max-width: 76rem) {
+    .fasi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 30rem) {
+    .area__nome { font-size: var(--text-lg); }
+  }
+</style>

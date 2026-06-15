@@ -1,0 +1,112 @@
+---
+import Base from "@layouts/Base.astro";
+
+const aggiornamento = "15 giugno 2026";
+---
+
+<Base
+  title="Cookie Policy"
+  description="Informativa sui cookie e gli strumenti di archiviazione utilizzati dal sito di Icuraimpresa S.r.l."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Cookie policy</p>
+      <h1>Cookie Policy.</h1>
+      <p class="lede">
+        Quali cookie e strumenti di archiviazione usa questo sito, e come gestirli.
+      </p>
+      <p class="meta">Ultimo aggiornamento: {aggiornamento}</p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section legal">
+    <div class="container legal__col">
+      <h2>1. Cosa sono i cookie</h2>
+      <p>
+        I cookie sono piccoli file di testo che i siti salvano sul dispositivo dell'utente. Strumenti analoghi (come <em>localStorage</em> e <em>sessionStorage</em>) consentono di memorizzare informazioni nel browser. Vengono usati per far funzionare il sito, ricordare preferenze o raccogliere statistiche.
+      </p>
+
+      <h2>2. Cookie tecnici e di funzionalità</h2>
+      <p>
+        Questo sito è prevalentemente statico e <strong>non utilizza cookie di profilazione</strong>. Utilizza esclusivamente strumenti tecnici necessari al funzionamento, tra cui l'archiviazione locale di un token di sessione per l'area riservata di gestione delle candidature (accessibile solo agli amministratori). Questi strumenti non richiedono il consenso preventivo.
+      </p>
+
+      <h2>3. Strumenti di terze parti</h2>
+      <p>
+        Alcune funzionalità si appoggiano a servizi esterni che, quando attivi, possono impostare cookie o utilizzare l'archiviazione locale gestiti direttamente dai rispettivi fornitori:
+      </p>
+      <ul class="legal__list">
+        <li><strong>Assistente virtuale (chatbot)</strong> — per mantenere il contesto della conversazione e il caricamento dei documenti. L'elaborazione si avvale di servizi di intelligenza artificiale di terze parti (vedi <a href="/privacy">Privacy Policy</a>).</li>
+        <li><strong>Contenuti e servizi incorporati</strong> (es. invio del modulo, componenti di terze parti) — possono impostare cookie tecnici propri.</li>
+      </ul>
+      <p>
+        Per il trattamento dei dati da parte di questi fornitori si rimanda alle rispettive informative privacy.
+      </p>
+
+      <h2>4. Cookie analitici e di profilazione</h2>
+      <p>
+        Al momento il sito <strong>non utilizza</strong> cookie analitici o di profilazione né strumenti di tracciamento pubblicitario. Qualora venissero introdotti, verrà mostrato un banner per la raccolta del consenso e questa pagina sarà aggiornata di conseguenza.
+      </p>
+
+      <h2>5. Come gestire i cookie</h2>
+      <p>
+        Puoi controllare e/o eliminare i cookie e l'archiviazione locale dalle impostazioni del tuo browser. La maggior parte dei browser consente di bloccare i cookie o di essere avvisati prima che vengano salvati. La disattivazione dei cookie tecnici potrebbe però compromettere alcune funzionalità del sito.
+      </p>
+      <p>
+        Istruzioni per i browser più diffusi:
+        <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Chrome</a>,
+        <a href="https://support.mozilla.org/it/kb/Gestione%20dei%20cookie" target="_blank" rel="noopener">Firefox</a>,
+        <a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Safari</a>,
+        <a href="https://support.microsoft.com/it-it/microsoft-edge" target="_blank" rel="noopener">Edge</a>.
+      </p>
+
+      <h2>6. Modifiche</h2>
+      <p>
+        Questa Cookie Policy può essere aggiornata nel tempo. Le modifiche saranno pubblicate su questa pagina con l'indicazione della data di ultimo aggiornamento. Per i dettagli sul trattamento dei dati personali consulta la <a href="/privacy">Privacy Policy</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-lg); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 52ch; }
+  .meta {
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .legal__col { max-width: 70ch; }
+  .legal h2 {
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-sm);
+  }
+  .legal h2:first-child { margin-top: 0; }
+  .legal p { color: var(--color-ink-2); line-height: 1.65; margin-bottom: var(--space-sm); }
+  .legal__list {
+    color: var(--color-ink-2);
+    line-height: 1.6;
+    padding-left: 1.2rem;
+    margin-bottom: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+  .legal strong { color: var(--color-ink); }
+  .legal em { font-style: italic; }
+</style>

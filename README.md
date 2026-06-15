@@ -1,6 +1,6 @@
 # icuraimpresa — sito
 
-Sito vetrina di Icuraimpresa S.r.l. (Napoli, dal 2014). Consulenza integrata su sicurezza sul lavoro, engineering, formazione finanziata, consulenza legale.
+Sito vetrina di Icuraimpresa S.r.l. (Napoli, dal 2014). Consulenza integrata su sicurezza sul lavoro, engineering, formazione finanziata, finanza agevolata e certificazioni.
 
 ## Stack
 
@@ -51,14 +51,28 @@ Soluzione adottata: Dockerfile multi-stage.
 src/
   components/   Nav, Footer, Placeholder
   layouts/      Base.astro
-  pages/        index, chi-siamo, bando-isi, contatti, servizi/*
+  pages/        index, chi-siamo, bando-isi, contatti, lavora-con-noi,
+                lavora-con-noi/admin (dashboard candidature, noindex),
+                servizi/* (consulenza, formazione, engineering, finanza-agevolata, certificazioni)
   styles/       tokens.css, global.css
 public/
   images/       asset visivi (generati esternamente, vedi feedback memory)
   images/brand/ logo / brand mark
 design.md       sistema di design (theme, tipografia, macrostructure)
+apps-script/    backend selezionatore HR (Google Apps Script + schema foglio + guida)
 Dockerfile      build + runtime per Coolify
 ```
+
+## Selezionatore HR (Lavora con noi)
+
+`/lavora-con-noi` ospita un questionario psico-attitudinale (16 domande) che invia le candidature
+a un Google Sheet tramite Apps Script; `/lavora-con-noi/admin` è la dashboard (login, KPI, mappa
+candidati, dettaglio con radar, gestione posizioni).
+
+- Backend e guida in `apps-script/` (`Code.gs`, `INTESTAZIONI_FOGLIO.txt`, `DEPLOY.md`).
+- Dopo il deploy della Web App incollare l'URL in `WEBHOOK_URL` dentro
+  `src/pages/lavora-con-noi.astro` **e** `src/pages/lavora-con-noi/admin.astro`.
+- Finché `WEBHOOK_URL` è vuoto: posizioni di fallback sul sito e dati mock (senza login) nell'admin.
 
 ## Note sulle immagini
 

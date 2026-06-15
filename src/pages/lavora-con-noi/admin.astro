@@ -1,0 +1,841 @@
+---
+import "@styles/global.css";
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Dashboard candidature · Icuraimpresa</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+  </head>
+  <body class="page-admin">
+    <main class="admin">
+      <!-- LOGIN -->
+      <section class="admin-login" id="adminLogin">
+        <div class="admin-login-card">
+          <div class="admin-login-icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h1>Dashboard candidature</h1>
+          <p>Accesso riservato al team di selezione.</p>
+          <form id="loginForm" autocomplete="off">
+            <input id="loginPassword" type="password" placeholder="Password" required />
+            <button type="submit">Entra <span aria-hidden="true">→</span></button>
+            <p class="admin-login-error" id="loginError" hidden>Password non corretta.</p>
+          </form>
+        </div>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section class="admin-dash" id="adminDash" hidden>
+        <div class="admin-devnote" id="adminDevNote" hidden>
+          Anteprima con dati di esempio — backend non ancora configurato. Vedi <code>apps-script/DEPLOY.md</code>.
+        </div>
+
+        <header class="admin-top">
+          <div class="admin-top-left">
+            <span class="admin-wordmark">Icuraimpresa</span>
+            <div>
+              <h1>Dashboard candidature</h1>
+              <p>Screening attitudinale · valutazione candidati</p>
+            </div>
+          </div>
+          <div class="admin-top-right">
+            <div class="admin-kpis">
+              <div class="kpi"><span class="kpi-num" id="kpiTotal">0</span><span class="kpi-label">Totali</span></div>
+              <div class="kpi"><span class="kpi-num" id="kpiPronti">0</span><span class="kpi-label">Pronti ora</span></div>
+              <div class="kpi"><span class="kpi-num" id="kpiDiamanti">0</span><span class="kpi-label">Diamanti</span></div>
+            </div>
+            <button id="refreshBtn" class="admin-icon-btn" title="Ricarica" type="button">↻</button>
+            <button id="logoutBtn" class="admin-icon-btn" title="Esci" type="button">⎋</button>
+          </div>
+        </header>
+
+        <nav class="admin-tabs" role="tablist">
+          <button class="admin-tab active" data-view="candidates" type="button">Candidati</button>
+          <button class="admin-tab" data-view="positions" type="button">Gestisci posizioni</button>
+        </nav>
+
+        <div class="admin-view" id="viewCandidates">
+          <div class="admin-controls">
+            <div class="control-search">
+              <input id="searchInput" type="search" placeholder="Cerca per nome o email…" />
+            </div>
+            <div class="control-filters">
+              <select id="filterPosizione"><option value="">Tutte le posizioni</option></select>
+              <div class="cat-toggles" id="catToggles">
+                <button data-cat="pronti" class="cat-toggle active" data-cat-color="pronti" type="button">Pronti ora</button>
+                <button data-cat="diamante" class="cat-toggle active" data-cat-color="diamante" type="button">Diamante grezzo</button>
+                <button data-cat="medio" class="cat-toggle active" data-cat-color="medio" type="button">Potenziale medio</button>
+                <button data-cat="non_ora" class="cat-toggle active" data-cat-color="non_ora" type="button">Non ora</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-grid">
+            <div class="panel panel-chart">
+              <div class="panel-head">
+                <h2>Mappa candidati</h2>
+                <p>Fit settore <span>(asse X)</span> × Potenziale <span>(asse Y)</span>. Clicca un punto per il dettaglio.</p>
+              </div>
+              <div class="scatter-wrap" id="scatterWrap"></div>
+              <div class="scatter-legend">
+                <span><i data-cat="pronti"></i> Pronti ora</span>
+                <span><i data-cat="diamante"></i> Diamante grezzo</span>
+                <span><i data-cat="medio"></i> Potenziale medio</span>
+                <span><i data-cat="non_ora"></i> Non ora</span>
+              </div>
+            </div>
+
+            <div class="panel panel-table">
+              <div class="panel-head">
+                <h2>Elenco candidati</h2>
+                <p><span id="visibleCount">0</span> visibili</p>
+              </div>
+              <div class="table-wrap">
+                <table class="cand-table">
+                  <thead>
+                    <tr>
+                      <th data-sort="nome">Candidato</th>
+                      <th data-sort="posizione">Posizione</th>
+                      <th data-sort="overall">Score</th>
+                      <th data-sort="categoria">Categoria</th>
+                      <th data-sort="timestamp">Data</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="candTbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-view" id="viewPositions" hidden>
+          <div class="positions-toolbar">
+            <div class="positions-toolbar-info">
+              <h2>Posizioni aperte</h2>
+              <p><span id="posCount">0</span> posizioni · le posizioni <strong>attive</strong> appaiono come card su <code>/lavora-con-noi</code>.</p>
+            </div>
+            <button id="addPositionBtn" class="btn-primary-admin" type="button">+ Nuova posizione</button>
+          </div>
+          <div class="panel panel-positions">
+            <div class="table-wrap">
+              <table class="pos-table">
+                <thead>
+                  <tr><th>Titolo</th><th>Location</th><th>RAL / Contratto</th><th>Ordine</th><th>Stato</th><th></th></tr>
+                </thead>
+                <tbody id="posTbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODAL POSIZIONE -->
+      <div class="pos-modal" id="posModal" hidden>
+        <div class="pos-modal-backdrop" id="posModalBackdrop"></div>
+        <div class="pos-modal-panel" role="dialog" aria-modal="true">
+          <header class="pos-modal-head">
+            <h3 id="posModalTitle">Nuova posizione</h3>
+            <button class="pos-modal-close" id="posModalClose" type="button" title="Chiudi">✕</button>
+          </header>
+          <form class="pos-form" id="posForm">
+            <input type="hidden" id="posId" />
+            <div class="pos-form-row"><label for="posTitolo">Titolo *</label><input type="text" id="posTitolo" maxlength="80" placeholder="Es. Consulente HSE Senior" /></div>
+            <div class="pos-form-row"><label for="posDescrizione">Descrizione *</label><textarea id="posDescrizione" rows="3" maxlength="240" placeholder="Una o due righe sulle responsabilità principali"></textarea></div>
+            <div class="pos-form-grid">
+              <div class="pos-form-row"><label for="posRal">RAL / Contratto</label><input type="text" id="posRal" maxlength="40" placeholder="€ 25.000 – 35.000 oppure Da valutare" /></div>
+              <div class="pos-form-row"><label for="posLocation">Location</label><input type="text" id="posLocation" maxlength="40" value="Napoli" /></div>
+            </div>
+            <div class="pos-form-grid">
+              <div class="pos-form-row"><label for="posOrdine">Ordine in pagina</label><input type="number" id="posOrdine" min="0" step="10" value="50" /></div>
+              <div class="pos-form-row pos-form-toggle"><label class="pos-toggle-label"><input type="checkbox" id="posAttivo" checked /><span>Attiva (visibile sul sito)</span></label></div>
+            </div>
+            <div class="pos-form-error" id="posFormError"></div>
+            <div class="pos-form-actions">
+              <button type="button" class="btn-secondary-admin" id="posCancelBtn">Annulla</button>
+              <button type="submit" class="btn-primary-admin" id="posSaveBtn">Salva</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- DETTAGLIO -->
+      <aside class="admin-detail" id="adminDetail" hidden>
+        <div class="detail-backdrop" id="detailBackdrop"></div>
+        <div class="detail-panel">
+          <button class="detail-close" id="detailClose" title="Chiudi" type="button">✕</button>
+          <div id="detailContent"></div>
+        </div>
+      </aside>
+    </main>
+
+    <script>
+      // ============================================================
+      // CONFIG — incolla l'URL Web App qui dopo il deploy (apps-script/DEPLOY.md)
+      // ============================================================
+      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzKIFU-S3n2BxKKIkhvDdwIMPhSz_nplg8y7Wnve2S8mvSfTRET6ir1Z_a6wwzU86CJxQ/exec';
+      const STORAGE_KEY = 'icura_admin_token';
+      const DEV_MODE = !WEBHOOK_URL; // senza URL: anteprima con dati mock, senza login
+
+      // ===== Questionario di riferimento (testo + dimensione/scoring) =====
+      const QUESTIONS = [
+        { id: 1,  dim: 'relazionale',   ideal: 'si', critical: null, text: 'Le persone si accendono quando ti ascoltano?' },
+        { id: 2,  dim: 'relazionale',   ideal: 'si', critical: null, text: 'Ci sono persone che ti seguirebbero ovunque?' },
+        { id: 3,  dim: 'relazionale',   ideal: 'no', critical: null, text: 'Hai difficoltà a far accettare idee e progetti?' },
+        { id: 4,  dim: 'organizzazione',ideal: 'no', critical: null, text: 'Le interferenze esterne ti distolgono facilmente?' },
+        { id: 5,  dim: 'flessibilita',  ideal: 'no', critical: null, text: 'Sei timido con persone che non conosci?' },
+        { id: 6,  dim: 'mindset',       ideal: 'si', critical: null, text: 'Pensi di dover cambiare qualcosa nel tuo approccio futuro?' },
+        { id: 7,  dim: 'organizzazione',ideal: 'no', critical: null, text: 'Completi le cose all’ultimo minuto?' },
+        { id: 8,  dim: 'mindset',       ideal: 'no', critical: null, text: 'La timidezza ti frena spesso?' },
+        { id: 9,  dim: 'relazionale',   ideal: 'si', critical: null, text: 'Intuisci in anticipo cosa ti dirà una persona?' },
+        { id: 10, dim: 'flessibilita',  ideal: 'no', critical: null, text: 'Insisti che le cose si facciano a modo tuo?' },
+        { id: 11, dim: 'mindset',       ideal: 'no', critical: null, text: 'Dici agli altri come fare fuori dalla tua area?' },
+        { id: 12, dim: 'flessibilita',  ideal: 'no', critical: null, text: 'Un leader può sacrificare il singolo per il gruppo?' },
+        { id: 13, dim: 'fitSettore',    ideal: 'si', critical: 'no', text: 'Ti dà energia il contatto con imprese e cantieri più della scrivania?' },
+        { id: 14, dim: 'fitSettore',    ideal: 'si', critical: null, text: 'La sicurezza sul lavoro e la tutela delle persone ti stanno a cuore?' },
+        { id: 15, dim: 'fitSettore',    ideal: 'si', critical: 'no', text: 'Sei disponibile a spostarti per sopralluoghi presso i clienti?' },
+        { id: 16, dim: 'fitSettore',    ideal: 'si', critical: null, text: 'Gestisci bene gli imprevisti normativi/tecnici sul momento?' }
+      ];
+
+      const DIM_LABELS = { relazionale: 'Relazionale', mindset: 'Mindset & Crescita', organizzazione: 'Organizzazione & Focus', flessibilita: 'Flessibilità & Team', fitSettore: 'Fit Settore' };
+      const DIM_COLORS = { relazionale: '#0d9e71', mindset: '#0284c7', organizzazione: '#7c3aed', flessibilita: '#d97706', fitSettore: '#1f4e8c' };
+      const CAT_LABELS = { pronti: 'Pronti ora', diamante: 'Diamante grezzo', medio: 'Potenziale medio', non_ora: 'Non ora' };
+      const CAT_COLORS = { pronti: '#16a34a', diamante: '#0284c7', medio: '#d97706', non_ora: '#94a3b8' };
+
+      // ===== SCORING =====
+      function scoreAnswer(q, value) {
+        if (value === q.ideal) return 100;
+        if (value === 'incerto') return 50;
+        if (value === 'na') return 25;
+        return q.critical === value ? 0 : 20;
+      }
+      function formatTime(ms) {
+        if (ms == null || !isFinite(ms) || ms < 0) return null;
+        if (ms < 1000) return `${ms} ms`;
+        const s = ms / 1000;
+        if (s < 10) return `${s.toFixed(1)} s`;
+        if (s < 60) return `${Math.round(s)} s`;
+        const m = Math.floor(s / 60);
+        return `${m}m ${Math.round(s - m * 60)}s`;
+      }
+      function timeSpeed(ms) { if (ms == null) return 'na'; if (ms < 2000) return 'fast'; if (ms > 20000) return 'slow'; return 'normal'; }
+      function answerFlag(q, value) {
+        if (value === q.ideal) return 'ok';
+        if (value === 'incerto') return 'warn';
+        if (value === 'na') return 'na';
+        return q.critical === value ? 'crit' : 'warn';
+      }
+      function answerLabel(value) { return { si: 'Sì', incerto: 'Incerto', no: 'No', na: 'Non risp.' }[value] || value; }
+      function computeDimensions(answers) {
+        const dims = { relazionale: [], mindset: [], organizzazione: [], flessibilita: [], fitSettore: [] };
+        for (const q of QUESTIONS) {
+          const a = answers.find(x => x.questionId === q.id);
+          if (a) dims[q.dim].push(scoreAnswer(q, a.value));
+        }
+        const out = {};
+        for (const k in dims) { const arr = dims[k]; out[k] = arr.length ? Math.round(arr.reduce((s, v) => s + v, 0) / arr.length) : 0; }
+        return out;
+      }
+      function computePotenziale(d) { return Math.round((d.relazionale + d.mindset + d.organizzazione + d.flessibilita) / 4); }
+      function computeOverall(d) { const v = Object.values(d); return Math.round(v.reduce((s, x) => s + x, 0) / v.length); }
+      function categorize(d) {
+        const fit = d.fitSettore, pot = computePotenziale(d);
+        if (fit >= 65 && pot >= 65) return 'pronti';
+        if (fit < 50 && pot >= 65) return 'diamante';
+        if (fit < 50 && pot < 50) return 'non_ora';
+        return 'medio';
+      }
+
+      // ===== MOCK (anteprima dev) =====
+      function ans(arr) { return arr.map((v, i) => ({ questionId: i + 1, value: v, timeMs: 3000 + i * 400 })); }
+      const MOCK_CANDIDATES = [
+        { id: 'c01', nome: 'Francesco', cognome: 'Esposito', email: 'f.esposito@email.com', telefono: '+39 333 1112233', citta: 'Napoli', posizione: 'Tecnico della sicurezza (HSE)', timestamp: '2026-06-12T14:22:00Z', answers: ans(['si','si','no','no','no','si','no','no','si','no','no','no','si','si','si','si']) },
+        { id: 'c02', nome: 'Alessandra', cognome: 'Bianchi', email: 'a.bianchi@email.com', telefono: '+39 340 9988776', citta: 'Salerno', posizione: 'Consulente certificazioni ISO', timestamp: '2026-06-12T11:08:00Z', answers: ans(['si','incerto','no','no','no','si','no','no','si','no','no','no','si','si','si','si']) },
+        { id: 'c03', nome: 'Marco', cognome: 'Russo', email: 'm.russo@email.com', telefono: '+39 335 5544332', citta: 'Caserta', posizione: 'Consulente finanza agevolata', timestamp: '2026-06-11T16:45:00Z', answers: ans(['si','si','no','no','no','si','no','no','si','no','no','no','no','incerto','no','si']) },
+        { id: 'c04', nome: 'Giulia', cognome: 'De Luca', email: 'g.deluca@email.com', telefono: '+39 347 1122334', citta: 'Napoli', posizione: 'Ingegnere / progettista junior', timestamp: '2026-06-11T09:30:00Z', answers: ans(['incerto','no','incerto','incerto','no','si','incerto','no','incerto','incerto','no','no','si','incerto','si','incerto']) },
+        { id: 'c05', nome: 'Davide', cognome: 'Pellegrino', email: 'd.pellegrino@email.com', telefono: '+39 333 7766554', citta: 'Avellino', posizione: 'Tecnico della sicurezza (HSE)', timestamp: '2026-06-10T18:14:00Z', answers: ans(['no','no','si','si','si','no','si','si','no','si','si','si','no','no','no','no']) },
+        { id: 'c06', nome: 'Sara', cognome: 'Greco', email: 's.greco@email.com', telefono: '+39 339 5544221', citta: 'Napoli', posizione: 'Consulente certificazioni ISO', timestamp: '2026-06-10T12:00:00Z', answers: ans(['si','si','no','no','no','si','no','no','si','no','no','no','incerto','no','no','si']) },
+        { id: 'c07', nome: 'Luca', cognome: 'Coppola', email: 'l.coppola@email.com', telefono: '+39 348 1234567', citta: 'Benevento', posizione: 'Consulente finanza agevolata', timestamp: '2026-06-09T15:42:00Z', answers: ans(['si','incerto','incerto','incerto','no','incerto','incerto','incerto','si','incerto','incerto','incerto','si','si','incerto','si']) },
+        { id: 'c08', nome: 'Chiara', cognome: 'Romano', email: 'c.romano@email.com', telefono: '+39 320 9988771', citta: 'Salerno', posizione: 'Tecnico della sicurezza (HSE)', timestamp: '2026-06-09T10:20:00Z', answers: ans(['si','si','no','no','no','si','no','no','si','no','no','no','si','si','si','si']) },
+        { id: 'c09', nome: 'Antonio', cognome: 'Ferraro', email: 'a.ferraro@email.com', telefono: '+39 351 2233445', citta: 'Caserta', posizione: 'Ingegnere / progettista junior', timestamp: '2026-06-08T17:55:00Z', answers: ans(['no','no','si','si','si','incerto','si','si','no','si','si','si','incerto','no','no','no']) },
+        { id: 'c10', nome: 'Valeria', cognome: 'Mazza', email: 'v.mazza@email.com', telefono: '+39 327 6655443', citta: 'Napoli', posizione: 'Consulente finanza agevolata', timestamp: '2026-06-08T08:11:00Z', answers: ans(['si','si','no','incerto','no','si','no','incerto','si','incerto','no','no','incerto','si','incerto','si']) }
+      ];
+      const MOCK_POSITIONS = [
+        { id: 'hse', attivo: true, titolo: 'Tecnico della sicurezza (HSE)', descrizione: 'Sopralluoghi, redazione DVR, coordinamento sicurezza in cantiere.', ral: '€ 22.000 – 30.000', location: 'Napoli + cantieri', ordine: 10 },
+        { id: 'iso', attivo: true, titolo: 'Consulente certificazioni ISO', descrizione: 'Sistemi di gestione 9001/14001/45001, audit, supporto imprese.', ral: '€ 24.000 – 32.000', location: 'Napoli', ordine: 20 },
+        { id: 'eng', attivo: true, titolo: 'Ingegnere / progettista junior', descrizione: 'Progettazione edile e impiantistica, pratiche, prevenzione incendi.', ral: '€ 20.000 – 28.000', location: 'Napoli', ordine: 30 },
+        { id: 'finanza', attivo: true, titolo: 'Consulente finanza agevolata', descrizione: 'Bandi, domande e rendicontazione.', ral: '€ 22.000 – 30.000', location: 'Napoli', ordine: 40 },
+        { id: 'spontanea', attivo: false, titolo: 'Candidatura spontanea', descrizione: 'Profilo libero per candidature spontanee.', ral: 'Da valutare', location: 'Napoli', ordine: 100 }
+      ];
+      function enrichMock(list) {
+        return list.map(c => {
+          const dims = computeDimensions(c.answers);
+          return { ...c, dims, potenziale: computePotenziale(dims), overall: computeOverall(dims), categoria: categorize(dims) };
+        });
+      }
+
+      // ===== STATE =====
+      let CANDIDATES = [];
+      const state = { search: '', posizione: '', catActive: new Set(['pronti','diamante','medio','non_ora']), sort: { key: 'overall', dir: 'desc' } };
+
+      // ===== ELEMENTS =====
+      const adminLogin = document.getElementById('adminLogin');
+      const adminDash = document.getElementById('adminDash');
+      const adminDevNote = document.getElementById('adminDevNote');
+      const loginForm = document.getElementById('loginForm');
+      const loginPassword = document.getElementById('loginPassword');
+      const loginError = document.getElementById('loginError');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const searchInput = document.getElementById('searchInput');
+      const filterPosizione = document.getElementById('filterPosizione');
+      const catToggles = document.getElementById('catToggles');
+      const scatterWrap = document.getElementById('scatterWrap');
+      const candTbody = document.getElementById('candTbody');
+      const visibleCount = document.getElementById('visibleCount');
+      const adminDetail = document.getElementById('adminDetail');
+      const detailContent = document.getElementById('detailContent');
+      const detailClose = document.getElementById('detailClose');
+      const detailBackdrop = document.getElementById('detailBackdrop');
+
+      function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+      function escAttr(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+
+      // ===== LOGIN / SESSION =====
+      async function apiCall(payload) {
+        const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+        return res.json();
+      }
+      function getToken() { return sessionStorage.getItem(STORAGE_KEY); }
+
+      function checkSession() {
+        if (DEV_MODE) { showDashboard(); return; }
+        if (getToken()) showDashboard();
+      }
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loginError.hidden = true;
+        const submitBtn = loginForm.querySelector('button');
+        const orig = submitBtn.innerHTML;
+        submitBtn.disabled = true; submitBtn.textContent = 'Verifica…';
+        try {
+          const data = await apiCall({ action: 'login', password: loginPassword.value });
+          if (data.ok && data.token) {
+            sessionStorage.setItem(STORAGE_KEY, data.token);
+            loginPassword.value = '';
+            await showDashboard();
+          } else {
+            loginError.textContent = data.error === 'admin_not_configured' ? 'Backend non configurato (Script Properties mancanti).' : 'Password non corretta.';
+            loginError.hidden = false; loginPassword.focus();
+          }
+        } catch (err) {
+          loginError.textContent = 'Errore di rete. Riprova.'; loginError.hidden = false; console.error(err);
+        } finally { submitBtn.disabled = false; submitBtn.innerHTML = orig; }
+      });
+
+      logoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem(STORAGE_KEY);
+        adminDash.hidden = true; adminLogin.hidden = false; loginPassword.value = '';
+      });
+
+      refreshBtn.addEventListener('click', async () => {
+        await loadCandidates(); renderAll();
+        if (!viewPositions.hidden) loadPositionsAdmin();
+      });
+
+      async function showDashboard() {
+        adminLogin.hidden = true; adminDash.hidden = false;
+        adminDevNote.hidden = !DEV_MODE;
+        await loadCandidates(); renderAll();
+      }
+
+      async function loadCandidates() {
+        if (DEV_MODE) { CANDIDATES = enrichMock(MOCK_CANDIDATES); rebuildPositionFilter(); return; }
+        const token = getToken();
+        if (!token) return;
+        try {
+          const data = await apiCall({ action: 'list', token });
+          if (data.ok && Array.isArray(data.candidates)) {
+            CANDIDATES = data.candidates.map(c => ({ ...c, dims: c.dims || computeDimensions(c.answers || []) }));
+            rebuildPositionFilter();
+          } else if (data.error === 'unauthorized') {
+            sessionStorage.removeItem(STORAGE_KEY); adminDash.hidden = true; adminLogin.hidden = false;
+          } else { console.error('list error:', data); CANDIDATES = []; }
+        } catch (err) { console.error('fetch error:', err); CANDIDATES = []; }
+      }
+
+      function rebuildPositionFilter() {
+        const titles = Array.from(new Set(CANDIDATES.map(c => c.posizione).filter(Boolean))).sort();
+        const current = filterPosizione.value;
+        filterPosizione.innerHTML = '<option value="">Tutte le posizioni</option>' + titles.map(t => `<option value="${escAttr(t)}">${esc(t)}</option>`).join('');
+        if (titles.includes(current)) filterPosizione.value = current;
+      }
+
+      // ===== FILTERS =====
+      searchInput.addEventListener('input', () => { state.search = searchInput.value.toLowerCase().trim(); renderAll(); });
+      filterPosizione.addEventListener('change', () => { state.posizione = filterPosizione.value; renderAll(); });
+      catToggles.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-cat]'); if (!btn) return;
+        const cat = btn.dataset.cat;
+        if (state.catActive.has(cat)) { state.catActive.delete(cat); btn.classList.remove('active'); }
+        else { state.catActive.add(cat); btn.classList.add('active'); }
+        renderAll();
+      });
+      function filterCandidates() {
+        return CANDIDATES.filter(c => {
+          if (state.posizione && c.posizione !== state.posizione) return false;
+          if (!state.catActive.has(c.categoria)) return false;
+          if (state.search) { if (!`${c.nome} ${c.cognome} ${c.email}`.toLowerCase().includes(state.search)) return false; }
+          return true;
+        });
+      }
+
+      // ===== RENDER =====
+      function renderAll() { const list = filterCandidates(); renderKpis(); renderScatter(list); renderTable(list); visibleCount.textContent = list.length; }
+      function renderKpis() {
+        document.getElementById('kpiTotal').textContent = CANDIDATES.length;
+        document.getElementById('kpiPronti').textContent = CANDIDATES.filter(c => c.categoria === 'pronti').length;
+        document.getElementById('kpiDiamanti').textContent = CANDIDATES.filter(c => c.categoria === 'diamante').length;
+      }
+
+      function renderScatter(list) {
+        const W = scatterWrap.clientWidth || 600, H = 420;
+        const m = { top: 16, right: 20, bottom: 44, left: 48 };
+        const iw = W - m.left - m.right, ih = H - m.top - m.bottom;
+        const xScale = v => m.left + (v / 100) * iw;
+        const yScale = v => m.top + ih - (v / 100) * ih;
+        const ticks = [0, 20, 40, 60, 80, 100];
+        let svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`;
+        for (const t of ticks) {
+          svg += `<line class="scatter-grid" x1="${xScale(t)}" y1="${m.top}" x2="${xScale(t)}" y2="${m.top + ih}"/>`;
+          svg += `<line class="scatter-grid" x1="${m.left}" y1="${yScale(t)}" x2="${m.left + iw}" y2="${yScale(t)}"/>`;
+        }
+        svg += `<line class="scatter-axis-line" x1="${xScale(50)}" y1="${m.top}" x2="${xScale(50)}" y2="${m.top + ih}" stroke-dasharray="3 4"/>`;
+        svg += `<line class="scatter-axis-line" x1="${m.left}" y1="${yScale(50)}" x2="${m.left + iw}" y2="${yScale(50)}" stroke-dasharray="3 4"/>`;
+        svg += `<line class="scatter-axis-line" x1="${m.left}" y1="${m.top + ih}" x2="${m.left + iw}" y2="${m.top + ih}"/>`;
+        svg += `<line class="scatter-axis-line" x1="${m.left}" y1="${m.top}" x2="${m.left}" y2="${m.top + ih}"/>`;
+        for (const t of ticks) {
+          svg += `<text class="scatter-tick" x="${xScale(t)}" y="${m.top + ih + 18}" text-anchor="middle">${t}</text>`;
+          svg += `<text class="scatter-tick" x="${m.left - 10}" y="${yScale(t) + 4}" text-anchor="end">${t}</text>`;
+        }
+        svg += `<text class="scatter-axis-label" x="${m.left + iw / 2}" y="${H - 8}" text-anchor="middle">Fit settore</text>`;
+        svg += `<text class="scatter-axis-label" transform="rotate(-90 14 ${m.top + ih / 2})" x="14" y="${m.top + ih / 2}" text-anchor="middle">Potenziale</text>`;
+        for (const c of list) {
+          const cx = xScale(c.dims.fitSettore), cy = yScale(c.potenziale), r = 6 + (c.overall / 100) * 6;
+          svg += `<circle class="scatter-point" data-id="${c.id}" cx="${cx}" cy="${cy}" r="${r}" fill="${CAT_COLORS[c.categoria]}" stroke="white" stroke-width="2"><title>${esc(c.nome)} ${esc(c.cognome)} — ${c.overall}/100</title></circle>`;
+        }
+        svg += '</svg>';
+        scatterWrap.innerHTML = svg;
+        scatterWrap.querySelectorAll('.scatter-point').forEach(p => p.addEventListener('click', () => openDetail(p.dataset.id)));
+      }
+      window.addEventListener('resize', () => { if (!adminDash.hidden) renderScatter(filterCandidates()); });
+
+      function renderTable(list) {
+        const sorted = [...list].sort((a, b) => {
+          const k = state.sort.key; let va = a[k], vb = b[k];
+          if (k === 'nome') { va = a.nome + a.cognome; vb = b.nome + b.cognome; }
+          if (va < vb) return state.sort.dir === 'asc' ? -1 : 1;
+          if (va > vb) return state.sort.dir === 'asc' ? 1 : -1;
+          return 0;
+        });
+        if (!sorted.length) { candTbody.innerHTML = `<tr class="empty-row"><td colspan="6">Nessun candidato corrisponde ai filtri.</td></tr>`; return; }
+        candTbody.innerHTML = sorted.map(c => {
+          const initials = ((c.nome[0] || '') + (c.cognome[0] || '')).toUpperCase();
+          const dateStr = new Date(c.timestamp).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
+          return `<tr data-id="${escAttr(c.id)}">
+            <td><div class="cand-name"><div class="cand-avatar">${esc(initials)}</div><div><strong>${esc(c.nome)} ${esc(c.cognome)}</strong><small>${esc(c.email)}</small></div></div></td>
+            <td>${esc(c.posizione)}</td>
+            <td><div class="cand-score">${c.overall}<small>/100</small></div><div class="cand-score-bar"><i style="width:${c.overall}%;background:${CAT_COLORS[c.categoria]}"></i></div></td>
+            <td><span class="cand-pill" data-cat="${c.categoria}">${CAT_LABELS[c.categoria]}</span></td>
+            <td><small class="cand-date">${dateStr}</small></td>
+            <td class="cand-chevron">›</td>
+          </tr>`;
+        }).join('');
+        candTbody.querySelectorAll('tr[data-id]').forEach(tr => tr.addEventListener('click', () => openDetail(tr.dataset.id)));
+      }
+      document.querySelectorAll('.cand-table thead th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+          const k = th.dataset.sort;
+          if (state.sort.key === k) state.sort.dir = state.sort.dir === 'asc' ? 'desc' : 'asc';
+          else { state.sort.key = k; state.sort.dir = k === 'overall' ? 'desc' : 'asc'; }
+          renderAll();
+        });
+      });
+
+      // ===== DETTAGLIO =====
+      function openDetail(id) {
+        const c = CANDIDATES.find(x => x.id === id); if (!c) return;
+        detailContent.innerHTML = renderDetail(c);
+        adminDetail.hidden = false; document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => { detailContent.querySelectorAll('.d-bar-fill').forEach(el => { el.style.width = el.dataset.target; }); });
+      }
+      function closeDetail() { adminDetail.hidden = true; document.body.style.overflow = ''; }
+      detailClose.addEventListener('click', closeDetail);
+      detailBackdrop.addEventListener('click', closeDetail);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !adminDetail.hidden) closeDetail(); });
+
+      function renderDetail(c) {
+        const initials = ((c.nome[0] || '') + (c.cognome[0] || '')).toUpperCase();
+        const dateStr = new Date(c.timestamp).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const barsHtml = Object.entries(DIM_LABELS).map(([k, label]) => {
+          const val = c.dims[k];
+          return `<div class="d-bar-row"><div class="d-bar-label">${label}</div><div class="d-bar-track"><div class="d-bar-fill" style="width:0;background:${DIM_COLORS[k]}" data-target="${val}%"></div></div><div class="d-bar-val">${val}</div></div>`;
+        }).join('');
+        const radar = renderRadarSVG(c.dims);
+        const answersHtml = QUESTIONS.map(q => {
+          const a = c.answers.find(x => x.questionId === q.id);
+          const val = a ? a.value : null;
+          const flag = a ? answerFlag(q, val) : 'na';
+          const flagLabel = { ok: 'Ideale', warn: 'Da approfondire', crit: 'Critica', na: 'N/D' }[flag];
+          const tLabel = formatTime(a ? a.timeMs : null);
+          const tSpeed = timeSpeed(a ? a.timeMs : null);
+          return `<div class="d-answer-row"><div class="d-answer-num">Q${q.id}</div><div class="d-answer-text">${esc(q.text)}<small>${DIM_LABELS[q.dim]}</small></div><span class="d-answer-time" data-speed="${tSpeed}">${tLabel || '—'}</span><span class="d-answer-flag" data-flag="${flag}">${answerLabel(val)} · ${flagLabel}</span></div>`;
+        }).join('');
+        return `<div class="d-content">
+          <div class="d-header">
+            <div class="d-avatar-row"><div class="d-avatar">${esc(initials)}</div><div class="d-headline"><h2>${esc(c.nome)} ${esc(c.cognome)}</h2><p>${esc(c.posizione)} · ${esc(c.citta)}</p></div></div>
+            <div class="d-score-row"><div class="d-score-num">${c.overall}<small>/100</small></div><div class="d-score-meta"><span class="cand-pill" data-cat="${c.categoria}">${CAT_LABELS[c.categoria]}</span><p>Potenziale ${c.potenziale} · Fit settore ${c.dims.fitSettore}</p></div></div>
+            <div class="d-contact-grid"><div class="d-contact-item"><label>Email</label><span>${esc(c.email)}</span></div><div class="d-contact-item"><label>Telefono</label><span>${esc(c.telefono)}</span></div><div class="d-contact-item"><label>Città</label><span>${esc(c.citta)}</span></div><div class="d-contact-item"><label>Inviato il</label><span>${dateStr}</span></div></div>
+          </div>
+          <div class="d-section"><h3 class="d-section-title">Profilo per dimensione</h3><div class="d-charts"><div class="d-bars">${barsHtml}</div>${radar}</div></div>
+          <div class="d-section"><h3 class="d-section-title">Risposte (${QUESTIONS.length})</h3><div class="d-answers">${answersHtml}</div></div>
+        </div>`;
+      }
+
+      function renderRadarSVG(dims) {
+        const size = 220, cx = size / 2, cy = size / 2, rMax = size / 2 - 30;
+        const keys = ['relazionale','mindset','organizzazione','flessibilita','fitSettore'];
+        const labels = ['Relaz.','Mindset','Organ.','Fless.','Fit'];
+        const n = keys.length;
+        const point = (angle, ratio) => [cx + Math.cos(angle) * rMax * ratio, cy + Math.sin(angle) * rMax * ratio];
+        const angles = keys.map((_, i) => (-Math.PI / 2) + (i * 2 * Math.PI / n));
+        let svg = `<svg class="d-radar" viewBox="0 0 ${size} ${size}" preserveAspectRatio="xMidYMid meet">`;
+        for (const r of [0.25, 0.5, 0.75, 1]) svg += `<polygon class="d-radar-grid" points="${angles.map(a => point(a, r).join(',')).join(' ')}"/>`;
+        for (const a of angles) { const [x, y] = point(a, 1); svg += `<line class="d-radar-grid" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`; }
+        svg += `<polygon class="d-radar-data" points="${keys.map((k, i) => point(angles[i], dims[k] / 100).join(',')).join(' ')}"/>`;
+        keys.forEach((k, i) => { const [x, y] = point(angles[i], dims[k] / 100); svg += `<circle class="d-radar-dot" cx="${x}" cy="${y}" r="3"/>`; });
+        labels.forEach((lab, i) => { const [x, y] = point(angles[i], 1.18); svg += `<text class="d-radar-label" x="${x}" y="${y + 3}" text-anchor="middle">${lab}</text>`; });
+        return svg + '</svg>';
+      }
+
+      // ===== TABS =====
+      const viewCandidates = document.getElementById('viewCandidates');
+      const viewPositions = document.getElementById('viewPositions');
+      const adminTabs = document.querySelectorAll('.admin-tab');
+      function switchView(name) {
+        adminTabs.forEach(t => t.classList.toggle('active', t.dataset.view === name));
+        viewCandidates.hidden = (name !== 'candidates');
+        viewPositions.hidden = (name !== 'positions');
+        if (name === 'positions') loadPositionsAdmin();
+      }
+      adminTabs.forEach(t => t.addEventListener('click', () => switchView(t.dataset.view)));
+
+      // ===== POSIZIONI (CRUD) =====
+      let POSITIONS_ADMIN = [];
+      const posTbody = document.getElementById('posTbody');
+      const posCount = document.getElementById('posCount');
+      const addPositionBtn = document.getElementById('addPositionBtn');
+      const posModal = document.getElementById('posModal');
+      const posModalTitle = document.getElementById('posModalTitle');
+      const posForm = document.getElementById('posForm');
+      const posFormError = document.getElementById('posFormError');
+      const posSaveBtn = document.getElementById('posSaveBtn');
+      const posCancelBtn = document.getElementById('posCancelBtn');
+      const posModalClose = document.getElementById('posModalClose');
+      const posModalBackdrop = document.getElementById('posModalBackdrop');
+
+      async function loadPositionsAdmin() {
+        if (DEV_MODE) { POSITIONS_ADMIN = MOCK_POSITIONS.slice(); renderPositionsTable(); return; }
+        const token = getToken(); if (!token) return;
+        try {
+          const data = await apiCall({ action: 'list_positions_admin', token });
+          if (data && data.ok && Array.isArray(data.positions)) { POSITIONS_ADMIN = data.positions; renderPositionsTable(); }
+          else if (data && data.error === 'unauthorized') { sessionStorage.removeItem(STORAGE_KEY); adminDash.hidden = true; adminLogin.hidden = false; }
+          else { POSITIONS_ADMIN = []; renderPositionsTable(); }
+        } catch (err) { console.error('loadPositionsAdmin error:', err); POSITIONS_ADMIN = []; renderPositionsTable(); }
+      }
+
+      function renderPositionsTable() {
+        posCount.textContent = POSITIONS_ADMIN.length;
+        if (!POSITIONS_ADMIN.length) { posTbody.innerHTML = '<tr class="pos-empty-row"><td colspan="6">Nessuna posizione. Clicca "Nuova posizione" per crearne una.</td></tr>'; return; }
+        posTbody.innerHTML = POSITIONS_ADMIN.map(p => `<tr data-id="${escAttr(p.id)}">
+          <td><div class="pos-row-title">${esc(p.titolo)}</div><div class="pos-row-title-desc">${esc(p.descrizione)}</div></td>
+          <td>${esc(p.location || '—')}</td>
+          <td>${esc(p.ral || '—')}</td>
+          <td>${Number(p.ordine) || 0}</td>
+          <td><span class="pos-status" data-on="${p.attivo ? 'true' : 'false'}">${p.attivo ? 'Attiva' : 'Disattiva'}</span></td>
+          <td><div class="pos-row-actions">
+            <button class="pos-icon-btn" data-action="toggle" type="button" title="${p.attivo ? 'Disattiva' : 'Attiva'}">${p.attivo ? '○' : '●'}</button>
+            <button class="pos-icon-btn" data-action="edit" type="button" title="Modifica">✎</button>
+            <button class="pos-icon-btn danger" data-action="delete" type="button" title="Elimina">🗑</button>
+          </div></td>
+        </tr>`).join('');
+      }
+
+      posTbody.addEventListener('click', async (e) => {
+        const btn = e.target.closest('button[data-action]'); if (!btn) return;
+        const row = btn.closest('tr'); const id = row ? row.dataset.id : null; if (!id) return;
+        const pos = POSITIONS_ADMIN.find(p => p.id === id); if (!pos) return;
+        const action = btn.dataset.action;
+        if (action === 'edit') openPosModal(pos);
+        else if (action === 'toggle') { btn.disabled = true; await savePosition({ ...pos, attivo: !pos.attivo }); btn.disabled = false; }
+        else if (action === 'delete') { if (!confirm(`Eliminare la posizione "${pos.titolo}"?`)) return; btn.disabled = true; await deletePosition(id); btn.disabled = false; }
+      });
+      addPositionBtn.addEventListener('click', () => openPosModal(null));
+
+      function openPosModal(pos) {
+        posFormError.classList.remove('visible'); posFormError.textContent = '';
+        document.getElementById('posId').value = pos ? pos.id : '';
+        document.getElementById('posTitolo').value = pos ? pos.titolo : '';
+        document.getElementById('posDescrizione').value = pos ? pos.descrizione : '';
+        document.getElementById('posRal').value = pos ? pos.ral : '';
+        document.getElementById('posLocation').value = pos ? pos.location : 'Napoli';
+        document.getElementById('posOrdine').value = pos ? pos.ordine : 50;
+        document.getElementById('posAttivo').checked = pos ? !!pos.attivo : true;
+        posModalTitle.textContent = pos ? 'Modifica posizione' : 'Nuova posizione';
+        posModal.hidden = false; document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('posTitolo').focus(), 50);
+      }
+      function closePosModal() { posModal.hidden = true; document.body.style.overflow = ''; }
+      posCancelBtn.addEventListener('click', closePosModal);
+      posModalClose.addEventListener('click', closePosModal);
+      posModalBackdrop.addEventListener('click', closePosModal);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !posModal.hidden) closePosModal(); });
+
+      posForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); posFormError.classList.remove('visible');
+        const position = {
+          id: document.getElementById('posId').value.trim(),
+          titolo: document.getElementById('posTitolo').value.trim(),
+          descrizione: document.getElementById('posDescrizione').value.trim(),
+          ral: document.getElementById('posRal').value.trim(),
+          location: document.getElementById('posLocation').value.trim(),
+          ordine: Number(document.getElementById('posOrdine').value) || 0,
+          attivo: document.getElementById('posAttivo').checked
+        };
+        if (!position.titolo || !position.descrizione) { posFormError.textContent = 'Titolo e descrizione sono obbligatori.'; posFormError.classList.add('visible'); return; }
+        posSaveBtn.disabled = true; posSaveBtn.textContent = 'Salvataggio…';
+        const ok = await savePosition(position);
+        posSaveBtn.disabled = false; posSaveBtn.textContent = 'Salva';
+        if (ok) closePosModal();
+        else { posFormError.textContent = DEV_MODE ? 'Modalità anteprima: configura il backend per salvare.' : 'Salvataggio fallito. Riprova.'; posFormError.classList.add('visible'); }
+      });
+
+      async function savePosition(position) {
+        if (DEV_MODE) return false;
+        const token = getToken(); if (!token) return false;
+        try { const data = await apiCall({ action: 'save_position', token, position }); if (data && data.ok) { await loadPositionsAdmin(); return true; } return false; }
+        catch (err) { console.error('savePosition error:', err); return false; }
+      }
+      async function deletePosition(id) {
+        if (DEV_MODE) return false;
+        const token = getToken(); if (!token) return false;
+        try { const data = await apiCall({ action: 'delete_position', token, id }); if (data && data.ok) { await loadPositionsAdmin(); return true; } return false; }
+        catch (err) { console.error('deletePosition error:', err); return false; }
+      }
+
+      // ===== INIT =====
+      checkSession();
+    </script>
+
+    <style is:global>
+      .page-admin { background: var(--color-paper-3); min-height: 100vh; }
+      .page-admin [hidden] { display: none !important; }
+      .page-admin .admin { min-height: 100vh; }
+
+      /* LOGIN */
+      .page-admin .admin-login { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: var(--space-lg); }
+      .page-admin .admin-login-card { width: 100%; max-width: 24rem; background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-card); padding: var(--space-2xl) var(--space-xl); text-align: center; box-shadow: 0 20px 50px -30px oklch(0% 0 0 / 0.25); }
+      .page-admin .admin-login-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--color-accent-soft); color: var(--color-accent); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md); }
+      .page-admin .admin-login-card h1 { font-size: var(--text-2xl); margin-bottom: var(--space-2xs); }
+      .page-admin .admin-login-card p { font-size: var(--text-sm); color: var(--color-muted); margin-bottom: var(--space-lg); }
+      .page-admin #loginForm { display: flex; flex-direction: column; gap: var(--space-sm); }
+      .page-admin #loginPassword { width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--color-rule); border-radius: var(--radius-input); font-size: var(--text-md); background: var(--color-paper); color: var(--color-ink); }
+      .page-admin #loginPassword:focus { outline: 2px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-accent); }
+      .page-admin #loginForm button { padding: 0.75rem 1.25rem; background: var(--color-accent); color: var(--color-accent-ink); border: none; border-radius: var(--radius-pill); font-family: var(--font-body); font-weight: 500; font-size: var(--text-md); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.4em; }
+      .page-admin #loginForm button:hover { background: var(--color-accent-hover); }
+      .page-admin .admin-login-error { color: oklch(52% 0.17 25) !important; font-size: var(--text-sm) !important; margin: 0 !important; }
+
+      /* DASHBOARD */
+      .page-admin .admin-dash { padding: var(--space-lg) var(--space-lg) var(--space-3xl); max-width: 92rem; margin: 0 auto; }
+      .page-admin .admin-devnote { background: var(--color-accent-soft); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-input); padding: var(--space-sm) var(--space-md); margin-bottom: var(--space-md); font-size: var(--text-sm); color: var(--color-ink-2); }
+      .page-admin .admin-devnote code { font-family: var(--font-mono); font-size: 0.92em; }
+      .page-admin .admin-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); padding: var(--space-md) var(--space-lg); background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-card); margin-bottom: var(--space-md); flex-wrap: wrap; }
+      .page-admin .admin-top-left { display: flex; align-items: center; gap: var(--space-md); }
+      .page-admin .admin-wordmark { font-family: var(--font-display); font-weight: 600; font-size: var(--text-md); color: var(--color-ink); }
+      .page-admin .admin-top-left h1 { font-size: var(--text-lg); line-height: 1.1; }
+      .page-admin .admin-top-left p { font-size: var(--text-sm); color: var(--color-muted); margin-top: 2px; }
+      .page-admin .admin-top-right { display: flex; align-items: center; gap: var(--space-md); }
+      .page-admin .admin-kpis { display: flex; gap: var(--space-lg); padding-right: var(--space-md); border-right: var(--rule-hair) solid var(--color-rule); }
+      .page-admin .kpi { text-align: right; line-height: 1; }
+      .page-admin .kpi-num { display: block; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; color: var(--color-accent); letter-spacing: -0.02em; font-feature-settings: "tnum"; }
+      .page-admin .kpi-label { display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+      .page-admin .admin-icon-btn { width: 38px; height: 38px; border-radius: 50%; border: var(--rule-hair) solid var(--color-rule); background: var(--color-paper); color: var(--color-ink-2); font-size: 1.1rem; cursor: pointer; transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+      .page-admin .admin-icon-btn:hover { background: var(--color-accent); color: var(--color-accent-ink); border-color: var(--color-accent); }
+
+      /* TABS */
+      .page-admin .admin-tabs { display: flex; gap: var(--space-md); margin-bottom: var(--space-md); border-bottom: var(--rule-hair) solid var(--color-rule); }
+      .page-admin .admin-tab { background: none; border: none; border-bottom: 2px solid transparent; padding: var(--space-sm) var(--space-2xs); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500; color: var(--color-muted); cursor: pointer; margin-bottom: -1px; }
+      .page-admin .admin-tab.active { color: var(--color-ink); border-bottom-color: var(--color-accent); }
+
+      /* CONTROLS */
+      .page-admin .admin-controls { display: flex; gap: var(--space-md); margin-bottom: var(--space-md); flex-wrap: wrap; align-items: center; }
+      .page-admin .control-search { flex: 1; min-width: 14rem; }
+      .page-admin .control-search input, .page-admin #filterPosizione { width: 100%; padding: 0.6rem 0.9rem; border: 1px solid var(--color-rule); border-radius: var(--radius-input); background: var(--color-paper); font-size: var(--text-sm); color: var(--color-ink); }
+      .page-admin .control-filters { display: flex; gap: var(--space-sm); flex-wrap: wrap; align-items: center; }
+      .page-admin .cat-toggles { display: flex; gap: var(--space-2xs); flex-wrap: wrap; }
+      .page-admin .cat-toggle { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 12px; border-radius: var(--radius-pill); border: var(--rule-hair) solid var(--color-rule); background: var(--color-paper); color: var(--color-muted); cursor: pointer; opacity: 0.5; }
+      .page-admin .cat-toggle.active { opacity: 1; color: var(--color-ink); }
+      .page-admin .cat-toggle.active[data-cat-color="pronti"] { border-color: #16a34a; }
+      .page-admin .cat-toggle.active[data-cat-color="diamante"] { border-color: #0284c7; }
+      .page-admin .cat-toggle.active[data-cat-color="medio"] { border-color: #d97706; }
+      .page-admin .cat-toggle.active[data-cat-color="non_ora"] { border-color: #94a3b8; }
+
+      /* GRID + PANELS */
+      .page-admin .admin-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: var(--space-md); align-items: start; }
+      .page-admin .panel { background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-card); padding: var(--space-lg); }
+      .page-admin .panel-head { margin-bottom: var(--space-md); }
+      .page-admin .panel-head h2 { font-size: var(--text-lg); }
+      .page-admin .panel-head p { font-size: var(--text-sm); color: var(--color-muted); margin-top: 2px; }
+      .page-admin .panel-head span { color: var(--color-ink-2); }
+
+      /* SCATTER */
+      .page-admin .scatter-wrap { width: 100%; }
+      .page-admin .scatter-wrap svg { width: 100%; height: auto; display: block; }
+      .page-admin .scatter-grid { stroke: var(--color-rule-2); stroke-width: 1; }
+      .page-admin .scatter-axis-line { stroke: var(--color-rule); stroke-width: 1; }
+      .page-admin .scatter-tick { fill: var(--color-muted); font-family: var(--font-mono); font-size: 10px; }
+      .page-admin .scatter-axis-label { fill: var(--color-ink-2); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+      .page-admin .scatter-point { cursor: pointer; transition: r 0.15s ease; }
+      .page-admin .scatter-point:hover { r: 13; }
+      .page-admin .scatter-legend { display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-md); font-size: var(--text-xs); color: var(--color-muted); }
+      .page-admin .scatter-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+      .page-admin .scatter-legend i[data-cat="pronti"] { background: #16a34a; }
+      .page-admin .scatter-legend i[data-cat="diamante"] { background: #0284c7; }
+      .page-admin .scatter-legend i[data-cat="medio"] { background: #d97706; }
+      .page-admin .scatter-legend i[data-cat="non_ora"] { background: #94a3b8; }
+
+      /* TABLE */
+      .page-admin .table-wrap { overflow-x: auto; }
+      .page-admin .cand-table, .page-admin .pos-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+      .page-admin .cand-table th, .page-admin .pos-table th { text-align: left; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-muted); padding: var(--space-2xs) var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); cursor: pointer; white-space: nowrap; }
+      .page-admin .pos-table th { cursor: default; }
+      .page-admin .cand-table td, .page-admin .pos-table td { padding: var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule-2); vertical-align: middle; }
+      .page-admin .cand-table tbody tr { cursor: pointer; transition: background var(--dur-fast) var(--ease-out); }
+      .page-admin .cand-table tbody tr:hover { background: var(--color-paper-2); }
+      .page-admin .empty-row td, .page-admin .pos-empty-row td { text-align: center; color: var(--color-muted); padding: var(--space-xl); }
+      .page-admin .cand-name { display: flex; align-items: center; gap: var(--space-sm); }
+      .page-admin .cand-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--color-accent-soft); color: var(--color-accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 600; font-size: var(--text-xs); flex-shrink: 0; }
+      .page-admin .cand-name strong { display: block; font-weight: 600; color: var(--color-ink); }
+      .page-admin .cand-name small { color: var(--color-muted); font-size: var(--text-xs); }
+      .page-admin .cand-score { font-family: var(--font-display); font-weight: 600; color: var(--color-ink); }
+      .page-admin .cand-score small { color: var(--color-muted); font-weight: 500; font-size: 0.78em; }
+      .page-admin .cand-score-bar { height: 5px; background: var(--color-paper-3); border-radius: 100px; margin-top: 4px; overflow: hidden; max-width: 80px; }
+      .page-admin .cand-score-bar i { display: block; height: 100%; }
+      .page-admin .cand-date { color: var(--color-muted); }
+      .page-admin .cand-chevron { color: var(--color-muted); text-align: right; font-size: 1.2rem; }
+      .page-admin .cand-pill { display: inline-block; font-size: var(--text-xs); font-weight: 600; padding: 3px 10px; border-radius: var(--radius-pill); white-space: nowrap; }
+      .page-admin .cand-pill[data-cat="pronti"] { background: #dcfce7; color: #15803d; }
+      .page-admin .cand-pill[data-cat="diamante"] { background: #e0f2fe; color: #0369a1; }
+      .page-admin .cand-pill[data-cat="medio"] { background: #fef3c7; color: #b45309; }
+      .page-admin .cand-pill[data-cat="non_ora"] { background: #f1f5f9; color: #64748b; }
+
+      /* POSITIONS */
+      .page-admin .positions-toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); margin-bottom: var(--space-md); flex-wrap: wrap; }
+      .page-admin .positions-toolbar-info h2 { font-size: var(--text-lg); }
+      .page-admin .positions-toolbar-info p { font-size: var(--text-sm); color: var(--color-muted); margin-top: 2px; }
+      .page-admin .positions-toolbar-info code { font-family: var(--font-mono); font-size: 0.92em; }
+      .page-admin .panel-positions { padding: var(--space-sm) var(--space-lg); }
+      .page-admin .pos-row-title { font-weight: 600; color: var(--color-ink); }
+      .page-admin .pos-row-title-desc { font-size: var(--text-xs); color: var(--color-muted); max-width: 30rem; }
+      .page-admin .pos-status { font-size: var(--text-xs); font-weight: 600; padding: 3px 10px; border-radius: var(--radius-pill); }
+      .page-admin .pos-status[data-on="true"] { background: #dcfce7; color: #15803d; }
+      .page-admin .pos-status[data-on="false"] { background: #f1f5f9; color: #64748b; }
+      .page-admin .pos-row-actions { display: flex; gap: var(--space-2xs); }
+      .page-admin .pos-icon-btn { width: 32px; height: 32px; border-radius: var(--radius-input); border: var(--rule-hair) solid var(--color-rule); background: var(--color-paper); color: var(--color-ink-2); cursor: pointer; }
+      .page-admin .pos-icon-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+      .page-admin .pos-icon-btn.danger:hover { border-color: oklch(52% 0.17 25); color: oklch(52% 0.17 25); }
+      .page-admin .btn-primary-admin { background: var(--color-accent); color: var(--color-accent-ink); border: none; padding: 0.55rem 1.1rem; border-radius: var(--radius-pill); font-family: var(--font-body); font-weight: 500; font-size: var(--text-sm); cursor: pointer; }
+      .page-admin .btn-primary-admin:hover { background: var(--color-accent-hover); }
+      .page-admin .btn-secondary-admin { background: transparent; color: var(--color-ink); border: 1px solid var(--color-ink); padding: 0.55rem 1.1rem; border-radius: var(--radius-pill); font-family: var(--font-body); font-weight: 500; font-size: var(--text-sm); cursor: pointer; }
+
+      /* MODAL POSIZIONE */
+      .page-admin .pos-modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-md); }
+      .page-admin .pos-modal-backdrop { position: absolute; inset: 0; background: oklch(18% 0.02 252 / 0.45); }
+      .page-admin .pos-modal-panel { position: relative; width: 100%; max-width: 32rem; background: var(--color-paper); border-radius: var(--radius-card); padding: var(--space-lg); box-shadow: 0 30px 60px -30px oklch(0% 0 0 / 0.4); }
+      .page-admin .pos-modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
+      .page-admin .pos-modal-head h3 { font-size: var(--text-xl); }
+      .page-admin .pos-modal-close { background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--color-muted); }
+      .page-admin .pos-form-row { margin-bottom: var(--space-md); }
+      .page-admin .pos-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+      .page-admin .pos-form label { display: block; font-size: var(--text-sm); font-weight: 500; color: var(--color-ink-2); margin-bottom: var(--space-2xs); }
+      .page-admin .pos-form input[type=text], .page-admin .pos-form input[type=number], .page-admin .pos-form textarea { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--color-rule); border-radius: var(--radius-input); font-family: var(--font-body); font-size: var(--text-sm); background: var(--color-paper); color: var(--color-ink); }
+      .page-admin .pos-form input:focus, .page-admin .pos-form textarea:focus { outline: 2px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-accent); }
+      .page-admin .pos-form-toggle { display: flex; align-items: flex-end; }
+      .page-admin .pos-toggle-label { display: flex; align-items: center; gap: 0.5em; font-weight: 400 !important; }
+      .page-admin .pos-form-error { color: oklch(52% 0.17 25); font-size: var(--text-sm); min-height: 1.2em; opacity: 0; }
+      .page-admin .pos-form-error.visible { opacity: 1; }
+      .page-admin .pos-form-actions { display: flex; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-sm); }
+
+      /* DETTAGLIO (slide-over) */
+      .page-admin .admin-detail { position: fixed; inset: 0; z-index: 200; }
+      .page-admin .detail-backdrop { position: absolute; inset: 0; background: oklch(18% 0.02 252 / 0.45); }
+      .page-admin .detail-panel { position: absolute; top: 0; right: 0; height: 100%; width: min(40rem, 100%); background: var(--color-paper); box-shadow: -20px 0 60px -30px oklch(0% 0 0 / 0.4); overflow-y: auto; padding: var(--space-xl); }
+      .page-admin .detail-close { position: absolute; top: var(--space-md); right: var(--space-md); background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; color: var(--color-ink-2); }
+      .page-admin .d-avatar-row { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md); }
+      .page-admin .d-avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--color-accent-soft); color: var(--color-accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 600; }
+      .page-admin .d-headline h2 { font-size: var(--text-xl); }
+      .page-admin .d-headline p { font-size: var(--text-sm); color: var(--color-muted); }
+      .page-admin .d-score-row { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) 0; border-top: var(--rule-hair) solid var(--color-rule); border-bottom: var(--rule-hair) solid var(--color-rule); margin-bottom: var(--space-md); }
+      .page-admin .d-score-num { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 600; color: var(--color-accent); line-height: 1; }
+      .page-admin .d-score-num small { font-size: 0.4em; color: var(--color-muted); }
+      .page-admin .d-score-meta p { font-size: var(--text-sm); color: var(--color-muted); margin-top: 4px; }
+      .page-admin .d-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); margin-bottom: var(--space-lg); }
+      .page-admin .d-contact-item label { display: block; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-muted); }
+      .page-admin .d-contact-item span { font-size: var(--text-sm); color: var(--color-ink); }
+      .page-admin .d-section { margin-bottom: var(--space-lg); }
+      .page-admin .d-section-title { font-size: var(--text-md); margin-bottom: var(--space-md); }
+      .page-admin .d-charts { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-lg); align-items: center; }
+      .page-admin .d-bar-row { display: grid; grid-template-columns: 7rem 1fr 2rem; gap: var(--space-sm); align-items: center; margin-bottom: var(--space-2xs); }
+      .page-admin .d-bar-label { font-size: var(--text-xs); color: var(--color-ink-2); }
+      .page-admin .d-bar-track { height: 8px; background: var(--color-paper-3); border-radius: 100px; overflow: hidden; }
+      .page-admin .d-bar-fill { height: 100%; border-radius: 100px; transition: width 0.6s var(--ease-out); }
+      .page-admin .d-bar-val { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink); text-align: right; }
+      .page-admin .d-radar { width: 100%; height: auto; }
+      .page-admin .d-radar-grid { fill: none; stroke: var(--color-rule); stroke-width: 1; }
+      .page-admin .d-radar-data { fill: color-mix(in oklch, var(--color-accent) 18%, transparent); stroke: var(--color-accent); stroke-width: 2; stroke-linejoin: round; }
+      .page-admin .d-radar-dot { fill: var(--color-accent); }
+      .page-admin .d-radar-label { fill: var(--color-muted); font-family: var(--font-mono); font-size: 10px; }
+      .page-admin .d-answers { display: flex; flex-direction: column; gap: var(--space-2xs); }
+      .page-admin .d-answer-row { display: grid; grid-template-columns: 2.4rem 1fr auto auto; gap: var(--space-sm); align-items: center; padding: var(--space-2xs) 0; border-bottom: var(--rule-hair) solid var(--color-rule-2); }
+      .page-admin .d-answer-num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-muted); }
+      .page-admin .d-answer-text { font-size: var(--text-sm); color: var(--color-ink); }
+      .page-admin .d-answer-text small { display: block; font-size: var(--text-xs); color: var(--color-muted); }
+      .page-admin .d-answer-time { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-muted); white-space: nowrap; }
+      .page-admin .d-answer-time[data-speed="fast"] { color: #d97706; }
+      .page-admin .d-answer-time[data-speed="slow"] { color: #0284c7; }
+      .page-admin .d-answer-flag { font-size: var(--text-xs); font-weight: 600; white-space: nowrap; padding: 2px 8px; border-radius: var(--radius-pill); }
+      .page-admin .d-answer-flag[data-flag="ok"] { background: #dcfce7; color: #15803d; }
+      .page-admin .d-answer-flag[data-flag="warn"] { background: #fef3c7; color: #b45309; }
+      .page-admin .d-answer-flag[data-flag="crit"] { background: #fee2e2; color: #b91c1c; }
+      .page-admin .d-answer-flag[data-flag="na"] { background: #f1f5f9; color: #64748b; }
+
+      @media (max-width: 64rem) {
+        .page-admin .admin-grid { grid-template-columns: 1fr; }
+        .page-admin .d-charts { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 48rem) {
+        .page-admin .admin-top { flex-direction: column; align-items: flex-start; }
+        .page-admin .d-contact-grid { grid-template-columns: 1fr; }
+        .page-admin .pos-form-grid { grid-template-columns: 1fr; }
+        .page-admin .detail-panel { padding: var(--space-lg); }
+      }
+    </style>
+  </body>
+</html>

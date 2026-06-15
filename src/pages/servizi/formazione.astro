@@ -71,10 +71,16 @@ const corsi = [
         <p>
           Ogni azienda versa già lo 0,30% del costo del lavoro ai fondi interprofessionali. Quei soldi tornano sotto forma di corsi. Noi ci occupiamo della domanda, della rendicontazione e dell'erogazione.
         </p>
-        <a href="/contatti" class="btn btn--primary">
-          Verifica i fondi disponibili
-          <span class="btn__arrow" aria-hidden="true">→</span>
-        </a>
+        <div class="finanziamento__ctas">
+          <a href="/contatti" class="btn btn--primary">
+            Verifica i fondi disponibili
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="/servizi/finanza-agevolata" class="link-cta">
+            Tutta la finanza agevolata
+            <span class="link-cta__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -142,6 +148,12 @@ const corsi = [
     font-size: var(--text-lg);
     color: var(--color-ink-2);
     margin-bottom: var(--space-lg);
+  }
+  .finanziamento__ctas {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: center;
+    flex-wrap: wrap;
   }
 
   @media (max-width: 56rem) {

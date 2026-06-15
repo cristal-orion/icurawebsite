@@ -3,12 +3,16 @@ const { pathname } = Astro.url;
 const isActive = (path: string) =>
   path === "/" ? pathname === "/" : pathname.startsWith(path);
 
-const links = [
-  { href: "/chi-siamo", label: "Chi siamo" },
-  { href: "/servizi/sicurezza", label: "Servizi" },
-  { href: "/bando-isi", label: "Bando ISI" },
-  { href: "/contatti", label: "Contatti" },
+const servizi = [
+  { href: "/servizi/consulenza", label: "Consulenza" },
+  { href: "/servizi/formazione", label: "Formazione" },
+  { href: "/servizi/engineering", label: "Engineering" },
+  { href: "/servizi/finanza-agevolata", label: "Finanza agevolata" },
+  { href: "/servizi/certificazioni", label: "Certificazioni" },
 ];
+
+// "Servizi" è attivo anche su /bando-isi (approfondimento di Finanza agevolata)
+const serviziActive = pathname.startsWith("/servizi") || pathname.startsWith("/bando-isi");
 ---
 
 <a href="#main" class="skip-link">Salta al contenuto</a>
@@ -19,17 +23,62 @@ const links = [
   </a>
 
   <ul class="nav-pill__links">
-    {links.map((l) => (
-      <li>
-        <a
-          href={l.href}
-          class={`nav-pill__link${isActive(l.href) ? " is-active" : ""}`}
-          aria-current={isActive(l.href) ? "page" : undefined}
-        >
-          {l.label}
-        </a>
-      </li>
-    ))}
+    <li>
+      <a
+        href="/chi-siamo"
+        class={`nav-pill__link${isActive("/chi-siamo") ? " is-active" : ""}`}
+        aria-current={isActive("/chi-siamo") ? "page" : undefined}
+      >
+        Chi siamo
+      </a>
+    </li>
+
+    <li class="nav-pill__dropdown" data-dropdown>
+      <button
+        type="button"
+        class={`nav-pill__link nav-pill__trigger${serviziActive ? " is-active" : ""}`}
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-controls="nav-servizi-menu"
+        data-dropdown-trigger
+      >
+        Servizi
+        <span class="nav-pill__caret" aria-hidden="true">▾</span>
+      </button>
+      <ul id="nav-servizi-menu" class="nav-pill__menu" data-dropdown-menu>
+        {servizi.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              class={`nav-pill__menu-link${isActive(s.href) ? " is-active" : ""}`}
+              aria-current={isActive(s.href) ? "page" : undefined}
+            >
+              {s.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </li>
+
+    <li>
+      <a
+        href="/lavora-con-noi"
+        class={`nav-pill__link${isActive("/lavora-con-noi") ? " is-active" : ""}`}
+        aria-current={isActive("/lavora-con-noi") ? "page" : undefined}
+      >
+        Lavora con noi
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="/contatti"
+        class={`nav-pill__link${isActive("/contatti") ? " is-active" : ""}`}
+        aria-current={isActive("/contatti") ? "page" : undefined}
+      >
+        Contatti
+      </a>
+    </li>
   </ul>
 
   <a href="/contatti" class="nav-pill__cta">
@@ -37,6 +86,46 @@ const links = [
     <span aria-hidden="true">→</span>
   </a>
 </nav>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-dropdown]").forEach((dropdown) => {
+    const trigger = dropdown.querySelector<HTMLButtonElement>("[data-dropdown-trigger]");
+    const menu = dropdown.querySelector<HTMLElement>("[data-dropdown-menu]");
+    if (!trigger || !menu) return;
+
+    const open = () => {
+      dropdown.classList.add("is-open");
+      trigger.setAttribute("aria-expanded", "true");
+    };
+    const close = () => {
+      dropdown.classList.remove("is-open");
+      trigger.setAttribute("aria-expanded", "false");
+    };
+    const toggle = () => (dropdown.classList.contains("is-open") ? close() : open());
+
+    trigger.addEventListener("click", toggle);
+
+    // Esc chiude e riporta il focus al trigger
+    dropdown.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        close();
+        trigger.focus();
+      }
+    });
+
+    // Click fuori chiude
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target as Node)) close();
+    });
+
+    // Focus fuori dal dropdown chiude
+    dropdown.addEventListener("focusout", () => {
+      requestAnimationFrame(() => {
+        if (!dropdown.contains(document.activeElement)) close();
+      });
+    });
+  });
+</script>
 
 <style>
   .nav-pill {
@@ -74,6 +163,7 @@ const links = [
 
   .nav-pill__links {
     display: flex;
+    align-items: center;
     gap: 1.25rem;
     list-style: none;
     margin: 0;
@@ -103,6 +193,71 @@ const links = [
     border-radius: 50%;
     background: var(--color-highlight);
   }
+
+  /* Trigger del dropdown — pulsante che si comporta da link */
+  .nav-pill__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-family: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .nav-pill__caret {
+    font-size: 0.7em;
+    line-height: 1;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .nav-pill__dropdown.is-open .nav-pill__caret { transform: rotate(180deg); }
+
+  /* Menu a tendina */
+  .nav-pill__dropdown { position: relative; }
+  .nav-pill__menu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 50%;
+    transform: translateX(-50%) translateY(-0.25rem);
+    min-width: 13rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem;
+    background: color-mix(in oklch, var(--color-paper) 92%, transparent);
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
+    box-shadow: 0 12px 32px -18px oklch(0% 0 0 / 0.28);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .nav-pill__dropdown:hover .nav-pill__menu,
+  .nav-pill__dropdown:focus-within .nav-pill__menu,
+  .nav-pill__dropdown.is-open .nav-pill__menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .nav-pill__menu-link {
+    display: block;
+    padding: 0.5rem 0.7rem;
+    border-radius: var(--radius-input);
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .nav-pill__menu-link:hover {
+    background: var(--color-paper-3);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .nav-pill__menu-link.is-active { color: var(--color-ink); font-weight: 500; }
 
   .nav-pill__cta {
     display: inline-flex;
@@ -135,5 +290,13 @@ const links = [
       display: none;
     }
     .nav-pill__cta { font-size: var(--text-xs); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-pill__menu { transition: opacity var(--dur-fast) var(--ease-out); transform: translateX(-50%); }
+    .nav-pill__dropdown:hover .nav-pill__menu,
+    .nav-pill__dropdown:focus-within .nav-pill__menu,
+    .nav-pill__dropdown.is-open .nav-pill__menu { transform: translateX(-50%); }
+    .nav-pill__caret { transition: none; }
   }
 </style>

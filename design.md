@@ -5,16 +5,17 @@ Sistema di design bloccato per il sito Icuraimpresa. Ogni redesign di pagina leg
 ## Genre
 modern-minimal
 
-Brand B2B di consulenza (sicurezza sul lavoro, formazione, engineering, legale). Tono professionale, autorevole, rassicurante. Niente editorial-fall-through, niente atmospheric, niente playful.
+Brand B2B di consulenza (consulenza/sicurezza, formazione, engineering, finanza agevolata, certificazioni). Tono professionale, autorevole, rassicurante. Niente editorial-fall-through, niente atmospheric, niente playful.
 
 ## Macrostructure family
 
 | Tipo di pagina | Macrostructure | Variazione consentita |
 | --- | --- | --- |
 | Home | Marquee Hero | Variazioni nel polish pattern (HP1 vertical-rail) |
-| Hub servizi (`/servizi/*`) | Long Document compresso | Hero archetype varia: H2 split, H4 stat, H5 letter |
+| Hub servizi (`/servizi/*`) | Long Document compresso | 5 macro aree: consulenza, formazione, engineering, finanza-agevolata, certificazioni. Hero archetype varia: H2 split, H4 stat, H5 letter |
 | Chi siamo | Long Document | Single column, hairline rules |
-| Bando ISI | Stat-Led | H4 stat-led hero (369M€) |
+| Bando ISI | Stat-Led | H4 stat-led hero (369M€), approfondimento di Finanza agevolata |
+| Lavora con noi | Marquee Hero · industrial | Hero scuro dedicato + "perché noi". Ospita il selezionatore: profile cards → questionario psico-attitudinale (16 domande) → invio Apps Script. Dashboard candidature a `/lavora-con-noi/admin` (standalone, noindex, re-skin sobrio; eccezione: colori funzionali per data-viz). DOM iniettato via JS → stili in `<style is:global>` namespacati `.page-lavora` / `.page-admin` |
 | Contatti | Form-led semplice | Two-column: info + form |
 
 Le pagine condividono nav, footer, type, palette. Variano solo su macrostructure e archetype.
@@ -119,7 +120,7 @@ Esempio: `alt="Team di consulenti Icuraimpresa in riunione operativa, ufficio Na
 - Wordmark "Icuraimpresa" + tagline "Vivi Sicuro!" (in nav e footer mast).
 - Accent navy + highlight orange, footprint vincolato.
 - Inter Tight variable.
-- Nav N5 floating-pill (modern-minimal default).
+- Nav N5 floating-pill (modern-minimal default), con dropdown "Servizi" sulle 5 macro aree.
 - Footer Ft1 mast-headed con wordmark, tagline, contatti, link essenziali.
 - Section heading rhythm: eyebrow opzionale (mono micro-cap, 1-2 per pagina max), display heading.
 
