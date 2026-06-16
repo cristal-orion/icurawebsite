@@ -1,12 +1,24 @@
 ---
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
+import CtaBand from "@components/CtaBand.astro";
 
 const competenze = [
   { area: "Ingegneria", desc: "Sicurezza tecnica, progettazione, prevenzione incendi." },
   { area: "Medicina del lavoro", desc: "Sorveglianza sanitaria, idoneità, protocolli." },
   { area: "Certificazioni & qualità", desc: "Sistemi di gestione ISO, Attestazione SOA, gare." },
   { area: "Economia", desc: "Consulenza aziendale, finanza agevolata, bandi." },
+];
+
+// TEAM — placeholder. Sostituire nome + foto reali (droppare l'immagine in
+// /public/images e impostare `foto`) quando arrivano dal cliente.
+const team = [
+  { nome: "Nome Cognome", ruolo: "Ingegnere della sicurezza", foto: undefined, alt: "Ritratto professionale di un ingegnere della sicurezza di iCura Impresa: adulto in ufficio napoletano, camicia in toni navy, espressione cordiale e sicura, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
+  { nome: "Nome Cognome", ruolo: "Medico del lavoro", foto: undefined, alt: "Ritratto professionale di un medico del lavoro di iCura Impresa: adulto con abito sobrio, espressione rassicurante, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
+  { nome: "Nome Cognome", ruolo: "Tecnico della prevenzione", foto: undefined, alt: "Ritratto professionale di un tecnico della prevenzione di iCura Impresa: adulto in abbigliamento da lavoro sobrio, espressione concreta e affidabile, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
+  { nome: "Nome Cognome", ruolo: "Consulente certificazioni e qualità", foto: undefined, alt: "Ritratto professionale di una consulente certificazioni e qualità di iCura Impresa: adulta in abito formale toni grigio e navy, espressione competente, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
+  { nome: "Nome Cognome", ruolo: "Consulente finanza agevolata", foto: undefined, alt: "Ritratto professionale di un consulente di finanza agevolata di iCura Impresa: adulto in abito formale, espressione professionale e disponibile, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
+  { nome: "Nome Cognome", ruolo: "Coordinamento e amministrazione", foto: undefined, alt: "Ritratto professionale di una responsabile coordinamento e amministrazione di iCura Impresa: adulta in abito sobrio, espressione organizzata e cordiale, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
 ];
 ---
 
@@ -72,26 +84,36 @@ const competenze = [
 
   <hr class="rule" aria-hidden="true" />
 
-  <section class="section">
+  <section id="team" class="section" aria-labelledby="team-heading">
     <div class="container">
-      <Placeholder
-        aspect="21/9"
-        src="/images/chi-siamo-riunione-team.webp"
-        alt="Riunione operativa in ufficio professionale napoletano: cinque adulti di età 30-55 (mix uomini e donne, etnia mediterranea) seduti attorno a un tavolo riunioni rettangolare in legno chiaro, di tre quarti rispetto alla camera, alcuni con documenti cartacei davanti, uno indica un foglio tecnico al collega; pareti tinteggiate in grigio chiaro caldo, una finestra alta sulla sinistra che lascia entrare luce naturale di mezza mattina; nessuno guarda in camera, atmosfera di lavoro concentrato non di posa; palette desaturata sobria con vestiti in toni navy/grigio/beige; fotografia editoriale documentaria, no sorrisi forzati, no laptop aperti in primo piano, no caffè decorativi"
-      />
+      <header class="team-head">
+        <p class="eyebrow">03 — Il team</p>
+        <h2 id="team-heading">Le persone, non solo le pratiche.</h2>
+        <p class="team-head__lede">
+          Ingegneri, medici del lavoro, tecnici e consulenti che seguono la tua impresa in prima persona.
+        </p>
+      </header>
+      <ul class="team-grid">
+        {team.map((m) => (
+          <li class="team-card">
+            <Placeholder aspect="3/4" src={m.foto} alt={m.alt} />
+            <h3 class="team-card__name">{m.nome}</h3>
+            <p class="team-card__role">{m.ruolo}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container closing-cta">
-      <h2>Vuoi conoscerci?</h2>
-      <p>Una call gratuita di 30 minuti per capire se possiamo essere utili.</p>
-      <a href="/contatti" class="btn btn--primary">
-        Prenota la call
-        <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-  </section>
+  <CtaBand
+    title="Vuoi conoscerci?"
+    lede="Una call gratuita di 30 minuti per capire se possiamo esserti utili. Senza impegno, parliamo della tua impresa e di cosa ti serve davvero."
+    image={{
+      alt: "Due consulenti iCura Impresa in videochiamata conoscitiva con un cliente: adulti in ufficio napoletano luminoso davanti a un portatile, espressione cordiale e professionale, scrivania ordinata con block-notes, palette desaturata sobria toni navy e grigio, fotografia documentaria, no posa frontale",
+    }}
+    primary={{ href: "/contatti", label: "Prenota la call" }}
+    labelledby="conoscerci-heading"
+  />
 </Base>
 
 <style>
@@ -149,12 +171,38 @@ const competenze = [
     max-width: 60ch;
   }
 
-  .closing-cta {
-    text-align: center;
-    padding-block: var(--space-2xl);
+  /* ───── Team ───── */
+  .team-head { margin-bottom: var(--space-xl); max-width: 52ch; }
+  .team-head__lede {
+    font-size: var(--text-lg);
+    color: var(--color-ink-2);
+    line-height: 1.5;
+    margin-top: var(--space-sm);
   }
-  .closing-cta h2 { font-size: var(--text-3xl); margin-bottom: var(--space-sm); }
-  .closing-cta p { color: var(--color-muted); margin-bottom: var(--space-lg); margin-inline: auto; }
+  .team-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-xl) var(--space-lg);
+  }
+  .team-card :global(.placeholder) {
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    margin-bottom: var(--space-sm);
+  }
+  .team-card__name {
+    font-size: var(--text-lg);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .team-card__role {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    margin: var(--space-3xs) 0 0;
+  }
 
   @media (max-width: 64rem) {
     .metodo-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
@@ -165,5 +213,6 @@ const competenze = [
     .two-col { grid-template-columns: 1fr; }
     .metodo-grid { grid-template-columns: 1fr; }
     .comp-list { grid-template-columns: 1fr; gap: var(--space-md); }
+    .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
   }
 </style>
