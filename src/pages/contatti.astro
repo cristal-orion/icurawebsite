@@ -107,15 +107,21 @@ import Placeholder from "@components/Placeholder.astro";
   <section class="section section--tight" aria-labelledby="mappa-heading">
     <div class="container">
       <h2 id="mappa-heading" class="sr-only">Dove siamo</h2>
-      <div class="map">
+      <div class="map" data-map>
         <iframe
           class="map__frame"
           title="Mappa: iCura Impresa, Corso Secondigliano 236, 80144 Napoli"
-          src="https://www.google.com/maps?q=Corso+Secondigliano+236,+80144+Napoli&z=16&hl=it&output=embed"
+          data-src="https://www.google.com/maps?q=Corso+Secondigliano+236,+80144+Napoli&z=16&hl=it&output=embed"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
           allowfullscreen
         ></iframe>
+        <div class="map__gate" data-map-gate>
+          <p class="map__gate-text">
+            La mappa è fornita da Google e può impostare cookie. Caricala per vederla.
+          </p>
+          <button type="button" class="btn btn--primary" data-map-load>Carica la mappa</button>
+        </div>
       </div>
       <p class="map__link">
         <a
@@ -130,6 +136,27 @@ import Placeholder from "@components/Placeholder.astro";
       </p>
     </div>
   </section>
+
+  <script>
+    // La mappa Google si carica solo dopo il consenso (click-to-load o "Accetta").
+    const mapWrap = document.querySelector<HTMLElement>("[data-map]");
+    if (mapWrap) {
+      const frame = mapWrap.querySelector<HTMLIFrameElement>("iframe[data-src]");
+      const gate = mapWrap.querySelector<HTMLElement>("[data-map-gate]");
+      let loaded = false;
+      const loadMap = () => {
+        if (loaded || !frame || !frame.dataset.src) return;
+        frame.src = frame.dataset.src;
+        loaded = true;
+        if (gate) gate.hidden = true;
+      };
+      let consent: string | null = null;
+      try { consent = localStorage.getItem("icura-consent"); } catch {}
+      if (consent === "granted") loadMap();
+      mapWrap.querySelector("[data-map-load]")?.addEventListener("click", loadMap);
+      window.addEventListener("icura:consent-granted", loadMap);
+    }
+  </script>
 </Base>
 
 <style>
@@ -209,15 +236,37 @@ import Placeholder from "@components/Placeholder.astro";
 
   /* ───── Mappa ───── */
   .map {
+    position: relative;
     border-radius: var(--radius-card);
     overflow: hidden;
     border: var(--rule-hair) solid var(--color-rule);
+    background: var(--color-paper-3);
   }
   .map__frame {
     display: block;
     width: 100%;
     height: clamp(18rem, 42vw, 28rem);
     border: 0;
+  }
+  .map__gate {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    text-align: center;
+    padding: var(--space-lg);
+    background: var(--color-paper-3);
+  }
+  .map__gate[hidden] { display: none; }
+  .map__gate-text {
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    line-height: 1.5;
+    max-width: 38ch;
+    margin: 0;
   }
   .map__link { margin: var(--space-sm) 0 0; }
 

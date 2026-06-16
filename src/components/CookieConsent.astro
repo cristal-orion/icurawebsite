@@ -49,6 +49,8 @@
         ad_personalization: "granted",
         analytics_storage: "granted",
       });
+      // notifica i terzi gated (es. mappa Google in /contatti)
+      window.dispatchEvent(new Event("icura:consent-granted"));
     };
 
     const stored = read();
