@@ -272,6 +272,33 @@ const stats = [
   />
 </Base>
 
+<script>
+  // Hero: la descrizione compare al primo scroll (progressive enhancement).
+  // Senza JS o con prefers-reduced-motion la descrizione è subito visibile.
+  const hero = document.querySelector<HTMLElement>(".hero-impact");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (hero && !reduce) {
+    hero.classList.add("js-hero-defer");
+    let done = false;
+    const reveal = () => {
+      if (done) return;
+      done = true;
+      hero.classList.add("is-revealed");
+      window.removeEventListener("scroll", onScroll);
+    };
+    const onScroll = () => {
+      if (window.scrollY > 16) reveal();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // tastiera: se l'utente entra col Tab nell'hero, mostra subito
+    hero.addEventListener("focusin", reveal, { once: true });
+    // safety net: chi non scrolla vede comunque la descrizione
+    setTimeout(reveal, 4000);
+    // pagina già scrollata al caricamento
+    if (window.scrollY > 16) reveal();
+  }
+</script>
+
 <style>
   /* ───── Hero · Marquee + vertical rail ───── */
   .hero-impact {
@@ -301,9 +328,9 @@ const stats = [
     background:
       linear-gradient(
         100deg,
-        color-mix(in oklch, var(--color-ink) 92%, transparent) 0%,
-        color-mix(in oklch, var(--color-ink) 70%, transparent) 38%,
-        color-mix(in oklch, var(--color-ink) 28%, transparent) 78%,
+        color-mix(in oklch, var(--color-ink) 95%, transparent) 0%,
+        color-mix(in oklch, var(--color-ink) 78%, transparent) 40%,
+        color-mix(in oklch, var(--color-ink) 30%, transparent) 78%,
         color-mix(in oklch, var(--color-ink) 8%, transparent) 100%
       ),
       linear-gradient(
@@ -417,6 +444,20 @@ const stats = [
     line-height: 1.45;
     max-width: 52ch;
     margin: var(--space-sm) 0 0;
+  }
+
+  /* Reveal della descrizione al primo scroll — attivo solo con JS + motion on.
+     Senza JS o con reduced-motion la descrizione resta subito visibile. */
+  .hero-impact.js-hero-defer .hero-impact__lede {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out);
+    will-change: opacity, transform;
+  }
+  .hero-impact.js-hero-defer.is-revealed .hero-impact__lede {
+    opacity: 1;
+    transform: none;
   }
 
   .hero-impact__ctas {
