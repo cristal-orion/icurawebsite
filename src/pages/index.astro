@@ -268,6 +268,24 @@ const stats = [
     // pagina già scrollata al caricamento
     if (window.scrollY > 16) reveal();
   }
+
+  // Servizi: reveal a cascata delle card quando la griglia entra in viewport.
+  const grid = document.querySelector<HTMLElement>(".servizi__grid");
+  if (grid && !reduce && "IntersectionObserver" in window) {
+    grid.classList.add("js-reveal");
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".servizio-card"));
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          cards.forEach((card, i) => {
+            setTimeout(() => card.classList.add("is-visible"), i * 70);
+          });
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    io.observe(grid);
+  }
 </script>
 
 <style>
@@ -572,8 +590,21 @@ const stats = [
     transform: translateY(-2px);
   }
   .servizio-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-input);
+    background: var(--color-accent-soft);
     color: var(--color-accent);
-    margin-bottom: var(--space-2xs);
+    margin-bottom: var(--space-sm);
+    transition: background var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+  .servizio-card:hover .servizio-card__icon {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
   }
   .servizio-card__n {
     position: absolute;
@@ -607,9 +638,26 @@ const stats = [
     position: absolute;
     inset: 0;
   }
+  /* Reveal allo scroll con stagger (via JS) — progressive enhancement */
+  .servizi__grid.js-reveal .servizio-card {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+  .servizi__grid.js-reveal .servizio-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   @media (prefers-reduced-motion: reduce) {
     .servizio-card { transition: border-color var(--dur-fast) var(--ease-out); }
     .servizio-card:hover { transform: none; }
+    .servizi__grid.js-reveal .servizio-card {
+      opacity: 1;
+      transform: none;
+      transition: border-color var(--dur-fast) var(--ease-out);
+    }
   }
 
   /* ───── Stats ───── */

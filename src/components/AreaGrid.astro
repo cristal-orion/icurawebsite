@@ -1,0 +1,92 @@
+---
+// Griglia di card per i sotto-servizi di una pagina servizio.
+// Sostituisce le vecchie liste <ol>. Icona = check ("cosa copriamo").
+interface Area {
+  nome: string;
+  desc: string;
+}
+interface Props {
+  aree: Area[];
+}
+const { aree } = Astro.props;
+---
+
+<ul class="area-grid">
+  {aree.map((a) => (
+    <li class="area-card">
+      <span class="area-card__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <path d="m8.5 12.4 2.4 2.5 4.6-5.1" />
+        </svg>
+      </span>
+      <h3 class="area-card__nome">{a.nome}</h3>
+      <p class="area-card__desc">{a.desc}</p>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .area-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+  .area-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding: var(--space-lg);
+    background: var(--color-paper-2);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
+    transition: border-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+  .area-card:hover {
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-rule));
+    transform: translateY(-2px);
+  }
+  .area-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-input);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    margin-bottom: var(--space-2xs);
+  }
+  .area-card__icon svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    display: block;
+  }
+  .area-card__nome {
+    font-size: var(--text-lg);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .area-card__desc {
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 64rem) {
+    .area-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 40rem) {
+    .area-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .area-card { transition: border-color var(--dur-fast) var(--ease-out); }
+    .area-card:hover { transform: none; }
+  }
+</style>
