@@ -100,6 +100,36 @@ import Placeholder from "@components/Placeholder.astro";
       </form>
     </div>
   </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── Mappa ───── */}
+  <section class="section section--tight" aria-labelledby="mappa-heading">
+    <div class="container">
+      <h2 id="mappa-heading" class="sr-only">Dove siamo</h2>
+      <div class="map">
+        <iframe
+          class="map__frame"
+          title="Mappa: iCura Impresa, Corso Secondigliano 236, 80144 Napoli"
+          src="https://www.google.com/maps?q=Corso+Secondigliano+236,+80144+Napoli&z=16&hl=it&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p class="map__link">
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=Corso+Secondigliano+236,+80144+Napoli"
+          target="_blank"
+          rel="noopener"
+          class="link-cta"
+        >
+          Apri in Google Maps
+          <span class="link-cta__arrow" aria-hidden="true">→</span>
+        </a>
+      </p>
+    </div>
+  </section>
 </Base>
 
 <style>
@@ -176,6 +206,20 @@ import Placeholder from "@components/Placeholder.astro";
   .consent input { margin-top: 0.25rem; }
 
   .form .btn { align-self: flex-start; margin-top: var(--space-2xs); }
+
+  /* ───── Mappa ───── */
+  .map {
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    border: var(--rule-hair) solid var(--color-rule);
+  }
+  .map__frame {
+    display: block;
+    width: 100%;
+    height: clamp(18rem, 42vw, 28rem);
+    border: 0;
+  }
+  .map__link { margin: var(--space-sm) 0 0; }
 
   @media (max-width: 56rem) {
     .contact-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
