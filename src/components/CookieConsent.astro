@@ -1,0 +1,135 @@
+---
+// Banner di consenso cookie. Lavora con Google Consent Mode v2:
+// il default "denied" è impostato in Base.astro <head> PRIMA di GTM.
+// Qui gestiamo la scelta dell'utente (Accetta / Rifiuta) e l'update del consenso.
+---
+
+<div
+  class="cookie-consent"
+  data-cookie-consent
+  hidden
+  role="dialog"
+  aria-label="Preferenze cookie"
+>
+  <div class="cookie-consent__inner">
+    <p class="cookie-consent__text">
+      Usiamo cookie tecnici necessari al sito e, <strong>solo con il tuo consenso</strong>,
+      strumenti di misurazione e mappe di terze parti (Google). Puoi accettare o rifiutare.
+      Dettagli nella <a href="/cookie">Cookie Policy</a>.
+    </p>
+    <div class="cookie-consent__actions">
+      <button type="button" class="btn btn--secondary" data-cookie-reject>Rifiuta</button>
+      <button type="button" class="btn btn--primary" data-cookie-accept>Accetta</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = "icura-consent";
+  const banner = document.querySelector<HTMLElement>("[data-cookie-consent]");
+
+  if (banner) {
+    const dataLayer = ((window as any).dataLayer = (window as any).dataLayer || []);
+    const gtag = (...args: unknown[]) => {
+      dataLayer.push(args);
+    };
+
+    const read = () => {
+      try {
+        return localStorage.getItem(KEY);
+      } catch {
+        return null;
+      }
+    };
+
+    const grant = () => {
+      gtag("consent", "update", {
+        ad_storage: "granted",
+        ad_user_data: "granted",
+        ad_personalization: "granted",
+        analytics_storage: "granted",
+      });
+    };
+
+    const stored = read();
+    if (stored === "granted") {
+      grant();
+    } else if (stored !== "denied") {
+      banner.hidden = false; // nessuna scelta -> mostra il banner
+    }
+
+    const decide = (value: "granted" | "denied") => {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch {
+        /* ignore */
+      }
+      if (value === "granted") grant();
+      banner.hidden = true;
+    };
+
+    banner
+      .querySelector("[data-cookie-accept]")
+      ?.addEventListener("click", () => decide("granted"));
+    banner
+      .querySelector("[data-cookie-reject]")
+      ?.addEventListener("click", () => decide("denied"));
+  }
+</script>
+
+<style>
+  .cookie-consent {
+    position: fixed;
+    left: var(--space-md);
+    right: var(--space-md);
+    bottom: var(--space-md);
+    z-index: 80;
+    background: color-mix(in oklch, var(--color-paper) 94%, transparent);
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
+    box-shadow: 0 12px 40px -20px oklch(0% 0 0 / 0.35);
+  }
+  .cookie-consent[hidden] {
+    display: none;
+  }
+  .cookie-consent__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: var(--space-md) var(--space-lg);
+  }
+  .cookie-consent__text {
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .cookie-consent__text a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .cookie-consent__actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+  }
+  .cookie-consent__actions .btn {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 40rem) {
+    .cookie-consent__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-sm);
+    }
+    .cookie-consent__actions {
+      justify-content: flex-end;
+    }
+  }
+</style>

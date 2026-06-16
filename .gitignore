@@ -31,3 +31,7 @@ pnpm-debug.log*
 .agents/
 .codex/
 .hallmark/
+
+# immagini gestite fuori da git per ora (placeholder / generate)
+# NB: quelle già committate restano tracciate; questo vale solo per i file nuovi
+public/images/

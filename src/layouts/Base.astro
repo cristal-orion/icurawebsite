@@ -2,6 +2,7 @@
 import "@styles/global.css";
 import Nav from "@components/Nav.astro";
 import Footer from "@components/Footer.astro";
+import CookieConsent from "@components/CookieConsent.astro";
 
 interface Props {
   title: string;
@@ -21,6 +22,25 @@ const fullTitle = title === "iCura Impresa" ? title : `${title} · iCura Impresa
 <!doctype html>
 <html lang="it">
   <head>
+    <!-- Google Consent Mode v2 — default denied (DEVE stare prima di GTM) -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      var __icuraConsent = null;
+      try { __icuraConsent = localStorage.getItem('icura-consent'); } catch (e) {}
+      if (__icuraConsent === 'granted') {
+        gtag('consent', 'default', {
+          ad_storage:'granted', ad_user_data:'granted', ad_personalization:'granted',
+          analytics_storage:'granted', functionality_storage:'granted', security_storage:'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied',
+          analytics_storage:'denied', functionality_storage:'granted', security_storage:'granted',
+          wait_for_update: 500
+        });
+      }
+    </script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -49,6 +69,7 @@ const fullTitle = title === "iCura Impresa" ? title : `${title} · iCura Impresa
       <slot />
     </main>
     <Footer />
+    <CookieConsent />
     <!-- Clippy AI Widget -->
     <script src="https://clippyai.duckdns.org/static/clippy-embed.js" data-config-id="24932cb9"></script>
   </body>
