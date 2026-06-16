@@ -210,35 +210,6 @@ const stats = [
     </div>
   </section>
 
-  {/* ───── Bando ISI · stat-led strip ───── */}
-  <section class="section bando" aria-labelledby="bando-heading">
-    <div class="container bando__grid">
-      <div class="bando__copy">
-        <p class="eyebrow">03 — In evidenza</p>
-        <h2 id="bando-heading" class="bando__title">
-          Bando ISI 2024 — <span class="bando__amount">369&nbsp;mln&nbsp;€</span> a fondo perduto.
-        </h2>
-        <p class="bando__lede">
-          Fino al 65% dell'investimento, massimo 130.000 €. Per le imprese che vogliono mettere in sicurezza macchinari, processi, ambienti. Ti accompagniamo in tutta la pratica.
-        </p>
-        <div class="bando__ctas">
-          <a href="/bando-isi" class="btn btn--primary">
-            Verifica idoneità
-            <span class="btn__arrow" aria-hidden="true">→</span>
-          </a>
-          <a href="/contatti" class="btn btn--secondary">Parla con noi</a>
-        </div>
-      </div>
-      <div class="bando__media">
-        <Placeholder
-          aspect="4/3"
-          src="/images/home-cnc-barriera.webp"
-          alt="Macchinario industriale CNC nuovo in primo piano installato in officina italiana di media dimensione: dettaglio della testa di lavoro con barriera fotoelettrica di sicurezza attiva, etichetta CE visibile, cavi ordinati in canalina; operatore adulto in DPI navy completi (occhiali, guanti, scarpe antinfortunistiche) consulta uno schermo di controllo touch sulla destra; luce naturale dall'alto da lucernario industriale, ombre morbide; palette desaturata con accenti caldi arancio sui DPI di sicurezza; fotografia documentaria editoriale, no posa marketing, no scintille spettacolari"
-        />
-      </div>
-    </div>
-  </section>
-
   <hr class="rule" aria-hidden="true" />
 
   {/* ───── Stats strip · T4 numbered ───── */}
@@ -641,40 +612,6 @@ const stats = [
     .servizio-card:hover { transform: none; }
   }
 
-  /* ───── Bando ISI ───── */
-  .bando { background: var(--color-accent-soft); }
-  .bando__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    gap: var(--space-2xl);
-    align-items: center;
-  }
-  .bando__title {
-    font-size: var(--text-3xl);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-  }
-  .bando__amount {
-    color: var(--color-highlight);
-    font-weight: 600;
-    font-feature-settings: "tnum";
-    white-space: nowrap;
-  }
-  .bando__lede {
-    font-size: var(--text-lg);
-    color: var(--color-ink-2);
-    line-height: 1.5;
-    max-width: 48ch;
-    margin-top: var(--space-md);
-  }
-  .bando__ctas {
-    display: flex;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
-    margin-top: var(--space-lg);
-  }
-
   /* ───── Stats ───── */
   .stats__list {
     display: grid;
@@ -762,7 +699,6 @@ const stats = [
     }
     .intro__grid { grid-template-columns: 1fr; gap: var(--space-lg); }
     .intro__lead { position: static; }
-    .bando__grid { grid-template-columns: 1fr; }
     .stats__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md); }
   }
 
