@@ -1,6 +1,6 @@
-# Design — Icuraimpresa
+# Design — iCura Impresa
 
-Sistema di design bloccato per il sito Icuraimpresa. Ogni redesign di pagina legge questo file prima di emettere codice. Non rigenerare per pagina — estendi o aggiorna questo file quando il sistema deve crescere.
+Sistema di design bloccato per il sito iCura Impresa. Ogni redesign di pagina legge questo file prima di emettere codice. Non rigenerare per pagina — estendi o aggiorna questo file quando il sistema deve crescere.
 
 ## Genre
 modern-minimal
@@ -106,7 +106,7 @@ Tutte le immagini sono **placeholder** in questa fase. Pattern:
 
 Lo `alt` del placeholder finale descrive il *contenuto previsto*, non il placeholder. Quando l'utente sostituirà con immagini reali, l'alt sarà già corretto.
 
-Esempio: `alt="Team di consulenti Icuraimpresa in riunione operativa, ufficio Napoli, luce naturale"` — non `alt="placeholder"`.
+Esempio: `alt="Team di consulenti iCura Impresa in riunione operativa, ufficio Napoli, luce naturale"` — non `alt="placeholder"`.
 
 ## Per-page allowances
 
@@ -117,7 +117,7 @@ Esempio: `alt="Team di consulenti Icuraimpresa in riunione operativa, ufficio Na
 
 ## What pages MUST share
 
-- Wordmark "Icuraimpresa" + tagline "Vivi Sicuro!" (in nav e footer mast).
+- Wordmark "iCura Impresa" + tagline "Vivi Sicuro!" (in nav e footer mast).
 - Accent navy + highlight orange, footprint vincolato.
 - Inter Tight variable.
 - Nav N5 floating-pill (modern-minimal default), con dropdown "Servizi" sulle 5 macro aree.
@@ -130,7 +130,7 @@ Esempio: `alt="Team di consulenti Icuraimpresa in riunione operativa, ufficio Na
 - Hero archetype.
 - Densità contenuto (hub servizi può essere più denso, home più ariosa).
 
-## Anti-patterns specifici per Icuraimpresa
+## Anti-patterns specifici per iCura Impresa
 
 Vietati esplicitamente — il sito originale ne aveva versioni:
 

@@ -1,6 +1,6 @@
 # icuraimpresa — sito
 
-Sito vetrina di Icuraimpresa S.r.l. (Napoli, dal 2014). Consulenza integrata su sicurezza sul lavoro, engineering, formazione finanziata, finanza agevolata e certificazioni.
+Sito vetrina di iCura Impresa S.r.l. (Napoli, dal 2014). Consulenza integrata su sicurezza sul lavoro, engineering, formazione finanziata, finanza agevolata e certificazioni.
 
 ## Stack
 
