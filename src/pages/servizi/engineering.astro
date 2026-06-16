@@ -1,6 +1,8 @@
 ---
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import CtaBand from "@components/CtaBand.astro";
 
 const aree = [
   {
@@ -41,14 +43,7 @@ const aree = [
   <section class="section">
     <div class="container">
       <p class="eyebrow">Quattro aree integrate</p>
-      <div class="grid">
-        {aree.map((a) => (
-          <article class="cell">
-            <h2 class="cell__nome">{a.nome}</h2>
-            <p class="cell__desc">{a.desc}</p>
-          </article>
-        ))}
-      </div>
+      <AreaGrid aree={aree} />
     </div>
   </section>
 
@@ -62,15 +57,15 @@ const aree = [
     </div>
   </section>
 
-  <section class="section closing-cta">
-    <div class="container">
-      <h2>Progetto, impianto, certificazione: parliamone.</h2>
-      <a href="/contatti" class="btn btn--primary">
-        Richiedi un sopralluogo
-        <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-  </section>
+  <CtaBand
+    title="Progetto, impianto, certificazione: parliamone."
+    lede="Un sopralluogo tecnico per inquadrare l'intervento e dirti come procedere. Senza impegno."
+    image={{
+      alt: "Tecnico iCura Impresa in sopralluogo su un impianto industriale: adulto con casco e tablet rugged verifica un quadro elettrico o un impianto antincendio, atmosfera competente e rassicurante, capannone italiano con luce naturale, palette desaturata sobria toni navy e grigio, fotografia documentaria professionale, no posa",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi un sopralluogo" }}
+    labelledby="engineering-cta"
+  />
 </Base>
 
 <style>
@@ -83,41 +78,4 @@ const aree = [
     margin-bottom: var(--space-md);
   }
   .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 50ch; }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-top: var(--rule-hair) solid var(--color-rule);
-    border-left: var(--rule-hair) solid var(--color-rule);
-    margin-top: var(--space-lg);
-  }
-  .cell {
-    padding: var(--space-lg);
-    border-right: var(--rule-hair) solid var(--color-rule);
-    border-bottom: var(--rule-hair) solid var(--color-rule);
-    min-height: 14rem;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xs);
-  }
-  .cell__nome {
-    font-size: var(--text-xl);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-  .cell__desc { color: var(--color-ink-2); margin: 0; }
-
-  .closing-cta { text-align: center; }
-  .closing-cta h2 {
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-lg);
-    max-width: 24ch;
-    margin-inline: auto;
-  }
-
-  @media (max-width: 56rem) {
-    .grid { grid-template-columns: 1fr; }
-    .cell { min-height: 0; }
-  }
 </style>

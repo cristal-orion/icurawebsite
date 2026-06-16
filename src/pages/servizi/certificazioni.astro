@@ -1,6 +1,8 @@
 ---
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import CtaBand from "@components/CtaBand.astro";
 
 const aree = [
   {
@@ -45,17 +47,7 @@ const aree = [
   <section class="section">
     <div class="container">
       <p class="eyebrow">Cosa certifichiamo</p>
-      <ol class="aree">
-        {aree.map((a, i) => (
-          <li class="area">
-            <h2 class="area__nome">
-              <span class="area__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-              {a.nome}
-            </h2>
-            <p class="area__desc">{a.desc}</p>
-          </li>
-        ))}
-      </ol>
+      <AreaGrid aree={aree} />
     </div>
   </section>
 
@@ -90,16 +82,15 @@ const aree = [
     </div>
   </section>
 
-  <section class="section closing-cta">
-    <div class="container">
-      <h2>Quale certificazione ti serve davvero?</h2>
-      <p>Te lo diciamo con onestà, senza venderti percorsi inutili.</p>
-      <a href="/contatti" class="btn btn--primary">
-        Richiedi una valutazione
-        <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-  </section>
+  <CtaBand
+    title="Quale certificazione ti serve davvero?"
+    lede="Te lo diciamo con onestà, senza venderti percorsi inutili: una valutazione iniziale per capire da dove partire."
+    image={{
+      alt: "Consulente certificazioni iCura Impresa con un imprenditore durante un audit di sistema: due adulti in ufficio italiano esaminano registri e checklist su un tavolo ordinato, espressione professionale e rassicurante, palette desaturata sobria toni navy e grigio, fotografia documentaria, no posa",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    labelledby="certificazioni-cta"
+  />
 </Base>
 
 <style>
@@ -113,29 +104,6 @@ const aree = [
   }
   .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 54ch; }
 
-  .aree { list-style: none; margin: 0; padding: 0; }
-  .area {
-    padding-block: var(--space-lg);
-    border-top: var(--rule-hair) solid var(--color-rule);
-  }
-  .area:last-child { border-bottom: var(--rule-hair) solid var(--color-rule); }
-  .area__nome {
-    font-size: var(--text-xl);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    margin: 0 0 var(--space-2xs);
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.8em;
-  }
-  .area__n {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-    font-weight: 400;
-  }
-  .area__desc { color: var(--color-ink-2); max-width: 60ch; margin: 0; }
-
   .metodo { background: var(--color-paper-2); }
   .metodo__grid {
     display: grid;
@@ -146,16 +114,7 @@ const aree = [
   .metodo h2 { font-size: var(--text-3xl); margin: 0; max-width: 14ch; }
   .metodo__body p { font-size: var(--text-lg); color: var(--color-ink-2); margin: 0 0 var(--space-md); line-height: 1.55; max-width: 56ch; }
 
-  .closing-cta {
-    text-align: center;
-  }
-  .closing-cta h2 { font-size: var(--text-3xl); margin-bottom: var(--space-2xs); }
-  .closing-cta p { color: var(--color-muted); margin-bottom: var(--space-lg); margin-inline: auto; }
-
   @media (max-width: 56rem) {
     .metodo__grid { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 30rem) {
-    .area__nome { font-size: var(--text-lg); }
   }
 </style>

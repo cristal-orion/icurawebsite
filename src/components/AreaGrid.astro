@@ -4,6 +4,8 @@
 interface Area {
   nome: string;
   desc: string;
+  href?: string;
+  cta?: string;
 }
 interface Props {
   aree: Area[];
@@ -22,6 +24,12 @@ const { aree } = Astro.props;
       </span>
       <h3 class="area-card__nome">{a.nome}</h3>
       <p class="area-card__desc">{a.desc}</p>
+      {a.href && (
+        <a href={a.href} class="link-cta area-card__link">
+          {a.cta}
+          <span class="link-cta__arrow" aria-hidden="true">→</span>
+        </a>
+      )}
     </li>
   ))}
 </ul>
@@ -77,6 +85,11 @@ const { aree } = Astro.props;
     color: var(--color-ink-2);
     line-height: 1.55;
     margin: 0;
+    flex: 1;
+  }
+  .area-card__link {
+    margin-top: var(--space-sm);
+    align-self: flex-start;
   }
 
   @media (max-width: 64rem) {
