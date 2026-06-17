@@ -1,0 +1,159 @@
+---
+import Base from "@layouts/Base.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const facts = [
+  { num: "600 mln €", label: "Dotazione a fondo perduto (edizione 2025/2026)" },
+  { num: "fino al 65%", label: "Delle spese — fino all'80% con modelli organizzativi" },
+  { num: "5.000–130.000 €", label: "Importo del contributo" },
+];
+
+const finanzia = [
+  {
+    nome: "Macchinari più sicuri",
+    desc: "Sostituzione di macchine e attrezzature obsolete con soluzioni a norma, più sicure ed efficienti.",
+  },
+  {
+    nome: "Riduzione dei rischi",
+    desc: "Interventi su rumore, vibrazioni, agenti nocivi, movimentazione carichi e rischio infortuni.",
+  },
+  {
+    nome: "Modelli organizzativi",
+    desc: "Adozione di modelli organizzativi e di responsabilità sociale: contributo fino all'80%.",
+  },
+  {
+    nome: "Bonifica amianto",
+    desc: "Rimozione e smaltimento di materiali contenenti amianto dai luoghi di lavoro.",
+  },
+];
+---
+
+<Base
+  title="Bando ISI INAIL 2025"
+  description="Bando ISI INAIL 2025/2026: 600 milioni a fondo perduto per la sicurezza sul lavoro, contributi fino al 65% (80% con modelli organizzativi), da 5.000 a 130.000 €. iCura Impresa prepara la domanda e ti accompagna al click day."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Finanza agevolata · Bando ISI</p>
+      <h1>Bando ISI INAIL 2025.</h1>
+      <p class="lede">
+        600 milioni a fondo perduto per mettere in sicurezza macchinari, processi e ambienti di lavoro. È a sportello, con click day: vince chi arriva pronto. La domanda la prepariamo noi.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <dl class="facts">
+        {facts.map((f) => (
+          <div class="fact">
+            <dt class="fact__num">{f.num}</dt>
+            <dd class="fact__label">{f.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Cos'è</p>
+        <h2>Contributi a fondo perduto per la sicurezza.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Il Bando ISI dell'INAIL finanzia a fondo perduto i progetti delle imprese che migliorano le condizioni di salute e sicurezza sul lavoro. L'edizione 2025/2026 mette a disposizione 600 milioni di euro: il contributo copre fino al 65% delle spese, fino all'80% se si adottano modelli organizzativi e di responsabilità sociale.
+        </p>
+        <p>
+          L'importo va da 5.000 a 130.000 € e si possono finanziare anche interventi aggiuntivi. La selezione è a sportello con click day e ordine cronologico di invio: per questo la preparazione anticipata fa la differenza.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Cosa puoi finanziare</p>
+      <AreaGrid aree={finanzia} />
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Come ti aiutiamo</p>
+        <h2>Pronti per il click day.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Verifichiamo l'idoneità, progettiamo l'intervento per massimizzare il punteggio, prepariamo tutta la documentazione e ti accompagniamo all'invio nel click day. Poi seguiamo realizzazione e rendicontazione.
+        </p>
+        <p class="note">
+          Calendario, finestre di domanda e click day dell'edizione 2025/2026 vengono definiti nel corso del 2026: ti avvisiamo noi appena aprono e arriviamo pronti.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Verifichiamo la tua idoneità al Bando ISI."
+    lede="Pre-check gratuito · risposta entro 48 ore. Capiamo se il tuo progetto è finanziabile e prepariamo la domanda."
+    image={{
+      src: "/images/sicurezza-ispezione-capannone.webp",
+      alt: "Consulente per la sicurezza iCura Impresa in sopralluogo in un capannone industriale: adulto con casco bianco e tablet valuta macchinari e vie di passaggio, palette desaturata sobria, fotografia documentaria professionale",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi il pre-check" }}
+    labelledby="isi-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 54ch; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+    margin: 0;
+  }
+  .fact { display: flex; flex-direction: column; gap: var(--space-3xs); }
+  .fact__num {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-highlight);
+  }
+  .fact__label { font-size: var(--text-sm); color: var(--color-ink-2); margin: 0; line-height: 1.45; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 18ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 60ch; }
+  .prose p:last-child { margin-bottom: 0; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .facts { grid-template-columns: 1fr; gap: var(--space-md); }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

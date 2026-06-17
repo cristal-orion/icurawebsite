@@ -1,0 +1,155 @@
+---
+import Base from "@layouts/Base.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const facts = [
+  { num: "fino al 60%", label: "Credito d'imposta — piccole imprese in Campania" },
+  { num: "2026", label: "Investimenti ammissibili (misura fino al 2028)" },
+  { num: "200.000 €", label: "Soglia minima di progetto" },
+];
+
+const finanzia = [
+  {
+    nome: "Macchinari e impianti",
+    desc: "Acquisto di nuovi macchinari, impianti e attrezzature destinati alla struttura produttiva.",
+  },
+  {
+    nome: "Immobili strumentali",
+    desc: "Acquisto, realizzazione o ampliamento di immobili strumentali all'investimento produttivo.",
+  },
+  {
+    nome: "Strutture produttive nel Sud",
+    desc: "Investimenti in unità produttive nelle aree della ZES Unica del Mezzogiorno, Campania inclusa.",
+  },
+];
+---
+
+<Base
+  title="ZES Unica 2026"
+  description="Credito d'imposta ZES Unica 2026: fino al 60% per le piccole imprese della Campania e del Sud sugli investimenti in beni strumentali. iCura Impresa ti segue dal pre-check alla compensazione."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Finanza agevolata · ZES Unica</p>
+      <h1>ZES Unica 2026.</h1>
+      <p class="lede">
+        Il credito d'imposta per chi investe nel Mezzogiorno. Per le imprese della Campania è una delle occasioni più forti del 2026: noi verifichiamo se puoi accedere e seguiamo tutta la pratica.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <dl class="facts">
+        {facts.map((f) => (
+          <div class="fact">
+            <dt class="fact__num">{f.num}</dt>
+            <dd class="fact__label">{f.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Cos'è</p>
+        <h2>Un credito d'imposta automatico per investire al Sud.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          La ZES Unica riconosce alle imprese che investono in beni strumentali nelle regioni del Mezzogiorno — Campania compresa — un credito d'imposta proporzionale all'investimento. L'aliquota dipende dalla dimensione dell'impresa e dalla regione: per le piccole imprese in Campania può arrivare fino al 60%.
+        </p>
+        <p>
+          Vale sugli investimenti realizzati nel 2026, con una soglia minima di progetto di 200.000 €. Il credito si utilizza in compensazione tramite F24, previa certificazione delle spese da parte di un revisore.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Cosa puoi finanziare</p>
+      <AreaGrid aree={finanzia} />
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Come ti aiutiamo</p>
+        <h2>Dal pre-check alla compensazione.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Verifichiamo l'ammissibilità dell'impresa e del progetto, calcoliamo il beneficio, prepariamo la documentazione e gestiamo la certificazione delle spese e la compensazione. Un solo referente per tutta la pratica.
+        </p>
+        <p class="note">
+          Aliquote esatte, finestre di domanda e adempimenti dipendono da dimensione d'impresa, regione e aggiornamenti normativi: il pre-check è gratuito e lo facciamo noi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Verifichiamo se la tua impresa può accedere."
+    lede="Pre-check gratuito · risposta entro 48 ore. Ti diciamo con onestà se conviene e quanto puoi ottenere."
+    image={{
+      src: "/images/home-cnc-barriera.webp",
+      alt: "Consulente iCura Impresa con un imprenditore valuta un progetto di investimento agevolato: documenti e prospetti su una scrivania ordinata, ambiente ufficio luminoso, palette desaturata sobria toni navy e grigio, fotografia documentaria professionale",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi il pre-check" }}
+    labelledby="zes-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 54ch; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+    margin: 0;
+  }
+  .fact { display: flex; flex-direction: column; gap: var(--space-3xs); }
+  .fact__num {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-highlight);
+  }
+  .fact__label { font-size: var(--text-sm); color: var(--color-ink-2); margin: 0; line-height: 1.45; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 18ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 60ch; }
+  .prose p:last-child { margin-bottom: 0; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .facts { grid-template-columns: 1fr; gap: var(--space-md); }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

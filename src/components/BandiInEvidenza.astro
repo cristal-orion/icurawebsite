@@ -1,0 +1,134 @@
+---
+// Sezione home "agevolazioni in evidenza" — sfondo azzurro (accent-soft),
+// come il vecchio Bando ISI. Due card cliccabili verso le pagine dedicate.
+const bandi = [
+  {
+    badge: "fino al 60%",
+    titolo: "ZES Unica 2026",
+    meta: "Credito d'imposta · Mezzogiorno",
+    desc: "Credito d'imposta per investimenti in beni strumentali nelle imprese della Campania e del Sud. Fino al 60% per le piccole imprese, sugli investimenti realizzati nel 2026.",
+    href: "/zes-unica",
+  },
+  {
+    badge: "fino al 65%",
+    titolo: "Bando ISI INAIL 2025",
+    meta: "Fondo perduto · Sicurezza sul lavoro",
+    desc: "600 milioni a fondo perduto per investire nella sicurezza: contributi fino al 65% (80% con modelli organizzativi), da 5.000 a 130.000 €.",
+    href: "/bando-isi",
+  },
+];
+---
+
+<section class="section bandi-ev" aria-labelledby="bandi-ev-heading">
+  <div class="container">
+    <header class="bandi-ev__head">
+      <p class="eyebrow">In evidenza</p>
+      <h2 id="bandi-ev-heading" class="bandi-ev__title">Le agevolazioni del momento.</h2>
+      <p class="bandi-ev__lede">
+        Contributi e crediti d'imposta aperti adesso. Verifichiamo se la tua impresa può accedere e seguiamo tutta la pratica.
+      </p>
+    </header>
+
+    <ul class="bandi-ev__grid">
+      {bandi.map((b) => (
+        <li class="bando-card">
+          <span class="bando-card__badge">{b.badge}</span>
+          <h3 class="bando-card__title">{b.titolo}</h3>
+          <p class="bando-card__meta">{b.meta}</p>
+          <p class="bando-card__desc">{b.desc}</p>
+          <a href={b.href} class="link-cta bando-card__link">
+            Scopri il bando
+            <span class="link-cta__arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .bandi-ev { background: var(--color-accent-soft); }
+  .bandi-ev__head { margin-bottom: var(--space-xl); max-width: 54ch; }
+  .bandi-ev__title {
+    font-size: var(--text-3xl);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    max-width: 22ch;
+  }
+  .bandi-ev__lede {
+    font-size: var(--text-lg);
+    color: var(--color-ink-2);
+    line-height: 1.5;
+    margin-top: var(--space-sm);
+  }
+  .bandi-ev__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+  .bando-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    padding: var(--space-xl);
+    background: var(--color-paper);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
+    transition: border-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+  .bando-card:hover {
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-rule));
+    transform: translateY(-2px);
+  }
+  .bando-card__badge {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-highlight);
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-2xs);
+  }
+  .bando-card__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .bando-card__meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+    margin: 0;
+  }
+  .bando-card__desc {
+    font-size: var(--text-md);
+    color: var(--color-ink-2);
+    line-height: 1.55;
+    margin: var(--space-2xs) 0 0;
+    flex: 1;
+  }
+  .bando-card__link {
+    margin-top: var(--space-md);
+    align-self: flex-start;
+  }
+  .bando-card__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  @media (max-width: 56rem) {
+    .bandi-ev__grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bando-card:hover { transform: none; }
+  }
+</style>
