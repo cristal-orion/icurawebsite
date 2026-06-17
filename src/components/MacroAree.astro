@@ -1,0 +1,117 @@
+---
+import Placeholder from "@components/Placeholder.astro";
+
+// Sezione "macro aree" a cerchi cliccabili (richiesta esplicita del cliente,
+// ispirata a Qualifica Group). Foto circolari = placeholder con alt-come-prompt:
+// generare le immagini quadrate e impostare `foto` (poi forzare in git).
+const aree = [
+  {
+    titolo: "Consulenza",
+    href: "/servizi/consulenza",
+    foto: undefined,
+    alt: "Ritratto quadrato di un consulente aziendale di iCura Impresa: adulto professionale in giacca navy, espressione competente e rassicurante, sfondo ufficio luminoso sfocato, palette desaturata sobria, fotografia ritrattistica professionale",
+  },
+  {
+    titolo: "Formazione",
+    href: "/servizi/formazione",
+    foto: undefined,
+    alt: "Ritratto quadrato di una formatrice di iCura Impresa: adulta professionale, espressione cordiale, contesto aula di formazione sfocato sullo sfondo, palette desaturata sobria, fotografia ritrattistica professionale",
+  },
+  {
+    titolo: "Engineering",
+    href: "/servizi/engineering",
+    foto: undefined,
+    alt: "Ritratto quadrato di un tecnico/ingegnere di iCura Impresa con casco di sicurezza bianco, espressione affidabile, sfondo capannone industriale sfocato, palette desaturata con lievi accenti, fotografia ritrattistica professionale",
+  },
+  {
+    titolo: "Finanza agevolata",
+    href: "/servizi/finanza-agevolata",
+    foto: undefined,
+    alt: "Ritratto quadrato di un consulente di finanza agevolata di iCura Impresa: adulto in abito formale con documenti o tablet, espressione professionale e disponibile, sfondo ufficio sfocato, palette desaturata sobria, fotografia ritrattistica professionale",
+  },
+  {
+    titolo: "Certificazioni",
+    href: "/servizi/certificazioni",
+    foto: undefined,
+    alt: "Ritratto quadrato di un auditor/consulente certificazioni di iCura Impresa: adulto professionale, espressione precisa e competente, sfondo ufficio con raccoglitori sfocati, palette desaturata sobria, fotografia ritrattistica professionale",
+  },
+];
+---
+
+<section class="section macroaree" aria-labelledby="macroaree-heading">
+  <div class="container">
+    <h2 id="macroaree-heading" class="sr-only">Le nostre aree di servizio</h2>
+    <ul class="macroaree__grid">
+      {aree.map((a) => (
+        <li class="macroaree__item">
+          <a href={a.href} class="macroaree__link">
+            <span class="macroaree__media">
+              <Placeholder aspect="1/1" src={a.foto} alt={a.alt} />
+            </span>
+            <span class="macroaree__label">{a.titolo}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .macroaree__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+  .macroaree__link {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+  }
+  .macroaree__media {
+    display: block;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(140deg, var(--color-accent), var(--color-highlight));
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .macroaree__media :global(.placeholder) {
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+  }
+  .macroaree__link:hover .macroaree__media {
+    transform: translateY(-4px) scale(1.02);
+  }
+  .macroaree__label {
+    display: block;
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-lg);
+    letter-spacing: -0.015em;
+    color: var(--color-accent);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .macroaree__link:hover .macroaree__label {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 64rem) {
+    .macroaree__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-md); }
+  }
+  @media (max-width: 40rem) {
+    .macroaree__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .macroaree__label { font-size: var(--text-md); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .macroaree__media { transition: none; }
+    .macroaree__link:hover .macroaree__media { transform: none; }
+  }
+</style>

@@ -3,6 +3,7 @@ import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
 import ServiceIcon from "@components/ServiceIcon.astro";
 import CtaBand from "@components/CtaBand.astro";
+import MacroAree from "@components/MacroAree.astro";
 
 const servizi = [
   {
@@ -136,6 +137,9 @@ const stats = [
 
   <hr class="rule rule--thick" aria-hidden="true" />
 
+  {/* ───── Macro aree · cerchi cliccabili (richiesta cliente) ───── */}
+  <MacroAree />
+
   {/* ───── Intro · chi siamo sintetico ───── */}
   <section class="section intro" aria-labelledby="intro-heading">
     <div class="container intro__grid">
@@ -235,6 +239,7 @@ const stats = [
     title="Una mail, una chiamata, un sopralluogo. Senza impegno."
     lede="Sopralluogo gratuito e risposta entro 48 ore. Prima capiamo se possiamo esserti utile, poi decidi tu."
     image={{
+      src: "/images/home-cnc-barriera.webp",
       alt: "Consulente iCura Impresa durante un sopralluogo in azienda: adulto con casco bianco e block-notes parla con il titolare accanto a un macchinario industriale, atmosfera collaborativa e rassicurante, officina italiana con luce naturale di mattina, palette desaturata sobria in toni navy e grigio, fotografia documentaria professionale, no posa, no strette di mano da stock",
     }}
     primary={{ href: "/contatti", label: "Richiedi consulenza" }}
