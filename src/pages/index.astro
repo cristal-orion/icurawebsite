@@ -1,52 +1,8 @@
 ---
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
-import ServiceIcon from "@components/ServiceIcon.astro";
 import CtaBand from "@components/CtaBand.astro";
 import MacroAree from "@components/MacroAree.astro";
-
-const servizi = [
-  {
-    n: "01",
-    icon: "consulenza" as const,
-    titolo: "Consulenza",
-    sintesi:
-      "Sicurezza sul lavoro (D.Lgs. 81/08), cantieri, HACCP, medicina del lavoro, GDPR e ambiente. Un solo contratto per tutti gli adempimenti.",
-    href: "/servizi/consulenza",
-  },
-  {
-    n: "02",
-    icon: "formazione" as const,
-    titolo: "Formazione",
-    sintesi:
-      "Corsi in aula, e-learning e HACCP. Spesso a costo zero tramite i fondi interprofessionali.",
-    href: "/servizi/formazione",
-  },
-  {
-    n: "03",
-    icon: "engineering" as const,
-    titolo: "Engineering",
-    sintesi:
-      "Progettazione edile e impiantistica, prevenzione incendi, qualifiche e test sui materiali.",
-    href: "/servizi/engineering",
-  },
-  {
-    n: "04",
-    icon: "finanza-agevolata" as const,
-    titolo: "Finanza agevolata",
-    sintesi:
-      "Bando ISI, sgravi INAIL, fondi interprofessionali e crediti d'imposta. Dalla domanda alla rendicontazione.",
-    href: "/servizi/finanza-agevolata",
-  },
-  {
-    n: "05",
-    icon: "certificazioni" as const,
-    titolo: "Certificazioni",
-    sintesi:
-      "ISO 9001, 14001 e 45001, Attestazione SOA e supporto alle gare d'appalto.",
-    href: "/servizi/certificazioni",
-  },
-];
 
 const stats = [
   { num: "2014", label: "Anno di fondazione" },
@@ -185,37 +141,6 @@ const stats = [
 
   <hr class="rule" aria-hidden="true" />
 
-  {/* ───── Servizi · 4 categorie ───── */}
-  <section class="section servizi" aria-labelledby="servizi-heading">
-    <div class="container">
-      <header class="section-head">
-        <p class="eyebrow">02 — Cosa facciamo</p>
-        <h2 id="servizi-heading" class="section-head__title">
-          Cinque aree, un solo interlocutore.
-        </h2>
-      </header>
-
-      <ul class="servizi__grid">
-        {servizi.map((s) => (
-          <li class="servizio-card">
-            <span class="servizio-card__icon" aria-hidden="true">
-              <ServiceIcon name={s.icon} />
-            </span>
-            <span class="servizio-card__n" aria-hidden="true">{s.n}</span>
-            <h3 class="servizio-card__title">{s.titolo}</h3>
-            <p class="servizio-card__text">{s.sintesi}</p>
-            <a href={s.href} class="link-cta servizio-card__link">
-              Approfondisci
-              <span class="link-cta__arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <hr class="rule" aria-hidden="true" />
-
   {/* ───── Stats strip · T4 numbered ───── */}
   <section class="section section--tight stats" aria-labelledby="stats-heading">
     <div class="container">
@@ -235,7 +160,7 @@ const stats = [
 
   {/* ───── Final CTA · CtaBand riusabile ───── */}
   <CtaBand
-    eyebrow="04 — Iniziamo"
+    eyebrow="02 — Iniziamo"
     title="Una mail, una chiamata, un sopralluogo. Senza impegno."
     lede="Sopralluogo gratuito e risposta entro 48 ore. Prima capiamo se possiamo esserti utile, poi decidi tu."
     image={{
@@ -272,24 +197,6 @@ const stats = [
     setTimeout(reveal, 4000);
     // pagina già scrollata al caricamento
     if (window.scrollY > 16) reveal();
-  }
-
-  // Servizi: reveal a cascata delle card quando la griglia entra in viewport.
-  const grid = document.querySelector<HTMLElement>(".servizi__grid");
-  if (grid && !reduce && "IntersectionObserver" in window) {
-    grid.classList.add("js-reveal");
-    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".servizio-card"));
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          cards.forEach((card, i) => {
-            setTimeout(() => card.classList.add("is-visible"), i * 70);
-          });
-          obs.disconnect();
-        }
-      });
-    }, { threshold: 0.2 });
-    io.observe(grid);
   }
 </script>
 
@@ -560,111 +467,6 @@ const stats = [
     margin-top: var(--space-lg);
   }
 
-  /* ───── Section head ───── */
-  .section-head { margin-bottom: var(--space-xl); }
-  .section-head__title {
-    font-size: var(--text-3xl);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    max-width: 22ch;
-  }
-
-  /* ───── Servizi · griglia card con icone ───── */
-  .servizi__grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-md);
-  }
-  .servizio-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xs);
-    padding: var(--space-lg);
-    background: var(--color-paper-2);
-    border: var(--rule-hair) solid var(--color-rule);
-    border-radius: var(--radius-card);
-    transition: border-color var(--dur-fast) var(--ease-out),
-      transform var(--dur-fast) var(--ease-out);
-  }
-  .servizio-card:hover {
-    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-rule));
-    transform: translateY(-2px);
-  }
-  .servizio-card__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: var(--radius-input);
-    background: var(--color-accent-soft);
-    color: var(--color-accent);
-    margin-bottom: var(--space-sm);
-    transition: background var(--dur-fast) var(--ease-out),
-      color var(--dur-fast) var(--ease-out);
-  }
-  .servizio-card:hover .servizio-card__icon {
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
-  }
-  .servizio-card__n {
-    position: absolute;
-    top: var(--space-md);
-    right: var(--space-md);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--color-muted);
-    letter-spacing: 0.05em;
-  }
-  .servizio-card__title {
-    font-size: var(--text-xl);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-  .servizio-card__text {
-    font-size: var(--text-sm);
-    color: var(--color-ink-2);
-    line-height: 1.55;
-    margin: 0;
-    flex: 1;
-  }
-  /* stretched link: l'intera card è cliccabile */
-  .servizio-card__link {
-    margin-top: var(--space-xs);
-    align-self: flex-start;
-  }
-  .servizio-card__link::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
-  /* Reveal allo scroll con stagger (via JS) — progressive enhancement */
-  .servizi__grid.js-reveal .servizio-card {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity var(--dur-slow) var(--ease-out),
-      transform var(--dur-slow) var(--ease-out),
-      border-color var(--dur-fast) var(--ease-out);
-  }
-  .servizi__grid.js-reveal .servizio-card.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .servizio-card { transition: border-color var(--dur-fast) var(--ease-out); }
-    .servizio-card:hover { transform: none; }
-    .servizi__grid.js-reveal .servizio-card {
-      opacity: 1;
-      transform: none;
-      transition: border-color var(--dur-fast) var(--ease-out);
-    }
-  }
-
   /* ───── Stats ───── */
   .stats__list {
     display: grid;
@@ -693,14 +495,6 @@ const stats = [
   }
 
   /* ───── Responsive ───── */
-  @media (max-width: 64rem) {
-    .servizi__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-
-  @media (max-width: 40rem) {
-    .servizi__grid { grid-template-columns: 1fr; }
-  }
-
   @media (max-width: 56rem) {
     .hero-impact {
       min-height: 92svh;
