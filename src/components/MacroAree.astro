@@ -2,38 +2,37 @@
 import Placeholder from "@components/Placeholder.astro";
 
 // Sezione "macro aree" a cerchi cliccabili (richiesta esplicita del cliente,
-// ispirata a Qualifica Group). Foto circolari = placeholder con alt-come-prompt:
-// generare le immagini quadrate e impostare `foto` (poi forzare in git).
+// ispirata a Qualifica Group).
 const aree = [
   {
     titolo: "Consulenza",
     href: "/servizi/consulenza",
-    foto: undefined,
-    alt: "Ritratto quadrato di un consulente aziendale di iCura Impresa: adulto professionale in giacca navy, espressione competente e rassicurante, sfondo ufficio luminoso sfocato, palette desaturata sobria, fotografia ritrattistica professionale",
+    foto: "/images/macroaree-consulenza.webp",
+    alt: "Consulenti iCura Impresa in riunione operativa in ufficio, documenti sul tavolo e luce naturale",
   },
   {
     titolo: "Formazione",
     href: "/servizi/formazione",
-    foto: undefined,
-    alt: "Ritratto quadrato di una formatrice di iCura Impresa: adulta professionale, espressione cordiale, contesto aula di formazione sfocato sullo sfondo, palette desaturata sobria, fotografia ritrattistica professionale",
+    foto: "/images/macroaree-formazione.webp",
+    alt: "Formatore iCura Impresa durante una lezione in aula sulla sicurezza sul lavoro",
   },
   {
     titolo: "Engineering",
     href: "/servizi/engineering",
-    foto: undefined,
-    alt: "Ritratto quadrato di un tecnico/ingegnere di iCura Impresa con casco di sicurezza bianco, espressione affidabile, sfondo capannone industriale sfocato, palette desaturata con lievi accenti, fotografia ritrattistica professionale",
+    foto: "/images/macroaree-engineering.webp",
+    alt: "Tecnici iCura Impresa con casco di sicurezza al lavoro su una planimetria in cantiere",
   },
   {
     titolo: "Finanza agevolata",
     href: "/servizi/finanza-agevolata",
-    foto: undefined,
-    alt: "Ritratto quadrato di un consulente di finanza agevolata di iCura Impresa: adulto in abito formale con documenti o tablet, espressione professionale e disponibile, sfondo ufficio sfocato, palette desaturata sobria, fotografia ritrattistica professionale",
+    foto: "/images/macroaree-finanza-agevolata.webp",
+    alt: "Consulente iCura Impresa firma documenti aziendali su una scrivania con appunti e telefono",
   },
   {
     titolo: "Certificazioni",
     href: "/servizi/certificazioni",
-    foto: undefined,
-    alt: "Ritratto quadrato di un auditor/consulente certificazioni di iCura Impresa: adulto professionale, espressione precisa e competente, sfondo ufficio con raccoglitori sfocati, palette desaturata sobria, fotografia ritrattistica professionale",
+    foto: "/images/macroaree-certificazioni.webp",
+    alt: "Archivio di faldoni e documentazione tecnica per audit e certificazioni aziendali",
   },
 ];
 ---
