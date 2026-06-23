@@ -1,0 +1,168 @@
+---
+// FAQ a fisarmonica — riusabile su tutte le pagine.
+// Usa <details>/<summary> nativi: accessibile e funzionante anche senza JS.
+// L'attributo `name` rende l'apertura esclusiva (accordion) sui browser
+// moderni; sui più vecchi degrada a voci indipendenti (nessun problema).
+interface FaqItem {
+  q: string;
+  a: string;
+}
+interface Props {
+  items: FaqItem[];
+  eyebrow?: string;
+  title?: string;
+  name?: string;
+  labelledby?: string;
+  tone?: "alt" | "alt-2" | "alt-blue";
+}
+const {
+  items,
+  eyebrow = "FAQ",
+  title = "Domande frequenti",
+  name = "faq",
+  labelledby,
+  tone,
+} = Astro.props;
+const headingId = labelledby ?? "faq-heading";
+const toneClass = tone ? ` section--${tone}` : "";
+---
+
+<section class={`section faq${toneClass}`} aria-labelledby={headingId}>
+  <div class="container faq__wrap">
+    <div class="faq__head">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 id={headingId} class="faq__title">{title}</h2>
+    </div>
+    <div class="faq__list">
+      {items.map((it) => (
+        <details class="faq__item" name={name}>
+          <summary class="faq__q">
+            <span>{it.q}</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a">
+            <p>{it.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+  .faq__head {
+    position: sticky;
+    top: calc(var(--space-md) + 64px);
+  }
+  .faq__title {
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+  }
+  .faq__item {
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .faq__item:last-child {
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .faq__q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    cursor: pointer;
+    font-size: var(--text-lg);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    list-style: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+  .faq__q:hover {
+    color: var(--color-accent);
+  }
+
+  /* Icona +/- disegnata in CSS: "+" da chiusa, "−" da aperta */
+  .faq__icon {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+  .faq__icon::before,
+  .faq__icon::after {
+    content: "";
+    position: absolute;
+    background: var(--color-accent);
+    transition: transform var(--dur-base) var(--ease-out),
+      opacity var(--dur-base) var(--ease-out);
+  }
+  .faq__icon::before {
+    top: 6px;
+    left: 0;
+    width: 14px;
+    height: 2px;
+  }
+  .faq__icon::after {
+    top: 0;
+    left: 6px;
+    width: 2px;
+    height: 14px;
+  }
+  .faq__item[open] .faq__icon::after {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  .faq__a {
+    overflow: hidden;
+    padding-bottom: var(--space-md);
+  }
+  .faq__a p {
+    margin: 0;
+    max-width: 68ch;
+    color: var(--color-ink-2);
+    font-size: var(--text-md);
+    line-height: 1.6;
+  }
+  .faq__item[open] .faq__a {
+    animation: faqOpen var(--dur-base) var(--ease-out);
+  }
+  @keyframes faqOpen {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 56rem) {
+    .faq__wrap {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .faq__head {
+      position: static;
+    }
+  }
+</style>

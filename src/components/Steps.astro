@@ -1,0 +1,100 @@
+---
+// Blocco "come funziona" — fasi numerate, riusabile su tutte le pagine.
+// Generalizza il vecchio markup inline di finanza-agevolata.
+interface Step {
+  n?: string;
+  titolo: string;
+  desc: string;
+}
+interface Props {
+  steps: Step[];
+  eyebrow?: string;
+  title?: string;
+  labelledby?: string;
+}
+const { steps, eyebrow, title, labelledby } = Astro.props;
+const headingId = labelledby ?? "steps-heading";
+---
+
+<section class="section steps-section" aria-labelledby={headingId}>
+  <div class="container">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {title && <h2 id={headingId} class="steps__heading">{title}</h2>}
+    <ol class="steps" style={`--steps:${steps.length}`}>
+      {steps.map((s, i) => (
+        <li class="step">
+          <span class="step__n">{s.n ?? String(i + 1).padStart(2, "0")}</span>
+          <h3 class="step__titolo">{s.titolo}</h3>
+          <p class="step__desc">{s.desc}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps__heading {
+    font-size: var(--text-3xl);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin-bottom: var(--space-xl);
+    max-width: 24ch;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(var(--steps, 4), minmax(0, 1fr));
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .step {
+    padding: var(--space-lg);
+    border: var(--rule-hair) solid var(--color-rule);
+    margin-left: -1px;
+  }
+  .step:first-child {
+    margin-left: 0;
+  }
+  .step__n {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-highlight);
+    display: block;
+    margin-bottom: var(--space-md);
+  }
+  .step__titolo {
+    font-size: var(--text-xl);
+    margin: 0 0 var(--space-2xs);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+  .step__desc {
+    color: var(--color-ink-2);
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 76rem) {
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .step {
+      margin-left: -1px;
+      margin-top: -1px;
+    }
+    .step:nth-child(odd) {
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 40rem) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+    .step {
+      margin-left: 0;
+      margin-top: -1px;
+    }
+  }
+</style>

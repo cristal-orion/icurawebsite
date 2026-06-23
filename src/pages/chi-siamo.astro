@@ -4,21 +4,35 @@ import Placeholder from "@components/Placeholder.astro";
 import CtaBand from "@components/CtaBand.astro";
 
 const competenze = [
-  { area: "Ingegneria", desc: "Sicurezza tecnica, progettazione, prevenzione incendi." },
-  { area: "Medicina del lavoro", desc: "Sorveglianza sanitaria, idoneità, protocolli." },
-  { area: "Certificazioni & qualità", desc: "Sistemi di gestione ISO, Attestazione SOA, gare." },
-  { area: "Economia", desc: "Consulenza aziendale, finanza agevolata, bandi." },
+  { area: "Ingegneria", desc: "Sicurezza tecnica, progettazione edile e impiantistica, prevenzione incendi e CPI." },
+  { area: "Medicina del lavoro", desc: "Sorveglianza sanitaria, idoneità alla mansione, protocolli e medico competente." },
+  { area: "Certificazioni & qualità", desc: "Sistemi di gestione ISO, Attestazione SOA, parità di genere, procedure di gara." },
+  { area: "Economia", desc: "Consulenza aziendale, finanza agevolata, bandi e crediti d'imposta." },
 ];
 
-// TEAM — placeholder. Sostituire nome + foto reali (droppare l'immagine in
-// /public/images e impostare `foto`) quando arrivano dal cliente.
-const team = [
-  { nome: "Nome Cognome", ruolo: "Ingegnere della sicurezza", foto: undefined, alt: "Ritratto professionale di un ingegnere della sicurezza di iCura Impresa: adulto in ufficio napoletano, camicia in toni navy, espressione cordiale e sicura, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
-  { nome: "Nome Cognome", ruolo: "Medico del lavoro", foto: undefined, alt: "Ritratto professionale di un medico del lavoro di iCura Impresa: adulto con abito sobrio, espressione rassicurante, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
-  { nome: "Nome Cognome", ruolo: "Tecnico della prevenzione", foto: undefined, alt: "Ritratto professionale di un tecnico della prevenzione di iCura Impresa: adulto in abbigliamento da lavoro sobrio, espressione concreta e affidabile, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
-  { nome: "Nome Cognome", ruolo: "Consulente certificazioni e qualità", foto: undefined, alt: "Ritratto professionale di una consulente certificazioni e qualità di iCura Impresa: adulta in abito formale toni grigio e navy, espressione competente, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
-  { nome: "Nome Cognome", ruolo: "Consulente finanza agevolata", foto: undefined, alt: "Ritratto professionale di un consulente di finanza agevolata di iCura Impresa: adulto in abito formale, espressione professionale e disponibile, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
-  { nome: "Nome Cognome", ruolo: "Coordinamento e amministrazione", foto: undefined, alt: "Ritratto professionale di una responsabile coordinamento e amministrazione di iCura Impresa: adulta in abito sobrio, espressione organizzata e cordiale, sfondo neutro sfocato, luce naturale morbida, fotografia ritrattistica professionale" },
+const fatti = [
+  { num: "2014", label: "Nasce come studio di consulenza" },
+  { num: "2018", label: "Diventa S.r.l." },
+  { num: "100+", label: "Imprese seguite in Italia" },
+  { num: "5", label: "Aree integrate sotto un tetto" },
+];
+
+const storia = [
+  {
+    anno: "2014",
+    titolo: "L'inizio",
+    desc: "Nasce a Napoli come studio di consulenza sulla sicurezza sul lavoro, al fianco delle imprese del territorio.",
+  },
+  {
+    anno: "2018",
+    titolo: "Diventa S.r.l.",
+    desc: "La struttura cresce e si organizza in società, ampliando le competenze oltre la sola sicurezza.",
+  },
+  {
+    anno: "Oggi",
+    titolo: "Cinque aree, una regia",
+    desc: "Ingegneri, medici del lavoro, tecnici e commercialisti seguono oltre cento imprese su tutta Italia, da un unico interlocutore.",
+  },
 ];
 ---
 
@@ -35,12 +49,18 @@ const team = [
       <p class="page-header__lede">
         Nata nel 2014, S.r.l. dal 2018. Mettiamo insieme ingegneri, medici del lavoro, tecnici e commercialisti per dare alle imprese un unico interlocutore.
       </p>
+      <dl class="fatti" aria-label="iCura Impresa in breve">
+        {fatti.map((f) => (
+          <div class="fatto">
+            <dt class="fatto__num">{f.num}</dt>
+            <dd class="fatto__label">{f.label}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   </header>
 
-  <hr class="rule" aria-hidden="true" />
-
-  <section class="section" aria-labelledby="competenze-heading">
+  <section class="section section--alt" aria-labelledby="competenze-heading">
     <div class="container two-col">
       <div>
         <p class="eyebrow">01 — Competenze</p>
@@ -57,12 +77,30 @@ const team = [
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
+  <section class="section section--ink" aria-labelledby="storia-heading">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">02 — La nostra storia</p>
+        <h2 id="storia-heading" class="two-col__title">Dieci anni al fianco delle imprese.</h2>
+      </div>
+      <ol class="timeline">
+        {storia.map((s) => (
+          <li class="tappa">
+            <span class="tappa__anno">{s.anno}</span>
+            <div class="tappa__body">
+              <h3 class="tappa__titolo">{s.titolo}</h3>
+              <p class="tappa__desc">{s.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 
   <section class="section" aria-labelledby="metodo-heading">
     <div class="container metodo-grid">
       <div>
-        <p class="eyebrow">02 — Metodo</p>
+        <p class="eyebrow">03 — Metodo</p>
         <h2 id="metodo-heading">Come lavoriamo.</h2>
       </div>
       <div class="prose">
@@ -82,26 +120,25 @@ const team = [
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
-
-  <section id="team" class="section" aria-labelledby="team-heading">
-    <div class="container">
-      <header class="team-head">
-        <p class="eyebrow">03 — Il team</p>
-        <h2 id="team-heading">Le persone, non solo le pratiche.</h2>
-        <p class="team-head__lede">
-          Ingegneri, medici del lavoro, tecnici e consulenti che seguono la tua impresa in prima persona.
+  <section id="team" class="section section--alt-blue team" aria-labelledby="team-heading">
+    <div class="container team__grid">
+      <div class="team__intro">
+        <p class="eyebrow">04 — Il team</p>
+        <h2 id="team-heading" class="team__title">Conosci il nostro team di esperti.</h2>
+        <p class="team__lede">
+          Ingegneri, medici del lavoro, tecnici e consulenti che seguono la tua impresa in prima persona. Un solo gruppo, sotto lo stesso tetto, dal sopralluogo alla pratica.
         </p>
-      </header>
-      <ul class="team-grid">
-        {team.map((m) => (
-          <li class="team-card">
-            <Placeholder aspect="3/4" src={m.foto} alt={m.alt} />
-            <h3 class="team-card__name">{m.nome}</h3>
-            <p class="team-card__role">{m.ruolo}</p>
-          </li>
-        ))}
-      </ul>
+      </div>
+      <figure class="team-photo">
+        <img
+          src="/images/team-icura.webp"
+          alt="Il team di iCura Impresa al completo: ingegneri, medici del lavoro, tecnici e consulenti"
+          width="1100"
+          height="1375"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
     </div>
   </section>
 
@@ -116,6 +153,32 @@ const team = [
     labelledby="conoscerci-heading"
   />
 </Base>
+
+<script>
+  // Reveal della foto del team: tendina + zoom che si assesta.
+  // Stesso gating del reveal globale: parte solo con JS e motion attivo;
+  // l'effetto CSS è agganciato a html.reveal-ready, quindi senza JS o con
+  // prefers-reduced-motion la foto resta subito visibile.
+  if (
+    !matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    "IntersectionObserver" in window
+  ) {
+    const photo = document.querySelector(".team-photo");
+    if (photo) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        },
+        { rootMargin: "0px 0px -15% 0px", threshold: 0 }
+      );
+      io.observe(photo);
+    }
+  }
+</script>
 
 <style>
   .page-header { padding-block: var(--space-4xl) var(--space-xl); }
@@ -172,37 +235,123 @@ const team = [
     max-width: 60ch;
   }
 
-  /* ───── Team ───── */
-  .team-head { margin-bottom: var(--space-xl); max-width: 52ch; }
-  .team-head__lede {
-    font-size: var(--text-lg);
-    color: var(--color-ink-2);
-    line-height: 1.5;
-    margin-top: var(--space-sm);
+  /* ───── Fatti (in breve) ───── */
+  .fatti {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0 0;
+    padding-top: var(--space-lg);
+    border-top: var(--rule-hair) solid var(--color-rule);
   }
-  .team-grid {
+  .fatto { display: flex; flex-direction: column; gap: var(--space-3xs); }
+  .fatto__num {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--color-ink);
+    font-feature-settings: "tnum";
+  }
+  .fatto__label {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.35;
+  }
+
+  /* ───── Timeline (storia) ───── */
+  .timeline {
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  .tappa {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-xl) var(--space-lg);
+    grid-template-columns: minmax(5rem, 7rem) 1fr;
+    gap: var(--space-lg);
+    padding: var(--space-lg) 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
   }
-  .team-card :global(.placeholder) {
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    margin-bottom: var(--space-sm);
+  .tappa:first-child { border-top: 0; padding-top: 0; }
+  .tappa__anno {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-highlight);
+    letter-spacing: 0.04em;
+    padding-top: 0.2em;
   }
-  .team-card__name {
-    font-size: var(--text-lg);
+  .tappa__titolo {
+    font-size: var(--text-xl);
     font-weight: 500;
     letter-spacing: -0.015em;
-    margin: 0;
+    margin: 0 0 var(--space-2xs);
   }
-  .team-card__role {
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-    margin: var(--space-3xs) 0 0;
+  .tappa__desc {
+    color: var(--color-ink-2);
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.55;
+    max-width: 56ch;
+  }
+  @media (max-width: 56rem) {
+    .fatti { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md); }
+    .tappa { grid-template-columns: 1fr; gap: var(--space-2xs); }
+  }
+
+  /* ───── Team ───── */
+  .team__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+  .team__title {
+    font-size: var(--text-3xl);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    max-width: 15ch;
+  }
+  .team__lede {
+    font-size: var(--text-lg);
+    color: var(--color-ink-2);
+    line-height: 1.55;
+    margin-top: var(--space-md);
+    max-width: 46ch;
+  }
+
+  .team-photo {
+    margin: 0;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--color-paper-2);
+    aspect-ratio: 1100 / 1375;
+    box-shadow: 0 1px 0 var(--color-rule), 0 18px 40px -24px rgba(0, 0, 0, 0.35);
+  }
+  .team-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Effetto reveal: tendina che si apre dall'alto + zoom che si assesta.
+     Gated su html.reveal-ready (lo aggiunge lo script globale solo con JS +
+     motion attivo). Senza JS o con reduced-motion la foto è subito visibile. */
+  html.reveal-ready .team-photo {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1000ms var(--ease-out);
+  }
+  html.reveal-ready .team-photo.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+  html.reveal-ready .team-photo img {
+    transform: scale(1.18);
+    transition: transform 1400ms var(--ease-out);
+    will-change: transform;
+  }
+  html.reveal-ready .team-photo.is-visible img {
+    transform: scale(1);
   }
 
   @media (max-width: 64rem) {
@@ -214,6 +363,7 @@ const team = [
     .two-col { grid-template-columns: 1fr; }
     .metodo-grid { grid-template-columns: 1fr; }
     .comp-list { grid-template-columns: 1fr; gap: var(--space-md); }
-    .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+    .team__grid { grid-template-columns: 1fr; gap: var(--space-lg); }
+    .team-photo { max-width: 28rem; }
   }
 </style>

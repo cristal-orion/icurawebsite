@@ -3,15 +3,76 @@ const { pathname } = Astro.url;
 const isActive = (path: string) =>
   path === "/" ? pathname === "/" : pathname.startsWith(path);
 
-const servizi = [
-  { href: "/servizi/consulenza", label: "Consulenza" },
-  { href: "/servizi/formazione", label: "Formazione" },
-  { href: "/servizi/engineering", label: "Engineering" },
-  { href: "/servizi/finanza-agevolata", label: "Finanza agevolata" },
-  { href: "/servizi/certificazioni", label: "Certificazioni" },
+// Mega-menu Servizi: ogni colonna = una pagina servizio + sotto-voci che
+// atterrano su ancore (id sulle card AreaGrid) nelle pagine esistenti.
+const menu = [
+  {
+    label: "Consulenza",
+    href: "/servizi/consulenza",
+    voci: [
+      { label: "Sicurezza sul lavoro · 81/08", href: "/servizi/consulenza#sicurezza-lavoro" },
+      { label: "Sicurezza nei cantieri", href: "/servizi/consulenza#cantieri" },
+      { label: "HACCP alimentare", href: "/servizi/consulenza#haccp" },
+      { label: "Medicina del lavoro", href: "/servizi/consulenza#medicina-lavoro" },
+      { label: "GDPR & Privacy", href: "/servizi/consulenza#gdpr" },
+      { label: "Consulenza ambientale", href: "/servizi/consulenza#ambiente" },
+    ],
+  },
+  {
+    label: "Engineering",
+    href: "/servizi/engineering",
+    voci: [
+      { label: "Progettazione edile", href: "/servizi/engineering#edile" },
+      { label: "Impiantistica", href: "/servizi/engineering#impianti" },
+      { label: "Prevenzione incendi · CPI", href: "/servizi/engineering#antincendio" },
+      { label: "Collaudi e perizie", href: "/servizi/engineering#collaudi" },
+      { label: "Qualifiche e test materiali", href: "/servizi/engineering#qualifiche" },
+    ],
+  },
+  {
+    label: "Formazione",
+    href: "/servizi/formazione",
+    voci: [
+      { label: "Formazione lavoratori", href: "/servizi/formazione#cat-lavoratori" },
+      { label: "Ruoli · RSPP, RLS, preposti", href: "/servizi/formazione#cat-ruoli" },
+      { label: "Antincendio · primo soccorso", href: "/servizi/formazione#cat-emergenze" },
+      { label: "Attrezzature · carrelli, PLE", href: "/servizi/formazione#cat-attrezzature" },
+      { label: "Corsi finanziati", href: "/servizi/formazione#formazione-fondi" },
+    ],
+  },
+  {
+    label: "Certificazioni",
+    href: "/servizi/certificazioni",
+    voci: [
+      { label: "ISO 9001 · Qualità", href: "/servizi/certificazioni#iso-9001" },
+      { label: "ISO 14001 · Ambiente", href: "/servizi/certificazioni#iso-14001" },
+      { label: "ISO 45001 · Sicurezza", href: "/servizi/certificazioni#iso-45001" },
+      { label: "Parità di genere · 125", href: "/servizi/certificazioni#parita" },
+      { label: "Attestazione SOA", href: "/servizi/certificazioni#soa" },
+    ],
+  },
+  {
+    label: "Finanza agevolata",
+    href: "/servizi/finanza-agevolata",
+    voci: [
+      { label: "Bando ISI INAIL", href: "/bando-isi" },
+      { label: "ZES Unica 2026", href: "/zes-unica" },
+      { label: "Sgravi INAIL · OT23", href: "/servizi/finanza-agevolata#ot23" },
+      { label: "Transizione 5.0", href: "/servizi/finanza-agevolata#transizione" },
+      { label: "Formazione finanziata", href: "/servizi/formazione#formazione-fondi" },
+    ],
+  },
 ];
 
-const serviziActive = pathname.startsWith("/servizi");
+const agevolazioni = [
+  { label: "ZES Unica 2026", href: "/zes-unica" },
+  { label: "Bando ISI INAIL", href: "/bando-isi" },
+];
+
+const serviziActive =
+  pathname.startsWith("/servizi") ||
+  pathname === "/zes-unica" ||
+  pathname === "/bando-isi";
 ---
 
 <a href="#main" class="skip-link">Salta al contenuto</a>
@@ -44,16 +105,23 @@ const serviziActive = pathname.startsWith("/servizi");
         Servizi
         <span class="nav-pill__caret" aria-hidden="true">▾</span>
       </button>
-      <ul id="nav-servizi-menu" class="nav-pill__menu" data-dropdown-menu>
-        {servizi.map((s) => (
-          <li>
+      <ul id="nav-servizi-menu" class="nav-pill__menu nav-pill__mega" data-dropdown-menu>
+        {menu.map((col) => (
+          <li class="nav-mega__col">
             <a
-              href={s.href}
-              class={`nav-pill__menu-link${isActive(s.href) ? " is-active" : ""}`}
-              aria-current={isActive(s.href) ? "page" : undefined}
+              href={col.href}
+              class={`nav-mega__head${isActive(col.href) ? " is-active" : ""}`}
+              aria-current={isActive(col.href) ? "page" : undefined}
             >
-              {s.label}
+              {col.label}
             </a>
+            <ul class="nav-mega__sub">
+              {col.voci.map((v) => (
+                <li>
+                  <a href={v.href} class="nav-mega__link">{v.label}</a>
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>
@@ -106,9 +174,19 @@ const serviziActive = pathname.startsWith("/servizi");
     <li class="nav-mobile__group">
       <span class="nav-mobile__group-label">Servizi</span>
       <ul>
-        {servizi.map((s) => (
+        {menu.map((col) => (
           <li>
-            <a href={s.href} class={isActive(s.href) ? "is-active" : undefined}>{s.label}</a>
+            <a href={col.href} class={isActive(col.href) ? "is-active" : undefined}>{col.label}</a>
+          </li>
+        ))}
+      </ul>
+    </li>
+    <li class="nav-mobile__group">
+      <span class="nav-mobile__group-label">Agevolazioni</span>
+      <ul>
+        {agevolazioni.map((a) => (
+          <li>
+            <a href={a.href} class={isActive(a.href) ? "is-active" : undefined}>{a.label}</a>
           </li>
         ))}
       </ul>
@@ -326,6 +404,56 @@ const serviziActive = pathname.startsWith("/servizi");
     text-decoration: none;
   }
   .nav-pill__menu-link.is-active { color: var(--color-ink); font-weight: 500; }
+
+  /* Mega-menu Servizi — pannello a colonne, centrato sul viewport
+     (position:fixed) così con 5 colonne non sfora mai i bordi. */
+  .nav-pill__mega {
+    position: fixed;
+    top: calc(var(--space-md) + 3.4rem);
+    z-index: 50;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-md) var(--space-lg);
+    width: min(56rem, calc(100vw - 1.5rem));
+    max-width: calc(100vw - 1.5rem);
+    padding: var(--space-md);
+  }
+  .nav-mega__col { min-width: 0; }
+  .nav-mega__head {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    text-decoration: none;
+    padding: 0.25rem 0.4rem 0.5rem;
+    margin-bottom: 0.4rem;
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+  .nav-mega__head:hover { color: var(--color-accent); text-decoration: none; }
+  .nav-mega__head.is-active { color: var(--color-accent); }
+  .nav-mega__sub {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .nav-mega__link {
+    display: block;
+    padding: 0.32rem 0.4rem;
+    border-radius: var(--radius-input);
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .nav-mega__link:hover {
+    background: var(--color-paper-3);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
 
   .nav-pill__cta {
     display: inline-flex;

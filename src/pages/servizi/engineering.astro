@@ -2,47 +2,133 @@
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
 
 const aree = [
   {
+    id: "edile",
     nome: "Progettazione edile",
-    desc: "Pratiche edilizie, ristrutturazioni, sopraelevazioni, accatastamenti. Dal progetto al collaudo.",
+    desc: "Pratiche edilizie (CILA, SCIA, permesso di costruire), ristrutturazioni, sopraelevazioni e accatastamenti. Dal progetto al collaudo.",
   },
   {
+    id: "impianti",
     nome: "Impiantistica",
-    desc: "Elettrico, idraulico, termico, antincendio. Progetto, direzione lavori, dichiarazioni di conformità.",
+    desc: "Impianti elettrici, idraulici, termici e antincendio: progetto, direzione lavori e dichiarazioni di conformità (DM 37/2008).",
   },
   {
+    id: "antincendio",
     nome: "Prevenzione incendi",
-    desc: "CPI, SCIA antincendio, valutazione del rischio. Per attività soggette al DPR 151/2011.",
+    desc: "CPI, SCIA antincendio, valutazione del rischio incendio e progettazione per le attività soggette (DPR 151/2011, Codice di Prevenzione Incendi).",
   },
   {
+    id: "collaudi",
+    nome: "Collaudi e perizie",
+    desc: "Collaudi statici e tecnico-amministrativi, perizie giurate, verifiche strutturali e relazioni per banche, assicurazioni e contenziosi.",
+  },
+  {
+    id: "qualifiche",
     nome: "Qualifiche e test materiali",
-    desc: "Prove di laboratorio, verifiche periodiche, qualifiche WPS/WPQR per saldature.",
+    desc: "Prove di laboratorio, verifiche periodiche di attrezzature, qualifiche di saldatura WPS/WPQR e controlli non distruttivi.",
+  },
+  {
+    id: "pratiche",
+    nome: "Pratiche e autorizzazioni",
+    desc: "Gestione degli iter presso Comune, SUAP, Vigili del Fuoco e altri enti, fino al rilascio dell'autorizzazione.",
+  },
+];
+
+const ottieni = [
+  "Un progetto firmato da tecnici abilitati e iscritti all'albo",
+  "Asseverazioni, dichiarazioni di conformità e relazioni a norma",
+  "La gestione completa delle pratiche presso Comune, SUAP e Vigili del Fuoco",
+  "La direzione lavori e il coordinamento con imprese e fornitori",
+  "Un interlocutore tecnico che parla anche con sicurezza e certificazioni quando serve",
+];
+
+const fasi = [
+  { n: "01", titolo: "Sopralluogo tecnico", desc: "Vediamo lo stato di fatto, l'impianto o l'opera e inquadriamo vincoli e obiettivi." },
+  { n: "02", titolo: "Progetto", desc: "Sviluppiamo elaborati, calcoli e relazioni, con il quadro autorizzativo necessario." },
+  { n: "03", titolo: "Pratiche", desc: "Depositiamo e seguiamo gli iter presso gli enti competenti fino all'esito." },
+  { n: "04", titolo: "Direzione e collaudo", desc: "Seguiamo l'esecuzione, verifichiamo la conformità e chiudiamo con collaudo o certificato." },
+];
+
+const faq = [
+  {
+    q: "Cos'è il CPI e quando lo devo avere?",
+    a: "Il CPI (Certificato di Prevenzione Incendi) attesta che un'attività rispetta la normativa antincendio. È richiesto per le attività elencate nel DPR 151/2011 — alberghi, autorimesse, depositi, locali di pubblico spettacolo, molte attività produttive. A seconda della categoria si procede con SCIA antincendio o con valutazione del progetto da parte dei Vigili del Fuoco: ti diciamo noi in che caso rientri.",
+  },
+  {
+    q: "Le firme e le asseverazioni sono valide a tutti gli effetti?",
+    a: "Sì. I progetti, i collaudi e le perizie sono firmati da tecnici abilitati e iscritti ai rispettivi albi professionali, con timbro e responsabilità di legge. Sono documenti utilizzabili davanti a enti, banche, assicurazioni e in sede di contenzioso.",
+  },
+  {
+    q: "Vi occupate anche della direzione lavori?",
+    a: "Sì. Possiamo seguire l'intervento dalla progettazione alla direzione lavori, coordinando imprese e fornitori e verificando che quanto realizzato corrisponda al progetto e alle norme, fino al collaudo finale.",
+  },
+  {
+    q: "Seguite anche le pratiche presso Comune e Vigili del Fuoco?",
+    a: "È parte del servizio. Gestiamo gli iter presso Comune, SUAP, Vigili del Fuoco e gli altri enti: deposito, integrazioni, sopralluoghi e rilascio dell'autorizzazione, così non devi rincorrere uffici e scadenze.",
+  },
+  {
+    q: "Lavorate solo con imprese o anche con privati?",
+    a: "Con entrambi. Seguiamo imprese (capannoni, attività produttive, impianti) e committenti privati (ristrutturazioni, pratiche edilizie, antincendio per attività ricettive e commerciali).",
   },
 ];
 ---
 
 <Base
   title="Engineering"
-  description="Progettazione edile e impiantistica, prevenzione incendi, qualifiche e test materiali."
+  description="Progettazione edile e impiantistica, prevenzione incendi e CPI, collaudi e perizie, qualifiche e test materiali, gestione pratiche presso Comune, SUAP e Vigili del Fuoco."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 03</p>
       <h1>Engineering.</h1>
       <p class="lede">
-        Quando il progetto, l'impianto o l'autorizzazione richiede una firma tecnica, ci pensiamo noi.
+        Quando il progetto, l'impianto o l'autorizzazione richiede una firma tecnica, ci pensiamo noi — dal disegno al collaudo.
       </p>
     </div>
   </header>
 
   <hr class="rule" aria-hidden="true" />
 
-  <section class="section">
+  {/* ───── Contesto ───── */}
+  <section class="section section--alt" aria-labelledby="engineering-contesto">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">01 — Quando serve</p>
+        <h2 id="engineering-contesto" class="two-col__title">Dove serve una firma, e qualcuno che la sostenga.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Un capannone da ampliare, un impianto da mettere a norma, un'attività che ha bisogno del CPI, un collaudo da depositare: sono passaggi in cui non basta "fare", serve un tecnico abilitato che progetti, asseveri e risponda di quella firma davanti agli enti.
+        </p>
+        <p>
+          Mettiamo a disposizione ingegneri e tecnici che seguono l'intervento per intero — progetto, pratiche, direzione lavori, collaudo — e che, quando il caso tocca la sicurezza o le certificazioni, parlano la stessa lingua del resto del team.
+        </p>
+        <ul class="chips" aria-label="Ambiti e normative">
+          <li>CILA / SCIA</li>
+          <li>DM 37/2008</li>
+          <li>CPI</li>
+          <li>DPR 151/2011</li>
+          <li>SCIA antincendio</li>
+          <li>Collaudo statico</li>
+          <li>WPS / WPQR</li>
+          <li>SUAP / VVF</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── Aree ───── */}
+  <section class="section" aria-labelledby="engineering-aree">
     <div class="container">
-      <p class="eyebrow">Quattro aree integrate</p>
+      <p class="eyebrow">02 — Cosa facciamo</p>
+      <h2 id="engineering-aree" class="section-title">Sei aree tecniche integrate.</h2>
       <AreaGrid aree={aree} />
     </div>
   </section>
@@ -56,6 +142,47 @@ const aree = [
       />
     </div>
   </section>
+
+  {/* ───── Cosa ottieni ───── */}
+  <section class="section section--ink" aria-labelledby="engineering-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">03 — Cosa ottieni</p>
+        <h2 id="engineering-ottieni" class="two-col__title">Dal disegno alla pratica chiusa.</h2>
+        <p class="two-col__note">
+          Un solo riferimento tecnico, dall'idea al collaudo, senza rimbalzi tra studi e uffici.
+        </p>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ───── Come funziona ───── */}
+  <Steps
+    eyebrow="04 — Come funziona"
+    title="Quattro fasi, dal sopralluogo al collaudo."
+    steps={fasi}
+    labelledby="engineering-fasi"
+  />
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── FAQ ───── */}
+  <Faq
+    eyebrow="05 — Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-engineering"
+    labelledby="engineering-faq"
+    items={faq}
+    tone="alt-blue"
+  />
 
   <CtaBand
     title="Progetto, impianto, certificazione: parliamone."

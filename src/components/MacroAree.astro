@@ -74,15 +74,16 @@ const aree = [
     border-radius: 50%;
     padding: 4px;
     background: linear-gradient(140deg, var(--color-accent), var(--color-highlight));
-    transition: transform var(--dur-base) var(--ease-out);
+    transition: transform 0.7s var(--ease-in-out);
   }
   .macroaree__media :global(.placeholder) {
     border-radius: 50%;
     overflow: hidden;
     display: block;
   }
+  /* Hover: il cerchio gira su se stesso (360°) + leggero lift */
   .macroaree__link:hover .macroaree__media {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-4px) scale(1.02) rotate(360deg);
   }
   .macroaree__label {
     display: block;

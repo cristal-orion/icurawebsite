@@ -72,5 +72,84 @@ const fullTitle = title === "iCura Impresa" ? title : `${title} · iCura Impresa
     <CookieConsent />
     <!-- Clippy AI Widget -->
     <script src="https://clippyai.duckdns.org/static/clippy-embed.js" data-config-id="24932cb9"></script>
+
+    <script>
+      // Scroll reveal globale — fa entrare con un fade-up morbido titoli,
+      // testi, card e immagini quando arrivano nel viewport. Vale su tutte
+      // le pagine (è nel layout). Progressive enhancement: parte solo con
+      // JS e motion attivo; gli elementi già nel primo viewport NON vengono
+      // nascosti, così non c'è nessun flash sopra la piega.
+      (() => {
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const main = document.getElementById("main");
+        if (!main || !("IntersectionObserver" in window)) return;
+
+        const SELECTOR = [
+          ".eyebrow",
+          "h2:not(.sr-only)",
+          "h3:not(.sr-only)",
+          "[class*='card']",
+          "[class*='lede']",
+          ".macroaree__item",
+          ".stat",
+          ".intro__title",
+          ".intro__body",
+          "figure.placeholder",
+        ].join(",");
+
+        // Candidati dentro <main>, esclusi quelli dell'hero (ha già la sua animazione).
+        let items = Array.from(main.querySelectorAll(SELECTOR)).filter(
+          (el) => !el.closest(".hero-impact")
+        );
+
+        // Dedup: se un elemento è dentro un altro candidato, tieni solo il più esterno
+        // (es. un <h3> dentro una card → anima la card, non entrambi).
+        const set = new Set(items);
+        items = items.filter((el) => {
+          let p = el.parentElement;
+          while (p) {
+            if (set.has(p)) return false;
+            p = p.parentElement;
+          }
+          return true;
+        });
+        if (!items.length) return;
+
+        // Stagger: piccolo ritardo progressivo tra fratelli che entrano insieme
+        // (una fila di card / numeri appare a cascata).
+        const order = new Map();
+        for (const el of items) {
+          const parent = el.parentElement;
+          const n = order.get(parent) || 0;
+          order.set(parent, n + 1);
+          el.style.setProperty("--reveal-delay", Math.min(n, 8) * 110 + "ms");
+        }
+
+        document.documentElement.classList.add("reveal-ready");
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.add("is-visible");
+              io.unobserve(e.target);
+            }
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0 }
+        );
+
+        const fold = window.innerHeight * 0.9;
+        for (const el of items) {
+          if (el.getBoundingClientRect().top < fold) {
+            // Già nel primo viewport: mostralo subito, senza nasconderlo prima.
+            el.classList.add("is-visible");
+          } else {
+            el.setAttribute("data-reveal", "");
+            io.observe(el);
+          }
+        }
+      })();
+    </script>
   </body>
 </html>

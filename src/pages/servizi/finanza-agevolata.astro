@@ -2,47 +2,100 @@
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
+import ParallaxBand from "@components/ParallaxBand.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
 
 const aree = [
   {
-    nome: "Sgravi INAIL — oscillazione OT23",
-    desc: "Riduzione del premio assicurativo per le imprese che adottano interventi di prevenzione. Predisponiamo domanda e documentazione.",
+    nome: "Bando ISI INAIL",
+    desc: "Contributi a fondo perduto per investimenti in sicurezza: macchine, impianti, abbattimento rischi. Procedura a sportello (click day) che premia chi arriva pronto. Predisponiamo progetto e documentazione tecnica.",
+    href: "/bando-isi",
+    cta: "Scopri il bando ISI",
+  },
+  {
+    nome: "ZES Unica — Mezzogiorno",
+    desc: "Credito d'imposta per investimenti in beni strumentali nelle imprese del Sud. Comunicazione all'Agenzia delle Entrate, asseverazione e calcolo dell'agevolazione.",
+    href: "/zes-unica",
+    cta: "Scopri la ZES Unica",
+  },
+  {
+    id: "ot23",
+    nome: "Sgravi INAIL — modello OT23",
+    desc: "Riduzione del premio assicurativo per le imprese che adottano interventi di prevenzione oltre l'obbligo di legge. Raccogliamo le prove documentali e compiliamo l'istanza entro la scadenza annuale.",
+  },
+  {
+    id: "transizione",
+    nome: "Transizione 5.0 e credito d'imposta",
+    desc: "Beni strumentali 4.0, efficienza energetica, formazione collegata. Verifichiamo l'ammissibilità, prepariamo la perizia tecnica e gestiamo le certificazioni ex-ante ed ex-post.",
   },
   {
     nome: "Formazione finanziata",
-    desc: "Fondi interprofessionali per formare il personale a costo zero. Domanda, erogazione e rendicontazione gestite da noi.",
+    desc: "Fondi interprofessionali (Fondimpresa, For.Te, Fondir e altri) per formare il personale a costo zero. Adesione al fondo, piano formativo, erogazione e rendicontazione.",
     href: "/servizi/formazione",
     cta: "Vai alla formazione",
   },
   {
     nome: "Bandi regionali e nazionali",
-    desc: "Contributi a fondo perduto e finanziamenti agevolati per investimenti, innovazione e crescita d'impresa. Scrematura, domanda, monitoraggio.",
-  },
-  {
-    nome: "Credito d'imposta",
-    desc: "Beni strumentali, formazione 4.0, transizione 5.0. Verifichiamo l'ammissibilità e prepariamo la documentazione tecnica.",
+    desc: "Contributi a fondo perduto e finanziamenti agevolati per investimenti, innovazione, digitalizzazione e crescita. Monitoriamo le aperture, scremiamo i bandi adatti a te e seguiamo la domanda.",
   },
 ];
 
+const ottieni = [
+  "Un'analisi gratuita di ammissibilità prima di muovere un euro",
+  "La scelta dello strumento giusto tra fondo perduto, credito d'imposta e finanziamento agevolato",
+  "Tutta la documentazione tecnica e amministrativa preparata da noi",
+  "Il rispetto delle scadenze e dei portali (click day, piattaforme ministeriali e regionali)",
+  "La rendicontazione finale e la gestione di eventuali controlli dell'ente",
+  "Un solo referente dall'idea di investimento all'incasso del contributo",
+];
+
 const fasi = [
-  { n: "01", titolo: "Pre-check", desc: "Verifichiamo idoneità dell'impresa e del progetto. Gratuito." },
-  { n: "02", titolo: "Progettazione", desc: "Definiamo l'intervento e prepariamo la documentazione tecnica." },
-  { n: "03", titolo: "Domanda", desc: "Compilazione e invio nei tempi e sui portali previsti dal bando." },
-  { n: "04", titolo: "Rendicontazione", desc: "Esecuzione, monitoraggio e chiusura della pratica all'ente." },
+  { n: "01", titolo: "Pre-check", desc: "Verifichiamo l'idoneità dell'impresa e dell'investimento. È gratuito e senza impegno." },
+  { n: "02", titolo: "Progettazione", desc: "Scegliamo lo strumento più conveniente e prepariamo il progetto e la documentazione tecnica." },
+  { n: "03", titolo: "Domanda", desc: "Compilazione e invio nei tempi e sui portali previsti dal bando, con tutte le asseverazioni." },
+  { n: "04", titolo: "Rendicontazione", desc: "Seguiamo esecuzione, monitoraggio, rendiconto e gli eventuali controlli fino alla chiusura." },
+];
+
+const faq = [
+  {
+    q: "Quanto costa il vostro servizio?",
+    a: "Il pre-check di ammissibilità è gratuito. Sul resto lavoriamo con una quota fissa concordata e, di norma, una percentuale di success fee legata al contributo effettivamente ottenuto: se non arriva l'agevolazione, non paghi la parte a risultato. I termini esatti li mettiamo nero su bianco prima di partire.",
+  },
+  {
+    q: "Che differenza c'è tra fondo perduto, credito d'imposta e finanziamento agevolato?",
+    a: "Il fondo perduto è un contributo che non va restituito (es. bando ISI). Il credito d'imposta abbatte le imposte da versare in compensazione (es. ZES, Transizione 5.0). Il finanziamento agevolato è un prestito a condizioni di favore (tasso ridotto, garanzie). In fase di analisi scegliamo quello che ti conviene davvero, e quando è possibile li combiniamo.",
+  },
+  {
+    q: "Che differenza c'è tra credito d'imposta 4.0 e Transizione 5.0?",
+    a: "Il credito 4.0 premia l'acquisto di beni strumentali tecnologicamente avanzati e interconnessi. La Transizione 5.0 va oltre: finanzia investimenti che, oltre a digitalizzare, riducono i consumi energetici della struttura produttiva (almeno il 3%) o del processo (almeno il 5%), con aliquote più alte quanto maggiore è il risparmio. Verifichiamo quale delle due conviene al tuo progetto e gestiamo perizie e certificazioni richieste.",
+  },
+  {
+    q: "Posso cumulare più agevolazioni sullo stesso investimento?",
+    a: "Spesso sì, ma con limiti precisi sull'intensità di aiuto e regole anti-doppio-finanziamento che cambiano da misura a misura. Fa parte del nostro lavoro verificarlo prima, così non rischi di vederti revocare il contributo in fase di controllo.",
+  },
+  {
+    q: "Quanto tempo richiede tutta la procedura?",
+    a: "Dipende dalla misura. Una domanda a sportello richiede settimane di preparazione e poi l'esito è rapido; un bando regionale può avere istruttorie di mesi. Nel pre-check ti diamo una tempistica realistica e le scadenze da rispettare.",
+  },
+  {
+    q: "Lavorate solo con imprese della Campania?",
+    a: "No. Misure come ZES e Decreto Coesione riguardano il Mezzogiorno, ma sgravi INAIL, bando ISI, Transizione 5.0, formazione finanziata e gran parte dei bandi nazionali valgono su tutta Italia. Seguiamo imprese in più regioni.",
+  },
 ];
 ---
 
 <Base
   title="Finanza agevolata"
-  description="Bando ISI, sgravi INAIL, fondi interprofessionali, bandi regionali e nazionali, credito d'imposta. iCura Impresa ti accompagna dalla domanda alla rendicontazione."
+  description="Bando ISI, ZES Unica, sgravi INAIL OT23, Transizione 5.0, fondi interprofessionali, bandi regionali e nazionali, credito d'imposta. iCura Impresa ti accompagna dall'analisi di ammissibilità alla rendicontazione."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 04</p>
       <h1>Finanza agevolata.</h1>
       <p class="lede">
-        Contributi, fondi e crediti d'imposta esistono. Il difficile è intercettarli e portarli a casa senza errori. Lo facciamo noi.
+        Contributi, fondi e crediti d'imposta esistono. Il difficile è intercettarli, scegliere quello giusto e portarlo a casa senza errori. Lo facciamo noi.
       </p>
     </div>
   </header>
@@ -59,30 +112,97 @@ const fasi = [
     </div>
   </section>
 
-  <section class="section">
+  {/* ───── Contesto ───── */}
+  <section class="section section--alt" aria-labelledby="finanza-contesto">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">01 — Il contesto</p>
+        <h2 id="finanza-contesto" class="two-col__title">Ogni anno milioni di euro restano non richiesti.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Tra fondi europei, nazionali e regionali, le risorse per chi investe non mancano. Quello che manca, alle imprese, è il tempo per monitorarle, la capacità di leggere i bandi e la struttura per gestire domanda, asseverazioni e rendicontazione nei tempi giusti.
+        </p>
+        <p>
+          Risultato: una parte consistente delle agevolazioni va deserta o finisce a chi è arrivato prima e meglio preparato. Noi facciamo esattamente questo — intercettare la misura adatta alla tua impresa e seguirla dalla A alla Z — così l'agevolazione la prendi tu.
+        </p>
+        <ul class="chips" aria-label="Strumenti che seguiamo">
+          <li>Bando ISI INAIL</li>
+          <li>ZES Unica</li>
+          <li>Sgravi OT23</li>
+          <li>Transizione 5.0</li>
+          <li>Credito d'imposta 4.0</li>
+          <li>Fondi interprofessionali</li>
+          <li>Nuova Sabatini</li>
+          <li>Bandi regionali</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── Cosa intercettiamo ───── */}
+  <section class="section" aria-labelledby="finanza-aree">
     <div class="container">
-      <p class="eyebrow">Cosa intercettiamo</p>
+      <p class="eyebrow">02 — Cosa intercettiamo</p>
+      <h2 id="finanza-aree" class="section-title">Gli strumenti su cui lavoriamo.</h2>
       <AreaGrid aree={aree} />
     </div>
   </section>
 
   <hr class="rule" aria-hidden="true" />
 
-  <section class="section">
-    <div class="container">
-      <p class="eyebrow">02 — Come funziona</p>
-      <h2 class="fasi__heading">Quattro fasi, una persona di riferimento.</h2>
-      <ol class="fasi">
-        {fasi.map((f) => (
-          <li class="fase">
-            <span class="fase__n">{f.n}</span>
-            <h3 class="fase__titolo">{f.titolo}</h3>
-            <p class="fase__desc">{f.desc}</p>
+  {/* ───── Cosa ottieni ───── */}
+  <section class="section section--alt-blue" aria-labelledby="finanza-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">03 — Cosa ottieni</p>
+        <h2 id="finanza-ottieni" class="two-col__title">Non un consiglio. La pratica chiusa.</h2>
+        <p class="two-col__note">
+          Niente fai-da-te sui portali, niente scadenze perse. Tu decidi l'investimento, al resto pensiamo noi.
+        </p>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   </section>
+
+  <ParallaxBand
+    eyebrow="Investire conviene"
+    title="Gli investimenti del 2026 sono agevolati."
+    lede="Chi rinnova macchinari, riduce i consumi o investe al Sud può recuperare una parte importante della spesa tra Transizione 5.0, ZES Unica e credito d'imposta. Noi troviamo la misura giusta e la portiamo a casa."
+    src="/images/finanza-zes-transizione-impianto.webp"
+    alt="Consulente di finanza agevolata iCura Impresa in uno stabilimento produttivo: consulente e titolare valutano su tablet un investimento in nuovo macchinario e monitoraggio energetico, barriere di sicurezza e luce naturale, fotografia industriale documentaria"
+    cta={{ href: "/zes-unica", label: "Scopri la ZES Unica" }}
+    labelledby="finanza-parallax"
+  />
+
+  {/* ───── Come funziona ───── */}
+  <Steps
+    eyebrow="04 — Come funziona"
+    title="Quattro fasi, una persona di riferimento."
+    steps={fasi}
+    labelledby="finanza-fasi"
+  />
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── FAQ ───── */}
+  <Faq
+    eyebrow="05 — Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-finanza"
+    labelledby="finanza-faq"
+    items={faq}
+    tone="alt"
+  />
 
   <CtaBand
     title="Capiamo insieme cosa puoi ottenere."
@@ -106,37 +226,4 @@ const fasi = [
     margin-bottom: var(--space-md);
   }
   .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 52ch; }
-
-  .fasi__heading { font-size: var(--text-3xl); margin-bottom: var(--space-xl); max-width: 22ch; }
-  .fasi {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .fase {
-    padding: var(--space-lg);
-    border: var(--rule-hair) solid var(--color-rule);
-    margin-left: -1px;
-  }
-  .fase:first-child { margin-left: 0; }
-  .fase__n {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-    display: block;
-    margin-bottom: var(--space-md);
-  }
-  .fase__titolo { font-size: var(--text-xl); margin: 0 0 var(--space-2xs); font-weight: 500; }
-  .fase__desc { color: var(--color-ink-2); margin: 0; font-size: var(--text-md); }
-
-  @media (max-width: 56rem) {
-    .fasi { grid-template-columns: 1fr; }
-    .fase { margin-left: 0; margin-top: -1px; }
-  }
-  @media (min-width: 56rem) and (max-width: 76rem) {
-    .fasi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
 </style>

@@ -1,6 +1,9 @@
 ---
 import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
 
 const facts = [
@@ -21,6 +24,36 @@ const finanzia = [
   {
     nome: "Strutture produttive nel Sud",
     desc: "Investimenti in unità produttive nelle aree della ZES Unica del Mezzogiorno, Campania inclusa.",
+  },
+];
+
+const fasi = [
+  { n: "01", titolo: "Pre-check", desc: "Verifichiamo che impresa e investimento rientrino nei requisiti della ZES Unica. È gratuito." },
+  { n: "02", titolo: "Calcolo del beneficio", desc: "Stimiamo l'aliquota applicabile e il credito d'imposta atteso sul tuo progetto." },
+  { n: "03", titolo: "Comunicazione all'AdE", desc: "Prepariamo e inviamo la comunicazione all'Agenzia delle Entrate nei termini della misura." },
+  { n: "04", titolo: "Certificazione e compensazione", desc: "Coordiniamo la certificazione delle spese e l'utilizzo del credito in compensazione su F24." },
+];
+
+const faq = [
+  {
+    q: "La mia regione rientra nella ZES Unica?",
+    a: "La ZES Unica copre l'intero Mezzogiorno: Abruzzo, Basilicata, Calabria, Campania, Molise, Puglia, Sardegna e Sicilia. L'aliquota base del credito cambia da regione a regione — più alta in Campania, Puglia, Calabria e Sicilia — e si somma alla maggiorazione per piccole e medie imprese. Nel pre-check verifichiamo la tua sede e il beneficio effettivo.",
+  },
+  {
+    q: "Quali imprese possono accedere alla ZES Unica?",
+    a: "Le imprese che realizzano investimenti in beni strumentali destinati a strutture produttive nelle regioni del Mezzogiorno, Campania inclusa. L'aliquota del credito dipende dalla dimensione dell'impresa e dalla regione: per le piccole imprese in Campania può arrivare fino al 60%. Nel pre-check verifichiamo la tua posizione esatta.",
+  },
+  {
+    q: "C'è un importo minimo di investimento?",
+    a: "Sì. Il progetto deve raggiungere una soglia minima di 200.000 €. Non esiste invece un tetto unico nazionale al beneficio: conta il rispetto delle intensità di aiuto previste per dimensione e territorio, che calcoliamo noi.",
+  },
+  {
+    q: "Come si usa concretamente il credito d'imposta?",
+    a: "Non è un rimborso in denaro: è un credito che abbatte le imposte e i contributi da versare, da utilizzare in compensazione tramite modello F24. Prima dell'utilizzo serve la certificazione delle spese da parte di un revisore legale, che coordiniamo noi.",
+  },
+  {
+    q: "Posso cumulare la ZES con altre agevolazioni?",
+    a: "In molti casi sì, ma entro i limiti dell'intensità massima di aiuto e con le regole anti-doppio-finanziamento. Verificare la cumulabilità prima di investire fa parte del nostro lavoro: serve a non vedersi revocare il credito in fase di controllo.",
   },
 ];
 ---
@@ -54,7 +87,17 @@ const finanzia = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/finanza-zes-transizione-impianto.webp"
+        alt="Consulente di finanza agevolata iCura Impresa in uno stabilimento produttivo: consulente e titolare valutano su tablet un investimento in nuovo macchinario e monitoraggio energetico, barriere di sicurezza e luce naturale, fotografia industriale documentaria"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
     <div class="container two-col">
       <div>
         <p class="eyebrow">Cos'è</p>
@@ -71,9 +114,7 @@ const finanzia = [
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
-
-  <section class="section">
+  <section class="section section--alt-2">
     <div class="container">
       <p class="eyebrow">Cosa puoi finanziare</p>
       <AreaGrid aree={finanzia} />
@@ -82,22 +123,31 @@ const finanzia = [
 
   <hr class="rule" aria-hidden="true" />
 
-  <section class="section">
-    <div class="container two-col">
-      <div>
-        <p class="eyebrow">Come ti aiutiamo</p>
-        <h2>Dal pre-check alla compensazione.</h2>
-      </div>
-      <div class="prose">
-        <p>
-          Verifichiamo l'ammissibilità dell'impresa e del progetto, calcoliamo il beneficio, prepariamo la documentazione e gestiamo la certificazione delle spese e la compensazione. Un solo referente per tutta la pratica.
-        </p>
-        <p class="note">
-          Aliquote esatte, finestre di domanda e adempimenti dipendono da dimensione d'impresa, regione e aggiornamenti normativi: il pre-check è gratuito e lo facciamo noi.
-        </p>
-      </div>
+  <Steps
+    eyebrow="Come ti aiutiamo"
+    title="Dal pre-check alla compensazione."
+    steps={fasi}
+    labelledby="zes-fasi"
+  />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        Aliquote esatte, finestre di domanda e adempimenti dipendono da dimensione d'impresa, regione e aggiornamenti normativi: il pre-check è gratuito e lo facciamo noi.
+      </p>
     </div>
   </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-zes"
+    labelledby="zes-faq"
+    items={faq}
+    tone="alt-blue"
+  />
 
   <CtaBand
     title="Verifichiamo se la tua impresa può accedere."

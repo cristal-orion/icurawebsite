@@ -2,50 +2,102 @@
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
+import FeatureRow from "@components/FeatureRow.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
 
 const aree = [
   {
-    nome: "Sicurezza sul lavoro",
-    desc: "DVR, valutazioni rischio, designazioni RSPP, sopralluoghi periodici. Tutto il D.Lgs. 81/08 in un unico contratto.",
+    id: "sicurezza-lavoro",
+    nome: "Sicurezza sul lavoro — D.Lgs. 81/08",
+    desc: "DVR e valutazioni dei rischi, nomina e incarico RSPP, sopralluoghi periodici, gestione di scadenze e adempimenti. Tutto il Testo Unico in un unico contratto.",
   },
   {
+    id: "cantieri",
     nome: "Sicurezza nei cantieri",
-    desc: "PSC, POS, coordinamento per la sicurezza in fase progettuale ed esecutiva. Per imprese edili e committenti privati.",
+    desc: "PSC, POS, fascicolo dell'opera e coordinamento per la sicurezza in fase di progettazione ed esecuzione (CSP/CSE). Per imprese edili e committenti privati.",
   },
   {
+    id: "haccp",
     nome: "Sicurezza alimentare (HACCP)",
-    desc: "Manuali, autocontrollo, formazione operatori. Per ristoranti, bar, mense, produzione alimentare.",
+    desc: "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione operatori secondo il Reg. CE 852/2004. Per ristoranti, bar, mense e produzione alimentare.",
   },
   {
+    id: "medicina-lavoro",
     nome: "Medicina del lavoro",
-    desc: "Sorveglianza sanitaria, idoneità alla mansione, protocolli sanitari, medico competente.",
+    desc: "Sorveglianza sanitaria, idoneità alla mansione, protocollo sanitario e nomina del medico competente. Visite organizzate direttamente in azienda.",
   },
   {
+    id: "gdpr",
     nome: "GDPR & Privacy",
-    desc: "DPO, registri trattamento, informative, audit. Per chi tratta dati personali in modo strutturato.",
+    desc: "Nomina DPO, registro dei trattamenti, informative, valutazioni d'impatto e audit. Per chi tratta dati personali in modo strutturato (Reg. UE 2016/679).",
   },
   {
+    id: "ambiente",
     nome: "Consulenza ambientale",
-    desc: "Autorizzazioni AUA, gestione rifiuti, MUD, registri di carico/scarico, emissioni in atmosfera.",
+    desc: "Autorizzazione Unica Ambientale (AUA), gestione rifiuti, MUD, registri di carico/scarico ed emissioni in atmosfera. Adempimenti tecnici e scadenze gestite da noi.",
   },
   {
+    id: "aziendale",
     nome: "Consulenza aziendale",
-    desc: "Strutturazione societaria, organizzazione dei processi, adempimenti e supporto continuativo all'impresa.",
+    desc: "Strutturazione societaria, organizzazione dei processi e supporto continuativo all'impresa. Il punto di raccordo tra sicurezza, qualità e adempimenti.",
+  },
+];
+
+const ottieni = [
+  "Tutta la documentazione obbligatoria a norma e pronta in caso di ispezione",
+  "Un calendario delle scadenze (visite, formazione, revisioni) che teniamo noi",
+  "Un solo referente per sicurezza, HACCP, ambiente e privacy, senza rimbalzi tra studi",
+  "Aggiornamenti automatici quando cambia la normativa o la tua organizzazione",
+  "Supporto diretto durante ispezioni di ASL, INAIL, Ispettorato e Vigili del Fuoco",
+];
+
+const fasi = [
+  { n: "01", titolo: "Sopralluogo", desc: "Veniamo in azienda, vediamo lavorazioni, ambienti e documenti già in essere. È gratuito." },
+  { n: "02", titolo: "Valutazione", desc: "Analizziamo rischi e adempimenti, fotografiamo cosa manca e definiamo le priorità." },
+  { n: "03", titolo: "Messa a norma", desc: "Redigiamo documenti e nomine, pianifichiamo formazione e sorveglianza sanitaria." },
+  { n: "04", titolo: "Gestione continua", desc: "Teniamo lo scadenzario, aggiorniamo i documenti e ti seguiamo durante i controlli." },
+];
+
+const faq = [
+  {
+    q: "Devo fare il DVR anche se ho un solo dipendente?",
+    a: "Sì. L'obbligo del Documento di Valutazione dei Rischi scatta dal primo lavoratore (anche familiare o socio che lavora in azienda). Non esiste più l'autocertificazione: il DVR va redatto e datato. Senza, le sanzioni sono penali a carico del datore di lavoro.",
+  },
+  {
+    q: "Cosa rischio se non sono in regola con il D.Lgs. 81/08?",
+    a: "Si va da sanzioni amministrative ad ammende e arresto per il datore di lavoro, fino alla sospensione dell'attività imprenditoriale nei casi più gravi. In caso di infortunio, l'assenza di valutazione dei rischi e formazione pesa molto sulla responsabilità. Mettersi in regola costa una frazione di quello che costa non esserlo.",
+  },
+  {
+    q: "L'RSPP posso prenderlo esterno o devo nominarlo internamente?",
+    a: "Puoi nominare un RSPP esterno qualificato, ed è la scelta più comune per le PMI: ti diamo una figura competente e aggiornata senza doverla formare e mantenere internamente. In alcuni casi e dimensioni il datore di lavoro può svolgere direttamente il ruolo, dopo formazione specifica.",
+  },
+  {
+    q: "Ogni quanto va aggiornato il DVR?",
+    a: "Va rielaborato a ogni variazione significativa: nuove lavorazioni o macchinari, modifiche dei luoghi, infortuni significativi o evoluzione della normativa. Non è un documento da fare una volta e archiviare — è quello che teniamo aggiornato per te con la gestione continua.",
+  },
+  {
+    q: "Seguite anche la sorveglianza sanitaria e il medico competente?",
+    a: "Sì. Mettiamo a disposizione il medico competente, definiamo il protocollo sanitario in base ai rischi e organizziamo le visite direttamente in azienda, coordinandole con il resto degli adempimenti.",
+  },
+  {
+    q: "Come funziona il contratto?",
+    a: "Di norma lavoriamo con un retainer annuale: documentazione, formazione, aggiornamenti e supporto continuo a una tariffa prevedibile, senza extra a sorpresa. Dopo il sopralluogo gratuito ti diamo un preventivo chiaro su misura della tua attività.",
   },
 ];
 ---
 
 <Base
   title="Consulenza"
-  description="Consulenza integrata per l'impresa: sicurezza sul lavoro (D.Lgs. 81/08), cantieri, HACCP, medicina del lavoro, GDPR, ambiente e organizzazione aziendale."
+  description="Consulenza integrata per l'impresa: sicurezza sul lavoro (D.Lgs. 81/08), cantieri, HACCP, medicina del lavoro, GDPR, ambiente e organizzazione aziendale. Un solo interlocutore."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 01</p>
       <h1>Consulenza.</h1>
       <p class="lede">
-        Tutto quello che la legge chiede di fare e che l'impresa non dovrebbe gestire da sola, in capo a un solo interlocutore.
+        Tutto quello che la legge chiede e che l'impresa non dovrebbe gestire da sola — sicurezza, HACCP, ambiente, privacy — in capo a un solo interlocutore.
       </p>
     </div>
   </header>
@@ -62,12 +114,128 @@ const aree = [
     </div>
   </section>
 
-  <section class="section">
+  {/* ───── Contesto ───── */}
+  <section class="section section--alt" aria-labelledby="consulenza-contesto">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">01 — Perché serve</p>
+        <h2 id="consulenza-contesto" class="two-col__title">La sicurezza non è un certificato. È un mestiere quotidiano.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Il D.Lgs. 81/08 non chiede un foglio da archiviare: chiede di valutare i rischi reali, formare le persone, tenere in ordine documenti e scadenze e dimostrarlo in qualsiasi momento davanti a un ispettore. Lo stesso vale per HACCP, ambiente e privacy.
+        </p>
+        <p>
+          Per un'impresa, gestirlo da sola significa rincorrere norme che cambiano e moduli che si moltiplicano. Noi lo trattiamo come un processo continuo, non come un adempimento una tantum: un team multidisciplinare che tiene insieme tutto e ti lascia lavorare.
+        </p>
+        <ul class="chips" aria-label="Ambiti e normative che seguiamo">
+          <li>D.Lgs. 81/08</li>
+          <li>DVR</li>
+          <li>RSPP</li>
+          <li>PSC / POS</li>
+          <li>HACCP — Reg. CE 852/2004</li>
+          <li>Medico competente</li>
+          <li>GDPR — Reg. UE 2016/679</li>
+          <li>AUA / MUD</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── Cosa copriamo ───── */}
+  <section class="section" aria-labelledby="consulenza-aree">
     <div class="container">
-      <p class="eyebrow">Cosa copriamo</p>
+      <p class="eyebrow">02 — Cosa copriamo</p>
+      <h2 id="consulenza-aree" class="section-title">Un'unica filiera per tutti gli adempimenti.</h2>
       <AreaGrid aree={aree} />
     </div>
   </section>
+
+  {/* ───── Focus: Medicina del lavoro ───── */}
+  <FeatureRow
+    flip
+    id="medicina-focus"
+    eyebrow="Medicina del lavoro"
+    title="Sorveglianza sanitaria, organizzata in azienda."
+    image={{
+      src: "/images/consulenza-medicina-lavoro.webp",
+      alt: "Medico competente durante una visita di sorveglianza sanitaria in azienda: adulto in camice misura la pressione a un lavoratore in abbigliamento tecnico, stanza riservata e ordinata, luce naturale, atmosfera professionale e rispettosa",
+    }}
+    paras={[
+      "Dove c'è un rischio per la salute serve la sorveglianza sanitaria: protocollo, visite, idoneità alla mansione. Senza medico competente nominato e senza protocollo, l'azienda è scoperta proprio sul punto più delicato.",
+      "Mettiamo a disposizione il medico competente, costruiamo il protocollo sui rischi reali delle mansioni e organizziamo le visite direttamente da te, coordinandole con scadenze e formazione.",
+    ]}
+    points={[
+      "Nomina del medico competente",
+      "Protocollo sanitario sui rischi reali",
+      "Visite organizzate in sede",
+    ]}
+  />
+
+  {/* ───── Cosa ottieni ───── */}
+  <section class="section section--ink" aria-labelledby="consulenza-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">03 — Cosa ottieni</p>
+        <h2 id="consulenza-ottieni" class="two-col__title">In regola, e capace di dimostrarlo.</h2>
+        <p class="two-col__note">
+          L'obiettivo non è "avere le carte". È non doverci più pensare, sapendo che è tutto a posto.
+        </p>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ───── Come funziona ───── */}
+  <Steps
+    eyebrow="04 — Come funziona"
+    title="Dal sopralluogo alla gestione continua."
+    steps={fasi}
+    labelledby="consulenza-fasi"
+  />
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── Focus: GDPR ───── */}
+  <FeatureRow
+    id="gdpr-focus"
+    eyebrow="GDPR & Privacy"
+    title="GDPR: un registro che esiste davvero."
+    image={{
+      src: "/images/consulenza-gdpr-privacy.webp",
+      alt: "Consulente privacy iCura Impresa durante un audit GDPR in ufficio: due adulti esaminano registro trattamenti, laptop e documenti non leggibili su un tavolo ordinato, luce naturale e atmosfera riservata",
+    }}
+    paras={[
+      "Trattare dati di clienti, dipendenti e fornitori vuol dire avere informative corrette, un registro dei trattamenti aggiornato e, in molti casi, un DPO nominato. Il modello scaricato da internet, davanti a un reclamo o a un controllo del Garante, non basta.",
+      "Mappiamo i trattamenti, redigiamo informative e registro, valutiamo i rischi (DPIA dove serve) e, quando è obbligatorio o opportuno, assumiamo il ruolo di DPO. Conformità al Reg. UE 2016/679 costruita sulla tua organizzazione, non copiata.",
+    ]}
+    points={[
+      "Registro dei trattamenti e informative",
+      "Valutazioni d'impatto (DPIA)",
+      "DPO esterno quando serve",
+    ]}
+  />
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── FAQ ───── */}
+  <Faq
+    eyebrow="05 — Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-consulenza"
+    labelledby="consulenza-faq"
+    items={faq}
+    tone="alt-blue"
+  />
 
   <CtaBand
     title="Capiamo di cosa ha bisogno la tua impresa."

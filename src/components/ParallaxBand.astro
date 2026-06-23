@@ -1,0 +1,175 @@
+---
+// Fascia in parallasse — immagine full-width che scorre più lenta del
+// contenuto sovrapposto. Niente background-attachment:fixed (scatta su
+// mobile): si muove uno strato <img> via transform (rAF), solo quando in
+// vista, e si disattiva con prefers-reduced-motion (immagine ferma).
+interface Props {
+  src: string;
+  alt?: string;
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  cta?: { href: string; label: string };
+  labelledby?: string;
+}
+const { src, alt = "", eyebrow, title, lede, cta, labelledby } = Astro.props;
+const headingId = labelledby ?? "parallax-heading";
+---
+
+<section class="parallax" aria-labelledby={headingId} data-parallax>
+  <div class="parallax__media" data-parallax-layer>
+    <img src={src} alt={alt} loading="lazy" decoding="async" />
+  </div>
+  <div class="parallax__veil" aria-hidden="true"></div>
+  <div class="container parallax__inner">
+    {eyebrow && <p class="parallax__eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>{eyebrow}</p>}
+    <h2 id={headingId} class="parallax__title">{title}</h2>
+    {lede && <p class="parallax__lede">{lede}</p>}
+    {cta && (
+      <a href={cta.href} class="btn btn--primary parallax__cta">
+        {cta.label}
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    )}
+  </div>
+</section>
+
+<style>
+  .parallax {
+    position: relative;
+    overflow: clip;
+    isolation: isolate;
+    display: grid;
+    align-items: center;
+    min-height: clamp(22rem, 52vh, 34rem);
+    background: var(--color-ink);
+    border-block: var(--rule-thick) solid var(--color-ink);
+  }
+
+  /* Strato immagine: più alto della fascia (inset negativo) così il
+     movimento non scopre i bordi. */
+  .parallax__media {
+    position: absolute;
+    inset: -15% 0;
+    z-index: 0;
+    will-change: transform;
+  }
+  .parallax__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .parallax__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in oklch, var(--color-ink) 78%, transparent) 0%,
+        color-mix(in oklch, var(--color-ink) 45%, transparent) 42%,
+        color-mix(in oklch, var(--color-ink) 12%, transparent) 100%
+      );
+  }
+
+  .parallax__inner {
+    position: relative;
+    z-index: 2;
+    padding-block: var(--space-3xl);
+    color: var(--color-paper);
+  }
+  .parallax__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in oklch, var(--color-paper) 86%, transparent);
+    margin: 0 0 var(--space-md);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+  }
+  .parallax__eyebrow .eyebrow__dot { background: var(--color-highlight); }
+  .parallax__title {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--color-paper);
+    max-width: 20ch;
+  }
+  .parallax__lede {
+    margin: var(--space-md) 0 0;
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    color: color-mix(in oklch, var(--color-paper) 88%, transparent);
+    max-width: 48ch;
+  }
+  .parallax__cta {
+    margin-top: var(--space-lg);
+    background: var(--color-paper);
+    color: var(--color-accent);
+    border-color: var(--color-paper);
+  }
+  .parallax__cta:hover {
+    background: color-mix(in oklch, var(--color-paper) 92%, var(--color-highlight) 8%);
+    border-color: color-mix(in oklch, var(--color-paper) 92%, var(--color-highlight) 8%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .parallax__media { transform: none !important; }
+  }
+</style>
+
+<script>
+  // Parallasse: muove lo strato immagine più lentamente dello scroll.
+  // Un solo handler per tutte le fasce della pagina; rAF + solo quando in vista.
+  (() => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const bands = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-parallax]")
+    );
+    if (!bands.length || !("IntersectionObserver" in window)) return;
+
+    const visible = new Set<HTMLElement>();
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const vh = window.innerHeight;
+      for (const band of visible) {
+        const layer = band.querySelector<HTMLElement>("[data-parallax-layer]");
+        if (!layer) continue;
+        const rect = band.getBoundingClientRect();
+        const delta = rect.top + rect.height / 2 - vh / 2;
+        const max = band.offsetHeight * 0.15;
+        let y = (-delta / vh) * max;
+        y = Math.max(-max, Math.min(max, y));
+        layer.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+      }
+    };
+    const onScroll = () => {
+      if (!ticking && visible.size) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.add(e.target as HTMLElement);
+          else visible.delete(e.target as HTMLElement);
+        }
+        update();
+      },
+      { threshold: 0 }
+    );
+    bands.forEach((b) => io.observe(b));
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  })();
+</script>

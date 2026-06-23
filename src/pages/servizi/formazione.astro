@@ -1,55 +1,175 @@
 ---
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import FeatureRow from "@components/FeatureRow.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
 
 const corsi = [
   {
     formato: "In aula",
-    desc: "Formazione obbligatoria e specialistica con docenti qualificati. Sedi a Napoli e in azienda.",
+    desc: "Formazione obbligatoria e specialistica con docenti qualificati. In sede a Napoli o direttamente nella tua azienda.",
     target: "RSPP, RLS, dirigenti, preposti, addetti antincendio e primo soccorso.",
   },
   {
     formato: "E-learning",
-    desc: "Piattaforma online accreditata per moduli teorici. Tracciabile, ripetibile, con attestato.",
-    target: "Lavoratori generici, formazione base e aggiornamenti periodici.",
+    desc: "Piattaforma online accreditata per i moduli teorici. Tracciabile, ripetibile, con attestato a fine percorso.",
+    target: "Lavoratori, formazione generale e aggiornamenti periodici.",
   },
   {
     formato: "HACCP",
-    desc: "Corsi specifici per il settore alimentare. Operatori, responsabili, livelli base e avanzati.",
+    desc: "Corsi specifici per il settore alimentare, livelli base e avanzato, secondo le indicazioni regionali.",
     target: "Ristoranti, bar, mense, GDO, produzione alimentare.",
+  },
+];
+
+const catalogo = [
+  {
+    id: "cat-lavoratori",
+    nome: "Formazione lavoratori",
+    desc: "Formazione generale (4 ore) e specifica per rischio basso, medio o alto (4/8/12 ore), più l'aggiornamento quinquennale (6 ore).",
+  },
+  {
+    id: "cat-ruoli",
+    nome: "Ruoli della sicurezza",
+    desc: "Preposti, dirigenti, RSPP e ASPP (moduli A–B–C), RLS. Formazione iniziale e aggiornamenti previsti dall'Accordo Stato-Regioni.",
+  },
+  {
+    id: "cat-emergenze",
+    nome: "Gestione delle emergenze",
+    desc: "Addetti antincendio (livelli 1–2–3) e addetti al primo soccorso (gruppi A, B e C), con i relativi aggiornamenti periodici.",
+  },
+  {
+    id: "cat-attrezzature",
+    nome: "Attrezzature — abilitazioni",
+    desc: "Carrelli elevatori, piattaforme PLE, gru, trabattelli, macchine movimento terra. Abilitazioni previste dall'Accordo Stato-Regioni 2012.",
+  },
+  {
+    id: "cat-rischi",
+    nome: "Rischi specifici",
+    desc: "Lavori in quota, spazi confinati, rischio chimico, DPI di III categoria, rischio elettrico (PES/PAV/PEI).",
+  },
+  {
+    id: "cat-haccp",
+    nome: "Settore alimentare (HACCP)",
+    desc: "Corsi per alimentaristi e responsabili dell'industria alimentare, livelli base e avanzato.",
+  },
+];
+
+const faq = [
+  {
+    q: "La formazione sulla sicurezza è davvero obbligatoria?",
+    a: "Sì. L'art. 37 del D.Lgs. 81/08 impone la formazione di tutti i lavoratori, oltre a quella specifica per preposti, dirigenti, RSPP, RLS e addetti alle emergenze. Non è formale: in caso di ispezione o infortunio, la mancata formazione è una delle prime cose contestate al datore di lavoro.",
+  },
+  {
+    q: "Quanto dura la formazione e ogni quanto va aggiornata?",
+    a: "La formazione generale dei lavoratori dura 4 ore, quella specifica 4, 8 o 12 ore a seconda del livello di rischio dell'attività. L'aggiornamento è di 6 ore ogni 5 anni. Per i ruoli (preposti, dirigenti, RSPP, antincendio, primo soccorso) durate e aggiornamenti sono diversi: ti diamo noi il piano corretto.",
+  },
+  {
+    q: "I corsi online valgono come quelli in aula?",
+    a: "Per i moduli teorici e la formazione generale l'e-learning su piattaforma accreditata è pienamente valido e tracciabile. Alcuni contenuti — soprattutto le parti pratiche (antincendio, primo soccorso, uso attrezzature) — richiedono invece l'aula. Componiamo il percorso in modo che sia a norma.",
+  },
+  {
+    q: "È vero che può essere a costo zero per l'azienda?",
+    a: "Sì, se l'azienda aderisce a un fondo interprofessionale (o ci fa aderire). Ogni impresa versa già lo 0,30% del costo del lavoro: con i fondi quei contributi tornano sotto forma di corsi finanziati. Gestiamo noi domanda, erogazione e rendicontazione.",
+  },
+  {
+    q: "Rilasciate attestati riconosciuti?",
+    a: "Sì. Al termine del corso rilasciamo attestati validi a tutti gli effetti di legge, con registro presenze e tracciabilità, pronti da esibire in caso di controllo.",
   },
 ];
 ---
 
 <Base
   title="Formazione finanziata"
-  description="Corsi di formazione sulla sicurezza in aula, e-learning, HACCP. Spesso a costo zero tramite fondi interprofessionali."
+  description="Corsi di formazione sulla sicurezza sul lavoro: lavoratori, preposti, dirigenti, RSPP, RLS, antincendio, primo soccorso, attrezzature e HACCP. In aula, e-learning, spesso a costo zero con i fondi interprofessionali."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 02</p>
       <h1>Formazione finanziata.</h1>
       <p class="lede">
-        Aula, online, HACCP. Spesso a costo zero per l'azienda, tramite i fondi interprofessionali.
+        Aula, online, HACCP. Tutta la formazione obbligatoria sulla sicurezza — spesso a costo zero per l'azienda, tramite i fondi interprofessionali.
       </p>
     </div>
   </header>
 
-  <hr class="rule" aria-hidden="true" />
+  {/* ───── Contesto ───── */}
+  <section class="section section--ink" aria-labelledby="formazione-contesto">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">01 — Perché serve</p>
+        <h2 id="formazione-contesto" class="two-col__title">Obbligatoria per legge. Utile per davvero.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          La formazione non è un favore alla burocrazia: è ciò che mette le persone in condizione di lavorare in sicurezza e mette l'azienda al riparo da responsabilità. L'Accordo Stato-Regioni stabilisce contenuti, durate e aggiornamenti per ogni ruolo, e l'81/08 ne fa un obbligo preciso del datore di lavoro.
+        </p>
+        <p>
+          Noi la rendiamo semplice: capiamo chi deve fare cosa, costruiamo il piano, eroghiamo i corsi e — quando si può — li facciamo pagare ai fondi invece che a te.
+        </p>
+        <ul class="chips" aria-label="Corsi e ambiti">
+          <li>Lavoratori</li>
+          <li>Preposti</li>
+          <li>Dirigenti</li>
+          <li>RSPP / ASPP</li>
+          <li>RLS</li>
+          <li>Antincendio</li>
+          <li>Primo soccorso</li>
+          <li>Carrelli / PLE</li>
+          <li>HACCP</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  <section class="section">
+  {/* ───── I tre formati ───── */}
+  <section class="section section--alt-2" aria-labelledby="formazione-formati">
     <div class="container">
-      <p class="eyebrow">I tre formati</p>
+      <p class="eyebrow">02 — Come eroghiamo</p>
+      <h2 id="formazione-formati" class="section-title">Tre formati, un solo standard di qualità.</h2>
       <div class="corsi">
         {corsi.map((c, i) => (
           <article class="corso">
             <span class="corso__n">{String(i + 1).padStart(2, "0")}</span>
-            <h2 class="corso__formato">{c.formato}</h2>
+            <h3 class="corso__formato">{c.formato}</h3>
             <p class="corso__desc">{c.desc}</p>
             <p class="corso__target"><strong>Per chi:</strong> {c.target}</p>
           </article>
         ))}
       </div>
+    </div>
+  </section>
+
+  {/* ───── Focus: corsi HACCP ───── */}
+  <FeatureRow
+    id="haccp-corsi"
+    eyebrow="Settore alimentare"
+    title="Corsi HACCP per chi lavora con gli alimenti."
+    image={{
+      src: "/images/consulenza-haccp-cucina.webp",
+      alt: "Corso HACCP in una cucina professionale: adulto con copricapo monouso e giacca navy verifica una checklist di igiene con il responsabile del locale, piano in acciaio e ambiente ordinato, luce naturale, fotografia documentaria professionale",
+    }}
+    paras={[
+      "Chi manipola, prepara o somministra alimenti deve essere formato su igiene e autocontrollo: è un obbligo che l'ASL verifica e che, in caso di non conformità, ricade sul titolare dell'attività.",
+      "Eroghiamo i corsi per alimentaristi e responsabili dell'industria alimentare nei livelli previsti dalla tua Regione, in aula presso il locale o in e-learning, con attestato valido a fine percorso.",
+    ]}
+    points={[
+      "Livelli base e avanzato secondo le indicazioni regionali",
+      "In aula nel tuo locale o e-learning tracciato",
+      "Attestato valido per ASL e controlli",
+    ]}
+  />
+
+  <hr class="rule" aria-hidden="true" />
+
+  {/* ───── Catalogo corsi ───── */}
+  <section class="section" aria-labelledby="formazione-catalogo">
+    <div class="container">
+      <p class="eyebrow">03 — Catalogo</p>
+      <h2 id="formazione-catalogo" class="section-title">I corsi che eroghiamo.</h2>
+      <AreaGrid aree={catalogo} />
     </div>
   </section>
 
@@ -63,13 +183,14 @@ const corsi = [
     </div>
   </section>
 
-  <section class="section finanziamento">
+  {/* ───── Finanziamento ───── */}
+  <section class="section finanziamento" aria-labelledby="formazione-fondi">
     <div class="container">
       <div class="finanziamento__inner">
         <p class="eyebrow">Costo zero</p>
-        <h2>La formazione finanziata, in pratica.</h2>
+        <h2 id="formazione-fondi">La formazione finanziata, in pratica.</h2>
         <p>
-          Ogni azienda versa già lo 0,30% del costo del lavoro ai fondi interprofessionali. Quei soldi tornano sotto forma di corsi. Noi ci occupiamo della domanda, della rendicontazione e dell'erogazione.
+          Ogni azienda versa già lo 0,30% del costo del lavoro ai fondi interprofessionali. Quei soldi tornano sotto forma di corsi. Noi ci occupiamo dell'adesione al fondo, della domanda, dell'erogazione e della rendicontazione: tu formi il personale senza toccare il budget.
         </p>
         <div class="finanziamento__ctas">
           <a href="/contatti" class="btn btn--primary">
@@ -84,6 +205,27 @@ const corsi = [
       </div>
     </div>
   </section>
+
+  {/* ───── FAQ ───── */}
+  <Faq
+    eyebrow="04 — Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-formazione"
+    labelledby="formazione-faq"
+    items={faq}
+    tone="alt-blue"
+  />
+
+  <CtaBand
+    title="Costruiamo il piano formativo della tua impresa."
+    lede="Ci dici quante persone e che ruoli, ti diciamo cosa è obbligatorio, quanto dura e quanto puoi farti finanziare."
+    image={{
+      src: "/images/formazione-aula-adulti.webp",
+      alt: "Docente iCura Impresa in aula durante un corso sulla sicurezza sul lavoro: adulto spiega a un gruppo di lavoratori attenti, atmosfera professionale e concreta, aula italiana con luce naturale, palette desaturata sobria toni navy e grigio, fotografia documentaria, no posa",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi il piano formativo" }}
+    labelledby="formazione-cta"
+  />
 </Base>
 
 <style>
@@ -101,7 +243,6 @@ const corsi = [
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-md);
-    margin-top: var(--space-lg);
   }
   .corso {
     padding: var(--space-lg);
@@ -142,18 +283,14 @@ const corsi = [
   }
   .corso__target strong { color: var(--color-ink-2); font-weight: 600; }
 
-  .finanziamento {
-    background: var(--color-paper-3);
-  }
+  .finanziamento { background: var(--color-paper-3); }
   .finanziamento__inner { max-width: 60rem; }
-  .finanziamento h2 {
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-md);
-  }
+  .finanziamento h2 { font-size: var(--text-3xl); margin-bottom: var(--space-md); }
   .finanziamento p {
     font-size: var(--text-lg);
     color: var(--color-ink-2);
     margin-bottom: var(--space-lg);
+    max-width: 64ch;
   }
   .finanziamento__ctas {
     display: flex;

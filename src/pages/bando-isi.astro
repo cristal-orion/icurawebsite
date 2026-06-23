@@ -1,6 +1,9 @@
 ---
 import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
 
 const facts = [
@@ -25,6 +28,33 @@ const finanzia = [
   {
     nome: "Bonifica amianto",
     desc: "Rimozione e smaltimento di materiali contenenti amianto dai luoghi di lavoro.",
+  },
+];
+
+const fasi = [
+  { n: "01", titolo: "Pre-check idoneità", desc: "Verifichiamo che impresa e progetto rientrino negli assi di finanziamento del bando. È gratuito." },
+  { n: "02", titolo: "Progetto a punteggio", desc: "Disegniamo l'intervento per massimizzare il punteggio: tipologia, rischio ridotto e parametri premiali." },
+  { n: "03", titolo: "Documentazione", desc: "Prepariamo perizia, preventivi e tutta la modulistica tecnica richiesta dall'INAIL." },
+  { n: "04", titolo: "Click day", desc: "Carichiamo e inviamo la domanda all'apertura dello sportello, dove conta l'ordine cronologico." },
+  { n: "05", titolo: "Rendicontazione", desc: "Seguiamo realizzazione, collaudo e rendiconto fino all'erogazione del contributo." },
+];
+
+const faq = [
+  {
+    q: "Cos'è il click day e perché conta arrivare pronti?",
+    a: "Il Bando ISI assegna i fondi a sportello: alla data fissata si invia la domanda e contano l'ordine cronologico e la velocità di invio, fino a esaurimento delle risorse. Non basta avere un buon progetto — serve essere validati e pronti a inviare nell'istante giusto. Per questo prepariamo tutto in anticipo e simuliamo l'invio.",
+  },
+  {
+    q: "Quanto posso ottenere a fondo perduto?",
+    a: "Il contributo copre il 65% delle spese ammissibili, che sale fino all'80% per i progetti dell'Asse dedicato ai modelli organizzativi e di responsabilità sociale. L'importo va da un minimo di 5.000 € a un massimo di 130.000 € per progetto.",
+  },
+  {
+    q: "Che spese posso finanziare con il Bando ISI?",
+    a: "Acquisto di macchinari e attrezzature più sicure in sostituzione di quelle obsolete, interventi di riduzione dei rischi (rumore, vibrazioni, movimentazione carichi, agenti nocivi), adozione di modelli organizzativi e bonifica di materiali contenenti amianto. Nel pre-check valutiamo quali voci massimizzano contributo e punteggio.",
+  },
+  {
+    q: "La mia impresa può partecipare?",
+    a: "Possono partecipare la generalità delle imprese iscritte alla Camera di Commercio, con alcune specificità per assi e settori (incluso quello agricolo). La verifica di idoneità dell'impresa e del progetto è proprio il primo passo che facciamo, gratuitamente, nel pre-check.",
   },
 ];
 ---
@@ -58,7 +88,17 @@ const finanzia = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/bando-isi-click-day-documenti.webp"
+        alt="Documentazione tecnica per il Bando ISI preparata su una scrivania di consulenza: laptop con schermata non leggibile, checklist, calcolatrice e fascicoli ordinati, mani di un consulente al lavoro prima del click day, luce naturale"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
     <div class="container two-col">
       <div>
         <p class="eyebrow">Cos'è</p>
@@ -75,9 +115,7 @@ const finanzia = [
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
-
-  <section class="section">
+  <section class="section section--alt-2">
     <div class="container">
       <p class="eyebrow">Cosa puoi finanziare</p>
       <AreaGrid aree={finanzia} />
@@ -86,29 +124,38 @@ const finanzia = [
 
   <hr class="rule" aria-hidden="true" />
 
-  <section class="section">
-    <div class="container two-col">
-      <div>
-        <p class="eyebrow">Come ti aiutiamo</p>
-        <h2>Pronti per il click day.</h2>
-      </div>
-      <div class="prose">
-        <p>
-          Verifichiamo l'idoneità, progettiamo l'intervento per massimizzare il punteggio, prepariamo tutta la documentazione e ti accompagniamo all'invio nel click day. Poi seguiamo realizzazione e rendicontazione.
-        </p>
-        <p class="note">
-          Calendario, finestre di domanda e click day dell'edizione 2025/2026 vengono definiti nel corso del 2026: ti avvisiamo noi appena aprono e arriviamo pronti.
-        </p>
-      </div>
+  <Steps
+    eyebrow="Come ti aiutiamo"
+    title="Pronti per il click day."
+    steps={fasi}
+    labelledby="isi-fasi"
+  />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        Calendario, finestre di domanda e click day dell'edizione in corso vengono definiti dall'INAIL anno per anno: ti avvisiamo noi appena aprono e arriviamo pronti.
+      </p>
     </div>
   </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-isi"
+    labelledby="isi-faq"
+    items={faq}
+    tone="alt-blue"
+  />
 
   <CtaBand
     title="Verifichiamo la tua idoneità al Bando ISI."
     lede="Pre-check gratuito · risposta entro 48 ore. Capiamo se il tuo progetto è finanziabile e prepariamo la domanda."
     image={{
-      src: "/images/sicurezza-ispezione-capannone.webp",
-      alt: "Consulente per la sicurezza iCura Impresa in sopralluogo in un capannone industriale: adulto con casco bianco e tablet valuta macchinari e vie di passaggio, palette desaturata sobria, fotografia documentaria professionale",
+      src: "/images/bando-isi-click-day-documenti.webp",
+      alt: "Scrivania di consulenza pronta per il click day del Bando ISI: fascicoli tecnici, checklist, calcolatrice e laptop con portale non leggibile, mani di un consulente iCura Impresa che ordina i documenti, luce naturale, fotografia documentaria professionale",
     }}
     primary={{ href: "/contatti", label: "Richiedi il pre-check" }}
     labelledby="isi-cta"

@@ -10,6 +10,10 @@
   --color-paper: oklch(99% 0.004 252);
   --color-paper-2: oklch(96.5% 0.005 252);
   --color-paper-3: oklch(93% 0.007 252);
+  /* superficie azzurra — da alternare a paper-2 (neutro). Azzurro deciso e
+     riconoscibile (vicino all'accent-soft del blocco "bandi in evidenza"),
+     che resta leggibile col testo scuro sopra. */
+  --color-paper-blue: oklch(93% 0.05 252);
 
   /* Colors — ink band */
   --color-ink: oklch(18% 0.020 252);
