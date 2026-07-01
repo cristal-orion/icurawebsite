@@ -1,796 +1,535 @@
 ---
 import Base from "@layouts/Base.astro";
-import CtaBand from "@components/CtaBand.astro";
-import MacroAree from "@components/MacroAree.astro";
-import BandiInEvidenza from "@components/BandiInEvidenza.astro";
-import AreaGrid from "@components/AreaGrid.astro";
-import ParallaxBand from "@components/ParallaxBand.astro";
 
-const stats = [
-  { num: "2014", label: "Anno di fondazione" },
-  { num: "5", label: "Aree di consulenza integrate" },
-  { num: "48h", label: "Tempo medio di risposta" },
-  { num: "Napoli", label: "Sede operativa" },
-];
-
-const ambiti = [
+// Macro-aree (griglia servizi): foto reali + link alle pagine servizio.
+const servizi = [
   {
-    nome: "Sicurezza sul lavoro",
-    desc: "DVR, RSPP, sopralluoghi e adempimenti del D.Lgs. 81/08. Cantieri con PSC, POS e coordinamento.",
+    titolo: "Consulenza & Sicurezza",
+    desc: "DVR, RSPP, D.Lgs. 81/08, cantieri (PSC/POS), HACCP, medicina del lavoro, GDPR e ambiente.",
     href: "/servizi/consulenza",
-    cta: "Vai alla consulenza",
+    img: "/images/macroaree-consulenza.webp",
+    alt: "Consulenza e sicurezza sul lavoro iCura Impresa",
+    dark: false,
   },
   {
-    nome: "Salute e igiene",
-    desc: "Medicina del lavoro e sorveglianza sanitaria, medico competente, HACCP per il settore alimentare.",
-    href: "/servizi/consulenza",
-    cta: "Scopri di più",
-  },
-  {
-    nome: "Ambiente e privacy",
-    desc: "AUA, gestione rifiuti, MUD ed emissioni in atmosfera. GDPR, DPO e registri dei trattamenti.",
-    href: "/servizi/consulenza",
-    cta: "Scopri di più",
-  },
-  {
-    nome: "Engineering e antincendio",
-    desc: "Progettazione edile e impiantistica, prevenzione incendi e CPI, collaudi e perizie.",
+    titolo: "Engineering & Antincendio",
+    desc: "Progettazione edile e impiantistica, prevenzione incendi e CPI, collaudi e perizie tecniche.",
     href: "/servizi/engineering",
-    cta: "Vai a engineering",
+    img: "/images/macroaree-engineering.webp",
+    alt: "Engineering e prevenzione incendi iCura Impresa",
+    dark: true,
   },
   {
-    nome: "Certificazioni e gare",
-    desc: "ISO 9001, 14001, 45001, parità di genere UNI/PdR 125, Attestazione SOA e procedure di gara.",
+    titolo: "Formazione",
+    desc: "Corsi in aula ed e-learning: RSPP/RLS/preposti, antincendio e primo soccorso, attrezzature.",
+    href: "/servizi/formazione",
+    img: "/images/macroaree-formazione.webp",
+    alt: "Formazione sicurezza in aula iCura Impresa",
+    dark: false,
+  },
+];
+const serviziWide = [
+  {
+    titolo: "Certificazioni & Gare",
+    desc: "ISO 9001/14001/45001, parità di genere UNI/PdR 125, Attestazione SOA per le gare d'appalto.",
     href: "/servizi/certificazioni",
-    cta: "Vai alle certificazioni",
+    img: "/images/macroaree-certificazioni.webp",
+    alt: "Certificazioni ISO e attestazione SOA iCura Impresa",
+    dark: true,
   },
   {
-    nome: "Formazione e finanza",
-    desc: "Corsi obbligatori in aula ed e-learning, bando ISI, ZES, Transizione 5.0 e fondi interprofessionali.",
+    titolo: "Finanza agevolata",
+    desc: "Bando ISI INAIL, ZES Unica, Transizione 5.0, fondi interprofessionali e OT23.",
     href: "/servizi/finanza-agevolata",
-    cta: "Vai alla finanza",
+    img: "/images/macroaree-finanza-agevolata.webp",
+    alt: "Finanza agevolata e bandi iCura Impresa",
+    dark: false,
   },
 ];
 
-const settori = [
-  "Edilizia e cantieri",
-  "Manifatturiero e metalmeccanica",
-  "Logistica e magazzini",
-  "Alimentare e Ho.Re.Ca.",
-  "Commercio e uffici",
-  "Sanità e servizi",
-];
-
-const perche = [
-  {
-    titolo: "Un solo interlocutore",
-    desc: "Sicurezza, formazione, engineering, finanza e certificazioni sotto lo stesso tetto. Niente rimbalzi tra studi diversi.",
-  },
-  {
-    titolo: "Team multidisciplinare",
-    desc: "Ingegneri, medici del lavoro, tecnici e commercialisti che si parlano tra loro. Quando un caso tocca più aree, coordiniamo noi.",
-  },
-  {
-    titolo: "Tariffa prevedibile",
-    desc: "Retainer annuale: documentazione, aggiornamenti e supporto continuo a un costo chiaro, senza extra a sorpresa.",
-  },
+const team = [
+  { img: "/images/team-icura.webp", alt: "Area sicurezza e D.Lgs. 81/08 iCura Impresa", h: "Sicurezza & 81/08", k: "RSPP · DVR · Cantieri" },
+  { img: "/images/consulenza-medicina-lavoro.webp", alt: "Area medicina del lavoro iCura Impresa", h: "Medicina del lavoro", k: "Medico competente · Idoneità" },
+  { img: "/images/formazione-aula-adulti.webp", alt: "Area formazione iCura Impresa", h: "Formazione", k: "Aula · E-learning · Attestati" },
+  { img: "/images/chi-siamo-riunione-team.webp", alt: "Area engineering iCura Impresa", h: "Engineering", k: "Progettazione · CPI · Collaudi" },
 ];
 ---
 
-<Base title="iCura Impresa" pageClass="page-home">
-  {/* ───── Hero · foto sfondo + logo + brand + frase + cerchi ───── */}
-  <section class="hero" aria-labelledby="hero-heading">
-    <div class="hero__stage">
-      <img
-        class="hero__bg"
-        src="/images/home-cantiere-planimetria.webp"
-        alt=""
-        loading="eager"
-        decoding="async"
-        aria-hidden="true"
-      />
-      <div class="hero__veil" aria-hidden="true"></div>
-      <div class="container hero__inner">
-        <img
-          class="hero__logo"
-          src="/images/brand/logo-icura-white.webp"
-          alt=""
-          width="460"
-          height="600"
-          loading="eager"
-          decoding="async"
-          aria-hidden="true"
-        />
-        <h1 id="hero-heading" class="hero__brand">iCura Impresa</h1>
-        <p class="hero__phrase">
-          Un solo interlocutore per la sicurezza sul lavoro, la formazione, l'engineering, la finanza agevolata e le certificazioni della tua impresa.
-        </p>
-        <div class="hero__ctas">
-          <a href="/contatti" class="btn btn--primary">
-            Richiedi consulenza
-            <span class="btn__arrow" aria-hidden="true">→</span>
-          </a>
-          <a href="/servizi/consulenza" class="hero__link">
-            Vedi i servizi
-            <span aria-hidden="true">→</span>
-          </a>
+<Base
+  title="iCura Impresa"
+  description="Un solo interlocutore per la sicurezza, la formazione, l'engineering, la finanza agevolata e le certificazioni della tua impresa. Napoli, dal 2014."
+  pageClass="page-home"
+>
+  {/* ───── HERO SPLIT ───── */}
+  <section class="hero">
+    <div class="container">
+      <div class="hero__card">
+        <div class="hero__media group">
+          <img
+            src="/images/sicurezza-ispezione-capannone.webp"
+            alt="Tecnico iCura Impresa durante un sopralluogo di sicurezza in un capannone industriale"
+            class="media-grayscale"
+          />
+          <div class="hero__media-veil" aria-hidden="true"></div>
         </div>
-      </div>
-    </div>
 
-    {/* Cerchi macro-aree dentro la hero (richiesta cliente) */}
-    <MacroAree />
-  </section>
+        <div class="hero__panel">
+          <span class="hero__brand">
+            <img
+              class="hero__brand-mark"
+              src="/images/brand/logo-icura-white.webp"
+              alt=""
+              width="460"
+              height="600"
+              decoding="async"
+              aria-hidden="true"
+            />
+            <span class="hero__brand-name">iCura Impresa</span>
+          </span>
+          <h1 class="hero__title">
+            Un solo interlocutore <span class="accent">per la sicurezza</span> della tua impresa.
+          </h1>
+          <p class="hero__lede">
+            Sicurezza sul lavoro, formazione, engineering, finanza agevolata e certificazioni.
+            Un unico team multidisciplinare, dal 2014.
+          </p>
 
-  {/* ───── Intro · chi siamo sintetico ───── */}
-  <section class="section section--alt intro" aria-labelledby="intro-heading">
-    <div class="container intro__grid">
-      <div class="intro__lead">
-        <p class="eyebrow">01 — Chi siamo</p>
-        <h2 id="intro-heading" class="intro__title">
-          Un team multidisciplinare che si occupa di tutto ciò che la tua impresa non dovrebbe gestire da sola.
-        </h2>
-      </div>
-      <div class="intro__body">
-        <p>
-          Ingegneri, medici del lavoro, tecnici e commercialisti sotto lo stesso tetto. Nata nel 2014 come studio di consulenza, oggi S.r.l. operativa su tutta Italia.
-        </p>
-        <p>
-          Pensiamo che la sicurezza non sia un certificato da archiviare, ma un mestiere quotidiano. Lo facciamo per oltre cento imprese, dal cantiere alla cucina, dal magazzino all'ufficio.
-        </p>
-        <div class="intro__ctas">
-          <a href="/chi-siamo#team" class="link-cta">
-            Conosci il team
-            <span class="link-cta__arrow" aria-hidden="true">→</span>
-          </a>
-          <a href="/servizi/consulenza" class="link-cta">
-            Scopri i servizi
-            <span class="link-cta__arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ───── Ambiti · tutto ciò di cui ci occupiamo (ampiezza) ───── */}
-  <section class="section section--alt-blue ambiti" aria-labelledby="ambiti-heading">
-    <div class="container">
-      <p class="eyebrow">02 — Di cosa ci occupiamo</p>
-      <h2 id="ambiti-heading" class="ambiti__title">
-        Tutto quello che la tua impresa deve avere in regola, in un posto solo.
-      </h2>
-      <p class="ambiti__lede">
-        Dalla sicurezza sul lavoro agli adempimenti ambientali, dalle certificazioni ISO ai bandi: aree diverse, un'unica regia.
-      </p>
-      <AreaGrid aree={ambiti} />
-
-      <div class="settori" aria-labelledby="settori-heading">
-        <p id="settori-heading" class="settori__label">Settori che seguiamo</p>
-        <ul class="chips chips--inline" aria-label="Settori serviti">
-          {settori.map((s) => <li>{s}</li>)}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  {/* ───── Fascia in parallasse · statement ───── */}
-  <ParallaxBand
-    src="/images/sicurezza-ispezione-capannone.webp"
-    alt="Consulente per la sicurezza sul lavoro in sopralluogo dentro un capannone industriale italiano: adulto con casco bianco e tablet controlla macchinari e vie di passaggio, ambiente ordinato, luce naturale, fotografia documentaria professionale"
-    eyebrow="Dal 2014, su tutta Italia"
-    title="Dal cantiere alla cucina, sotto lo stesso tetto."
-    lede="Un solo team multidisciplinare per la sicurezza, la formazione, l'engineering, la finanza agevolata e le certificazioni della tua impresa."
-    cta={{ href: "/contatti", label: "Richiedi una consulenza" }}
-    labelledby="parallax-home"
-  />
-
-  {/* ───── Agevolazioni in evidenza · sfondo azzurro ───── */}
-  <BandiInEvidenza />
-
-  {/* ───── Perché iCura · tre pilastri ───── */}
-  <section class="section section--alt-2 perche" aria-labelledby="perche-heading">
-    <div class="container">
-      <p class="eyebrow">03 — Perché iCura</p>
-      <h2 id="perche-heading" class="perche__title">Non un fornitore in più. Uno in meno di cui preoccuparsi.</h2>
-      <ul class="perche__grid">
-        {perche.map((p, i) => (
-          <li class="pilastro">
-            <span class="pilastro__n">{String(i + 1).padStart(2, "0")}</span>
-            <h3 class="pilastro__titolo">{p.titolo}</h3>
-            <p class="pilastro__desc">{p.desc}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  {/* ───── Stats strip · T4 numbered ───── */}
-  <section class="section section--tight stats" aria-labelledby="stats-heading">
-    <div class="container">
-      <h2 id="stats-heading" class="sr-only">Numeri iCura Impresa</h2>
-      <dl class="stats__list">
-        {stats.map((s) => (
-          <div class="stat">
-            <dt class="stat__num">{s.num}</dt>
-            <dd class="stat__label">{s.label}</dd>
+          <div class="hero__ctas">
+            <a href="/contatti" class="hero__cta-primary">Richiedi una consulenza</a>
+            <a href="/servizi/consulenza" class="hero__cta-link">
+              I nostri servizi
+              <span aria-hidden="true">→</span>
+            </a>
           </div>
-        ))}
-      </dl>
+
+          <dl class="hero__metrics">
+            <div class="metric">
+              <dt class="metric__n">2014</dt>
+              <dd class="metric__label">Anno di fondazione</dd>
+            </div>
+            <div class="metric">
+              <dt class="metric__n">5</dt>
+              <dd class="metric__label">Aree integrate</dd>
+            </div>
+            <div class="metric">
+              <dt class="metric__n">48h</dt>
+              <dd class="metric__label">Risposta media</dd>
+            </div>
+            <div class="metric">
+              <dt class="metric__n">100+</dt>
+              <dd class="metric__label">Imprese servite</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
+  {/* ───── STRIP AGEVOLAZIONI ───── */}
+  <section class="strip" aria-labelledby="strip-heading">
+    <div class="container strip__inner">
+      <div class="strip__msg">
+        <span class="strip__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </span>
+        <div>
+          <p class="strip__kicker">Agevolazioni in scadenza</p>
+          <p id="strip-heading" class="strip__title">Bandi e incentivi 2026 — ZES Unica, Bando ISI INAIL, Transizione 5.0</p>
+        </div>
+      </div>
+      <a href="/servizi/finanza-agevolata" class="strip__cta">Scopri le scadenze</a>
+    </div>
+  </section>
 
-  {/* ───── Final CTA · CtaBand riusabile ───── */}
-  <CtaBand
-    eyebrow="02 — Iniziamo"
-    title="Una mail, una chiamata, un sopralluogo. Senza impegno."
-    lede="Sopralluogo gratuito e risposta entro 48 ore. Prima capiamo se possiamo esserti utile, poi decidi tu."
-    image={{
-      src: "/images/home-cnc-barriera.webp",
-      alt: "Consulente iCura Impresa durante un sopralluogo in azienda: adulto con casco bianco e block-notes parla con il titolare accanto a un macchinario industriale, atmosfera collaborativa e rassicurante, officina italiana con luce naturale di mattina, palette desaturata sobria in toni navy e grigio, fotografia documentaria professionale, no posa, no strette di mano da stock",
-    }}
-    primary={{ href: "/contatti", label: "Richiedi consulenza" }}
-    secondary={{ href: "tel:+390816580779", label: "081 658 0779" }}
-    labelledby="closing-heading"
-  />
+  {/* ───── GRIGLIA SERVIZI ───── */}
+  <section class="services" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="services__head">
+        <div>
+          <p class="eyebrow">Le nostre aree</p>
+          <h2 id="services-heading" class="services__title">Tutto in regola, <span class="italic">in un posto</span> solo.</h2>
+        </div>
+        <p class="services__note">
+          Cinque aree che si parlano tra loro: dalla sicurezza sul lavoro alla finanza agevolata,
+          gestite da un unico team multidisciplinare.
+        </p>
+      </div>
+
+      <div class="services__grid">
+        {servizi.map((s) => (
+          <a href={s.href} class={`svc-card group${s.dark ? " svc-card--dark" : ""}`}>
+            <span class="svc-card__top" aria-hidden="true">
+              <span class="svc-card__rule"></span>
+              <svg class="svc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </span>
+            <h3 class="svc-card__title">{s.titolo}</h3>
+            <p class="svc-card__desc">{s.desc}</p>
+            <img src={s.img} alt={s.alt} class="svc-card__img media-grayscale" loading="lazy" decoding="async" />
+          </a>
+        ))}
+      </div>
+
+      <div class="services__grid services__grid--wide">
+        {serviziWide.map((s) => (
+          <a href={s.href} class={`svc-card svc-card--row group${s.dark ? " svc-card--dark" : ""}`}>
+            <span class="svc-card__body">
+              <span class="svc-card__top" aria-hidden="true">
+                <span class="svc-card__rule"></span>
+                <svg class="svc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </span>
+              <h3 class="svc-card__title">{s.titolo}</h3>
+              <p class="svc-card__desc">{s.desc}</p>
+            </span>
+            <img src={s.img} alt={s.alt} class="svc-card__img svc-card__img--row media-grayscale" loading="lazy" decoding="async" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ───── PERCHÉ iCURA ───── */}
+  <section class="why section--ink" aria-labelledby="why-heading">
+    <div class="container why__grid">
+      <div class="why__body">
+        <p class="eyebrow">Il metodo</p>
+        <h2 id="why-heading" class="why__title">Perché <span class="accent">iCura.</span></h2>
+        <ol class="why__list">
+          <li class="why__item">
+            <span class="why__n">01</span>
+            <div>
+              <h3 class="why__item-title">Un solo interlocutore</h3>
+              <p class="why__item-desc">Sicurezza, formazione, engineering, finanza e certificazioni sotto lo stesso tetto. Niente rimbalzi tra studi diversi.</p>
+            </div>
+          </li>
+          <li class="why__item">
+            <span class="why__n">02</span>
+            <div>
+              <h3 class="why__item-title">Team multidisciplinare</h3>
+              <p class="why__item-desc">Ingegneri, medici del lavoro, tecnici e commercialisti che si parlano tra loro. Quando un caso tocca più aree, coordiniamo noi.</p>
+            </div>
+          </li>
+          <li class="why__item">
+            <span class="why__n">03</span>
+            <div>
+              <h3 class="why__item-title">Tariffa prevedibile</h3>
+              <p class="why__item-desc">Retainer annuale: documentazione, aggiornamenti e supporto continuo a un costo chiaro, senza extra a sorpresa.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="why__media">
+        <img src="/images/chi-siamo-riunione-team.webp" alt="Team di consulenti iCura Impresa in riunione operativa" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  {/* ───── TEAM ───── */}
+  <section class="team section--alt" aria-labelledby="team-heading">
+    <div class="container">
+      <div class="team__head">
+        <p class="eyebrow">Chi siamo</p>
+        <h2 id="team-heading" class="team__title">Un team che parla la stessa lingua.</h2>
+      </div>
+      <div class="team__grid">
+        {team.map((t) => (
+          <article class="team-tile group">
+            <div class="team-tile__media">
+              <img src={t.img} alt={t.alt} class="media-grayscale" loading="lazy" decoding="async" />
+            </div>
+            <h3 class="team-tile__h">{t.h}</h3>
+            <p class="team-tile__k">{t.k}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ───── CONTATTI + FORM ───── */}
+  <section class="contact section--ink" aria-labelledby="contact-heading">
+    <div class="container contact__grid">
+      <div class="contact__intro">
+        <p class="eyebrow">Contatti</p>
+        <h2 id="contact-heading" class="contact__title">Pronto a <span class="accent">metterti</span> in regola?</h2>
+        <p class="contact__lede">
+          Sopralluogo gratuito e risposta entro 48 ore. Prima capiamo se possiamo esserti utili, poi decidi tu.
+        </p>
+        <div class="contact__cards">
+          <div class="contact__box">
+            <span class="contact__box-label">Sede</span>
+            <p class="contact__box-value">Corso Secondigliano, 236</p>
+            <p class="contact__box-sub">80144 Napoli</p>
+          </div>
+          <div class="contact__box">
+            <span class="contact__box-label">Chiamaci</span>
+            <p class="contact__box-value"><a href="tel:+390816580779">+39 081 658 0779</a></p>
+            <p class="contact__box-sub"><a href="mailto:info@icuraimpresa.it">info@icuraimpresa.it</a></p>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact__form" action="#" method="POST" novalidate>
+        <h3 class="contact__form-title">Richiedi una consulenza</h3>
+        <div class="contact__row">
+          <div class="field">
+            <label for="cf-nome">Nome</label>
+            <input id="cf-nome" name="nome" type="text" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="cf-area">Area di interesse</label>
+          <select id="cf-area" name="area">
+            <option>Consulenza &amp; Sicurezza</option>
+            <option>Engineering &amp; Antincendio</option>
+            <option>Formazione</option>
+            <option>Certificazioni &amp; Gare</option>
+            <option>Finanza agevolata</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cf-msg">Messaggio</label>
+          <textarea id="cf-msg" name="messaggio" rows="4"></textarea>
+        </div>
+        <label class="consent">
+          <input type="checkbox" name="privacy" required />
+          <span>Acconsento al trattamento dei dati secondo la <a href="/privacy">privacy policy</a>.</span>
+        </label>
+        <button type="submit" class="btn btn--primary contact__submit">
+          Invia richiesta
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </form>
+    </div>
+  </section>
 </Base>
 
 <style>
-  /* ───── Hero · foto sfondo + logo + brand + frase + cerchi ───── */
-  .hero {
-    border-bottom: var(--rule-thick) solid var(--color-ink);
-  }
-  .hero__stage {
-    position: relative;
-    overflow: clip;
-    isolation: isolate;
-    background: var(--color-ink);
-    padding-top: calc(var(--space-3xl) + var(--space-md));
-    padding-bottom: var(--space-2xl);
-  }
-  .hero__bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 40%;
-    z-index: 0;
-  }
-  .hero__veil {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in oklch, var(--color-ink) 68%, transparent) 0%,
-        color-mix(in oklch, var(--color-ink) 46%, transparent) 45%,
-        color-mix(in oklch, var(--color-ink) 84%, transparent) 100%
-      );
-  }
-  .hero__inner {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .hero__logo {
-    height: clamp(5rem, 9vw, 7.5rem);
-    width: auto;
-    margin-bottom: var(--space-md);
-    animation: heroIn 700ms var(--ease-out) both;
-  }
-  .hero__brand {
-    font-size: var(--text-4xl);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    color: var(--color-paper);
-    margin: 0;
-    animation: heroIn 700ms var(--ease-out) 80ms both;
-  }
-  .hero__phrase {
-    font-size: var(--text-lg);
-    color: color-mix(in oklch, var(--color-paper) 90%, transparent);
-    line-height: 1.5;
-    max-width: 56ch;
-    margin: var(--space-md) auto 0;
-    text-wrap: balance;
-    animation: heroIn 700ms var(--ease-out) 160ms both;
-  }
-  .hero__ctas {
-    display: flex;
-    gap: var(--space-md);
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: var(--space-lg);
-    animation: heroIn 700ms var(--ease-out) 240ms both;
-  }
-  .hero .btn--primary {
-    background: var(--color-paper);
-    color: var(--color-accent);
-    border-color: var(--color-paper);
-  }
-  .hero .btn--primary:hover {
-    background: color-mix(in oklch, var(--color-paper) 92%, var(--color-highlight) 8%);
-    border-color: color-mix(in oklch, var(--color-paper) 92%, var(--color-highlight) 8%);
-  }
-  .hero__link {
-    color: var(--color-paper);
-    font-weight: 500;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.35em;
-    text-decoration-color: color-mix(in oklch, var(--color-paper) 55%, transparent);
-    white-space: nowrap;
-    transition: text-decoration-color var(--dur-fast) var(--ease-out);
-  }
-  .hero__link:hover { text-decoration-color: var(--color-paper); }
-  /* Cerchi macro-aree sotto lo stage, su fondo chiaro */
-  .hero :global(.macroaree) { padding-block: var(--space-2xl); }
-  @keyframes heroIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: none; }
-  }
-
-  /* ───── Hero · Marquee + vertical rail ───── */
-  .hero-impact {
-    position: relative;
-    min-height: 100svh;
+  /* ───────── HERO (full-bleed, full-screen) ───────── */
+  .hero { padding: 0; }
+  .hero .container { max-width: none; padding-inline: 0; }
+  .hero__card {
     display: grid;
-    overflow: clip;
-    background: var(--color-ink);
-    border-bottom: var(--rule-thick) solid var(--color-ink);
-    isolation: isolate;
-  }
-
-  .hero-impact__media {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 50%;
-    z-index: 0;
-  }
-
-  .hero-impact__veil {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background:
-      linear-gradient(
-        100deg,
-        color-mix(in oklch, var(--color-ink) 95%, transparent) 0%,
-        color-mix(in oklch, var(--color-ink) 78%, transparent) 40%,
-        color-mix(in oklch, var(--color-ink) 30%, transparent) 78%,
-        color-mix(in oklch, var(--color-ink) 8%, transparent) 100%
-      ),
-      linear-gradient(
-        180deg,
-        color-mix(in oklch, var(--color-ink) 32%, transparent) 0%,
-        color-mix(in oklch, var(--color-ink) 14%, transparent) 50%,
-        color-mix(in oklch, var(--color-ink) 70%, transparent) 100%
-      );
-  }
-
-  .hero-impact__inner {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(7rem, 11rem) minmax(0, 1fr);
-    grid-template-rows: 1fr auto auto;
-    column-gap: var(--space-xl);
-    row-gap: var(--space-lg);
-    align-content: end;
-    padding-top: calc(var(--space-3xl) + var(--space-md));
-    padding-bottom: var(--space-lg);
-    min-height: 100svh;
-  }
-
-  /* Rail verticale — meta brand */
-  .hero-impact__rail {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding-block: var(--space-md);
-    border-right: var(--rule-hair) solid color-mix(in oklch, var(--color-paper) 22%, transparent);
-    padding-right: var(--space-md);
-  }
-
-  .hero-impact__rail-n {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: color-mix(in oklch, var(--color-paper) 70%, transparent);
-  }
-
-  .hero-impact__rail-mark {
-    width: clamp(3rem, 5vw, 4.25rem);
-    height: auto;
-    object-fit: contain;
-    margin-top: auto;
-  }
-
-  .hero-impact__rail-meta {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: color-mix(in oklch, var(--color-paper) 78%, transparent);
-    line-height: 1.5;
-  }
-
-  /* Copy block */
-  .hero-impact__copy {
-    grid-column: 2;
-    grid-row: 1;
-    max-width: 64rem;
-    align-self: end;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .hero-impact__kicker {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: color-mix(in oklch, var(--color-paper) 86%, transparent);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2xs);
-  }
-  .hero-impact__kicker .eyebrow__dot {
-    background: var(--color-highlight);
-  }
-
-  .hero-impact__title {
-    font-family: var(--font-display);
-    font-size: clamp(3.5rem, 9.5vw, 8.75rem);
-    font-weight: 700;
-    line-height: 0.92;
-    letter-spacing: -0.025em;
-    margin: var(--space-2xs) 0 var(--space-2xs);
-    color: var(--color-paper);
-    display: block;
-  }
-  .hero-impact__title-line {
-    display: block;
-  }
-  .hero-impact__title-line--quiet {
-    color: color-mix(in oklch, var(--color-paper) 62%, transparent);
-    font-weight: 400;
-    font-style: italic;
-    letter-spacing: -0.02em;
-  }
-
-  .hero-impact__lede {
-    color: color-mix(in oklch, var(--color-paper) 88%, transparent);
-    font-size: var(--text-lg);
-    line-height: 1.45;
-    max-width: 52ch;
-    margin: var(--space-sm) 0 0;
-  }
-
-  /* Reveal della descrizione al primo scroll — attivo solo con JS + motion on.
-     Senza JS o con reduced-motion la descrizione resta subito visibile. */
-  .hero-impact.js-hero-defer .hero-impact__lede {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity var(--dur-slow) var(--ease-out),
-      transform var(--dur-slow) var(--ease-out);
-    will-change: opacity, transform;
-  }
-  .hero-impact.js-hero-defer.is-revealed .hero-impact__lede {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* Entrata in scena di kicker + righe del titolo al caricamento.
-     Attiva solo con JS + motion on (gate .js-hero-defer). Senza JS o con
-     reduced-motion restano subito visibili. */
-  .hero-impact.js-hero-defer .hero-impact__kicker,
-  .hero-impact.js-hero-defer .hero-impact__title-line {
-    opacity: 0;
-    transform: translateY(26px);
-    transition: opacity 800ms var(--ease-out),
-      transform 800ms var(--ease-out);
-    transition-delay: var(--enter-delay, 0ms);
-    will-change: opacity, transform;
-  }
-  .hero-impact.js-hero-defer.is-entered .hero-impact__kicker,
-  .hero-impact.js-hero-defer.is-entered .hero-impact__title-line {
-    opacity: 1;
-    transform: none;
-  }
-
-  .hero-impact__ctas {
-    display: flex;
-    gap: var(--space-md);
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: var(--space-md);
-  }
-
-  .hero-impact .btn--primary {
-    background: var(--color-paper);
-    color: var(--color-accent);
-    border-color: var(--color-paper);
-  }
-  .hero-impact .btn--primary:hover {
-    background: color-mix(in oklch, var(--color-paper) 92%, var(--color-highlight) 8%);
-    border-color: color-mix(in oklch, var(--color-paper) 92%, var(--color-highlight) 8%);
-  }
-
-  .hero-impact__link {
-    color: var(--color-paper);
-    font-weight: 500;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.35em;
-    text-decoration-color: color-mix(in oklch, var(--color-paper) 55%, transparent);
-    white-space: nowrap;
-    transition: text-decoration-color var(--dur-fast) var(--ease-out);
-  }
-  .hero-impact__link:hover { text-decoration-color: var(--color-paper); }
-
-  /* Proof strip */
-  .hero-impact__proof {
-    grid-column: 2;
-    grid-row: 2;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-md);
-    margin: 0;
-    padding: var(--space-md) 0 0;
-    border-top: var(--rule-hair) solid color-mix(in oklch, var(--color-paper) 22%, transparent);
-  }
-  .hero-impact__proof div {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3xs);
-  }
-  .hero-impact__proof dt {
-    color: var(--color-paper);
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.025em;
-    font-feature-settings: "tnum";
-  }
-  .hero-impact__proof dd {
-    margin: 0;
-    color: color-mix(in oklch, var(--color-paper) 70%, transparent);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  /* Marquee wordmark · bordo basso */
-  .hero-impact__marquee {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    display: block;
-    color: color-mix(in oklch, var(--color-paper) 12%, transparent);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(3.5rem, 13vw, 11rem);
-    line-height: 0.85;
-    letter-spacing: -0.03em;
-    margin-top: var(--space-lg);
-    margin-bottom: calc(var(--space-xl) * -1);
-    margin-inline-start: calc(var(--space-md) * -1);
-    white-space: nowrap;
+    grid-template-columns: 38% 62%;
+    min-height: calc(100svh - var(--header-h));
     overflow: hidden;
-    pointer-events: none;
-    user-select: none;
   }
-
-  /* ───── Intro ───── */
-  .intro__grid {
-    display: grid;
-    grid-template-columns: 5fr 7fr;
-    gap: var(--space-xl);
-    align-items: start;
+  .hero__media { position: relative; background: var(--color-ink); overflow: hidden; }
+  .hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero__media-veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-ink) 45%, transparent), transparent);
   }
-  .intro__lead { position: sticky; top: calc(var(--space-md) + 64px); }
-  .intro__title {
-    font-size: var(--text-3xl);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-  }
-  .intro__body p { color: var(--color-ink-2); font-size: var(--text-lg); line-height: 1.55; max-width: 56ch; }
-  .intro__ctas {
+  .hero__panel {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
     display: flex;
-    gap: var(--space-lg);
-    flex-wrap: wrap;
-    margin-top: var(--space-lg);
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-md);
   }
-
-  /* ───── Stats ───── */
-  .stats__list {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-lg);
-    margin: 0;
-    padding: 0;
+  .hero__brand { display: inline-flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md); }
+  .hero__brand-mark { height: 4.25rem; width: auto; }
+  .hero__brand-name {
+    font-family: var(--font-display); font-weight: 700; font-size: var(--text-2xl);
+    letter-spacing: -0.025em; color: var(--color-paper);
   }
-  .stat { display: flex; flex-direction: column; gap: 0.25rem; }
-  .stat__num {
-    font-family: var(--font-display);
+  .hero__title {
     font-size: var(--text-4xl);
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: -0.03em;
-    color: var(--color-ink);
-    line-height: 1;
-    font-feature-settings: "tnum";
+    line-height: 1.05;
+    color: var(--color-paper);
+    max-width: 16ch;
   }
-  .stat__label {
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-family: var(--font-mono);
-  }
-
-  /* ───── Ambiti ───── */
-  .ambiti__title {
-    font-size: var(--text-3xl);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    max-width: 24ch;
-  }
-  .ambiti__lede {
+  .hero__title .accent { color: var(--color-accent); }
+  .hero__lede {
     font-size: var(--text-lg);
-    color: var(--color-ink-2);
-    max-width: 56ch;
-    margin: var(--space-md) 0 var(--space-xl);
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--color-paper) 80%, transparent);
+    max-width: 48ch;
   }
-  .settori {
-    margin-top: var(--space-xl);
-    padding-top: var(--space-lg);
-    border-top: var(--rule-hair) solid var(--color-rule);
+  .hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-lg); margin-top: var(--space-sm); }
+  .hero__cta-primary {
+    display: inline-flex; align-items: center;
+    padding: 0.9rem 1.8rem;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    box-shadow: var(--shadow-accent);
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }
-  .settori__label {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-    margin: 0 0 var(--space-sm);
+  .hero__cta-primary:hover { background: #fff; color: var(--color-ink); text-decoration: none; }
+  .hero__cta-link {
+    display: inline-flex; align-items: center; gap: 0.5em;
+    color: var(--color-paper); font-weight: 600; font-size: var(--text-sm);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
   }
-  .chips--inline { margin-top: 0; }
+  .hero__cta-link:hover { color: var(--color-accent); text-decoration: none; }
 
-  /* ───── Perché iCura ───── */
-  .perche__title {
-    font-size: var(--text-3xl);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    max-width: 22ch;
-    margin-bottom: var(--space-xl);
+  .hero__metrics {
+    display: flex; flex-wrap: wrap; gap: var(--space-lg) var(--space-xl);
+    margin: var(--space-lg) 0 0;
+    padding-top: var(--space-lg);
+    border-top: var(--rule-hair) solid color-mix(in srgb, var(--color-paper) 12%, transparent);
   }
-  .perche__grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-lg);
+  .metric { display: flex; flex-direction: column; gap: 0.2rem; margin: 0; }
+  .metric__n { font-family: var(--font-display); font-weight: 700; font-size: var(--text-2xl); color: var(--color-paper); }
+  .metric__label {
+    font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-accent); margin: 0;
   }
-  .pilastro {
-    padding: var(--space-lg);
+
+  /* ───────── STRIP AGEVOLAZIONI ───────── */
+  .strip { background: var(--color-accent); color: #fff; padding-block: var(--space-md); }
+  .strip__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-md); }
+  .strip__msg { display: flex; align-items: center; gap: var(--space-md); }
+  .strip__icon {
+    flex: none; width: 2.5rem; height: 2.5rem; display: grid; place-items: center;
+    border-radius: 50%; background: color-mix(in srgb, #fff 20%, transparent);
+  }
+  .strip__icon svg { width: 1.25rem; height: 1.25rem; }
+  .strip__kicker { font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.85; margin: 0; }
+  .strip__title { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; line-height: 1.2; margin: 0.1rem 0 0; max-width: 60ch; }
+  .strip__cta {
+    flex: none;
+    display: inline-flex; align-items: center;
+    padding: 0.7rem 1.5rem; background: #fff; color: var(--color-accent);
+    font-weight: 600; border-radius: var(--radius-pill); text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .strip__cta:hover { background: var(--color-ink); color: #fff; text-decoration: none; }
+
+  /* ───────── SERVIZI ───────── */
+  .services { padding-block: var(--space-3xl); }
+  .services__head {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end;
+    gap: var(--space-lg); margin-bottom: var(--space-2xl);
+  }
+  .services__title { font-size: var(--text-4xl); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; max-width: 16ch; }
+  .services__title .italic { font-style: italic; font-weight: 400; }
+  .services__note { color: var(--color-muted); max-width: 40ch; font-size: var(--text-md); }
+
+  .services__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-lg); }
+  .services__grid--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--space-lg); }
+
+  .svc-card {
+    display: flex; flex-direction: column;
+    padding: var(--space-xl);
+    background: var(--color-surface);
     border: var(--rule-hair) solid var(--color-rule);
     border-radius: var(--radius-card);
-    background: var(--color-paper-2);
+    box-shadow: var(--shadow-card);
+    text-decoration: none; color: inherit;
+    transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
-  .pilastro__n {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--color-highlight);
-    display: block;
-    margin-bottom: var(--space-md);
+  .svc-card:hover { border-color: color-mix(in srgb, var(--color-accent) 40%, transparent); box-shadow: var(--shadow-lift); transform: translateY(-3px); text-decoration: none; }
+  .svc-card--dark { background: var(--color-ink); border-color: color-mix(in srgb, var(--color-accent) 14%, transparent); }
+
+  .svc-card__top { display: flex; align-items: center; justify-content: space-between; color: var(--color-accent); margin-bottom: var(--space-xl); }
+  .svc-card__rule { width: 2rem; height: 1px; background: color-mix(in srgb, var(--color-accent) 40%, transparent); }
+  .svc-card__arrow { width: 1.25rem; height: 1.25rem; transition: transform var(--dur-base) var(--ease-out); }
+  .svc-card:hover .svc-card__arrow { transform: rotate(45deg); }
+  .svc-card--dark .svc-card__arrow { color: var(--color-paper); }
+
+  .svc-card__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 var(--space-sm); color: var(--color-ink); }
+  .svc-card--dark .svc-card__title { color: var(--color-paper); }
+  .svc-card__desc { font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-lg); flex: 1; }
+  .svc-card--dark .svc-card__desc { color: color-mix(in srgb, var(--color-paper) 62%, transparent); }
+  .svc-card__img { width: 100%; height: 12rem; object-fit: cover; border-radius: var(--radius-input); }
+
+  .svc-card--row { flex-direction: row; align-items: center; gap: var(--space-xl); }
+  .svc-card--row .svc-card__body { flex: 1; display: flex; flex-direction: column; }
+  .svc-card--row .svc-card__desc { margin-bottom: 0; }
+  .svc-card__img--row { width: 11rem; height: 11rem; flex: none; }
+
+  /* ───────── PERCHÉ ───────── */
+  .why { padding-block: var(--space-3xl); overflow: hidden; }
+  .why__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: center; }
+  .why__title { font-size: var(--text-4xl); font-weight: 700; letter-spacing: -0.03em; margin-bottom: var(--space-xl); }
+  .why__title .accent { color: var(--color-accent); }
+  .why__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-lg); }
+  .why__item { display: flex; gap: var(--space-md); align-items: flex-start; }
+  .why__n { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-accent); flex: none; }
+  .why__item-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; margin: 0 0 0.3rem; color: var(--color-paper); }
+  .why__item-desc { font-size: var(--text-sm); line-height: 1.6; color: color-mix(in srgb, var(--color-paper) 62%, transparent); margin: 0; }
+  .why__media { position: relative; border-radius: var(--radius-lg); overflow: hidden; border: var(--rule-hair) solid color-mix(in srgb, var(--color-paper) 12%, transparent); }
+  .why__media img { width: 100%; height: 100%; max-height: 32rem; object-fit: cover; display: block; }
+
+  /* ───────── TEAM ───────── */
+  .team { padding-block: var(--space-3xl); }
+  .team__head { text-align: center; max-width: 40ch; margin: 0 auto var(--space-2xl); }
+  .team__head .eyebrow { text-align: center; }
+  .team__title { font-size: var(--text-3xl); font-weight: 700; letter-spacing: -0.025em; }
+  .team__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-lg); }
+  .team-tile__media { position: relative; height: 22rem; border-radius: var(--radius-card); overflow: hidden; background: var(--color-ink); margin-bottom: var(--space-md); }
+  .team-tile__media img { width: 100%; height: 100%; object-fit: cover; transition: filter var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+  .team-tile.group:hover .team-tile__media img { transform: scale(1.05); }
+  .team-tile__h { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; color: var(--color-ink); margin: 0; }
+  .team-tile__k { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted); margin: 0.2rem 0 0; }
+
+  /* ───────── CONTATTI ───────── */
+  .contact { padding-block: var(--space-3xl); }
+  .contact__grid { display: grid; grid-template-columns: 45% 55%; gap: var(--space-2xl); align-items: stretch; }
+  .contact__intro { display: flex; flex-direction: column; justify-content: center; }
+  .contact__title { font-size: var(--text-4xl); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+  .contact__title .accent { color: var(--color-accent); }
+  .contact__lede { font-size: var(--text-lg); color: color-mix(in srgb, var(--color-paper) 65%, transparent); max-width: 40ch; margin-top: var(--space-md); }
+  .contact__cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-top: var(--space-xl); }
+  .contact__box { padding: var(--space-md); background: var(--color-ink-inset); border: var(--rule-hair) solid color-mix(in srgb, var(--color-paper) 8%, transparent); border-radius: var(--radius-card); }
+  .contact__box-label { display: block; font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-accent); margin-bottom: 0.4rem; }
+  .contact__box-value { font-family: var(--font-display); font-size: var(--text-lg); margin: 0; color: var(--color-paper); }
+  .contact__box-value a { color: var(--color-paper); text-decoration: none; }
+  .contact__box-value a:hover { color: var(--color-accent); }
+  .contact__box-sub { font-size: var(--text-xs); color: color-mix(in srgb, var(--color-paper) 45%, transparent); margin: 0.3rem 0 0; }
+  .contact__box-sub a { color: inherit; }
+
+  .contact__form { background: var(--color-surface); color: var(--color-ink); padding: clamp(var(--space-lg), 3vw, var(--space-2xl)); border-radius: var(--radius-lg); box-shadow: var(--shadow-lift); display: flex; flex-direction: column; gap: var(--space-md); }
+  .contact__form-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; margin: 0 0 var(--space-2xs); color: var(--color-ink); }
+  .contact__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+  .field { display: flex; flex-direction: column; gap: var(--space-2xs); }
+  .field label { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-muted); }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 0.75rem 0.9rem;
+    background: var(--color-paper); border: 1px solid var(--color-rule);
+    border-radius: var(--radius-input); font-family: var(--font-body); font-size: var(--text-md);
+    color: var(--color-ink); transition: border-color var(--dur-fast) var(--ease-out);
   }
-  .pilastro__titolo {
-    font-size: var(--text-xl);
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    margin: 0 0 var(--space-2xs);
-  }
-  .pilastro__desc {
-    color: var(--color-ink-2);
-    margin: 0;
-    font-size: var(--text-md);
-    line-height: 1.55;
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--color-accent); outline: 2px solid var(--color-focus); outline-offset: 1px; }
+  .field textarea { resize: vertical; min-height: 6rem; }
+  .consent { display: flex; gap: 0.6rem; align-items: flex-start; font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.5; }
+  .consent input { margin-top: 0.25rem; }
+  .contact__submit { align-self: flex-start; }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width: 64rem) {
+    .hero__card { grid-template-columns: 1fr; min-height: auto; }
+    .hero__media { min-height: 60svh; }
+    .why__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .why__media { order: -1; }
+    .team__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .contact__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
   }
   @media (max-width: 56rem) {
-    .perche__grid { grid-template-columns: 1fr; gap: var(--space-md); }
+    .services__grid, .services__grid--wide { grid-template-columns: 1fr; }
+    .svc-card--row { flex-direction: column; align-items: stretch; }
+    .svc-card__img--row { width: 100%; height: 12rem; }
+  }
+  @media (max-width: 40rem) {
+    .team__grid { grid-template-columns: 1fr; }
+    .contact__row, .contact__cards { grid-template-columns: 1fr; }
+    .hero__metrics { gap: var(--space-md) var(--space-lg); }
   }
 
-  /* ───── Responsive ───── */
-  @media (max-width: 56rem) {
-    .hero-impact {
-      min-height: 92svh;
-    }
-    .hero-impact__media {
-      object-position: center;
-    }
-    .hero-impact__inner {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto auto;
-      column-gap: 0;
-      row-gap: var(--space-md);
-      padding-top: calc(var(--space-3xl) + var(--space-lg));
-      padding-bottom: var(--space-lg);
-    }
-    .hero-impact__rail {
-      grid-column: 1;
-      grid-row: 1;
-      flex-direction: row;
-      align-items: center;
-      gap: var(--space-md);
-      padding: 0 0 var(--space-md);
-      border-right: none;
-      border-bottom: var(--rule-hair) solid color-mix(in oklch, var(--color-paper) 22%, transparent);
-    }
-    .hero-impact__rail-mark {
-      width: 2.75rem;
-      margin: 0;
-      order: -1;
-    }
-    .hero-impact__rail-meta {
-      margin-left: auto;
-      text-align: right;
-    }
-    .hero-impact__copy {
-      grid-column: 1;
-      grid-row: 2;
-    }
-    .hero-impact__proof {
-      grid-column: 1;
-      grid-row: 3;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--space-sm);
-    }
-    .hero-impact__marquee {
-      grid-row: 4;
-      font-size: clamp(2.5rem, 13vw, 6.5rem);
-      margin-bottom: calc(var(--space-lg) * -1);
-    }
-    .intro__grid { grid-template-columns: 1fr; gap: var(--space-lg); }
-    .intro__lead { position: static; }
-    .stats__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md); }
-  }
-
-  @media (max-width: 30rem) {
-    .hero-impact__inner {
-      padding-top: calc(var(--space-3xl) + var(--space-md));
-    }
-    .hero-impact__title {
-      font-size: clamp(2.75rem, 13vw, 4rem);
-      line-height: 0.92;
-    }
-    .hero-impact__proof {
-      grid-template-columns: 1fr 1fr;
-    }
-    .hero-impact__marquee {
-      font-size: clamp(2.25rem, 13vw, 4.5rem);
-    }
-    .stats__list { grid-template-columns: 1fr; }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-card, .team-tile__media img { transition: none; }
+    .svc-card:hover { transform: none; }
+    .svc-card:hover .svc-card__arrow { transform: rotate(45deg); }
   }
 </style>

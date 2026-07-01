@@ -86,9 +86,15 @@ const headingId = labelledby ?? id ?? undefined;
   }
 
   .feature-row__media :global(.placeholder) {
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-lg);
     overflow: hidden;
   }
+  /* foto in bianco-e-nero → colore all'hover (firma clinico-tech) */
+  .feature-row__media :global(.placeholder__image) {
+    filter: grayscale(100%);
+    transition: filter var(--dur-slow) var(--ease-out);
+  }
+  .feature-row__media:hover :global(.placeholder__image) { filter: grayscale(0); }
 
   .feature-row__title {
     font-size: var(--text-2xl);

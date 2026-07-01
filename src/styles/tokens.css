@@ -1,41 +1,41 @@
 /* Hallmark · design system: design.md · designed-as-app
- * theme: custom · vibe: "B2B consulenza sicurezza, navy professionale, accent arancio puntuale"
- * paper: oklch(99% 0.004 252) · accent: oklch(38% 0.115 252)
- * display: Inter Tight · body: Inter Tight
- * axes: light / geometric-sans / cool
+ * theme: clinical-tech · vibe: "B2B sicurezza, navy clinico + accent blu, tecnico e autorevole"
+ * surface: #f8fafc · ink/dark: #0f172a · accent: #3b82f6
+ * display: Bricolage Grotesque · body: Inter Tight · mono: JetBrains Mono
+ * axes: light / geometric-sans / cool-blue
  */
 
 :root {
-  /* Colors — paper band */
-  --color-paper: oklch(99% 0.004 252);
-  --color-paper-2: oklch(96.5% 0.005 252);
-  --color-paper-3: oklch(93% 0.007 252);
-  /* superficie azzurra — da alternare a paper-2 (neutro). Azzurro deciso e
-     riconoscibile (vicino all'accent-soft del blocco "bandi in evidenza"),
-     che resta leggibile col testo scuro sopra. */
-  --color-paper-blue: oklch(93% 0.05 252);
+  /* Colors — light surfaces (paper band) */
+  --color-paper: #f8fafc;        /* sfondo pagina · off-white freddo */
+  --color-surface: #ffffff;      /* card / superficie bianca che "stacca" sul paper */
+  --color-paper-2: #f1f5f9;      /* superficie elevata · sezioni alt */
+  --color-paper-3: #e2e8f0;      /* fondo sezione alternato */
+  /* superficie azzurra — tint blu chiaro, da alternare a paper-2 (neutro) */
+  --color-paper-blue: #eff6ff;
 
-  /* Colors — ink band */
-  --color-ink: oklch(18% 0.020 252);
-  --color-ink-2: oklch(34% 0.018 252);
-  --color-muted: oklch(48% 0.012 252);
+  /* Colors — ink / dark band (navy clinico) */
+  --color-ink: #0f172a;          /* testo principale + sezioni scure full-width */
+  --color-ink-2: #334155;        /* testo secondario · titoletti */
+  --color-muted: #64748b;        /* testo de-emphasised · captions */
+  --color-ink-inset: #1e293b;    /* superficie su fondo navy · card/box dentro .section--ink */
 
-  /* Colors — dividers */
-  --color-rule: oklch(89% 0.008 252);
-  --color-rule-2: oklch(94% 0.006 252);
+  /* Colors — dividers (hairline su fondo chiaro) */
+  --color-rule: rgba(15, 23, 42, 0.10);
+  --color-rule-2: rgba(15, 23, 42, 0.06);
 
-  /* Colors — accent + highlight */
-  --color-accent: oklch(38% 0.115 252);
-  --color-accent-hover: oklch(42% 0.120 252);
-  --color-accent-ink: oklch(99% 0.004 252);
-  --color-accent-soft: oklch(95% 0.020 252);
-  --color-highlight: oklch(67% 0.165 55);
-  --color-focus: oklch(52% 0.205 252);
+  /* Colors — accent (blu) + highlight (amber) */
+  --color-accent: #3b82f6;       /* blu · link, eyebrow, CTA, tick, hover */
+  --color-accent-hover: #2563eb; /* blu più scuro · hover CTA */
+  --color-accent-ink: #ffffff;   /* testo su accent */
+  --color-accent-soft: #dbeafe;  /* fondo tinted accent · tick, sezioni "trust" */
+  --color-highlight: #f59e0b;    /* amber · raro: badge "in evidenza" */
+  --color-focus: #2563eb;        /* focus ring */
 
   /* Typography */
-  --font-display: Helvetica, "Helvetica Neue", "Nimbus Sans", Arial, sans-serif;
-  --font-body: Helvetica, "Helvetica Neue", "Nimbus Sans", Arial, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Inter Tight Variable", "Inter Tight", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Type scale */
   --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
@@ -65,15 +65,22 @@
   --page-gutter: clamp(1.25rem, 4vw, 2.5rem);
   --page-max: 78rem;
   --reading-max: 64ch;
+  --header-h: 4.5rem;   /* altezza barra nav fissa (clinico-tech) */
 
   /* Rules */
   --rule-hair: 1px;
   --rule-thick: 2px;
 
   /* Radius */
-  --radius-input: 6px;
-  --radius-card: 10px;
+  --radius-input: 8px;
+  --radius-card: 12px;
+  --radius-lg: 16px;   /* hero / feature card grandi */
   --radius-pill: 999px;
+
+  /* Elevation — clinico-tech usa ombre morbide bluastre */
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-lift: 0 20px 40px -16px rgba(15, 23, 42, 0.18);
+  --shadow-accent: 0 20px 40px -10px rgba(59, 130, 246, 0.30);
 
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

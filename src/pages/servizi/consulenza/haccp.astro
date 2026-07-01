@@ -1,0 +1,296 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const c = {
+  "title": "Sicurezza alimentare HACCP — Reg. CE 852/2004 e formazione alimentaristi",
+  "description": "Consulenza HACCP a Napoli: manuale di autocontrollo, formazione alimentaristi e gestione dei controlli ASL e NAS per ristoranti, bar, mense e attività alimentari.",
+  "eyebrow": "Consulenza · Sicurezza alimentare",
+  "h1": "Sicurezza alimentare e HACCP.",
+  "lede": "Il manuale di autocontrollo non è un documento da tenere in un cassetto: è lo strumento che dimostra, punto per punto, come tieni sotto controllo i rischi alimentari della tua attività — e quello che ASL e NAS chiedono per primo quando entrano.",
+  "chips": [
+    "Reg. CE 852/2004",
+    "D.Lgs. 193/2007",
+    "HACCP",
+    "Formazione alimentaristi",
+    "ASL / NAS",
+    "SIAN"
+  ],
+  "intro": [
+    "Chiunque produca, manipoli, somministri, confezioni, trasporti o venda alimenti — anche solo il bar sotto casa o la mensa aziendale — è un Operatore del Settore Alimentare (OSA) ai sensi del Regolamento CE 852/2004. Questo significa un obbligo preciso: avere un sistema di autocontrollo basato sui principi HACCP (Hazard Analysis and Critical Control Points), messo per iscritto, aggiornato e applicato ogni giorno, non solo esibito in caso di controllo.",
+    "Non è un adempimento burocratico astratto. Significa sapere esattamente dove nel tuo processo — dalla ricezione delle materie prime alla somministrazione al cliente — può insorgere un pericolo (biologico, chimico o fisico), quali sono i punti critici da tenere sotto controllo, come li misuri e cosa fai se un valore esce dai limiti. Se il manuale non rispecchia quello che succede davvero in cucina o in laboratorio, in caso di ispezione vale meno di niente — e la responsabilità, anche penale nei casi più gravi, resta comunque del titolare o del responsabile dell'attività."
+  ],
+  "sottoAree": [
+    {
+      "nome": "Manuale di autocontrollo HACCP",
+      "desc": "Redazione o revisione del piano su misura per la tua attività: analisi dei pericoli, individuazione dei punti critici di controllo (CCP), limiti critici, procedure di monitoraggio e azioni correttive. Non un modello standard scaricato online — un documento che descrive il tuo processo reale."
+    },
+    {
+      "nome": "Formazione obbligatoria degli alimentaristi",
+      "desc": "Corsi per titolari, responsabili dell'industria alimentare (RIA) e addetti, con i moduli orari previsti in base al livello di rischio dell'attività. Gestiamo le scadenze di aggiornamento periodico per tutto il personale, così nessun attestato scade senza che tu lo sappia."
+    },
+    {
+      "nome": "Piano di sanificazione e buone prassi igieniche (PRP)",
+      "desc": "Procedure di pulizia e sanificazione di ambienti, attrezzature e superfici a contatto con gli alimenti, gestione degli infestanti, tracciabilità dei prodotti e delle materie prime, controllo della catena del freddo."
+    },
+    {
+      "nome": "Etichettatura e allergeni",
+      "desc": "Verifica della conformità delle informazioni obbligatorie su etichette e menu, gestione della comunicazione degli allergeni ai sensi del Reg. UE 1169/2011, anche per la somministrazione al banco o su menu non scritto."
+    },
+    {
+      "nome": "Gestione dei controlli ASL e NAS",
+      "desc": "Assistenza prima, durante e dopo l'ispezione: verifica preventiva della documentazione, presenza in fase di sopralluogo quando serve, gestione di eventuali non conformità e prescrizioni."
+    },
+    {
+      "nome": "Notifica sanitaria e SCIA alimentare",
+      "desc": "Predisposizione e aggiornamento della notifica ai sensi del Reg. CE 852/2004 in caso di apertura, subentro, variazione dell'attività o della tipologia di lavorazione."
+    }
+  ],
+  "ottieni": [
+    "Un manuale HACCP che descrive davvero il tuo processo, non un modello generico",
+    "Un unico referente che segue il sopralluogo, la formazione e le scadenze, senza rimpallo tra consulenti diversi",
+    "Attestati e aggiornamenti del personale monitorati, con avviso prima della scadenza",
+    "Assistenza concreta nel giorno del controllo ASL o NAS, non solo un documento da mostrare"
+  ],
+  "fasi": [
+    {
+      "titolo": "Sopralluogo e analisi del processo",
+      "desc": "Veniamo nella tua attività — cucina, laboratorio, banco, magazzino — per mappare il flusso reale degli alimenti: dalla materia prima al piatto o al prodotto finito. È la base per un'analisi dei pericoli che regge davanti a un ispettore."
+    },
+    {
+      "titolo": "Redazione del piano di autocontrollo",
+      "desc": "Costruiamo il manuale HACCP identificando i punti critici di controllo specifici della tua attività, con limiti, modalità di monitoraggio e azioni correttive coerenti con quello che si fa davvero in reparto, non con uno schema teorico."
+    },
+    {
+      "titolo": "Formazione del personale",
+      "desc": "Organizziamo i corsi obbligatori per titolare, RIA e addetti in base al livello di rischio, e verifichiamo che ogni persona a contatto con gli alimenti — anche part-time o stagionale — abbia l'attestato in corso di validità."
+    },
+    {
+      "titolo": "Gestione continua e aggiornamento",
+      "desc": "Monitoriamo scadenze di formazione, revisioni periodiche del manuale, modifiche normative e cambi di attività o di menu che richiedono un aggiornamento del piano. Restiamo il riferimento a cui chiedere prima che arrivi un controllo, non dopo."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Devo avere il manuale HACCP anche se ho un solo dipendente o sono solo io a lavorare?",
+      "a": "Sì. L'obbligo di autocontrollo basato sui principi HACCP, previsto dal Regolamento CE 852/2004, riguarda ogni Operatore del Settore Alimentare a prescindere dal numero di persone impiegate: vale per il titolare che lavora da solo esattamente come per l'attività con dieci dipendenti. Cambia la complessità del piano, non l'obbligo di averlo scritto e applicato."
+    },
+    {
+      "q": "Quanto dura l'attestato HACCP e ogni quanto va rinnovato?",
+      "a": "Dipende dalla regione in cui è stato rilasciato l'attestato, perché la formazione degli alimentaristi è disciplinata a livello regionale e non da un'unica legge nazionale. In Campania la formazione prevede moduli orari diversi in base al livello di rischio dell'attività (addetto o responsabile) e un aggiornamento periodico, generalmente ogni tre anni. Un attestato valido, rilasciato da un ente accreditato in un'altra regione, va comunque riconosciuto: lo ha stabilito il Consiglio di Stato censurando i vincoli che alcune regioni, tra cui la Campania, avevano introdotto in violazione del principio di libera circolazione. In pratica: verifichiamo caso per caso la scadenza reale del tuo attestato invece di applicare una regola standard che potrebbe non valere per te."
+    },
+    {
+      "q": "Cosa controllano davvero ASL e NAS quando fanno un'ispezione?",
+      "a": "Verificano innanzitutto se il manuale di autocontrollo esiste, è aggiornato e corrisponde a quello che succede realmente nei locali: temperature di conservazione, tracciabilità delle materie prime, stato igienico di ambienti e attrezzature, gestione dei rifiuti, e la formazione del personale presente in quel momento. Un manuale scollegato dalla realtà operativa, o attestati scaduti anche di un solo addetto, sono tra le non conformità più contestate."
+    },
+    {
+      "q": "Cosa rischio se non ho il piano HACCP o non lo applico correttamente?",
+      "a": "La mancata o scorretta applicazione dei principi HACCP è sanzionata in via amministrativa ai sensi del D.Lgs. 193/2007, con importi che variano in base alla violazione contestata — non hanno tutte lo stesso peso una carenza documentale e una condizione igienica realmente a rischio per la salute pubblica. Nei casi più gravi, oltre alla sanzione pecuniaria, l'organo di controllo può disporre la sospensione dell'attività o il sequestro del prodotto. L'importo esatto dipende sempre dal tipo di irregolarità e va valutato caso per caso."
+    },
+    {
+      "q": "Il manuale HACCP che ho scaricato online o comprato anni fa va ancora bene?",
+      "a": "Quasi mai. Un modello generico non descrive i tuoi punti critici di controllo reali, e se non è mai stato aggiornato a fronte di cambi di menu, fornitori, layout dei locali o normativa sugli allergeni, in sede di controllo risulta inadeguato quanto non averlo. Il piano va rivisto ogni volta che cambia qualcosa di sostanziale nel processo, non solo su richiesta dell'ispettore."
+    },
+    {
+      "q": "La comunicazione degli allergeni al banco o a voce basta, o serve altro?",
+      "a": "Il Regolamento UE 1169/2011 impone di rendere disponibile l'informazione sugli allergeni presenti negli alimenti, anche per la somministrazione senza menu scritto: è ammessa la comunicazione verbale, ma solo se il personale è formato per farlo correttamente e se esiste una documentazione a supporto facilmente consultabile su richiesta. Una gestione improvvisata degli allergeni è tra le non conformità più frequenti nei controlli a bar e ristoranti."
+    }
+  ],
+  "note": "Le soglie di sanzione, la durata degli attestati e gli obblighi di aggiornamento variano in base alla regione, al livello di rischio dell'attività e al tipo di violazione contestata: le indicazioni sopra sono un quadro generale, la situazione specifica va sempre verificata caso per caso.",
+  "ctaTitle": "Parliamo della tua attività",
+  "ctaLede": "Sopralluogo diretto in cucina, laboratorio o punto vendita — risposta entro 48 ore, un solo referente per manuale, formazione e controlli."
+};
+
+const eyebrow = "Consulenza · Sicurezza alimentare";
+const h1 = "Sicurezza alimentare e HACCP.";
+const taglineTitle = "Il manuale deve reggere all'ispezione, non solo esistere.";
+const areeTitle = "Dall'analisi dei pericoli alla formazione degli alimentaristi.";
+const ottieniTitle = "Un piano che descrive la tua attività, non un modello.";
+const stepsTitle = "Dal sopralluogo alla gestione continua.";
+
+const img = {
+  "src": "/images/consulenza-haccp-cucina.webp",
+  "alt": "Consulente iCura Impresa durante un controllo HACCP in una cucina professionale: adulto con copricapo monouso e giacca navy verifica una checklist con il responsabile del locale, piano in acciaio e ambiente ordinato, luce naturale, fotografia documentaria professionale"
+};
+const ctaImg = {
+  "src": "/images/consulenza-haccp-cucina.webp",
+  "alt": "Consulente iCura Impresa durante un controllo HACCP in una cucina professionale: adulto con copricapo monouso e giacca navy verifica una checklist con il responsabile del locale, piano in acciaio e ambiente ordinato, luce naturale, fotografia documentaria professionale"
+};
+
+const altriAmbiti = [
+  {
+    "nome": "Sicurezza sul lavoro — D.Lgs. 81/08",
+    "desc": "DVR e valutazioni dei rischi, nomina e incarico RSPP, sopralluoghi periodici, gestione di scadenze e adempimenti. Tutto il Testo Unico in un unico contratto.",
+    "href": "/servizi/consulenza/sicurezza-lavoro",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Sicurezza nei cantieri",
+    "desc": "PSC, POS, fascicolo dell'opera e coordinamento per la sicurezza in fase di progettazione ed esecuzione (CSP/CSE). Per imprese edili e committenti privati.",
+    "href": "/servizi/consulenza/cantieri",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Medicina del lavoro",
+    "desc": "Sorveglianza sanitaria, idoneità alla mansione, protocollo sanitario e nomina del medico competente. Visite organizzate direttamente in azienda.",
+    "href": "/servizi/consulenza/medicina-lavoro",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "GDPR & Privacy",
+    "desc": "Nomina DPO, registro dei trattamenti, informative, valutazioni d'impatto e audit. Per chi tratta dati personali in modo strutturato (Reg. UE 2016/679).",
+    "href": "/servizi/consulenza/gdpr",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza ambientale",
+    "desc": "Autorizzazione Unica Ambientale (AUA), gestione rifiuti, MUD, registri di carico/scarico ed emissioni in atmosfera. Adempimenti tecnici e scadenze gestite da noi.",
+    "href": "/servizi/consulenza/ambiente",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza aziendale",
+    "desc": "Strutturazione societaria, organizzazione dei processi e supporto continuativo all'impresa. Il punto di raccordo tra sicurezza, qualità e adempimenti.",
+    "href": "/servizi/consulenza/aziendale",
+    "cta": "Scopri di più"
+  }
+];
+---
+
+<Base title={c.title} description={c.description}>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/consulenza" class="breadcrumb-back">&larr; Torna a Consulenza</a>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder aspect="21/9" src={img.src ?? undefined} alt={img.alt} />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché serve</p>
+        <h2>{taglineTitle}</h2>
+      </div>
+      <div class="prose">
+        <p>{c.intro[0]}</p>
+        <p>{c.intro[1]}</p>
+        <ul class="chips" aria-label="Riferimenti normativi">
+          {c.chips.map((ch) => <li>{ch}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="haccp-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="haccp-aree" class="section-title">{areeTitle}</h2>
+      <AreaGrid aree={c.sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="haccp-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="haccp-ottieni" class="two-col__title">{ottieniTitle}</h2>
+      </div>
+      <ul class="checklist">
+        {c.ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title={stepsTitle} steps={c.fasi} labelledby="haccp-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">{c.note}</p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-haccp"
+    labelledby="haccp-faq"
+    items={c.faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="haccp-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="haccp-altri" class="section-title">Gli altri ambiti di Consulenza.</h2>
+      <AreaGrid aree={altriAmbiti} />
+    </div>
+  </section>
+
+  <CtaBand
+    title={c.ctaTitle}
+    lede={c.ctaLede}
+    image={{ src: ctaImg.src ?? undefined, alt: ctaImg.alt }}
+    primary={{ href: "/contatti", label: "Prenota sopralluogo" }}
+    labelledby="haccp-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

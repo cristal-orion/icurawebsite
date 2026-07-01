@@ -10,12 +10,13 @@ const menu = [
     label: "Consulenza",
     href: "/servizi/consulenza",
     voci: [
-      { label: "Sicurezza sul lavoro · 81/08", href: "/servizi/consulenza#sicurezza-lavoro" },
-      { label: "Sicurezza nei cantieri", href: "/servizi/consulenza#cantieri" },
-      { label: "HACCP alimentare", href: "/servizi/consulenza#haccp" },
-      { label: "Medicina del lavoro", href: "/servizi/consulenza#medicina-lavoro" },
-      { label: "GDPR & Privacy", href: "/servizi/consulenza#gdpr" },
-      { label: "Consulenza ambientale", href: "/servizi/consulenza#ambiente" },
+      { label: "Sicurezza sul lavoro · 81/08", href: "/servizi/consulenza/sicurezza-lavoro" },
+      { label: "Sicurezza nei cantieri", href: "/servizi/consulenza/cantieri" },
+      { label: "HACCP alimentare", href: "/servizi/consulenza/haccp" },
+      { label: "Medicina del lavoro", href: "/servizi/consulenza/medicina-lavoro" },
+      { label: "GDPR & Privacy", href: "/servizi/consulenza/gdpr" },
+      { label: "Consulenza ambientale", href: "/servizi/consulenza/ambiente" },
+      { label: "Consulenza aziendale", href: "/servizi/consulenza/aziendale" },
     ],
   },
   {
@@ -77,94 +78,99 @@ const serviziActive =
 
 <a href="#main" class="skip-link">Salta al contenuto</a>
 
-<nav class="nav-pill" aria-label="Navigazione principale">
-  <a href="/" class="nav-pill__wordmark" aria-label="iCura Impresa, homepage">
-    <span>iCura Impresa</span>
-  </a>
+<header class="site-header">
+  <nav class="site-header__inner" aria-label="Navigazione principale">
+    <a href="/" class="site-header__wordmark" aria-label="iCura Impresa, homepage">
+      iCura Impresa<span class="site-header__dot" aria-hidden="true">.</span>
+    </a>
 
-  <ul class="nav-pill__links">
-    <li>
-      <a
-        href="/chi-siamo"
-        class={`nav-pill__link${isActive("/chi-siamo") ? " is-active" : ""}`}
-        aria-current={isActive("/chi-siamo") ? "page" : undefined}
-      >
-        Chi siamo
+    <ul class="site-nav">
+      <li>
+        <a
+          href="/chi-siamo"
+          class={`site-nav__link${isActive("/chi-siamo") ? " is-active" : ""}`}
+          aria-current={isActive("/chi-siamo") ? "page" : undefined}
+        >
+          Chi siamo
+        </a>
+      </li>
+
+      <li class="site-nav__dropdown" data-dropdown>
+        <button
+          type="button"
+          class={`site-nav__link site-nav__trigger${serviziActive ? " is-active" : ""}`}
+          aria-expanded="false"
+          aria-haspopup="true"
+          aria-controls="nav-servizi-menu"
+          data-dropdown-trigger
+        >
+          Servizi
+          <span class="site-nav__caret" aria-hidden="true">▾</span>
+        </button>
+        <ul id="nav-servizi-menu" class="site-mega" data-dropdown-menu>
+          {menu.map((col) => (
+            <li class="site-mega__col">
+              <a
+                href={col.href}
+                class={`site-mega__head${isActive(col.href) ? " is-active" : ""}`}
+                aria-current={isActive(col.href) ? "page" : undefined}
+              >
+                {col.label}
+              </a>
+              <ul class="site-mega__sub">
+                {col.voci.map((v) => (
+                  <li>
+                    <a href={v.href} class="site-mega__link">{v.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </li>
+
+      <li>
+        <a
+          href="/lavora-con-noi"
+          class={`site-nav__link${isActive("/lavora-con-noi") ? " is-active" : ""}`}
+          aria-current={isActive("/lavora-con-noi") ? "page" : undefined}
+        >
+          Lavora con noi
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="/contatti"
+          class={`site-nav__link${isActive("/contatti") ? " is-active" : ""}`}
+          aria-current={isActive("/contatti") ? "page" : undefined}
+        >
+          Contatti
+        </a>
+      </li>
+    </ul>
+
+    <div class="site-header__actions">
+      <a href="tel:+390816580779" class="site-header__phone">+39 081 658 0779</a>
+      <a href="/contatti" class="site-header__cta">
+        Richiedi consulenza
+        <span aria-hidden="true">→</span>
       </a>
-    </li>
 
-    <li class="nav-pill__dropdown" data-dropdown>
       <button
         type="button"
-        class={`nav-pill__link nav-pill__trigger${serviziActive ? " is-active" : ""}`}
+        class="site-header__burger"
+        data-nav-toggle
         aria-expanded="false"
-        aria-haspopup="true"
-        aria-controls="nav-servizi-menu"
-        data-dropdown-trigger
+        aria-controls="nav-mobile"
+        aria-label="Apri il menu di navigazione"
       >
-        Servizi
-        <span class="nav-pill__caret" aria-hidden="true">▾</span>
+        <span class="site-header__burger-bar" aria-hidden="true"></span>
+        <span class="site-header__burger-bar" aria-hidden="true"></span>
       </button>
-      <ul id="nav-servizi-menu" class="nav-pill__menu nav-pill__mega" data-dropdown-menu>
-        {menu.map((col) => (
-          <li class="nav-mega__col">
-            <a
-              href={col.href}
-              class={`nav-mega__head${isActive(col.href) ? " is-active" : ""}`}
-              aria-current={isActive(col.href) ? "page" : undefined}
-            >
-              {col.label}
-            </a>
-            <ul class="nav-mega__sub">
-              {col.voci.map((v) => (
-                <li>
-                  <a href={v.href} class="nav-mega__link">{v.label}</a>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
-    </li>
-
-    <li>
-      <a
-        href="/lavora-con-noi"
-        class={`nav-pill__link${isActive("/lavora-con-noi") ? " is-active" : ""}`}
-        aria-current={isActive("/lavora-con-noi") ? "page" : undefined}
-      >
-        Lavora con noi
-      </a>
-    </li>
-
-    <li>
-      <a
-        href="/contatti"
-        class={`nav-pill__link${isActive("/contatti") ? " is-active" : ""}`}
-        aria-current={isActive("/contatti") ? "page" : undefined}
-      >
-        Contatti
-      </a>
-    </li>
-  </ul>
-
-  <a href="/contatti" class="nav-pill__cta">
-    Richiedi consulenza
-    <span aria-hidden="true">→</span>
-  </a>
-
-  <button
-    type="button"
-    class="nav-pill__burger"
-    data-nav-toggle
-    aria-expanded="false"
-    aria-controls="nav-mobile"
-    aria-label="Apri il menu di navigazione"
-  >
-    <span class="nav-pill__burger-bar" aria-hidden="true"></span>
-    <span class="nav-pill__burger-bar" aria-hidden="true"></span>
-  </button>
-</nav>
+    </div>
+  </nav>
+</header>
 
 <div class="nav-mobile" id="nav-mobile" data-nav-mobile hidden>
   <ul class="nav-mobile__list">
@@ -274,165 +280,134 @@ const serviziActive =
 </script>
 
 <style>
-  .nav-pill {
+  /* ── Barra header a tutta larghezza (clinico-tech) ── */
+  .site-header {
     position: fixed;
-    top: var(--space-md);
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-md);
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
-    background: color-mix(in oklch, var(--color-paper) 80%, transparent);
-    backdrop-filter: blur(14px) saturate(130%);
-    -webkit-backdrop-filter: blur(14px) saturate(130%);
-    border: var(--rule-hair) solid var(--color-rule);
-    border-radius: var(--radius-pill);
-    box-shadow: 0 8px 24px -16px oklch(0% 0 0 / 0.18);
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 50;
-    max-width: calc(100% - var(--page-gutter) * 2);
+    min-height: var(--header-h);
+    background: color-mix(in srgb, var(--color-paper) 82%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
   }
-
-  .nav-pill__wordmark {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: var(--text-sm);
-    letter-spacing: -0.015em;
-    color: var(--color-ink);
-    text-decoration: none;
-    padding-right: 0.25rem;
-  }
-  .nav-pill__wordmark:hover { text-decoration: none; }
-
-  .nav-pill__links {
+  .site-header__inner {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    list-style: none;
-    margin: 0;
-    padding: 0 var(--space-sm);
-    border-left: var(--rule-hair) solid var(--color-rule);
-    border-right: var(--rule-hair) solid var(--color-rule);
+    gap: var(--space-lg);
+    width: 100%;
+    max-width: 84rem;
+    min-height: var(--header-h);
+    margin-inline: auto;
+    padding-inline: var(--page-gutter);
   }
 
-  .nav-pill__link {
-    position: relative;
-    font-size: var(--text-sm);
-    color: var(--color-ink-2);
+  .site-header__wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-xl);
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
     text-decoration: none;
-    padding: 0.35rem 0;
+    white-space: nowrap;
+  }
+  .site-header__wordmark:hover { text-decoration: none; }
+  .site-header__dot { color: var(--color-accent); }
+
+  /* ── Link di navigazione ── */
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0 auto 0 var(--space-md);
+    padding: 0;
+  }
+  .site-nav__link {
+    position: relative;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: color-mix(in srgb, var(--color-ink) 70%, transparent);
+    text-decoration: none;
+    padding: 0.4rem 0;
     transition: color var(--dur-fast) var(--ease-out);
     white-space: nowrap;
   }
-  .nav-pill__link:hover { color: var(--color-ink); text-decoration: none; }
-  .nav-pill__link.is-active { color: var(--color-ink); }
-  .nav-pill__link.is-active::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -0.7em;
-    transform: translateY(-50%);
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--color-highlight);
-  }
+  .site-nav__link:hover { color: var(--color-accent); text-decoration: none; }
+  .site-nav__link.is-active { color: var(--color-accent); }
 
-  /* Trigger del dropdown — pulsante che si comporta da link */
-  .nav-pill__trigger {
+  .site-nav__trigger {
     display: inline-flex;
     align-items: center;
-    gap: 0.3em;
-    font-family: inherit;
+    gap: 0.35em;
+    font: inherit;
     background: none;
     border: 0;
     cursor: pointer;
   }
-  .nav-pill__caret {
+  .site-nav__caret {
     font-size: 0.7em;
     line-height: 1;
     transition: transform var(--dur-fast) var(--ease-out);
   }
-  .nav-pill__dropdown.is-open .nav-pill__caret { transform: rotate(180deg); }
+  .site-nav__dropdown { position: relative; }
+  .site-nav__dropdown.is-open .site-nav__caret { transform: rotate(180deg); }
 
-  /* Menu a tendina */
-  .nav-pill__dropdown { position: relative; }
-  .nav-pill__menu {
-    position: absolute;
-    top: calc(100% + 0.75rem);
+  /* ── Mega-menu Servizi — pannello a colonne, centrato sul viewport ── */
+  .site-mega {
+    position: fixed;
+    top: calc(var(--header-h) + 0.5rem);
     left: 50%;
-    transform: translateX(-50%) translateY(-0.25rem);
-    min-width: 13rem;
-    list-style: none;
+    transform: translateX(-50%) translateY(-0.4rem);
+    z-index: 50;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-md) var(--space-lg);
+    width: min(60rem, calc(100vw - 1.5rem));
+    max-width: calc(100vw - 1.5rem);
     margin: 0;
-    padding: 0.4rem;
-    background: color-mix(in oklch, var(--color-paper) 92%, transparent);
-    backdrop-filter: blur(14px) saturate(130%);
-    -webkit-backdrop-filter: blur(14px) saturate(130%);
+    padding: var(--space-lg);
+    list-style: none;
+    background: color-mix(in srgb, var(--color-paper) 96%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
     border: var(--rule-hair) solid var(--color-rule);
-    border-radius: var(--radius-card);
-    box-shadow: 0 12px 32px -18px oklch(0% 0 0 / 0.28);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
-  .nav-pill__dropdown:hover .nav-pill__menu,
-  .nav-pill__dropdown:focus-within .nav-pill__menu,
-  .nav-pill__dropdown.is-open .nav-pill__menu {
+  .site-nav__dropdown:hover .site-mega,
+  .site-nav__dropdown:focus-within .site-mega,
+  .site-nav__dropdown.is-open .site-mega {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
     transform: translateX(-50%) translateY(0);
   }
-
-  .nav-pill__menu-link {
+  .site-mega__col { min-width: 0; }
+  .site-mega__head {
     display: block;
-    padding: 0.5rem 0.7rem;
-    border-radius: var(--radius-input);
-    font-size: var(--text-sm);
-    color: var(--color-ink-2);
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
-  }
-  .nav-pill__menu-link:hover {
-    background: var(--color-paper-3);
-    color: var(--color-ink);
-    text-decoration: none;
-  }
-  .nav-pill__menu-link.is-active { color: var(--color-ink); font-weight: 500; }
-
-  /* Mega-menu Servizi — pannello a colonne, centrato sul viewport
-     (position:fixed) così con 5 colonne non sfora mai i bordi. */
-  .nav-pill__mega {
-    position: fixed;
-    top: calc(var(--space-md) + 3.4rem);
-    z-index: 50;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    gap: var(--space-md) var(--space-lg);
-    width: min(56rem, calc(100vw - 1.5rem));
-    max-width: calc(100vw - 1.5rem);
-    padding: var(--space-md);
-  }
-  .nav-mega__col { min-width: 0; }
-  .nav-mega__head {
-    display: block;
-    font-size: var(--text-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-md);
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     color: var(--color-ink);
     text-decoration: none;
-    padding: 0.25rem 0.4rem 0.5rem;
+    padding: 0 0.4rem 0.5rem;
     margin-bottom: 0.4rem;
     border-bottom: var(--rule-hair) solid var(--color-rule);
   }
-  .nav-mega__head:hover { color: var(--color-accent); text-decoration: none; }
-  .nav-mega__head.is-active { color: var(--color-accent); }
-  .nav-mega__sub {
+  .site-mega__head:hover { color: var(--color-accent); text-decoration: none; }
+  .site-mega__head.is-active { color: var(--color-accent); }
+  .site-mega__sub {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -440,133 +415,158 @@ const serviziActive =
     flex-direction: column;
     gap: 1px;
   }
-  .nav-mega__link {
+  .site-mega__link {
     display: block;
-    padding: 0.32rem 0.4rem;
+    padding: 0.35rem 0.4rem;
     border-radius: var(--radius-input);
     font-size: var(--text-sm);
-    color: var(--color-ink-2);
+    color: color-mix(in srgb, var(--color-ink) 66%, transparent);
     text-decoration: none;
     transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }
-  .nav-mega__link:hover {
-    background: var(--color-paper-3);
-    color: var(--color-ink);
+  .site-mega__link:hover {
+    background: var(--color-paper-blue);
+    color: var(--color-accent);
     text-decoration: none;
   }
 
-  .nav-pill__cta {
+  /* ── Azioni a destra: telefono + CTA + burger ── */
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-left: auto;
+  }
+  .site-header__phone {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-accent);
+    text-decoration: none;
+    padding: 0.5rem 0.9rem;
+    border: var(--rule-hair) solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .site-header__phone:hover { background: color-mix(in srgb, var(--color-accent) 8%, transparent); text-decoration: none; }
+
+  /* CTA: pill NAVY → blu su hover */
+  .site-header__cta {
     display: inline-flex;
     align-items: center;
     gap: 0.4em;
-    padding: 0.5rem 1rem;
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
+    padding: 0.6rem 1.3rem;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-body);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: 600;
     border-radius: var(--radius-pill);
     text-decoration: none;
-    transition: background var(--dur-fast) var(--ease-out);
     white-space: nowrap;
+    transition: background var(--dur-fast) var(--ease-out);
   }
-  .nav-pill__cta:hover {
-    background: var(--color-accent-hover);
-    text-decoration: none;
-  }
+  .site-header__cta:hover { background: var(--color-accent); text-decoration: none; }
 
   /* Hamburger — solo mobile */
-  .nav-pill__burger {
+  .site-header__burger {
     display: none;
     flex-direction: column;
     justify-content: center;
     gap: 4px;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0;
     background: none;
     border: 0;
     cursor: pointer;
     border-radius: var(--radius-input);
+    color: var(--color-ink);
   }
-  .nav-pill__burger-bar {
+  .site-header__burger-bar {
     display: block;
-    width: 1.15rem;
+    width: 1.25rem;
     height: 2px;
     margin-inline: auto;
-    background: var(--color-ink);
+    background: currentColor;
     transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
   }
-  .nav-pill__burger[aria-expanded="true"] .nav-pill__burger-bar:nth-child(1) {
+  .site-header__burger[aria-expanded="true"] .site-header__burger-bar:nth-child(1) {
     transform: translateY(3px) rotate(45deg);
   }
-  .nav-pill__burger[aria-expanded="true"] .nav-pill__burger-bar:nth-child(2) {
+  .site-header__burger[aria-expanded="true"] .site-header__burger-bar:nth-child(2) {
     transform: translateY(-3px) rotate(-45deg);
   }
 
-  /* Pannello menu mobile */
+  /* ── Pannello menu mobile — sheet navy sotto la barra ── */
   .nav-mobile {
     position: fixed;
-    top: calc(var(--space-md) + 3.25rem);
-    left: var(--page-gutter);
-    right: var(--page-gutter);
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 49;
-    margin-inline: auto;
-    max-width: 26rem;
-    padding: var(--space-sm);
-    background: color-mix(in oklch, var(--color-paper) 96%, transparent);
-    backdrop-filter: blur(14px) saturate(130%);
-    -webkit-backdrop-filter: blur(14px) saturate(130%);
-    border: var(--rule-hair) solid var(--color-rule);
-    border-radius: var(--radius-card);
-    box-shadow: 0 16px 44px -22px oklch(0% 0 0 / 0.34);
+    padding: var(--space-xl) var(--page-gutter) var(--space-lg);
+    background: var(--color-ink);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .nav-mobile[hidden] { display: none; }
-  .nav-mobile__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .nav-mobile__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.2rem; }
   .nav-mobile__list a {
     display: block;
-    padding: 0.7rem 0.6rem;
-    font-size: var(--text-md);
-    color: var(--color-ink);
+    padding: 0.7rem 0.2rem;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-paper);
     text-decoration: none;
     border-radius: var(--radius-input);
   }
-  .nav-mobile__list a:hover { background: var(--color-paper-3); text-decoration: none; }
-  .nav-mobile__list a.is-active { color: var(--color-accent); font-weight: 500; }
+  .nav-mobile__list a:hover { color: var(--color-accent); text-decoration: none; }
+  .nav-mobile__list a.is-active { color: var(--color-accent); }
+  .nav-mobile__group { margin-block: 0.4rem; }
   .nav-mobile__group-label {
     display: block;
-    padding: 0.7rem 0.6rem 0.2rem;
+    padding: 0.6rem 0.2rem 0.3rem;
     font-family: var(--font-mono);
     font-size: var(--text-xs);
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-muted);
+    letter-spacing: 0.12em;
+    color: var(--color-accent);
   }
   .nav-mobile__group ul { list-style: none; margin: 0; padding: 0 0 0 var(--space-sm); }
+  .nav-mobile__group ul a { font-size: var(--text-md); font-weight: 500; color: color-mix(in srgb, var(--color-paper) 80%, transparent); }
   .nav-mobile__cta {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: var(--space-sm);
+    margin-top: var(--space-lg);
   }
 
-  /* Mobile — pill compatta: wordmark + hamburger; link e CTA nel menu */
+  /* Mobile — barra compatta: wordmark + burger; link/telefono/CTA nel menu */
   @media (max-width: 56rem) {
-    .nav-pill { gap: var(--space-sm); padding: 0.4rem 0.4rem 0.4rem 0.85rem; }
-    .nav-pill__links { display: none; }
-    .nav-pill__cta { display: none; }
-    .nav-pill__burger { display: flex; }
+    .site-nav { display: none; }
+    .site-header__cta,
+    .site-header__phone { display: none; }
+    .site-header__burger { display: flex; }
   }
-
-  /* Desktop — il pannello mobile resta nascosto anche se aperto e si ridimensiona */
+  @media (min-width: 64rem) {
+    .site-header__phone { display: inline-flex; }
+  }
   @media (min-width: 56.0625rem) {
     .nav-mobile { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .nav-pill__menu { transition: opacity var(--dur-fast) var(--ease-out); transform: translateX(-50%); }
-    .nav-pill__dropdown:hover .nav-pill__menu,
-    .nav-pill__dropdown:focus-within .nav-pill__menu,
-    .nav-pill__dropdown.is-open .nav-pill__menu { transform: translateX(-50%); }
-    .nav-pill__caret { transition: none; }
+    .site-mega { transition: opacity var(--dur-fast) var(--ease-out); transform: translateX(-50%); }
+    .site-nav__dropdown:hover .site-mega,
+    .site-nav__dropdown:focus-within .site-mega,
+    .site-nav__dropdown.is-open .site-mega { transform: translateX(-50%); }
+    .site-nav__caret { transition: none; }
   }
 </style>

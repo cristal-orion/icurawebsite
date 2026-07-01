@@ -1,0 +1,292 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const c = {
+  "title": "Consulenza aziendale — organizzazione, deleghe e modelli di gestione",
+  "description": "Struttura societaria, deleghe di funzioni, modelli organizzativi 231 e coordinamento continuo tra sicurezza, ambiente, qualità e privacy: iCura Impresa affianca l'azienda come punto di riferimento unico.",
+  "eyebrow": "Consulenza · Organizzazione aziendale",
+  "h1": "Consulenza aziendale.",
+  "lede": "Un'azienda che cresce ha bisogno di un'organizzazione che regge: ruoli chiari, deleghe valide, un modello di gestione che tenga insieme sicurezza, ambiente, qualità e privacy invece di farli viaggiare su binari separati.",
+  "chips": [
+    "D.Lgs. 231/2001",
+    "Art. 16 D.Lgs. 81/08 – Delega di funzioni",
+    "Organigramma sicurezza",
+    "Modello organizzativo",
+    "D.Lgs. 81/2026 (reati ambientali)"
+  ],
+  "intro": [
+    "Molte aziende affrontano sicurezza, ambiente, qualità e privacy come quattro pratiche separate, ognuna con il suo consulente, il suo scadenzario, il suo linguaggio. Il risultato è che nessuno ha il quadro completo: il datore di lavoro firma documenti che non sempre riflettono come l'azienda funziona davvero, le deleghe sono generiche o scadute, l'organigramma della sicurezza non coincide con quello reale. Quando arriva un controllo, un infortunio o una verifica di un cliente capofiliera, le contraddizioni tra un documento e l'altro emergono tutte insieme.",
+    "La consulenza aziendale di iCura Impresa nasce per chiudere questo scarto: mettere ordine nella struttura organizzativa — chi decide cosa, chi risponde di cosa, con quali poteri e quali risorse — e usarla come base comune per tutti gli adempimenti. Non è un servizio 'in più': è il livello che tiene insieme gli altri. Una delega di funzioni scritta bene, un organigramma aggiornato, un modello organizzativo coerente con l'attività reale valgono come prevenzione legale prima ancora che come adempimento, perché è lì che si stabilisce chi risponde se qualcosa va storto."
+  ],
+  "sottoAree": [
+    {
+      "nome": "Struttura organizzativa e deleghe di funzioni",
+      "desc": "Definizione di organigramma aziendale e deleghe ex art. 16 D.Lgs. 81/08: atto scritto con data certa, accettazione del delegato, poteri di organizzazione/gestione/controllo e autonomia di spesa effettivi. Senza questi requisiti la delega è nulla e la responsabilità resta in capo al datore di lavoro."
+    },
+    {
+      "nome": "Modelli organizzativi e di gestione (D.Lgs. 231/2001)",
+      "desc": "Adozione o aggiornamento del modello 231 per l'esonero da responsabilità amministrativa dell'ente: mappatura dei reati presupposto rilevanti per l'attività (inclusi i reati ambientali ampliati dal D.Lgs. 81/2026), procedure, flussi verso l'organismo di vigilanza, sistema disciplinare."
+    },
+    {
+      "nome": "Organigramma della sicurezza e catena di responsabilità",
+      "desc": "Individuazione formale di datore di lavoro, dirigenti, preposti, RSPP, RLS, medico competente e addetti alle emergenze, coerente con l'organigramma aziendale reale e con il DVR. Aggiornamento tempestivo a ogni variazione organizzativa, di mansioni o di responsabili."
+    },
+    {
+      "nome": "Coordinamento tra sicurezza, ambiente, qualità e privacy",
+      "desc": "Un solo referente che tiene allineati scadenzari, documenti e responsabili delle diverse aree, evitando che DVR, autorizzazioni ambientali, sistema qualità e trattamento dati viaggino su procedure e responsabili scollegati tra loro."
+    },
+    {
+      "nome": "Affiancamento continuativo e gestione delle scadenze",
+      "desc": "Monitoraggio nel tempo di formazione obbligatoria, visite mediche, verifiche periodiche, rinnovi e aggiornamenti normativi che riguardano l'intera struttura, non un singolo adempimento isolato."
+    }
+  ],
+  "ottieni": [
+    "Un organigramma reale, coerente tra sicurezza, qualità, ambiente e privacy, non quattro versioni diverse su quattro faldoni",
+    "Deleghe di funzioni scritte secondo i requisiti dell'art. 16 D.Lgs. 81/08, non moduli generici scaricati da internet",
+    "Un modello organizzativo (dove ha senso adottarlo) tarato sui rischi reali della tua attività, non un documento standard",
+    "Un referente unico che segue l'azienda nel tempo, non un consulente diverso per ogni scadenza",
+    "Aggiornamenti tempestivi quando cambia l'organizzazione, un ruolo o la normativa di riferimento"
+  ],
+  "fasi": [
+    {
+      "titolo": "Analisi dell'organizzazione",
+      "desc": "Sopralluogo e ricognizione della struttura reale dell'azienda: chi decide, chi controlla, come sono distribuiti compiti e responsabilità tra soci, dirigenti, preposti e figure della sicurezza, qualità e ambiente."
+    },
+    {
+      "titolo": "Mappatura degli scarti",
+      "desc": "Confronto tra organizzazione reale e documenti esistenti (organigramma, deleghe, DVR, eventuale modello 231): dove i ruoli sulla carta non coincidono con chi decide davvero, dove mancano deleghe valide o un organismo di vigilanza funzionante."
+    },
+    {
+      "titolo": "Costruzione del modello di gestione",
+      "desc": "Redazione o aggiornamento di deleghe di funzioni, organigramma della sicurezza e, dove opportuno, modello organizzativo 231 con relative procedure, coordinati con gli altri documenti aziendali già in essere."
+    },
+    {
+      "titolo": "Gestione continua e aggiornamento",
+      "desc": "Presidio nel tempo: revisione dei documenti a ogni cambio organizzativo, aggiornamento su nuovi reati presupposto o novità normative, un referente unico raggiungibile per ogni area."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Il modello organizzativo 231 è obbligatorio per la mia azienda?",
+      "a": "No, l'adozione del modello ex D.Lgs. 231/2001 resta formalmente facoltativa anche oggi. Ma è l'unico strumento che permette all'ente di essere esonerato dalla responsabilità amministrativa se un reato presupposto viene commesso da un dirigente o da un dipendente nell'interesse dell'azienda. Senza modello, o con un modello non aggiornato ai reati presupposto attuali, l'esonero non si applica. Per molte PMI diventa 'di fatto' necessario quando lavorano con capofiliera, pubblica amministrazione o gare che lo richiedono contrattualmente."
+    },
+    {
+      "q": "Cosa cambia con il D.Lgs. 81/2026 sui reati ambientali?",
+      "a": "Il D.Lgs. 81/2026, in vigore dal 2 giugno 2026, ha riformato i reati ambientali nel codice penale e ampliato l'art. 25-undecies del D.Lgs. 231/2001, aggiungendo nuove fattispecie (tra cui commercio di prodotti inquinanti, sostanze ozono lesive, gas a effetto serra) e inasprendo le sanzioni per gli enti. Le aziende che hanno già un modello 231 devono verificare se copre queste nuove fattispecie: se non lo fa, il modello perde efficacia esimente su quella parte."
+    },
+    {
+      "q": "Una delega di funzioni scritta a mano su un foglio basta?",
+      "a": "No. L'art. 16 del D.Lgs. 81/08 richiede requisiti precisi: atto scritto con data certa, accettazione espressa del delegato, professionalità ed esperienza adeguate al ruolo, attribuzione reale dei poteri di organizzazione, gestione e controllo, autonomia di spesa effettiva e pubblicità adeguata della delega. Manca anche solo uno di questi elementi e la delega può essere considerata inefficace in sede di accertamento, con la responsabilità che torna al datore di lavoro."
+    },
+    {
+      "q": "Se delego le funzioni di sicurezza a un dirigente, io datore di lavoro sono comunque responsabile?",
+      "a": "In parte sì. La delega di funzioni non elimina l'obbligo di vigilanza del datore di lavoro sul corretto operato del delegato (il cosiddetto dovere di 'alta vigilanza', ribadito anche dalla giurisprudenza più recente). Ci sono inoltre obblighi non delegabili, come la valutazione dei rischi e la nomina del responsabile del servizio di prevenzione e protezione. La delega serve a distribuire correttamente compiti operativi, non a scaricare ogni responsabilità."
+    },
+    {
+      "q": "Il nostro organigramma della sicurezza va rifatto ogni volta che cambia qualcosa in azienda?",
+      "a": "Sì, va aggiornato ogni volta che cambiano ruoli, mansioni, responsabili o assetto organizzativo: un organigramma non aggiornato è tra le prime cose che un organo di vigilanza controlla in caso di infortunio, perché mostra se l'azienda sa davvero chi fa cosa. Non c'è un termine fisso identico per ogni situazione, ma la prassi indica un aggiornamento tempestivo, generalmente entro pochi giorni dalla variazione."
+    },
+    {
+      "q": "Che differenza c'è tra questo servizio e il DVR o la consulenza HACCP che avete già in altre pagine?",
+      "a": "DVR, HACCP, privacy e sistemi qualità sono adempimenti verticali su un rischio o un processo specifico. La consulenza aziendale lavora un livello sopra: costruisce la struttura organizzativa — chi decide, chi risponde, con quali poteri — che rende quegli adempimenti coerenti tra loro e realmente applicati, invece di restare documenti paralleli scollegati dall'operatività quotidiana."
+    }
+  ],
+  "note": "Soglie di applicazione, obbligo di adottare un modello 231 in casi specifici (es. per requisiti di gara o richieste di clienti capofiliera) ed entità delle sanzioni variano in base a settore, dimensione e attività: vanno verificate caso per caso, non su un valore standard.",
+  "ctaTitle": "Parliamo della tua organizzazione",
+  "ctaLede": "Sopralluogo e analisi dell'organizzazione reale · risposta entro 48 ore · un referente unico per sicurezza, ambiente, qualità e privacy"
+};
+
+const eyebrow = "Consulenza · Organizzazione aziendale";
+const h1 = "Consulenza aziendale.";
+const taglineTitle = "La struttura che tiene insieme tutto il resto.";
+const areeTitle = "Dalle deleghe di funzioni al modello organizzativo 231.";
+const ottieniTitle = "Un organigramma reale, non quattro versioni diverse.";
+const stepsTitle = "Dall'analisi dell'organizzazione alla gestione continua.";
+
+const img = {
+  "src": null,
+  "alt": "Riunione di organizzazione aziendale in un ufficio italiano: consulente adulto in abito blu navy mostra un organigramma su tablet a un imprenditore seduto alla scrivania, documenti non leggibili sul tavolo, luce naturale, atmosfera collaborativa e riservata, palette desaturata navy/grigio, fotografia documentaria professionale, no posa frontale, no sorrisi"
+};
+const ctaImg = {
+  "src": null,
+  "alt": "Consulente iCura Impresa e imprenditore firmano un documento organizzativo in ufficio: tavolo ordinato, laptop chiuso, luce naturale, atmosfera professionale e riservata, palette desaturata navy/grigio, fotografia documentaria professionale, no posa"
+};
+
+const altriAmbiti = [
+  {
+    "nome": "Sicurezza sul lavoro — D.Lgs. 81/08",
+    "desc": "DVR e valutazioni dei rischi, nomina e incarico RSPP, sopralluoghi periodici, gestione di scadenze e adempimenti. Tutto il Testo Unico in un unico contratto.",
+    "href": "/servizi/consulenza/sicurezza-lavoro",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Sicurezza nei cantieri",
+    "desc": "PSC, POS, fascicolo dell'opera e coordinamento per la sicurezza in fase di progettazione ed esecuzione (CSP/CSE). Per imprese edili e committenti privati.",
+    "href": "/servizi/consulenza/cantieri",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Sicurezza alimentare (HACCP)",
+    "desc": "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione operatori secondo il Reg. CE 852/2004. Per ristoranti, bar, mense e produzione alimentare.",
+    "href": "/servizi/consulenza/haccp",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Medicina del lavoro",
+    "desc": "Sorveglianza sanitaria, idoneità alla mansione, protocollo sanitario e nomina del medico competente. Visite organizzate direttamente in azienda.",
+    "href": "/servizi/consulenza/medicina-lavoro",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "GDPR & Privacy",
+    "desc": "Nomina DPO, registro dei trattamenti, informative, valutazioni d'impatto e audit. Per chi tratta dati personali in modo strutturato (Reg. UE 2016/679).",
+    "href": "/servizi/consulenza/gdpr",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza ambientale",
+    "desc": "Autorizzazione Unica Ambientale (AUA), gestione rifiuti, MUD, registri di carico/scarico ed emissioni in atmosfera. Adempimenti tecnici e scadenze gestite da noi.",
+    "href": "/servizi/consulenza/ambiente",
+    "cta": "Scopri di più"
+  }
+];
+---
+
+<Base title={c.title} description={c.description}>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/consulenza" class="breadcrumb-back">&larr; Torna a Consulenza</a>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder aspect="21/9" src={img.src ?? undefined} alt={img.alt} />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché serve</p>
+        <h2>{taglineTitle}</h2>
+      </div>
+      <div class="prose">
+        <p>{c.intro[0]}</p>
+        <p>{c.intro[1]}</p>
+        <ul class="chips" aria-label="Riferimenti normativi">
+          {c.chips.map((ch) => <li>{ch}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="aziendale-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="aziendale-aree" class="section-title">{areeTitle}</h2>
+      <AreaGrid aree={c.sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="aziendale-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="aziendale-ottieni" class="two-col__title">{ottieniTitle}</h2>
+      </div>
+      <ul class="checklist">
+        {c.ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title={stepsTitle} steps={c.fasi} labelledby="aziendale-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">{c.note}</p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-aziendale"
+    labelledby="aziendale-faq"
+    items={c.faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="aziendale-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="aziendale-altri" class="section-title">Gli altri ambiti di Consulenza.</h2>
+      <AreaGrid aree={altriAmbiti} />
+    </div>
+  </section>
+
+  <CtaBand
+    title={c.ctaTitle}
+    lede={c.ctaLede}
+    image={{ src: ctaImg.src ?? undefined, alt: ctaImg.alt }}
+    primary={{ href: "/contatti", label: "Prenota sopralluogo" }}
+    labelledby="aziendale-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

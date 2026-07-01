@@ -35,3 +35,9 @@ pnpm-debug.log*
 # immagini gestite fuori da git per ora (placeholder / generate)
 # NB: quelle già committate restano tracciate; questo vale solo per i file nuovi
 public/images/
+
+# proposte home redesign — bozze da mostrare al cliente, NON si committano
+proposte/
+src/pages/proposte/
+src/layouts/proposte/
+src/components/proposte/

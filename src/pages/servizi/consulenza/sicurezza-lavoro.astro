@@ -1,0 +1,295 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const c = {
+  "chips": [
+    "D.Lgs. 81/08",
+    "DVR",
+    "RSPP",
+    "Accordo Stato-Regioni 2025",
+    "Patente a crediti"
+  ],
+  "ctaLede": "Sopralluogo gratuito in azienda · un referente unico per DVR, nomine e scadenze · risposta entro 48 ore",
+  "ctaTitle": "Mettiamo in regola la tua azienda, partendo dal sopralluogo",
+  "description": "Sicurezza sul lavoro D.Lgs. 81/08: DVR, RSPP, formazione e scadenze. iCura Impresa segue la pratica a Napoli e in Campania, dal sopralluogo alla gestione continua.",
+  "eyebrow": "Consulenza · Sicurezza sul lavoro",
+  "lede": "Il D.Lgs. 81/08 vale dal primo dipendente. Ti seguiamo dal sopralluogo alla gestione delle scadenze, con un unico referente.",
+  "faq": [
+    {
+      "q": "Devo fare il DVR anche se ho un solo dipendente?",
+      "a": "Sì. L'obbligo del Documento di Valutazione dei Rischi scatta dal primo lavoratore, anche se è un familiare o un socio che lavora in azienda. Non esiste più l'autocertificazione: il DVR va redatto, datato e firmato. Senza, le sanzioni sono penali a carico del datore di lavoro, con arresto o ammenda a seconda della gravità."
+    },
+    {
+      "q": "Devo nominare per forza un RSPP esterno?",
+      "a": "Dipende. Nelle aziende più piccole e a basso rischio il datore di lavoro può svolgere lui stesso il ruolo di RSPP, ma solo dopo un corso specifico di 16 ore previsto dal nuovo Accordo Stato-Regioni 2025 e con verifica periodica. Sopra certe soglie di rischio o di addetti la nomina di un RSPP esterno diventa obbligatoria. Nel sopralluogo verifichiamo qual è la strada corretta per la tua attività."
+    },
+    {
+      "q": "Cosa cambia con il nuovo Accordo Stato-Regioni 2025 sulla formazione?",
+      "a": "In vigore dal 24 maggio 2025, con un periodo transitorio di 12 mesi fino al 24 maggio 2026, l'Accordo introduce un corso obbligatorio specifico per i datori di lavoro (16 ore), rafforza la formazione dei preposti (da 8 a 12 ore) e conferma l'impianto già in vigore per i lavoratori: 4 ore di formazione generale più la parte specifica in base al rischio, con aggiornamento quinquennale di 6 ore. Dopo il periodo transitorio non sarà più possibile erogare corsi con le vecchie regole."
+    },
+    {
+      "q": "La patente a crediti riguarda anche la mia azienda?",
+      "a": "Se operi in cantieri temporanei o mobili, come impresa o come lavoratore autonomo, sì: dal 1° ottobre 2024 è obbligatoria, salvo poche esclusioni come le forniture senza posa in opera o le imprese con attestazione SOA di livello alto. Il Decreto-Legge 159/2025 ha inasprito le sanzioni e introdotto il badge digitale di cantiere. Senza patente in regola, o sotto la soglia minima di crediti, l'impresa non può operare in cantiere e rischia sanzioni pesanti."
+    },
+    {
+      "q": "Cosa rischia in concreto il datore di lavoro che viene ispezionato senza essere in regola?",
+      "a": "Dipende da cosa manca. La mancata redazione del DVR prevede arresto da 3 a 6 mesi o ammenda che può superare i 9.000 euro; la mancata nomina del RSPP prevede arresto da 3 a 6 mesi o ammenda fino a oltre 7.800 euro. Sono importi rivalutati periodicamente e possono aumentare in caso di rischi rilevanti o di più lavoratori coinvolti. A questo si aggiunge il fermo dell'attività nei casi più gravi, con un impatto economico spesso superiore alla sanzione stessa."
+    },
+    {
+      "q": "Con quale frequenza vanno aggiornati DVR e formazione?",
+      "a": "Il DVR va rielaborato ogni volta che cambiano i processi produttivi, l'organizzazione del lavoro, si verificano infortuni significativi o emergono rischi non valutati, come quello di violenza e molestie sul lavoro, diventato un obbligo esplicito dal 31 dicembre 2025. La formazione dei lavoratori si aggiorna ogni 5 anni, quella dei preposti richiede un aggiornamento periodico più frequente. Nel piano di gestione continua teniamo traccia di ogni scadenza e la anticipiamo, non la rincorriamo."
+    }
+  ],
+  "fasi": [
+    {
+      "titolo": "Sopralluogo e mappatura rischi",
+      "desc": "Veniamo in azienda, osserviamo i processi reali e individuiamo i rischi specifici della tua attività: dalle attrezzature ai luoghi di lavoro, fino alle mansioni più esposte. È il punto di partenza per un DVR che regge davvero a un controllo, non un modello copiato."
+    },
+    {
+      "titolo": "DVR, nomine e organigramma della sicurezza",
+      "desc": "Redigiamo il Documento di Valutazione dei Rischi datato e firmato, individuiamo se serve un RSPP esterno o se il datore di lavoro può ricoprire il ruolo dopo la formazione specifica, e completiamo le nomine obbligatorie: medico competente, addetti antincendio e primo soccorso."
+    },
+    {
+      "titolo": "Formazione dei lavoratori e dei preposti",
+      "desc": "Pianifichiamo ed eroghiamo la formazione generale e specifica per ogni mansione, secondo il nuovo Accordo Stato-Regioni 2025, comprese le ore rafforzate per i preposti e il corso per il datore di lavoro dove necessario."
+    },
+    {
+      "titolo": "Gestione continua e scadenzario",
+      "desc": "Teniamo sotto controllo aggiornamenti del DVR, rinnovi di formazione, verifiche periodiche di attrezzature e impianti, ed eventuali obblighi legati a patente a crediti e cantieri. Un referente unico, non un ufficio da rincorrere ogni volta che scade qualcosa."
+    }
+  ],
+  "h1": "Sicurezza sul lavoro — D.Lgs. 81/08.",
+  "intro": [
+    "Il D.Lgs. 81/08 non chiede un foglio da archiviare: chiede di valutare i rischi reali, formare le persone, tenere in ordine documenti e scadenze e dimostrarlo in qualsiasi momento davanti a un ispettore. Vale per l'artigiano con un dipendente e per l'azienda con cinquanta, cambia solo la complessità degli adempimenti, non l'obbligo.",
+    "Il quadro normativo si è mosso molto negli ultimi mesi: il Decreto-Legge 159/2025 ha aggiornato il Testo Unico su patente a crediti, badge di cantiere e sorveglianza sanitaria, il nuovo Accordo Stato-Regioni 2025 ha riscritto le regole della formazione, e dal 31 dicembre 2025 la valutazione del rischio violenza e molestie è entrata a far parte del DVR. Chi si è fermato al modello fatto anni fa rischia di trovarsi scoperto senza saperlo."
+  ],
+  "note": "Sanzioni, soglie di formazione e obblighi specifici (penale, edilizia, cantieri, rischio rilevante) variano in base a settore, numero di lavoratori e tipo di attività: gli importi e i termini citati sono quelli in vigore ad oggi, ma vanno sempre verificati sul caso concreto.",
+  "ottieni": [
+    "Un DVR datato, firmato e coerente con i rischi reali della tua attività, non un modello generico",
+    "Chiarezza su chi deve fare cosa: nomina RSPP, medico competente, addetti antincendio e primo soccorso",
+    "Formazione dei lavoratori e dei preposti in regola con il nuovo Accordo Stato-Regioni 2025",
+    "Uno scadenzario unico per aggiornamenti, verifiche periodiche e rinnovi, seguito da un solo referente"
+  ],
+  "sottoAree": [
+    {
+      "nome": "DVR - Documento di Valutazione dei Rischi",
+      "desc": "Redazione e aggiornamento del DVR, compresa la valutazione del rischio violenza e molestie sul lavoro, obbligatoria dal 31 dicembre 2025. Datato, firmato, coerente con l'attività reale."
+    },
+    {
+      "nome": "RSPP e nomine obbligatorie",
+      "desc": "Individuazione della figura corretta: RSPP interno (datore di lavoro formato) o esterno, più medico competente, addetti antincendio e primo soccorso, secondo i rischi della tua azienda."
+    },
+    {
+      "nome": "Formazione lavoratori, preposti e datori di lavoro",
+      "desc": "Corsi generali e specifici secondo il nuovo Accordo Stato-Regioni 2025: 4 ore generali più parte specifica per i lavoratori, 12 ore per i preposti, 16 ore per i datori di lavoro che fanno da RSPP."
+    },
+    {
+      "nome": "Sopralluoghi e verifiche periodiche",
+      "desc": "Controllo di attrezzature, impianti e luoghi di lavoro con la periodicità richiesta dalla normativa, per arrivare pronti a ogni ispezione e non solo per adempimento formale."
+    },
+    {
+      "nome": "Patente a crediti e cantieri",
+      "desc": "Verifica dei requisiti per imprese e autonomi che operano in cantieri temporanei o mobili, gestione della patente a crediti e del nuovo badge digitale di cantiere introdotto dal D.L. 159/2025."
+    },
+    {
+      "nome": "Gestione scadenze e rapporti con gli enti",
+      "desc": "Scadenzario di rinnovi formativi, aggiornamenti documentali e verifiche, con assistenza in caso di ispezione da parte di ASL o Ispettorato Nazionale del Lavoro."
+    }
+  ],
+  "title": "Sicurezza sul lavoro — D.Lgs. 81/08"
+};
+
+const eyebrow = "Consulenza · Sicurezza sul lavoro";
+const h1 = "Sicurezza sul lavoro — D.Lgs. 81/08.";
+const taglineTitle = "Un obbligo che vale dal primo dipendente.";
+const areeTitle = "Tutti gli adempimenti del Testo Unico, in un solo contratto.";
+const ottieniTitle = "In regola, e capace di dimostrarlo.";
+const stepsTitle = "Dal sopralluogo alla gestione continua.";
+
+const img = {
+  "src": "/images/sicurezza-ispezione-capannone.webp",
+  "alt": "Ispezione di sicurezza in capannone logistico italiano: consulente adulto in elmetto bianco e giubbotto navy con clipboard digitale che osserva uno scaffale industriale; sullo sfondo carrelli elevatori fermi e zona delimitata da nastro giallo-nero; luce industriale fredda dall'alto, palette desaturata; fotografia documentaria, no posa frontale, no sorrisi"
+};
+const ctaImg = {
+  "src": "/images/sicurezza-ispezione-capannone.webp",
+  "alt": "Consulente iCura Impresa durante un sopralluogo in azienda: adulto con casco bianco e block-notes osserva gli impianti e parla con il responsabile, atmosfera collaborativa e rassicurante, ambiente industriale italiano con luce naturale, palette desaturata sobria toni navy e grigio, fotografia documentaria professionale, no posa"
+};
+
+const altriAmbiti = [
+  {
+    "nome": "Sicurezza nei cantieri",
+    "desc": "PSC, POS, fascicolo dell'opera e coordinamento per la sicurezza in fase di progettazione ed esecuzione (CSP/CSE). Per imprese edili e committenti privati.",
+    "href": "/servizi/consulenza/cantieri",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Sicurezza alimentare (HACCP)",
+    "desc": "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione operatori secondo il Reg. CE 852/2004. Per ristoranti, bar, mense e produzione alimentare.",
+    "href": "/servizi/consulenza/haccp",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Medicina del lavoro",
+    "desc": "Sorveglianza sanitaria, idoneità alla mansione, protocollo sanitario e nomina del medico competente. Visite organizzate direttamente in azienda.",
+    "href": "/servizi/consulenza/medicina-lavoro",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "GDPR & Privacy",
+    "desc": "Nomina DPO, registro dei trattamenti, informative, valutazioni d'impatto e audit. Per chi tratta dati personali in modo strutturato (Reg. UE 2016/679).",
+    "href": "/servizi/consulenza/gdpr",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza ambientale",
+    "desc": "Autorizzazione Unica Ambientale (AUA), gestione rifiuti, MUD, registri di carico/scarico ed emissioni in atmosfera. Adempimenti tecnici e scadenze gestite da noi.",
+    "href": "/servizi/consulenza/ambiente",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza aziendale",
+    "desc": "Strutturazione societaria, organizzazione dei processi e supporto continuativo all'impresa. Il punto di raccordo tra sicurezza, qualità e adempimenti.",
+    "href": "/servizi/consulenza/aziendale",
+    "cta": "Scopri di più"
+  }
+];
+---
+
+<Base title={c.title} description={c.description}>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/consulenza" class="breadcrumb-back">&larr; Torna a Consulenza</a>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder aspect="21/9" src={img.src ?? undefined} alt={img.alt} />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché serve</p>
+        <h2>{taglineTitle}</h2>
+      </div>
+      <div class="prose">
+        <p>{c.intro[0]}</p>
+        <p>{c.intro[1]}</p>
+        <ul class="chips" aria-label="Riferimenti normativi">
+          {c.chips.map((ch) => <li>{ch}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="sicurezza-lavoro-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="sicurezza-lavoro-aree" class="section-title">{areeTitle}</h2>
+      <AreaGrid aree={c.sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="sicurezza-lavoro-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="sicurezza-lavoro-ottieni" class="two-col__title">{ottieniTitle}</h2>
+      </div>
+      <ul class="checklist">
+        {c.ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title={stepsTitle} steps={c.fasi} labelledby="sicurezza-lavoro-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">{c.note}</p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-sicurezza-lavoro"
+    labelledby="sicurezza-lavoro-faq"
+    items={c.faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="sicurezza-lavoro-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="sicurezza-lavoro-altri" class="section-title">Gli altri ambiti di Consulenza.</h2>
+      <AreaGrid aree={altriAmbiti} />
+    </div>
+  </section>
+
+  <CtaBand
+    title={c.ctaTitle}
+    lede={c.ctaLede}
+    image={{ src: ctaImg.src ?? undefined, alt: ctaImg.alt }}
+    primary={{ href: "/contatti", label: "Prenota sopralluogo" }}
+    labelledby="sicurezza-lavoro-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

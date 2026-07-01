@@ -1,0 +1,296 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const c = {
+  "chips": [
+    "Reg. UE 2016/679 (GDPR)",
+    "D.Lgs. 196/2003 e s.m.i.",
+    "Registro trattamenti art. 30",
+    "DPO art. 37",
+    "DPIA art. 35",
+    "Garante Privacy"
+  ],
+  "ctaLede": "Verifica gratuita dello stato privacy · risposta entro 48 ore, senza impegno",
+  "ctaTitle": "Fatti dire dove sei esposto, prima che lo faccia un controllo",
+  "description": "Consulenza GDPR e privacy a Napoli: registro trattamenti, informative, DPO, DPIA e gestione continua per aziende che devono dimostrare conformità, non solo dichiararla.",
+  "eyebrow": "Consulenza · Privacy e protezione dati",
+  "faq": [
+    {
+      "q": "Ho un'azienda piccola, con pochi dipendenti: il GDPR mi riguarda comunque?",
+      "a": "Sì. Il GDPR non ha una soglia minima di dipendenti: si applica a chiunque tratti dati personali, quindi anche a uno studio con due persone o un negozio con un solo commesso. Cambiano gli adempimenti, non l'obbligo di base: informative, basi giuridiche dei trattamenti e misure di sicurezza servono comunque. Il registro dei trattamenti (art. 30) ha una deroga per chi ha meno di 250 dipendenti, ma è scritta in modo così stretto — non si applica se il trattamento non è occasionale, riguarda categorie particolari di dati o presenta un rischio per gli interessati — che nella pratica quasi tutte le aziende finiscono comunque per doverlo tenere. È in discussione a livello europeo una proposta (pacchetto \"Omnibus\") che alzerebbe la soglia a 750 dipendenti, ma non è ancora legge: oggi vale la regola attuale."
+    },
+    {
+      "q": "Devo nominare per forza un DPO (Responsabile Protezione Dati)?",
+      "a": "Dipende dall'attività, non dalla dimensione dell'azienda. La nomina è obbligatoria per la pubblica amministrazione, per chi fa monitoraggio sistematico e su larga scala degli interessati (es. profilazione, videosorveglianza estesa, tracciamento comportamentale) o per chi tratta su larga scala categorie particolari di dati (sanitari, biometrici, giudiziari). Fuori da questi casi non è obbligatorio, ma attenzione: anche se non nomini un DPO devi comunque documentare per iscritto la valutazione che ti ha portato a quella conclusione, e aggiornarla se cambiano le attività. Non farlo, quando l'obbligo in realtà c'era, espone a sanzione tanto quanto non aver nominato il DPO."
+    },
+    {
+      "q": "Cosa rischio concretamente se il Garante mi controlla e non sono in regola?",
+      "a": "Le sanzioni GDPR arrivano fino a 20 milioni di euro o al 4% del fatturato globale annuo dell'esercizio precedente, se superiore — l'importo esatto dipende dalla gravità della violazione, dal numero di interessati coinvolti, dalla durata e dal comportamento tenuto (collaborazione, misure correttive già adottate). Non è un tetto che si applica automaticamente: per una PMI la sanzione tipica è commisurata al caso specifico, ma il Garante ha mostrato negli ultimi anni particolare attenzione su videosorveglianza dei dipendenti, cookie installati senza consenso valido e uso di sistemi di intelligenza artificiale sul lavoro. Oltre alla sanzione economica ci sono responsabilità che possono toccare direttamente il titolare del trattamento."
+    },
+    {
+      "q": "Le telecamere in azienda sono un problema di privacy o di sicurezza sul lavoro?",
+      "a": "Entrambe le cose insieme, ed è proprio qui che molte aziende sbagliano. L'installazione di sistemi di videosorveglianza che possono anche solo indirettamente inquadrare i lavoratori richiede l'accordo sindacale o, in mancanza, l'autorizzazione dell'Ispettorato del Lavoro (art. 4 dello Statuto dei Lavoratori) prima ancora di verificare la parte GDPR. Sul fronte privacy servono poi due livelli di informativa: un cartello ben visibile prima di entrare nell'area ripresa, e un'informativa estesa (art. 13 GDPR) raggiungibile per approfondire. Il Garante sanziona con particolare severità i casi in cui le immagini vengono poi usate per procedimenti disciplinari senza che questa finalità fosse stata dichiarata: è un'aggravante ricorrente nei provvedimenti più recenti."
+    },
+    {
+      "q": "Il sito aziendale ha bisogno del cookie banner anche se non vendiamo online?",
+      "a": "Se il sito installa anche un solo cookie di terze parti, di analytics non anonimizzato o di profilazione prima che l'utente abbia scelto, sì. Le linee guida del Garante impongono un banner che dia scelte reali — accettare, rifiutare o personalizzare con pari evidenza — senza dark pattern (il semplice scroll della pagina non vale come consenso, e i cookie wall che bloccano l'accesso sono generalmente illegittimi). Il Garante ha annunciato controlli più frequenti proprio su banner ingannevoli e cookie preinstallati: è uno degli aspetti più facilmente verificabili anche da un ispettore che non è del settore, perché basta aprire il sito."
+    },
+    {
+      "q": "Posso usare strumenti di intelligenza artificiale per monitorare i dipendenti?",
+      "a": "Con limiti molto stringenti, e alcuni usi sono vietati a prescindere. Il Garante ha vietato l'utilizzo di sistemi che inferiscono lo stato emotivo o lo stress dei lavoratori, in linea con il divieto assoluto già previsto dall'AI Act per i sistemi di riconoscimento delle emozioni sul posto di lavoro. Dal 2025 sono entrate in vigore anche nuove regole specifiche del diritto del lavoro italiano sull'uso dell'IA (Legge 132/2025) e linee guida ministeriali dedicate. Prima di introdurre qualunque strumento di IA che tratti dati dei dipendenti — selezione, produttività, controllo accessi — va fatta una valutazione preventiva su base giuridica, informativa e necessità di DPIA."
+    }
+  ],
+  "fasi": [
+    {
+      "titolo": "Mappatura trattamenti",
+      "desc": "Sopralluogo e interviste per capire quali dati tratti davvero — clienti, dipendenti, fornitori, videosorveglianza, sito web — e con quali strumenti, prima di scrivere qualunque documento."
+    },
+    {
+      "titolo": "Documenti e basi giuridiche",
+      "desc": "Registro dei trattamenti, informative, nomine di responsabili e incaricati, valutazione sull'obbligo di DPO e DPIA dove necessarie: ogni documento costruito sui trattamenti reali, non su un modello scaricato."
+    },
+    {
+      "titolo": "Misure di sicurezza e formazione",
+      "desc": "Misure tecniche e organizzative adeguate al rischio, istruzioni scritte a chi tratta i dati, gestione di consensi e cookie sul sito aziendale."
+    },
+    {
+      "titolo": "Aggiornamento e gestione data breach",
+      "desc": "Revisione periodica quando cambiano attività, fornitori o strumenti (compresa l'IA), e procedura pronta per notificare un'eventuale violazione dei dati nei tempi previsti."
+    }
+  ],
+  "h1": "GDPR & Privacy.",
+  "intro": [
+    "Il Regolamento UE 2016/679 non si esaurisce con un'informativa copiata da internet e un cookie banner. Chiede di sapere esattamente quali dati tratti, perché, con quale base giuridica, per quanto tempo, e di poterlo dimostrare — con un registro dei trattamenti aggiornato, informative coerenti con quello che fai davvero, e misure di sicurezza proporzionate al rischio. Vale per lo studio con due dipendenti quanto per l'azienda con reparto HR e videosorveglianza.",
+    "Il punto debole più comune non è l'assenza di documenti, ma documenti scritti una volta e mai più toccati: il registro che non include il nuovo gestionale, l'informativa che non parla delle telecamere installate l'anno dopo, il DPO mai valutato perché 'tanto siamo piccoli'. Il Garante Privacy, negli ultimi provvedimenti, ha colpito con più severità proprio le aziende che avevano una parvenza di conformità formale ma nessuna coerenza tra quello che dichiaravano e quello che facevano — su videosorveglianza dei lavoratori, cookie installati senza consenso valido e strumenti di intelligenza artificiale usati senza valutazione preventiva."
+  ],
+  "note": "Obbligo di DPO, esenzioni sul registro dei trattamenti e importo delle sanzioni dipendono dal tipo di attività, dal numero di dipendenti e dalla natura dei dati trattati: i numeri esatti si stabiliscono caso per caso, non su un modello standard — ed è bene sapere che una proposta europea (pacchetto Omnibus) punta ad alzare da 250 a 750 dipendenti la soglia di esenzione dal registro, ma non è ancora legge.",
+  "ottieni": [
+    "Un referente unico che segue la pratica privacy dal sopralluogo iniziale alla gestione delle scadenze, senza rimpallo tra consulenti diversi",
+    "Documenti costruiti sui trattamenti che fai davvero — registro, informative, nomine — non modelli generici adattati col copia-incolla",
+    "Valutazione scritta e motivata sull'obbligo di DPO e DPIA, aggiornata quando cambiano attività o strumenti (compresi quelli di intelligenza artificiale)",
+    "Verifica di videosorveglianza e cookie del sito, i due punti più controllati dal Garante e più facili da controllare anche per un occhio esterno"
+  ],
+  "sottoAree": [
+    {
+      "nome": "Registro dei trattamenti",
+      "desc": "Mappatura di tutti i trattamenti di dati personali dell'azienda — clienti, dipendenti, fornitori, marketing — con finalità, basi giuridiche, tempi di conservazione e misure di sicurezza, tenuto aggiornato nel tempo."
+    },
+    {
+      "nome": "Informative e consensi",
+      "desc": "Informative privacy coerenti con i trattamenti reali (art. 13-14 GDPR), gestione dei consensi dove richiesti e cookie banner conforme alle linee guida del Garante, senza dark pattern che espongono a sanzione."
+    },
+    {
+      "nome": "DPO e valutazione obbligo",
+      "desc": "Verifica se la tua attività rientra nei casi di nomina obbligatoria del Responsabile Protezione Dati (monitoraggio sistematico, dati particolari su larga scala) e messa per iscritto della valutazione, obbligatoria anche quando la risposta è no."
+    },
+    {
+      "nome": "DPIA — valutazione d'impatto",
+      "desc": "Valutazione preventiva quando un trattamento presenta rischio elevato per le persone: videosorveglianza estesa, sistemi di IA sui dipendenti, trattamenti su larga scala di dati sanitari o biometrici."
+    },
+    {
+      "nome": "Videosorveglianza sul lavoro",
+      "desc": "Percorso conforme sia al GDPR sia allo Statuto dei Lavoratori: accordo sindacale o autorizzazione dell'Ispettorato prima dell'installazione, cartellonistica a doppio livello, finalità dichiarate coerenti con l'uso reale delle immagini."
+    },
+    {
+      "nome": "Data breach e gestione continua",
+      "desc": "Procedura pronta per riconoscere e notificare una violazione dei dati nei tempi previsti, revisione dei documenti quando cambiano fornitori, gestionali o strumenti di intelligenza artificiale usati sui lavoratori."
+    }
+  ],
+  "title": "GDPR & Privacy — Consulenza a Napoli",
+  "lede": "Il GDPR non è un'informativa da pubblicare e dimenticare: è sapere quali dati tratti, con quale diritto, e poterlo dimostrare in qualsiasi momento — a un cliente, a un dipendente o al Garante."
+};
+
+const eyebrow = "Consulenza · Privacy e protezione dati";
+const h1 = "GDPR & Privacy.";
+const taglineTitle = "Conformità che si dimostra, non si dichiara.";
+const areeTitle = "Dal registro dei trattamenti alla videosorveglianza in azienda.";
+const ottieniTitle = "Documenti costruiti sui tuoi trattamenti reali.";
+const stepsTitle = "Dalla mappatura alla gestione continua.";
+
+const img = {
+  "src": "/images/consulenza-gdpr-privacy.webp",
+  "alt": "Consulente privacy iCura Impresa durante un audit GDPR in ufficio: due adulti esaminano registro trattamenti, laptop e documenti non leggibili su un tavolo ordinato, luce naturale e atmosfera riservata"
+};
+const ctaImg = {
+  "src": "/images/consulenza-gdpr-privacy.webp",
+  "alt": "Consulente privacy iCura Impresa durante un audit GDPR in ufficio: due adulti esaminano registro trattamenti, laptop e documenti non leggibili su un tavolo ordinato, luce naturale e atmosfera riservata"
+};
+
+const altriAmbiti = [
+  {
+    "nome": "Sicurezza sul lavoro — D.Lgs. 81/08",
+    "desc": "DVR e valutazioni dei rischi, nomina e incarico RSPP, sopralluoghi periodici, gestione di scadenze e adempimenti. Tutto il Testo Unico in un unico contratto.",
+    "href": "/servizi/consulenza/sicurezza-lavoro",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Sicurezza nei cantieri",
+    "desc": "PSC, POS, fascicolo dell'opera e coordinamento per la sicurezza in fase di progettazione ed esecuzione (CSP/CSE). Per imprese edili e committenti privati.",
+    "href": "/servizi/consulenza/cantieri",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Sicurezza alimentare (HACCP)",
+    "desc": "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione operatori secondo il Reg. CE 852/2004. Per ristoranti, bar, mense e produzione alimentare.",
+    "href": "/servizi/consulenza/haccp",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Medicina del lavoro",
+    "desc": "Sorveglianza sanitaria, idoneità alla mansione, protocollo sanitario e nomina del medico competente. Visite organizzate direttamente in azienda.",
+    "href": "/servizi/consulenza/medicina-lavoro",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza ambientale",
+    "desc": "Autorizzazione Unica Ambientale (AUA), gestione rifiuti, MUD, registri di carico/scarico ed emissioni in atmosfera. Adempimenti tecnici e scadenze gestite da noi.",
+    "href": "/servizi/consulenza/ambiente",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza aziendale",
+    "desc": "Strutturazione societaria, organizzazione dei processi e supporto continuativo all'impresa. Il punto di raccordo tra sicurezza, qualità e adempimenti.",
+    "href": "/servizi/consulenza/aziendale",
+    "cta": "Scopri di più"
+  }
+];
+---
+
+<Base title={c.title} description={c.description}>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/consulenza" class="breadcrumb-back">&larr; Torna a Consulenza</a>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder aspect="21/9" src={img.src ?? undefined} alt={img.alt} />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché serve</p>
+        <h2>{taglineTitle}</h2>
+      </div>
+      <div class="prose">
+        <p>{c.intro[0]}</p>
+        <p>{c.intro[1]}</p>
+        <ul class="chips" aria-label="Riferimenti normativi">
+          {c.chips.map((ch) => <li>{ch}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="gdpr-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="gdpr-aree" class="section-title">{areeTitle}</h2>
+      <AreaGrid aree={c.sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="gdpr-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="gdpr-ottieni" class="two-col__title">{ottieniTitle}</h2>
+      </div>
+      <ul class="checklist">
+        {c.ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title={stepsTitle} steps={c.fasi} labelledby="gdpr-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">{c.note}</p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-gdpr"
+    labelledby="gdpr-faq"
+    items={c.faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="gdpr-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="gdpr-altri" class="section-title">Gli altri ambiti di Consulenza.</h2>
+      <AreaGrid aree={altriAmbiti} />
+    </div>
+  </section>
+
+  <CtaBand
+    title={c.ctaTitle}
+    lede={c.ctaLede}
+    image={{ src: ctaImg.src ?? undefined, alt: ctaImg.alt }}
+    primary={{ href: "/contatti", label: "Prenota sopralluogo" }}
+    labelledby="gdpr-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

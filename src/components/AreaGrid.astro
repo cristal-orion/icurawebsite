@@ -49,15 +49,18 @@ const { aree } = Astro.props;
     flex-direction: column;
     gap: var(--space-2xs);
     padding: var(--space-lg);
-    background: var(--color-paper-2);
+    background: var(--color-surface);
     border: var(--rule-hair) solid var(--color-rule);
     border-radius: var(--radius-card);
-    transition: border-color var(--dur-fast) var(--ease-out),
-      transform var(--dur-fast) var(--ease-out);
+    box-shadow: var(--shadow-card);
+    transition: border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
   }
   .area-card:hover {
-    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-rule));
-    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-3px);
   }
   .area-card__icon {
     display: inline-flex;
@@ -100,7 +103,7 @@ const { aree } = Astro.props;
     .area-grid { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .area-card { transition: border-color var(--dur-fast) var(--ease-out); }
+    .area-card { transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
     .area-card:hover { transform: none; }
   }
 </style>

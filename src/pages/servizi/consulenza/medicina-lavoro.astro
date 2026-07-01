@@ -1,0 +1,299 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const c = {
+  "title": "Medicina del lavoro — sorveglianza sanitaria D.Lgs. 81/08",
+  "description": "Medico competente, protocollo sanitario e visite periodiche organizzate in azienda, secondo il D.Lgs. 81/08 e le novità del D.L. 159/2025.",
+  "eyebrow": "Servizi · Medicina del lavoro",
+  "h1": "Medicina del lavoro.",
+  "lede": "Dove c'è un rischio per la salute, la legge chiede sorveglianza sanitaria vera: medico competente nominato, protocollo scritto sui rischi reali, visite fatte e verbalizzate. Non un modulo di idoneità generico.",
+  "chips": [
+    "D.Lgs. 81/08, Titolo I Capo III Sez. V",
+    "Art. 41 — Sorveglianza sanitaria",
+    "Art. 25 — Medico competente",
+    "Protocollo sanitario",
+    "Giudizio di idoneità",
+    "D.L. 159/2025 conv. L. 198/2025",
+    "Stress lavoro-correlato",
+    "Art. 18 — Obblighi del datore"
+  ],
+  "intro": [
+    "La sorveglianza sanitaria non è un optional da aggiungere se avanza budget. Scatta ogni volta che la valutazione dei rischi individua un'esposizione che la richiede: movimentazione manuale dei carichi, videoterminali oltre le 20 ore settimanali, rumore, agenti chimici o biologici, lavoro notturno, ambienti confinati. In quei casi il datore di lavoro deve nominare un medico competente e organizzare le visite: non è una scelta discrezionale, è un obbligo che discende direttamente dall'articolo 41 del D.Lgs. 81/08.",
+    "Il punto debole più comune non è l'assenza totale di sorveglianza sanitaria, ma la sorveglianza fatta a metà: un medico competente nominato solo sulla carta, un protocollo copiato da un'altra azienda con mansioni diverse, visite fatte in ritardo o senza verbale. Davanti a un ispettore, o peggio dopo un infortunio, questi dettagli pesano quanto l'assenza totale del medico. Il D.L. 159/2025 (convertito con la Legge 198/2025) ha aggiunto obblighi ulteriori sul fronte alcol e sostanze psicotrope per le mansioni a rischio infortunistico elevato, a conferma che la materia continua a muoversi e va presidiata con continuità, non sistemata una volta e archiviata."
+  ],
+  "sottoAree": [
+    {
+      "nome": "Nomina del medico competente",
+      "desc": "Individuiamo se la valutazione dei rischi fa scattare l'obbligo (art. 18 e 41) e mettiamo a disposizione il medico competente, con lettera di incarico e inserimento nel documento di valutazione dei rischi."
+    },
+    {
+      "nome": "Protocollo sanitario su misura",
+      "desc": "Il medico competente costruisce il protocollo sulle mansioni reali della tua azienda, non su un modello standard: rischio per rischio, accertamento per accertamento, con la periodicità corretta per ciascuno."
+    },
+    {
+      "nome": "Visite mediche periodiche in azienda",
+      "desc": "Preventiva, periodica, su cambio mansione, alla cessazione del rapporto: le organizziamo direttamente in sede, con date fissate e comunicate per tempo, evitando di fermare la produzione."
+    },
+    {
+      "nome": "Giudizio di idoneità alla mansione",
+      "desc": "Ogni visita si chiude con un giudizio scritto — idoneità piena, con prescrizioni, o inidoneità — che tuteliamo dal punto di vista documentale, gestendo anche gli eventuali ricorsi all'organo di vigilanza."
+    },
+    {
+      "nome": "Rischio stress lavoro-correlato",
+      "desc": "Valutazione secondo la metodologia INAIL, aggiornata nel 2025 anche per smart working e iperconnessione, integrata nel DVR come richiede l'art. 28."
+    },
+    {
+      "nome": "Cartelle sanitarie e privacy dei dati sanitari",
+      "desc": "Tenuta, aggiornamento e conservazione delle cartelle sanitarie e di rischio, con le cautele previste per il trattamento di dati relativi alla salute."
+    }
+  ],
+  "ottieni": [
+    "Un medico competente davvero operativo, non solo una firma su un incarico",
+    "Protocollo sanitario scritto sui rischi delle tue mansioni, aggiornato quando cambiano lavorazioni o organico",
+    "Visite pianificate in anticipo, fatte in azienda, con verbali e giudizi di idoneità in ordine",
+    "Cartelle sanitarie tenute a norma e coordinate con DVR e formazione",
+    "Un referente unico anche quando serve gestire un ricorso o un accertamento straordinario"
+  ],
+  "fasi": [
+    {
+      "titolo": "Sopralluogo",
+      "desc": "Veniamo in azienda, osserviamo mansioni e lavorazioni reali e verifichiamo se e dove scatta l'obbligo di sorveglianza sanitaria. È gratuito."
+    },
+    {
+      "titolo": "Protocollo e nomina",
+      "desc": "Il medico competente analizza il DVR, redige il protocollo sanitario mansione per mansione e viene formalmente nominato."
+    },
+    {
+      "titolo": "Visite e giudizi",
+      "desc": "Fissiamo il calendario delle visite, le organizziamo in sede e raccogliamo i giudizi di idoneità con la relativa documentazione."
+    },
+    {
+      "titolo": "Gestione continua",
+      "desc": "Teniamo lo scadenzario delle visite periodiche, aggiorniamo il protocollo a ogni variazione e seguiamo eventuali ricorsi o controlli."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Devo nominare il medico competente anche se ho pochi dipendenti?",
+      "a": "Il numero di dipendenti non c'entra: conta il rischio. Se la valutazione dei rischi (obbligatoria dal primo lavoratore) individua un'esposizione che richiede sorveglianza sanitaria — videoterminali oltre 20 ore settimanali, movimentazione carichi, rumore, agenti chimici, lavoro notturno — il medico competente va nominato, anche in un'azienda con un solo dipendente."
+    },
+    {
+      "q": "Ogni quanto vanno fatte le visite mediche periodiche?",
+      "a": "Di norma con periodicità annuale, come previsto dall'art. 41. Ma è il medico competente a stabilire la cadenza corretta in base al protocollo sanitario: può essere più ravvicinata per rischi specifici (per esempio esposizione a determinati agenti) o diversa se motivata e comunicata all'organo di vigilanza. Non esiste una periodicità unica valida per tutte le mansioni."
+    },
+    {
+      "q": "Cosa succede se un lavoratore risulta non idoneo alla mansione?",
+      "a": "Il medico competente esprime un giudizio che può essere di idoneità piena, idoneità con prescrizioni o limitazioni, oppure inidoneità temporanea o permanente. In caso di limitazioni o inidoneità, il datore di lavoro deve adeguare la mansione dove possibile. Sia il lavoratore sia il datore di lavoro possono presentare ricorso contro il giudizio, entro trenta giorni, all'organo di vigilanza territorialmente competente."
+    },
+    {
+      "q": "Lo stress lavoro-correlato è davvero obbligatorio da valutare?",
+      "a": "Sì, per tutte le aziende: è parte integrante della valutazione dei rischi prevista dall'art. 28 del D.Lgs. 81/08, non un accertamento facoltativo o aggiuntivo. INAIL ha aggiornato nel 2025 la metodologia di riferimento anche per tenere conto di smart working e lavoro digitale, ma il percorso valutativo di base resta quello del 2017: va comunque documentato nel DVR."
+    },
+    {
+      "q": "Cosa cambia con il decreto legge del 2025 sulla sicurezza sul lavoro?",
+      "a": "Il D.L. 159/2025, convertito con modificazioni dalla Legge 198/2025, ha introdotto per le mansioni a elevato rischio infortunistico la possibilità per il medico competente di effettuare controlli mirati su alcol e sostanze stupefacenti in presenza di ragionevoli indizi, anche prima o durante il turno. Ha inoltre chiarito che i controlli sanitari disposti dal medico competente rientrano nell'orario di lavoro, tranne quelli in fase preassuntiva."
+    },
+    {
+      "q": "Le cartelle sanitarie sono dati particolari secondo il GDPR?",
+      "a": "Sì, i dati relativi alla salute dei lavoratori rientrano tra le categorie particolari di dati personali e richiedono misure di sicurezza rafforzate nella conservazione e nell'accesso. Il medico competente è responsabile della custodia delle cartelle sanitarie e di rischio, tipicamente con cautele più stringenti di quelle riservate agli altri documenti aziendali."
+    }
+  ],
+  "note": "Soglie di esposizione, periodicità delle visite e portata degli obblighi variano per mansione, settore e risultanze del protocollo sanitario: qui trovi il quadro generale, la parola definitiva sul tuo caso specifico spetta al medico competente dopo aver visto la tua azienda.",
+  "ctaTitle": "Verifichiamo se e dove scatta l'obbligo, senza girarci intorno.",
+  "ctaLede": "Sopralluogo gratuito · risposta entro 48 ore. Portiamo il medico competente in azienda, non il contrario."
+};
+
+const eyebrow = "Consulenza · Medicina del lavoro";
+const h1 = "Medicina del lavoro.";
+const taglineTitle = "La sorveglianza fatta a metà pesa quanto non farla.";
+const areeTitle = "Dalla nomina del medico competente al giudizio di idoneità.";
+const ottieniTitle = "Un medico competente davvero operativo.";
+const stepsTitle = "Dal sopralluogo alla gestione continua.";
+
+const img = {
+  "src": "/images/consulenza-medicina-lavoro.webp",
+  "alt": "Medico competente durante una visita di sorveglianza sanitaria in azienda: adulto in camice misura la pressione a un lavoratore in abbigliamento tecnico, stanza riservata e ordinata, luce naturale, atmosfera professionale e rispettosa"
+};
+const ctaImg = {
+  "src": "/images/consulenza-medicina-lavoro.webp",
+  "alt": "Medico competente durante una visita di sorveglianza sanitaria in azienda: adulto in camice misura la pressione a un lavoratore in abbigliamento tecnico, stanza riservata e ordinata, luce naturale, atmosfera professionale e rispettosa"
+};
+
+const altriAmbiti = [
+  {
+    "nome": "Sicurezza sul lavoro — D.Lgs. 81/08",
+    "desc": "DVR e valutazioni dei rischi, nomina e incarico RSPP, sopralluoghi periodici, gestione di scadenze e adempimenti. Tutto il Testo Unico in un unico contratto.",
+    "href": "/servizi/consulenza/sicurezza-lavoro",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Sicurezza nei cantieri",
+    "desc": "PSC, POS, fascicolo dell'opera e coordinamento per la sicurezza in fase di progettazione ed esecuzione (CSP/CSE). Per imprese edili e committenti privati.",
+    "href": "/servizi/consulenza/cantieri",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Sicurezza alimentare (HACCP)",
+    "desc": "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione operatori secondo il Reg. CE 852/2004. Per ristoranti, bar, mense e produzione alimentare.",
+    "href": "/servizi/consulenza/haccp",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "GDPR & Privacy",
+    "desc": "Nomina DPO, registro dei trattamenti, informative, valutazioni d'impatto e audit. Per chi tratta dati personali in modo strutturato (Reg. UE 2016/679).",
+    "href": "/servizi/consulenza/gdpr",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza ambientale",
+    "desc": "Autorizzazione Unica Ambientale (AUA), gestione rifiuti, MUD, registri di carico/scarico ed emissioni in atmosfera. Adempimenti tecnici e scadenze gestite da noi.",
+    "href": "/servizi/consulenza/ambiente",
+    "cta": "Scopri di più"
+  },
+  {
+    "nome": "Consulenza aziendale",
+    "desc": "Strutturazione societaria, organizzazione dei processi e supporto continuativo all'impresa. Il punto di raccordo tra sicurezza, qualità e adempimenti.",
+    "href": "/servizi/consulenza/aziendale",
+    "cta": "Scopri di più"
+  }
+];
+---
+
+<Base title={c.title} description={c.description}>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/consulenza" class="breadcrumb-back">&larr; Torna a Consulenza</a>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder aspect="21/9" src={img.src ?? undefined} alt={img.alt} />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché serve</p>
+        <h2>{taglineTitle}</h2>
+      </div>
+      <div class="prose">
+        <p>{c.intro[0]}</p>
+        <p>{c.intro[1]}</p>
+        <ul class="chips" aria-label="Riferimenti normativi">
+          {c.chips.map((ch) => <li>{ch}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="medicina-lavoro-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="medicina-lavoro-aree" class="section-title">{areeTitle}</h2>
+      <AreaGrid aree={c.sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="medicina-lavoro-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="medicina-lavoro-ottieni" class="two-col__title">{ottieniTitle}</h2>
+      </div>
+      <ul class="checklist">
+        {c.ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title={stepsTitle} steps={c.fasi} labelledby="medicina-lavoro-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">{c.note}</p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-medicina-lavoro"
+    labelledby="medicina-lavoro-faq"
+    items={c.faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="medicina-lavoro-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="medicina-lavoro-altri" class="section-title">Gli altri ambiti di Consulenza.</h2>
+      <AreaGrid aree={altriAmbiti} />
+    </div>
+  </section>
+
+  <CtaBand
+    title={c.ctaTitle}
+    lede={c.ctaLede}
+    image={{ src: ctaImg.src ?? undefined, alt: ctaImg.alt }}
+    primary={{ href: "/contatti", label: "Prenota sopralluogo" }}
+    labelledby="medicina-lavoro-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
