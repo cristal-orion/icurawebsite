@@ -70,6 +70,10 @@ const headingId = labelledby ?? "steps-heading";
     margin: 0 0 var(--space-2xs);
     font-weight: 500;
     letter-spacing: -0.015em;
+    /* la card è stretta: sovrascrive l'overflow-wrap:anywhere globale (h1-h6),
+       che spezza le parole lunghe a caso invece che per sillaba */
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
   .step__desc {
     color: var(--color-ink-2);

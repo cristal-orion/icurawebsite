@@ -36,6 +36,7 @@
   --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif;
   --font-body: "Inter Tight Variable", "Inter Tight", system-ui, sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-wordmark: "Raleway Variable", "Raleway", system-ui, sans-serif;
 
   /* Type scale */
   --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);

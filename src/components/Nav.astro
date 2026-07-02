@@ -81,7 +81,7 @@ const serviziActive =
 <header class="site-header">
   <nav class="site-header__inner" aria-label="Navigazione principale">
     <a href="/" class="site-header__wordmark" aria-label="iCura Impresa, homepage">
-      iCura Impresa<span class="site-header__dot" aria-hidden="true">.</span>
+      i<strong>Cura</strong>Impresa<span class="site-header__dot" aria-hidden="true">.</span>
     </a>
 
     <ul class="site-nav">
@@ -307,14 +307,15 @@ const serviziActive =
   .site-header__wordmark {
     display: inline-flex;
     align-items: baseline;
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-family: var(--font-wordmark);
+    font-weight: 500;
     font-size: var(--text-xl);
     letter-spacing: -0.03em;
     color: var(--color-ink);
     text-decoration: none;
     white-space: nowrap;
   }
+  .site-header__wordmark strong { font-weight: 800; }
   .site-header__wordmark:hover { text-decoration: none; }
   .site-header__dot { color: var(--color-accent); }
 

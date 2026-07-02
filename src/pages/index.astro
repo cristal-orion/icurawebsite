@@ -48,7 +48,7 @@ const serviziWide = [
 ];
 
 const team = [
-  { img: "/images/team-icura.webp", alt: "Area sicurezza e D.Lgs. 81/08 iCura Impresa", h: "Sicurezza & 81/08", k: "RSPP · DVR · Cantieri" },
+  { img: "/images/sicurezza-ispezione-capannone.webp", alt: "Area sicurezza e D.Lgs. 81/08 iCura Impresa", h: "Sicurezza & 81/08", k: "RSPP · DVR · Cantieri" },
   { img: "/images/consulenza-medicina-lavoro.webp", alt: "Area medicina del lavoro iCura Impresa", h: "Medicina del lavoro", k: "Medico competente · Idoneità" },
   { img: "/images/formazione-aula-adulti.webp", alt: "Area formazione iCura Impresa", h: "Formazione", k: "Aula · E-learning · Attestati" },
   { img: "/images/chi-siamo-riunione-team.webp", alt: "Area engineering iCura Impresa", h: "Engineering", k: "Progettazione · CPI · Collaudi" },
@@ -68,7 +68,6 @@ const team = [
           <img
             src="/images/sicurezza-ispezione-capannone.webp"
             alt="Tecnico iCura Impresa durante un sopralluogo di sicurezza in un capannone industriale"
-            class="media-grayscale"
           />
           <div class="hero__media-veil" aria-hidden="true"></div>
         </div>
@@ -84,7 +83,7 @@ const team = [
               decoding="async"
               aria-hidden="true"
             />
-            <span class="hero__brand-name">iCura Impresa</span>
+            <span class="hero__brand-name">i<strong>Cura</strong>Impresa</span>
           </span>
           <h1 class="hero__title">
             Un solo interlocutore <span class="accent">per la sicurezza</span> della tua impresa.
@@ -334,9 +333,10 @@ const team = [
   .hero__brand { display: inline-flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md); }
   .hero__brand-mark { height: 4.25rem; width: auto; }
   .hero__brand-name {
-    font-family: var(--font-display); font-weight: 700; font-size: var(--text-2xl);
+    font-family: var(--font-wordmark); font-weight: 500; font-size: var(--text-2xl);
     letter-spacing: -0.025em; color: var(--color-paper);
   }
+  .hero__brand-name strong { font-weight: 800; }
   .hero__title {
     font-size: var(--text-4xl);
     font-weight: 700;
@@ -491,7 +491,8 @@ const team = [
   .contact__box-sub a { color: inherit; }
 
   .contact__form { background: var(--color-surface); color: var(--color-ink); padding: clamp(var(--space-lg), 3vw, var(--space-2xl)); border-radius: var(--radius-lg); box-shadow: var(--shadow-lift); display: flex; flex-direction: column; gap: var(--space-md); }
-  .contact__form-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; margin: 0 0 var(--space-2xs); color: var(--color-ink); }
+  /* !important: la card è bianca dentro una .section--ink, che forza h3/a chiari per il resto della sezione */
+  .contact__form-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; margin: 0 0 var(--space-2xs); color: var(--color-ink) !important; }
   .contact__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
   .field { display: flex; flex-direction: column; gap: var(--space-2xs); }
   .field label { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-muted); }
@@ -504,6 +505,7 @@ const team = [
   .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--color-accent); outline: 2px solid var(--color-focus); outline-offset: 1px; }
   .field textarea { resize: vertical; min-height: 6rem; }
   .consent { display: flex; gap: 0.6rem; align-items: flex-start; font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.5; }
+  .consent a { color: var(--color-accent) !important; }
   .consent input { margin-top: 0.25rem; }
   .contact__submit { align-self: flex-start; }
 
