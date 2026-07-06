@@ -417,8 +417,6 @@ const serviziActive =
     pointer-events: none;
     transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
-  .site-nav__dropdown:hover .site-mega,
-  .site-nav__dropdown:focus-within .site-mega,
   .site-nav__dropdown.is-open .site-mega {
     opacity: 1;
     visibility: visible;
@@ -660,8 +658,6 @@ const serviziActive =
 
   @media (prefers-reduced-motion: reduce) {
     .site-mega { transition: opacity var(--dur-fast) var(--ease-out); transform: translateX(-50%); }
-    .site-nav__dropdown:hover .site-mega,
-    .site-nav__dropdown:focus-within .site-mega,
     .site-nav__dropdown.is-open .site-mega { transform: translateX(-50%); }
     .site-nav__caret { transition: none; }
   }
