@@ -107,6 +107,7 @@ function initLeadForms() {
           form.classList.add("is-sent");
           const successEl = form.querySelector<HTMLElement>("[data-lead-success]");
           if (successEl) {
+            successEl.hidden = false;
             successEl.setAttribute("tabindex", "-1");
             successEl.focus();
           }
