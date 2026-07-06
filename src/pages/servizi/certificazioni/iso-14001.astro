@@ -1,0 +1,206 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const schemi = [
+  { id: "iso-9001", nome: "ISO 9001 — Qualità", desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori e un requisito sempre più richiesto da clienti e committenti.", href: "/servizi/certificazioni/iso-9001", cta: "Scopri di più" },
+  { id: "iso-14001", nome: "ISO 14001 — Ambiente", desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.", href: "/servizi/certificazioni/iso-14001", cta: "Scopri di più" },
+  { id: "iso-45001", nome: "ISO 45001 — Sicurezza", desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e può ridurre il premio INAIL.", href: "/servizi/certificazioni/iso-45001", cta: "Scopri di più" },
+  { id: "parita", nome: "Parità di genere — UNI/PdR 125", desc: "Certificazione della parità di genere: dà accesso a esonero contributivo e punteggi premiali nei bandi e nelle gare.", href: "/servizi/certificazioni/parita-genere", cta: "Scopri di più" },
+  { id: "soa", nome: "Attestazione SOA", desc: "Requisito per partecipare alle gare di lavori pubblici sopra i 150.000 €. Attesta categorie e classifiche di opere.", href: "/servizi/certificazioni/soa", cta: "Scopri di più" },
+];
+const altri = schemi.filter((s) => s.id !== "iso-14001");
+
+const sottoAree = [
+  { nome: "Analisi ambientale iniziale", desc: "Identifichiamo aspetti e impatti ambientali della tua attività — rifiuti, scarichi, emissioni, consumi di energia e risorse — e la loro significatività, con la ricognizione degli obblighi di legge applicabili." },
+  { nome: "Mappa degli obblighi di conformità", desc: "Colleghiamo il sistema alle autorizzazioni e agli adempimenti reali: AUA, gestione rifiuti, MUD, registri di carico/scarico, emissioni. Così le scadenze non ti sfuggono." },
+  { nome: "Sistema di gestione su misura", desc: "Politica ambientale, procedure, controlli operativi, obiettivi e indicatori costruiti sul tuo ciclo produttivo secondo il ciclo PDCA — non un modello generico." },
+  { nome: "Formazione e audit interno", desc: "Formiamo il personale e verifichiamo il sistema con un audit interno prima dell'ente, gestendo le non conformità." },
+  { nome: "Assistenza all'audit di certificazione", desc: "Ti affianchiamo nelle due fasi dell'audit dell'ente accreditato (Stage 1 e Stage 2) fino al rilascio del certificato." },
+  { nome: "Mantenimento e sorveglianza", desc: "Seguiamo gli audit di sorveglianza annuali e l'aggiornamento del sistema, inclusa la transizione alla nuova edizione della norma." },
+];
+
+const ottieni = [
+  "Un certificato rilasciato da un ente terzo accreditato Accredia, sulla versione vigente della norma",
+  "Punteggio premiale nelle gare con Criteri Ambientali Minimi (CAM), dove la ISO 14001 è mezzo di prova riconosciuto",
+  "Riduzione del 40% delle garanzie finanziarie per gli impianti di gestione rifiuti (art. 208 D.Lgs. 152/2006; 50% con EMAS)",
+  "Meno rischio di sanzioni ambientali e un presidio ordinato di AUA, rifiuti, MUD ed emissioni",
+];
+
+const fasi = [
+  { titolo: "Analisi ambientale", desc: "Mappiamo aspetti, impatti e obblighi di legge dell'attività: è la base del sistema." },
+  { titolo: "Progettazione del sistema", desc: "Costruiamo politica, procedure, controlli operativi, obiettivi e indicatori sul tuo ciclo produttivo." },
+  { titolo: "Formazione e audit interno", desc: "Formiamo il personale e proviamo il sistema con una verifica interna prima dell'ente." },
+  { titolo: "Audit di certificazione", desc: "L'ente terzo accreditato Accredia verifica in due fasi e rilascia il certificato." },
+  { titolo: "Mantenimento", desc: "Gestiamo le sorveglianze annuali e il rinnovo alla scadenza del triennio." },
+];
+
+const faq = [
+  { q: "La ISO 14001 è obbligatoria?", a: "No, è volontaria. Diventa di fatto necessaria per partecipare a gare con Criteri Ambientali Minimi, quando la richiedono clienti o filiere, o per ottenere benefici come la riduzione delle garanzie finanziarie sui rifiuti." },
+  { q: "Quanto vale nelle gare pubbliche?", a: "Nel Codice dei contratti (D.Lgs. 36/2023) i CAM sono obbligatori come requisiti o criteri premianti: la ISO 14001 è tra i mezzi di prova riconosciuti e concorre al punteggio tecnico dell'offerta, potendo fare la differenza in graduatoria." },
+  { q: "Aiuta con le garanzie sugli impianti di rifiuti?", a: "Sì: per gli impianti autorizzati ex art. 208 del D.Lgs. 152/2006, la ISO 14001 dà diritto a una riduzione del 40% della garanzia finanziaria (50% con registrazione EMAS)." },
+  { q: "Devo tenere conto della nuova edizione 2026?", a: "Sì. Ad aprile 2026 è stata pubblicata la nuova edizione della ISO 14001, con più attenzione a clima, biodiversità ed efficienza delle risorse: i certificati sulla versione precedente restano validi durante il periodo di transizione, ma chi si certifica ora conviene lo faccia già sulla versione aggiornata." },
+  { q: "Quanto dura il certificato?", a: "Tre anni, con audit di sorveglianza annuali e un rinnovo alla scadenza tramite una verifica completa del sistema." },
+];
+---
+
+<Base
+  title="ISO 14001 — Certificazione Ambientale"
+  description="Consulenza per la certificazione ISO 14001: analisi degli aspetti ambientali, sistema di gestione su misura, gare CAM, riduzione delle garanzie sui rifiuti e affiancamento all'audit dell'ente accreditato Accredia."
+>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/certificazioni" class="breadcrumb-back">&larr; Torna a Certificazioni</a>
+      <p class="eyebrow">Certificazioni · Ambiente</p>
+      <h1>ISO 14001 — Ambiente.</h1>
+      <p class="lede">
+        Gestire l'ambiente, non solo dichiararlo. Un sistema che tiene sotto controllo rifiuti, scarichi, emissioni e consumi — e che vale punti nelle gare e sconti sulle garanzie.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/consulenza-ambiente-rifiuti.webp"
+        alt="Verifica ambientale in un capannone industriale: due adulti controllano registri e contenitori nell'area rifiuti su un tavolo d'ispezione, segnaletica a pavimento e luce naturale, fotografia documentaria professionale"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché certificarsi</p>
+        <h2>Un sistema costruito sul tuo ciclo produttivo.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          La ISO 14001 definisce i requisiti di un Sistema di Gestione Ambientale: un insieme strutturato di procedure e controlli con cui l'azienda tiene sotto controllo i propri impatti — rifiuti, scarichi, emissioni, energia, risorse — e ne migliora le prestazioni nel tempo, secondo il ciclo PDCA. È volontaria e applicabile a qualsiasi organizzazione.
+        </p>
+        <p>
+          I due vantaggi più concreti per un'impresa: nelle gare con Criteri Ambientali Minimi (D.Lgs. 36/2023) è un mezzo di prova riconosciuto che pesa sul punteggio tecnico; per gli impianti di gestione rifiuti dà diritto a una riduzione del 40% delle garanzie finanziarie (art. 208 D.Lgs. 152/2006). Il certificato lo rilascia un ente terzo accreditato Accredia; noi costruiamo il sistema e portiamo l'azienda pronta all'audit.
+        </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>ISO 14001</li>
+          <li>Accredia</li>
+          <li>CAM · gare verdi</li>
+          <li>Art. 208 · rifiuti</li>
+          <li>AUA</li>
+          <li>MUD</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="iso14001-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="iso14001-aree" class="section-title">Dall'analisi degli impatti al mantenimento.</h2>
+      <AreaGrid aree={sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="iso14001-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="iso14001-ottieni" class="two-col__title">Vantaggi concreti, non solo un bollino verde.</h2>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title="Il percorso verso il certificato." steps={fasi} labelledby="iso14001-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        Il certificato è rilasciato da un ente terzo accreditato Accredia (consulenza e certificazione restano separate). Punteggi in gara e riduzioni delle garanzie dipendono dal singolo bando e dal tipo di impianto: la situazione va verificata caso per caso.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-iso14001"
+    labelledby="iso14001-faq"
+    items={faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="iso14001-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="iso14001-altri" class="section-title">Gli altri schemi di certificazione.</h2>
+      <AreaGrid aree={altri} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Ti serve la ISO 14001?"
+    lede="Partiamo da una valutazione degli aspetti ambientali della tua attività per capire cosa serve davvero e con che tempi."
+    image={{
+      src: "/images/consulenza-ambiente-rifiuti.webp",
+      alt: "Consulente ambientale iCura Impresa durante una verifica in azienda: adulto controlla registri e procedure ambientali con il responsabile, area ordinata e luce naturale, palette sobria toni navy e grigio, fotografia documentaria",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    labelledby="iso14001-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

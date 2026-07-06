@@ -1,0 +1,265 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const schemi = [
+  { id: "iso-9001", nome: "ISO 9001 — Qualità", desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori e un requisito sempre più richiesto da clienti e committenti.", href: "/servizi/certificazioni/iso-9001", cta: "Scopri di più" },
+  { id: "iso-14001", nome: "ISO 14001 — Ambiente", desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.", href: "/servizi/certificazioni/iso-14001", cta: "Scopri di più" },
+  { id: "iso-45001", nome: "ISO 45001 — Sicurezza", desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e può ridurre il premio INAIL.", href: "/servizi/certificazioni/iso-45001", cta: "Scopri di più" },
+  { id: "parita", nome: "Parità di genere — UNI/PdR 125", desc: "Certificazione della parità di genere: dà accesso a esonero contributivo e punteggi premiali nei bandi e nelle gare.", href: "/servizi/certificazioni/parita-genere", cta: "Scopri di più" },
+  { id: "soa", nome: "Attestazione SOA", desc: "Requisito per partecipare alle gare di lavori pubblici sopra i 150.000 €. Attesta categorie e classifiche di opere.", href: "/servizi/certificazioni/soa", cta: "Scopri di più" },
+];
+const altri = schemi.filter((s) => s.id !== "soa");
+
+const sottoAree = [
+  { nome: "Verifica dei requisiti", desc: "Analizziamo quali requisiti l'impresa già possiede — lavori eseguiti, direzione tecnica, fatturato, organico, regolarità — e individuiamo le categorie e le classifiche adeguate ai lavori che vuoi eseguire." },
+  { nome: "Categorie OG e OS", desc: "Ti guidiamo tra Opere Generali (OG) e Opere Specializzate (OS) e tra le classifiche di importo, scegliendo la qualificazione giusta per le gare a cui punti." },
+  { nome: "Predisposizione della documentazione", desc: "Raccogliamo e prepariamo CEL (Certificati di Esecuzione Lavori), bilanci, dati sulla direzione tecnica, organico e attrezzature, correggendo eventuali lacune prima dell'istruttoria." },
+  { nome: "Avvalimento", desc: "Quando manca un requisito tecnico o economico, gestiamo l'avvalimento (art. 104 D.Lgs. 36/2023): individuiamo l'impresa ausiliaria e curiamo il contratto, scritto a pena di nullità." },
+  { nome: "Rapporto con l'organismo SOA", desc: "Selezioniamo l'organismo SOA autorizzato e seguiamo l'istruttoria fino al rilascio dell'attestato, facendo da interfaccia unica." },
+  { nome: "Monitoraggio delle scadenze", desc: "Gestiamo la verifica di mantenimento al terzo anno e il rinnovo quinquennale, così l'impresa non resta mai scoperta in fase di gara." },
+];
+
+const ottieni = [
+  "La qualificazione per partecipare agli appalti di lavori pubblici pari o superiori a 150.000 €",
+  "Le categorie (OG/OS) e le classifiche di importo adeguate ai lavori che vuoi eseguire",
+  "L'avvalimento gestito quando mancano requisiti tecnici o economici, per non perdere la gara",
+  "Le scadenze presidiate: verifica triennale e rinnovo quinquennale seguiti da noi",
+];
+
+const classifiche = [
+  { cl: "I", imp: "258.000 €" },
+  { cl: "II", imp: "516.000 €" },
+  { cl: "III", imp: "1.033.000 €" },
+  { cl: "III-bis", imp: "1.500.000 €" },
+  { cl: "IV", imp: "2.582.000 €" },
+  { cl: "IV-bis", imp: "3.500.000 €" },
+  { cl: "V", imp: "5.165.000 €" },
+  { cl: "VI", imp: "10.329.000 €" },
+  { cl: "VII", imp: "15.494.000 €" },
+  { cl: "VIII", imp: "oltre 15.494.000 €" },
+];
+
+const fasi = [
+  { titolo: "Analisi preliminare", desc: "Verifichiamo i requisiti già posseduti e individuiamo categorie e classifiche adeguate ai lavori target." },
+  { titolo: "Raccolta documentazione", desc: "Predisponiamo CEL, bilanci, dati sulla direzione tecnica, organico e attrezzature, sanando le lacune." },
+  { titolo: "Istruttoria SOA", desc: "L'organismo SOA autorizzato verifica la documentazione; gestiamo eventuali integrazioni e l'avvalimento." },
+  { titolo: "Rilascio dell'attestato", desc: "In caso di esito positivo, la SOA rilascia l'attestazione e la comunica all'ANAC." },
+  { titolo: "Mantenimento e rinnovo", desc: "Seguiamo la verifica di mantenimento al terzo anno e avviamo il rinnovo almeno 90 giorni prima della scadenza." },
+];
+
+const faq = [
+  { q: "Quando è obbligatoria la SOA?", a: "Per partecipare ad appalti di lavori pubblici di importo pari o superiore a 150.000 € (D.Lgs. 36/2023). Sotto questa soglia si usano i requisiti semplificati previsti dal Codice." },
+  { q: "Cosa sono le categorie OG e OS?", a: "OG sono le Opere Generali (interventi complessivi, come edifici o strade); OS sono le Opere Specializzate (lavorazioni specialistiche, come impianti o restauri). L'attestato viene rilasciato per una o più categorie, ciascuna con una classifica di importo." },
+  { q: "Fino a che importo posso lavorare con la mia classifica?", a: "Fino all'importo della classifica maggiorato di un quinto (+20%). Ad esempio, con la classifica III (1.033.000 €) si può concorrere fino a circa 1.239.600 €. La classifica VIII è illimitata." },
+  { q: "Non ho tutti i requisiti: posso comunque qualificarmi?", a: "Sì, ricorrendo all'avvalimento (art. 104 D.Lgs. 36/2023): un'impresa ausiliaria mette a disposizione, con contratto scritto, i requisiti mancanti. È una strada che gestiamo direttamente per non farti perdere l'occasione." },
+  { q: "Quanto dura l'attestazione e quanto tempo serve per ottenerla?", a: "Dura 5 anni, con una verifica di mantenimento al terzo anno; il rinnovo va avviato almeno 90 giorni prima della scadenza. I tempi di rilascio sono in media di 60–120 giorni, a seconda della completezza documentale e delle categorie richieste." },
+];
+---
+
+<Base
+  title="Attestazione SOA — Qualificazione per i lavori pubblici"
+  description="Consulenza per l'attestazione SOA: verifica dei requisiti, scelta di categorie OG/OS e classifiche, predisposizione della documentazione, avvalimenti e rapporto con l'organismo SOA. Supporto alle gare d'appalto."
+>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/certificazioni" class="breadcrumb-back">&larr; Torna a Certificazioni</a>
+      <p class="eyebrow">Certificazioni · Lavori pubblici</p>
+      <h1>Attestazione SOA.</h1>
+      <p class="lede">
+        La chiave per gli appalti di lavori pubblici oltre i 150.000 €. Certifica le categorie di opere e le classifiche di importo che la tua impresa è qualificata a eseguire.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/certificazioni-soa-gare.webp"
+        alt="Preparazione di una pratica SOA e di gara: piani di cantiere, dossier, laptop e casco su un tavolo, due adulti verificano requisiti e documentazione, luce naturale, fotografia documentaria professionale"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché serve</p>
+        <h2>Senza SOA adeguata, resti fuori dalla gara.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          L'attestazione SOA qualifica un'impresa a partecipare agli appalti di lavori pubblici di importo pari o superiore a 150.000 €. Certifica che l'impresa è idonea a eseguire opere di una specifica natura — le categorie OG (Opere Generali) e OS (Opere Specializzate) — e fino a un determinato valore, definito dalle classifiche di importo (dalla I alla VIII). La rilasciano gli organismi SOA autorizzati e vigilati dall'ANAC.
+        </p>
+        <p>
+          Ottenerla significa dimostrare requisiti generali, tecnici (lavori eseguiti, direzione tecnica) ed economico-finanziari (fatturato, organico, attrezzature). Quando manca un requisito, l'avvalimento consente di integrarlo con un'impresa ausiliaria. Noi verifichiamo i requisiti, prepariamo la documentazione e seguiamo l'istruttoria fino al rilascio.
+        </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>D.Lgs. 36/2023</li>
+          <li>ANAC</li>
+          <li>Categorie OG / OS</li>
+          <li>Classifiche I–VIII</li>
+          <li>Avvalimento</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="soa-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="soa-aree" class="section-title">Dalla verifica dei requisiti al rinnovo.</h2>
+      <AreaGrid aree={sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="soa-classifiche">
+    <div class="container">
+      <p class="eyebrow">Classifiche di importo</p>
+      <h2 id="soa-classifiche" class="section-title">Quanto puoi eseguire, per classifica.</h2>
+      <p class="classifiche-note">La classifica indica l'importo massimo qualificabile; in gara si può concorrere fino all'importo maggiorato di un quinto (+20%).</p>
+      <div class="table-wrap">
+        <table class="soa-table">
+          <thead>
+            <tr><th scope="col">Classifica</th><th scope="col">Importo qualificabile</th></tr>
+          </thead>
+          <tbody>
+            {classifiche.map((r) => (
+              <tr><td>{r.cl}</td><td>{r.imp}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="gare" aria-labelledby="soa-gare">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Gare & avvalimenti</p>
+        <h2 id="soa-gare" class="two-col__title">Ti accompagniamo dentro la gara, non solo all'attestato.</h2>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title="Il percorso verso l'attestazione." steps={fasi} labelledby="soa-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        L'attestato è rilasciato da un organismo SOA autorizzato e vigilato dall'ANAC. Soglie, categorie e requisiti sono tecnici e aggiornati dal Codice dei contratti (D.Lgs. 36/2023) e dai manuali ANAC: la qualificazione adeguata va sempre valutata caso per caso in base ai lavori target.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-soa"
+    labelledby="soa-faq"
+    items={faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="soa-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="soa-altri" class="section-title">Gli altri schemi di certificazione.</h2>
+      <AreaGrid aree={altri} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Ti serve la SOA per una gara?"
+    lede="Verifichiamo i requisiti che già hai, individuiamo categorie e classifiche giuste e, se serve, gestiamo l'avvalimento."
+    image={{
+      src: "/images/certificazioni-soa-gare.webp",
+      alt: "Consulente iCura Impresa con un imprenditore edile durante la preparazione di una pratica SOA: verifica di requisiti e documentazione su un tavolo con piani e casco, luce naturale, palette sobria, fotografia documentaria",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    labelledby="soa-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  .classifiche-note { font-size: var(--text-sm); color: var(--color-muted); max-width: 60ch; margin: 0 0 var(--space-lg); }
+  .table-wrap { overflow-x: auto; }
+  .soa-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    background: var(--color-surface);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+  .soa-table th, .soa-table td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: var(--rule-hair) solid var(--color-rule-2);
+  }
+  .soa-table th {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+    font-weight: 600;
+  }
+  .soa-table td:first-child { font-family: var(--font-mono); font-weight: 600; color: var(--color-accent); }
+  .soa-table tbody tr:last-child td { border-bottom: 0; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

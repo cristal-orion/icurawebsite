@@ -2,7 +2,6 @@
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
-import FeatureRow from "@components/FeatureRow.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
 
@@ -18,9 +17,9 @@ const corsi = [
     target: "Lavoratori, formazione generale e aggiornamenti periodici.",
   },
   {
-    formato: "HACCP",
-    desc: "Corsi specifici per il settore alimentare, livelli base e avanzato, secondo le indicazioni regionali.",
-    target: "Ristoranti, bar, mense, GDO, produzione alimentare.",
+    formato: "In azienda",
+    desc: "Corsi erogati direttamente nella tua sede, calibrati sui rischi reali delle tue lavorazioni e sui turni del personale.",
+    target: "Squadre operative, aggiornamenti di gruppo, addestramento pratico.",
   },
 ];
 
@@ -50,11 +49,6 @@ const catalogo = [
     nome: "Rischi specifici",
     desc: "Lavori in quota, spazi confinati, rischio chimico, DPI di III categoria, rischio elettrico (PES/PAV/PEI).",
   },
-  {
-    id: "cat-haccp",
-    nome: "Settore alimentare (HACCP)",
-    desc: "Corsi per alimentaristi e responsabili dell'industria alimentare, livelli base e avanzato.",
-  },
 ];
 
 const faq = [
@@ -83,14 +77,14 @@ const faq = [
 
 <Base
   title="Formazione finanziata"
-  description="Corsi di formazione sulla sicurezza sul lavoro: lavoratori, preposti, dirigenti, RSPP, RLS, antincendio, primo soccorso, attrezzature e HACCP. In aula, e-learning, spesso a costo zero con i fondi interprofessionali."
+  description="Corsi di formazione sulla sicurezza sul lavoro: lavoratori, preposti, dirigenti, RSPP, RLS, antincendio, primo soccorso e attrezzature. In aula, e-learning, spesso a costo zero con i fondi interprofessionali."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 02</p>
       <h1>Formazione finanziata.</h1>
       <p class="lede">
-        Aula, online, HACCP. Tutta la formazione obbligatoria sulla sicurezza — spesso a costo zero per l'azienda, tramite i fondi interprofessionali.
+        Aula, e-learning e corsi in azienda. Tutta la formazione obbligatoria sulla sicurezza — spesso a costo zero per l'azienda, tramite i fondi interprofessionali.
       </p>
     </div>
   </header>
@@ -118,7 +112,6 @@ const faq = [
           <li>Antincendio</li>
           <li>Primo soccorso</li>
           <li>Carrelli / PLE</li>
-          <li>HACCP</li>
         </ul>
       </div>
     </div>
@@ -141,28 +134,6 @@ const faq = [
       </div>
     </div>
   </section>
-
-  {/* ───── Focus: corsi HACCP ───── */}
-  <FeatureRow
-    id="haccp-corsi"
-    eyebrow="Settore alimentare"
-    title="Corsi HACCP per chi lavora con gli alimenti."
-    image={{
-      src: "/images/consulenza-haccp-cucina.webp",
-      alt: "Corso HACCP in una cucina professionale: adulto con copricapo monouso e giacca navy verifica una checklist di igiene con il responsabile del locale, piano in acciaio e ambiente ordinato, luce naturale, fotografia documentaria professionale",
-    }}
-    paras={[
-      "Chi manipola, prepara o somministra alimenti deve essere formato su igiene e autocontrollo: è un obbligo che l'ASL verifica e che, in caso di non conformità, ricade sul titolare dell'attività.",
-      "Eroghiamo i corsi per alimentaristi e responsabili dell'industria alimentare nei livelli previsti dalla tua Regione, in aula presso il locale o in e-learning, con attestato valido a fine percorso.",
-    ]}
-    points={[
-      "Livelli base e avanzato secondo le indicazioni regionali",
-      "In aula nel tuo locale o e-learning tracciato",
-      "Attestato valido per ASL e controlli",
-    ]}
-  />
-
-  <hr class="rule" aria-hidden="true" />
 
   {/* ───── Catalogo corsi ───── */}
   <section class="section" aria-labelledby="formazione-catalogo">

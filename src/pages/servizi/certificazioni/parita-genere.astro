@@ -1,0 +1,205 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const schemi = [
+  { id: "iso-9001", nome: "ISO 9001 — Qualità", desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori e un requisito sempre più richiesto da clienti e committenti.", href: "/servizi/certificazioni/iso-9001", cta: "Scopri di più" },
+  { id: "iso-14001", nome: "ISO 14001 — Ambiente", desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.", href: "/servizi/certificazioni/iso-14001", cta: "Scopri di più" },
+  { id: "iso-45001", nome: "ISO 45001 — Sicurezza", desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e può ridurre il premio INAIL.", href: "/servizi/certificazioni/iso-45001", cta: "Scopri di più" },
+  { id: "parita", nome: "Parità di genere — UNI/PdR 125", desc: "Certificazione della parità di genere: dà accesso a esonero contributivo e punteggi premiali nei bandi e nelle gare.", href: "/servizi/certificazioni/parita-genere", cta: "Scopri di più" },
+  { id: "soa", nome: "Attestazione SOA", desc: "Requisito per partecipare alle gare di lavori pubblici sopra i 150.000 €. Attesta categorie e classifiche di opere.", href: "/servizi/certificazioni/soa", cta: "Scopri di più" },
+];
+const altri = schemi.filter((s) => s.id !== "parita");
+
+const ambiti = [
+  { nome: "Cultura e strategia", desc: "Politiche, obiettivi e impegno della direzione sulla parità di genere. Peso 15% nella valutazione UNI/PdR 125." },
+  { nome: "Governance", desc: "Presidio organizzativo, ruoli e responsabilità sulla parità, con un Comitato Guida o un referente dedicato. Peso 15%." },
+  { nome: "Processi HR", desc: "Selezione, gestione e sviluppo del personale in ottica di parità e non discriminazione. Peso 10%." },
+  { nome: "Crescita e inclusione", desc: "Opportunità di crescita e inclusione delle donne in azienda, presenza nei ruoli e nei percorsi di carriera. Peso 20%." },
+  { nome: "Equità remunerativa", desc: "Analisi e riduzione del divario retributivo di genere a parità di ruolo. Peso 20%." },
+  { nome: "Genitorialità e conciliazione", desc: "Tutela della genitorialità e misure di conciliazione vita-lavoro. Peso 20%." },
+];
+
+const ottieni = [
+  "Un certificato rilasciato da un organismo accreditato Accredia, valido ai sensi del Codice delle pari opportunità",
+  "Esonero contributivo fino all'1% dei contributi datoriali, entro il tetto di 50.000 € l'anno, per i 36 mesi di validità (L. 162/2021)",
+  "Punteggio premiale nelle gare pubbliche (art. 108 D.Lgs. 36/2023) e riduzione fino al 20% della garanzia provvisoria, cumulabile con altre riduzioni (art. 106)",
+  "Elemento premiante nei bandi finanziati dal PNRR e un segnale concreto verso clienti e dipendenti",
+];
+
+const fasi = [
+  { titolo: "Gap analysis sui 6 ambiti", desc: "Fotografiamo la situazione rispetto ai KPI applicabili alla tua fascia dimensionale (micro, piccola, media, grande)." },
+  { titolo: "Politiche, obiettivi e KPI", desc: "Definiamo piano d'azione, referente o Comitato Guida e il set di indicatori da monitorare." },
+  { titolo: "Sistema di monitoraggio", desc: "Impostiamo la raccolta dati, le procedure e il cruscotto di monitoraggio nel tempo." },
+  { titolo: "Audit di certificazione", desc: "L'organismo accreditato Accredia verifica documentazione e attuazione; serve un punteggio minimo del 60%." },
+  { titolo: "Esonero e mantenimento", desc: "Presentiamo la domanda INPS di esonero contributivo e seguiamo i monitoraggi annuali di mantenimento." },
+];
+
+const faq = [
+  { q: "L'esonero contributivo è ancora attivo?", a: "Sì. È una misura strutturale (L. 162/2021, resa permanente dalla Legge di Bilancio 2022): esonero fino all'1% dei contributi datoriali, massimo 50.000 € l'anno, per i 36 mesi di validità della certificazione. Va ricordato che esiste un tetto di spesa nazionale annuo: se le risorse non bastano, l'esonero può essere ridotto proporzionalmente per tutti i beneficiari." },
+  { q: "La certificazione dà vantaggi nelle gare pubbliche?", a: "Sì: punteggio premiale (art. 108, comma 7 del D.Lgs. 36/2023) e riduzione fino al 20% della garanzia provvisoria, cumulabile con le altre riduzioni (art. 106, comma 8). È inoltre elemento premiante nei bandi finanziati dal PNRR." },
+  { q: "Una piccola o micro impresa può ottenerla?", a: "Sì. La UNI/PdR 125 prevede quattro fasce dimensionali con KPI proporzionati e semplificati per le micro (1–9) e le piccole (10–49) imprese, così che il percorso sia sostenibile anche per organizzazioni piccole." },
+  { q: "Come si ottiene e quanto dura?", a: "Con una gap analysis sui 6 ambiti, la definizione di politiche e KPI, un sistema di monitoraggio e l'audit di un organismo accreditato Accredia (serve almeno il 60% di punteggio). La validità è di 3 anni, con verifiche annuali di mantenimento." },
+  { q: "Esistono contributi per coprire i costi della certificazione?", a: "Ci sono stati voucher nazionali Unioncamere legati al PNRR per PMI e micro imprese, con avvisi a sportello fino a esaurimento fondi. Sono soggetti a riaperture e a eventuali bandi regionali: verifichiamo insieme quali finanziamenti risultano aperti al momento, anche a livello di Regione Campania." },
+];
+---
+
+<Base
+  title="Certificazione della Parità di Genere — UNI/PdR 125:2022"
+  description="Consulenza per la certificazione della parità di genere UNI/PdR 125:2022: gap analysis sui 6 ambiti, sistema di monitoraggio, audit accreditato, esonero contributivo INPS e punteggi premiali in gara."
+>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/certificazioni" class="breadcrumb-back">&larr; Torna a Certificazioni</a>
+      <p class="eyebrow">Certificazioni · Parità di genere</p>
+      <h1>Parità di genere — UNI/PdR 125.</h1>
+      <p class="lede">
+        Un percorso che misura e migliora la parità in azienda su sei ambiti — e che dà accesso a un esonero contributivo e a punteggi premiali nelle gare e nei bandi PNRR.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/chi-siamo-riunione-team.webp"
+        alt="Team aziendale misto in riunione operativa in un ufficio luminoso: donne e uomini adulti confrontano documenti attorno a un tavolo, clima professionale e collaborativo, palette sobria toni navy e grigio, fotografia documentaria"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché certificarsi</p>
+        <h2>Non un adempimento formale: un vantaggio misurabile.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          La UNI/PdR 125:2022 è la Prassi di Riferimento nazionale per un sistema di gestione della parità di genere. Misura, tramite KPI quantitativi e qualitativi, la maturità dell'organizzazione su sei ambiti — cultura e strategia, governance, processi HR, crescita e inclusione, equità remunerativa, genitorialità — con un punteggio minimo di sintesi del 60% per ottenere la certificazione.
+        </p>
+        <p>
+          Oltre al valore verso clienti e dipendenti, i benefici sono concreti: un esonero contributivo strutturale fino all'1% dei contributi datoriali (max 50.000 € l'anno) e, nelle gare pubbliche, punteggi premiali e la riduzione fino al 20% della garanzia provvisoria. Il certificato lo rilascia un organismo accreditato Accredia; noi costruiamo il sistema e gestiamo la domanda di esonero all'INPS.
+        </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>UNI/PdR 125:2022</li>
+          <li>Accredia</li>
+          <li>Esonero INPS</li>
+          <li>Art. 108 · gare</li>
+          <li>PNRR</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="parita-aree">
+    <div class="container">
+      <p class="eyebrow">I sei ambiti</p>
+      <h2 id="parita-aree" class="section-title">Cosa valuta la UNI/PdR 125.</h2>
+      <AreaGrid aree={ambiti} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="parita-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="parita-ottieni" class="two-col__title">Un titolo che vale in bilancio e nelle gare.</h2>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title="Dal gap analysis all'esonero contributivo." steps={fasi} labelledby="parita-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        Il certificato è rilasciato da un organismo accreditato Accredia. L'esonero contributivo è soggetto a un tetto di spesa nazionale annuo (possibile riduzione proporzionale) e a scadenze di domanda all'INPS; i voucher a copertura dei costi dipendono da bandi aperti nel periodo. La situazione va verificata caso per caso.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-parita"
+    labelledby="parita-faq"
+    items={faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="parita-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="parita-altri" class="section-title">Gli altri schemi di certificazione.</h2>
+      <AreaGrid aree={altri} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Vuoi la certificazione di parità?"
+    lede="Partiamo da una gap analysis sui sei ambiti per capire dove sei e cosa serve per il 60% — e per attivare esonero e premialità."
+    image={{
+      src: "/images/chi-siamo-riunione-team.webp",
+      alt: "Consulente iCura Impresa con la direzione di un'azienda durante la definizione del piano per la parità di genere: team misto attorno a un tavolo in un ufficio luminoso, clima collaborativo, palette sobria, fotografia documentaria",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    labelledby="parita-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

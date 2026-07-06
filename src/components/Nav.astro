@@ -45,11 +45,11 @@ const menu = [
     label: "Certificazioni",
     href: "/servizi/certificazioni",
     voci: [
-      { label: "ISO 9001 · Qualità", href: "/servizi/certificazioni#iso-9001" },
-      { label: "ISO 14001 · Ambiente", href: "/servizi/certificazioni#iso-14001" },
-      { label: "ISO 45001 · Sicurezza", href: "/servizi/certificazioni#iso-45001" },
-      { label: "Parità di genere · 125", href: "/servizi/certificazioni#parita" },
-      { label: "Attestazione SOA", href: "/servizi/certificazioni#soa" },
+      { label: "ISO 9001 · Qualità", href: "/servizi/certificazioni/iso-9001" },
+      { label: "ISO 14001 · Ambiente", href: "/servizi/certificazioni/iso-14001" },
+      { label: "ISO 45001 · Sicurezza", href: "/servizi/certificazioni/iso-45001" },
+      { label: "Parità di genere · 125", href: "/servizi/certificazioni/parita-genere" },
+      { label: "Attestazione SOA", href: "/servizi/certificazioni/soa" },
     ],
   },
   {
@@ -69,6 +69,13 @@ const agevolazioni = [
   { label: "ZES Unica 2026", href: "/zes-unica" },
   { label: "Bando ISI INAIL", href: "/bando-isi" },
 ];
+
+// Bando in evidenza (badge amber). Cambia qui label/href per evidenziarne un altro.
+const bandoEvidenza = {
+  label: "Bando ISI INAIL",
+  href: "/bando-isi",
+  badge: "In evidenza",
+};
 
 const serviziActive =
   pathname.startsWith("/servizi") ||
@@ -131,6 +138,16 @@ const serviziActive =
 
       <li>
         <a
+          href="/blog"
+          class={`site-nav__link${isActive("/blog") ? " is-active" : ""}`}
+          aria-current={isActive("/blog") ? "page" : undefined}
+        >
+          Blog
+        </a>
+      </li>
+
+      <li>
+        <a
           href="/lavora-con-noi"
           class={`site-nav__link${isActive("/lavora-con-noi") ? " is-active" : ""}`}
           aria-current={isActive("/lavora-con-noi") ? "page" : undefined}
@@ -151,6 +168,13 @@ const serviziActive =
     </ul>
 
     <div class="site-header__actions">
+      <a
+        href={bandoEvidenza.href}
+        class={`site-header__promo${isActive(bandoEvidenza.href) ? " is-active" : ""}`}
+      >
+        <span class="site-header__promo-badge">{bandoEvidenza.badge}</span>
+        <span class="site-header__promo-label">{bandoEvidenza.label}</span>
+      </a>
       <a href="tel:+390816580779" class="site-header__phone">+39 081 658 0779</a>
       <a href="/contatti" class="site-header__cta">
         Richiedi consulenza
@@ -173,6 +197,11 @@ const serviziActive =
 </header>
 
 <div class="nav-mobile" id="nav-mobile" data-nav-mobile hidden>
+  <a href={bandoEvidenza.href} class="nav-mobile__promo">
+    <span class="nav-mobile__promo-badge">{bandoEvidenza.badge}</span>
+    <span>{bandoEvidenza.label}</span>
+    <span aria-hidden="true">→</span>
+  </a>
   <ul class="nav-mobile__list">
     <li>
       <a href="/chi-siamo" class={isActive("/chi-siamo") ? "is-active" : undefined}>Chi siamo</a>
@@ -186,6 +215,9 @@ const serviziActive =
           </li>
         ))}
       </ul>
+    </li>
+    <li>
+      <a href="/blog" class={isActive("/blog") ? "is-active" : undefined}>Blog</a>
     </li>
     <li class="nav-mobile__group">
       <span class="nav-mobile__group-label">Agevolazioni</span>
@@ -438,6 +470,42 @@ const serviziActive =
     gap: var(--space-sm);
     margin-left: auto;
   }
+
+  /* Bando in evidenza — pill con badge amber (uso raro dell'amber consentito) */
+  .site-header__promo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.8rem 0.35rem 0.4rem;
+    border: var(--rule-hair) solid color-mix(in srgb, var(--color-highlight) 45%, transparent);
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-highlight) 10%, transparent);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-ink);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .site-header__promo:hover,
+  .site-header__promo.is-active {
+    background: color-mix(in srgb, var(--color-highlight) 18%, transparent);
+    border-color: color-mix(in srgb, var(--color-highlight) 70%, transparent);
+    text-decoration: none;
+  }
+  .site-header__promo-badge {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ink);
+    background: var(--color-highlight);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-pill);
+  }
+
   .site-header__phone {
     display: none;
     font-family: var(--font-mono);
@@ -516,6 +584,32 @@ const serviziActive =
     overscroll-behavior: contain;
   }
   .nav-mobile[hidden] { display: none; }
+  .nav-mobile__promo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: var(--space-md);
+    padding: 0.8rem 1rem;
+    background: color-mix(in srgb, var(--color-highlight) 16%, transparent);
+    border: var(--rule-hair) solid color-mix(in srgb, var(--color-highlight) 45%, transparent);
+    border-radius: var(--radius-card);
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-paper);
+    text-decoration: none;
+  }
+  .nav-mobile__promo > span:last-child { margin-left: auto; }
+  .nav-mobile__promo-badge {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ink);
+    background: var(--color-highlight);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-pill);
+  }
   .nav-mobile__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.2rem; }
   .nav-mobile__list a {
     display: block;
@@ -553,7 +647,8 @@ const serviziActive =
   @media (max-width: 56rem) {
     .site-nav { display: none; }
     .site-header__cta,
-    .site-header__phone { display: none; }
+    .site-header__phone,
+    .site-header__promo { display: none; }
     .site-header__burger { display: flex; }
   }
   @media (min-width: 64rem) {

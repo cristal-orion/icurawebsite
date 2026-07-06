@@ -5,21 +5,24 @@ import Placeholder from "@components/Placeholder.astro";
 
 <Base
   title="Contatti"
-  description="Scrivici, chiamaci, vieni a trovarci. iCura Impresa, Corso Secondigliano 236, Napoli."
+  description="Scrivici, chiamaci, vieni a trovarci o prenota una call. iCura Impresa, Corso Secondigliano 236, Napoli. Risposta entro 48 ore."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Contatti</p>
-      <h1>Scrivici, ti rispondiamo entro 48h.</h1>
+      <h1>Parliamo della tua impresa.</h1>
+      <p class="page-header__lede">
+        Un sopralluogo gratuito, una call o una email: come preferisci. Ti rispondiamo entro 48 ore, senza impegno.
+      </p>
     </div>
   </header>
 
   <section class="section section--tight">
     <div class="container">
       <Placeholder
-        aspect="16/9"
-        src="/images/esternoicura.webp"
-        alt="Ingresso della sede di iCura Impresa a Napoli, Corso Secondigliano 236: portale ad arco di un palazzo storico con insegna e logo 'iCura Impresa' accanto all'entrata, facciata grigia al piano terra e rosa ai piani superiori, marciapiede e dissuasori in primo piano, luce diurna"
+        aspect="21/9"
+        src="/images/team-icura.webp"
+        alt="Il team di iCura Impresa nella sede di Napoli: consulenti adulti in abbigliamento professionale, espressione cordiale e competente, ambiente di lavoro ordinato con luce naturale, palette sobria toni navy e grigio, fotografia documentaria"
       />
     </div>
   </section>
@@ -54,12 +57,20 @@ import Placeholder from "@components/Placeholder.astro";
         </div>
       </aside>
 
-      <form class="form" action="#" method="POST" novalidate>
+      {/* Invio gestito da src/scripts/lead-form.ts → Klaviyo (client-side). */}
+      <form class="form" data-lead-form>
         <p class="eyebrow form__eyebrow">Scrivici</p>
+        <h2 class="form__title">Raccontaci di cosa hai bisogno.</h2>
+        <input type="text" name="company_website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
         <div class="field">
           <label for="nome">Nome e cognome</label>
           <input id="nome" name="nome" type="text" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="azienda">Azienda</label>
+          <input id="azienda" name="azienda" type="text" autocomplete="organization" />
         </div>
 
         <div class="field">
@@ -71,11 +82,11 @@ import Placeholder from "@components/Placeholder.astro";
           <label for="oggetto">Oggetto</label>
           <select id="oggetto" name="oggetto" required>
             <option value="">Seleziona…</option>
-            <option>Consulenza</option>
+            <option>Consulenza &amp; Sicurezza</option>
+            <option>Engineering &amp; Antincendio</option>
             <option>Formazione</option>
-            <option>Engineering</option>
-            <option>Finanza agevolata</option>
             <option>Certificazioni</option>
+            <option>Finanza agevolata</option>
             <option>Lavora con noi</option>
             <option>Altro</option>
           </select>
@@ -88,21 +99,72 @@ import Placeholder from "@components/Placeholder.astro";
 
         <label class="consent">
           <input type="checkbox" name="privacy" required />
-          <span>Acconsento al trattamento dei dati secondo la <a href="/privacy">privacy policy</a>.</span>
+          <span>Acconsento al trattamento dei dati per gestire la mia richiesta, secondo la <a href="/privacy">privacy policy</a>.</span>
         </label>
 
-        <button type="submit" class="btn btn--primary">
-          Invia
+        <label class="consent">
+          <input type="checkbox" name="marketing" />
+          <span>Acconsento al trattamento dei miei dati personali per finalità di marketing (comunicazioni commerciali e newsletter). Facoltativo.</span>
+        </label>
+
+        <button type="submit" class="btn btn--primary btn--cta">
+          Invia richiesta
           <span class="btn__arrow" aria-hidden="true">→</span>
         </button>
+        <p class="form__trust" aria-hidden="true">
+          <span>Risposta entro 48h</span>
+          <span>Sopralluogo gratuito</span>
+          <span>Nessun impegno</span>
+        </p>
+        <p class="form-status" data-lead-status role="status" aria-live="polite" hidden></p>
+
+        <div class="form-thanks" data-lead-success role="status">
+          <span class="form-thanks__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          </span>
+          <span class="form-thanks__title">Grazie<span data-thanks-name></span>!</span>
+          <span class="form-thanks__text">Abbiamo ricevuto la tua richiesta: ti ricontattiamo entro 48 ore. A presto.</span>
+        </div>
       </form>
+    </div>
+  </section>
+
+  {/* ───── Prenota una call ───── */}
+  <section class="section section--tight" aria-labelledby="call-heading">
+    <div class="container">
+      <div class="call">
+        <div class="call__body">
+          <span class="call__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4.5" width="18" height="16" rx="2" />
+              <path d="M3 9h18M8 2.5v4M16 2.5v4" />
+              <path d="m9 14 2 2 4-4" />
+            </svg>
+          </span>
+          <p class="eyebrow">Prenota una call</p>
+          <h2 id="call-heading" class="call__title">Preferisci parlarne? Prenota 20 minuti.</h2>
+          <p class="call__lede">
+            Scegli un orario che ti è comodo: una call conoscitiva senza impegno con un nostro consulente.
+          </p>
+        </div>
+        <div class="call__widget" data-booking-embed>
+          {/* TODO: sostituire con l'embed del calendario (Calendly / Google Calendar) quando disponibile. */}
+          <p class="call__widget-note">Calendario prenotazioni in arrivo.</p>
+          <p class="call__widget-sub">Nel frattempo scrivici o chiamaci: fissiamo noi l'orario.</p>
+          <div class="call__widget-actions">
+            <a href="tel:+390816580779" class="btn btn--primary">Chiama ora</a>
+            <a href="mailto:info@icuraimpresa.it" class="btn btn--secondary">Scrivi una email</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   {/* ───── Mappa ───── */}
   <section class="section section--tight" aria-labelledby="mappa-heading">
     <div class="container">
-      <h2 id="mappa-heading" class="sr-only">Dove siamo</h2>
+      <p class="eyebrow">Dove siamo</p>
+      <h2 id="mappa-heading" class="map-title">Vieni a trovarci a Secondigliano.</h2>
       <div class="map" data-map>
         <iframe
           class="map__frame"
@@ -134,6 +196,9 @@ import Placeholder from "@components/Placeholder.astro";
   </section>
 
   <script>
+    // Invio lead → Klaviyo (client-side).
+    import "../scripts/lead-form.ts";
+
     // La mappa Google si carica solo dopo il consenso (click-to-load o "Accetta").
     const mapWrap = document.querySelector<HTMLElement>("[data-map]");
     if (mapWrap) {
@@ -163,7 +228,9 @@ import Placeholder from "@components/Placeholder.astro";
     letter-spacing: -0.035em;
     line-height: 0.95;
     max-width: 18ch;
+    margin-bottom: var(--space-md);
   }
+  .page-header__lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 52ch; }
 
   .contact-grid {
     display: grid;
@@ -189,11 +256,14 @@ import Placeholder from "@components/Placeholder.astro";
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    padding: var(--space-xl);
-    background: var(--color-paper-2);
-    border-radius: var(--radius-card);
+    padding: clamp(var(--space-lg), 3vw, var(--space-2xl));
+    background: var(--color-surface);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
   }
   .form__eyebrow { margin-bottom: 0; }
+  .form__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 var(--space-2xs); color: var(--color-ink); }
   .field { display: flex; flex-direction: column; gap: var(--space-2xs); }
   .field label { font-size: var(--text-sm); color: var(--color-ink-2); font-weight: 500; }
   .field input,
@@ -226,11 +296,64 @@ import Placeholder from "@components/Placeholder.astro";
     color: var(--color-ink-2);
     line-height: 1.5;
   }
+  .consent a { color: var(--color-accent); }
   .consent input { margin-top: 0.25rem; }
 
-  .form .btn { align-self: flex-start; margin-top: var(--space-2xs); }
+  .form__trust {
+    display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-md);
+    justify-content: center;
+    margin: var(--space-xs) 0 0;
+    font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 500;
+    letter-spacing: 0.02em; color: var(--color-muted);
+  }
+  .form__trust span { display: inline-flex; align-items: center; gap: 0.4em; }
+  .form__trust span::before {
+    content: ""; width: 0.9em; height: 0.9em; flex: none;
+    background: var(--color-accent);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+  }
+
+  /* ───── Prenota una call ───── */
+  .call {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
+    background: var(--color-paper-blue);
+    border: var(--rule-hair) solid color-mix(in srgb, var(--color-accent) 18%, transparent);
+    border-radius: var(--radius-lg);
+  }
+  .call__icon {
+    display: inline-flex;
+    width: 3rem; height: 3rem;
+    align-items: center; justify-content: center;
+    border-radius: var(--radius-card);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    margin-bottom: var(--space-sm);
+  }
+  .call__icon svg { width: 1.6rem; height: 1.6rem; }
+  .call__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; letter-spacing: -0.02em; margin: 0 0 var(--space-2xs); }
+  .call__lede { font-size: var(--text-md); color: var(--color-ink-2); line-height: 1.55; margin: 0; max-width: 40ch; }
+
+  .call__widget {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding: var(--space-xl);
+    background: var(--color-surface);
+    border: 1px dashed color-mix(in srgb, var(--color-accent) 35%, transparent);
+    border-radius: var(--radius-card);
+    text-align: center;
+  }
+  .call__widget-note { font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600; color: var(--color-ink-2); margin: 0; }
+  .call__widget-sub { font-size: var(--text-sm); color: var(--color-muted); margin: 0 0 var(--space-sm); }
+  .call__widget-actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); justify-content: center; }
 
   /* ───── Mappa ───── */
+  .map-title { font-size: var(--text-2xl); font-weight: 600; letter-spacing: -0.02em; margin: 0 0 var(--space-lg); }
   .map {
     position: relative;
     border-radius: var(--radius-card);
@@ -268,5 +391,6 @@ import Placeholder from "@components/Placeholder.astro";
 
   @media (max-width: 56rem) {
     .contact-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .call { grid-template-columns: 1fr; gap: var(--space-lg); }
   }
 </style>

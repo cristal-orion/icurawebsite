@@ -1,0 +1,206 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const schemi = [
+  { id: "iso-9001", nome: "ISO 9001 — Qualità", desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori e un requisito sempre più richiesto da clienti e committenti.", href: "/servizi/certificazioni/iso-9001", cta: "Scopri di più" },
+  { id: "iso-14001", nome: "ISO 14001 — Ambiente", desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.", href: "/servizi/certificazioni/iso-14001", cta: "Scopri di più" },
+  { id: "iso-45001", nome: "ISO 45001 — Sicurezza", desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e può ridurre il premio INAIL.", href: "/servizi/certificazioni/iso-45001", cta: "Scopri di più" },
+  { id: "parita", nome: "Parità di genere — UNI/PdR 125", desc: "Certificazione della parità di genere: dà accesso a esonero contributivo e punteggi premiali nei bandi e nelle gare.", href: "/servizi/certificazioni/parita-genere", cta: "Scopri di più" },
+  { id: "soa", nome: "Attestazione SOA", desc: "Requisito per partecipare alle gare di lavori pubblici sopra i 150.000 €. Attesta categorie e classifiche di opere.", href: "/servizi/certificazioni/soa", cta: "Scopri di più" },
+];
+const altri = schemi.filter((s) => s.id !== "iso-9001");
+
+const sottoAree = [
+  { nome: "Analisi dei gap", desc: "Confrontiamo l'organizzazione con i requisiti della ISO 9001:2015 e individuiamo cosa manca davvero, senza checklist standard: mappiamo processi, ruoli e rischi reali." },
+  { nome: "Sistema di gestione su misura", desc: "Costruiamo politica della qualità, procedure, obiettivi e indicatori (KPI) sui tuoi processi, con approccio per processi e risk-based thinking. Niente moduli copia-incolla." },
+  { nome: "Formazione e audit interno", desc: "Prepariamo le persone ad applicare il sistema e lo mettiamo alla prova con una verifica interna, così le non conformità emergono prima dell'ente, non durante." },
+  { nome: "Assistenza all'audit di certificazione", desc: "Ti affianchiamo nelle due fasi dell'audit dell'ente accreditato (Stage 1 documentale e Stage 2 sul campo) e nella chiusura di eventuali rilievi." },
+  { nome: "Mantenimento e sorveglianza", desc: "Seguiamo gli audit di sorveglianza annuali e il rinnovo alla scadenza del triennio: il sistema deve restare vivo e utile, non solo superare la prima verifica." },
+  { nome: "Integrazione con altri sistemi", desc: "La 9001 condivide la stessa struttura di ISO 14001 e 45001: se vuoi più certificazioni, costruiamo un unico sistema integrato invece di tre paralleli." },
+];
+
+const ottieni = [
+  "Un certificato rilasciato da un ente terzo accreditato Accredia, con pieno valore riconosciuto",
+  "Diritto alla riduzione del 30% della garanzia provvisoria nelle gare pubbliche (art. 106 D.Lgs. 36/2023)",
+  "Un titolo spesso richiesto per entrare nelle vendor list e negli albi fornitori di grandi committenti",
+  "Processi misurabili con indicatori, meno errori e non conformità, ruoli e responsabilità chiari",
+];
+
+const fasi = [
+  { titolo: "Analisi dei gap", desc: "Fotografiamo lo stato attuale rispetto alla norma e definiamo il piano di lavoro con priorità concrete." },
+  { titolo: "Documentazione", desc: "Costruiamo il sistema di gestione della qualità su misura: processi, procedure, obiettivi e indicatori." },
+  { titolo: "Formazione e audit interno", desc: "Formiamo il personale e verifichiamo il sistema con un audit interno prima dell'ente." },
+  { titolo: "Audit di certificazione", desc: "L'ente terzo accreditato Accredia verifica in due fasi (Stage 1 e Stage 2) e rilascia il certificato." },
+  { titolo: "Mantenimento", desc: "Gestiamo le sorveglianze annuali e il rinnovo alla scadenza del triennio." },
+];
+
+const faq = [
+  { q: "La ISO 9001 è obbligatoria?", a: "No, non è obbligatoria per legge. Diventa però necessaria di fatto per partecipare con vantaggio a gare pubbliche, entrare nelle vendor list di grandi clienti o soddisfare requisiti contrattuali di filiera." },
+  { q: "Quanto vale la certificazione in una gara pubblica?", a: "Non può essere richiesta come requisito di ammissione a pena di esclusione, ma dà diritto alla riduzione del 30% della garanzia provvisoria (art. 106 D.Lgs. 36/2023) e può essere valorizzata con punteggio tecnico nell'offerta. L'entità dipende dal singolo bando." },
+  { q: "Quanto dura il certificato?", a: "Tre anni, con audit di sorveglianza ogni anno e un audit di rinnovo alla scadenza del triennio." },
+  { q: "Il certificato lo rilasciate voi?", a: "No, ed è giusto che sia così: lo rilascia un ente di certificazione terzo e accreditato Accredia. Per il principio di imparzialità (ISO/IEC 17021) chi fa consulenza non può anche certificare. Noi prepariamo l'azienda e la affianchiamo all'audit; la terzietà dell'ente è ciò che dà valore al certificato." },
+  { q: "Quanto tempo serve per ottenerla?", a: "Con un percorso seguito, di norma 3–5 mesi dall'avvio all'audit di certificazione, a seconda della dimensione, del numero di sedi e di quanto l'azienda è già strutturata." },
+];
+---
+
+<Base
+  title="ISO 9001 — Certificazione di Qualità"
+  description="Consulenza per la certificazione ISO 9001:2015: gap analysis, sistema di gestione qualità su misura, formazione, audit interno e affiancamento all'audit dell'ente accreditato Accredia. Napoli."
+>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/certificazioni" class="breadcrumb-back">&larr; Torna a Certificazioni</a>
+      <p class="eyebrow">Certificazioni · Qualità</p>
+      <h1>ISO 9001 — Qualità.</h1>
+      <p class="lede">
+        È il sistema di gestione più diffuso al mondo. Non un bollino in cornice: un modo di lavorare che riduce errori e sprechi — e un titolo che apre gare pubbliche e vendor list.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/certificazioni-audit-iso.webp"
+        alt="Riunione di audit del sistema qualità in ufficio professionale: consulenti adulti confrontano registri, checklist e procedure attorno a un tavolo, luce naturale, fotografia documentaria sobria toni navy e grigio"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché certificarsi</p>
+        <h2>Non certifica il prodotto: certifica come lavori.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          La ISO 9001:2015 definisce i requisiti di un Sistema di Gestione per la Qualità: non attesta il singolo prodotto, ma la capacità dell'organizzazione di gestire processi e risorse in modo ordinato, riducendo errori e non conformità e migliorando nel tempo. Si fonda sull'approccio per processi, sul ciclo PDCA e sul risk-based thinking.
+        </p>
+        <p>
+          Non è obbligatoria per legge, ma è sempre più spesso una chiave d'accesso: nelle gare pubbliche dà diritto alla riduzione del 30% della garanzia provvisoria ed è valorizzabile a punteggio tecnico; per molte filiere e grandi committenti è un requisito d'ingresso negli albi fornitori. Il certificato lo rilascia sempre un ente terzo accreditato Accredia — noi portiamo l'azienda pronta all'audit.
+        </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>ISO 9001:2015</li>
+          <li>Accredia</li>
+          <li>Ciclo PDCA</li>
+          <li>Risk-based thinking</li>
+          <li>Vendor list</li>
+          <li>Gare pubbliche</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="iso9001-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="iso9001-aree" class="section-title">Dall'analisi dei gap al mantenimento.</h2>
+      <AreaGrid aree={sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="iso9001-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="iso9001-ottieni" class="two-col__title">Un sistema che regge l'audit e resta utile dopo.</h2>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title="Il percorso verso il certificato." steps={fasi} labelledby="iso9001-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        Il certificato è rilasciato da un ente di certificazione terzo e accreditato Accredia: consulenza e certificazione restano ruoli separati (ISO/IEC 17021). Le riduzioni e i punteggi nelle gare dipendono dalle regole del singolo bando.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-iso9001"
+    labelledby="iso9001-faq"
+    items={faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="iso9001-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="iso9001-altri" class="section-title">Gli altri schemi di certificazione.</h2>
+      <AreaGrid aree={altri} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Parti dalla ISO 9001?"
+    lede="Una valutazione iniziale onesta per capire da dove cominciare e quanto tempo serve — senza venderti percorsi inutili."
+    image={{
+      src: "/images/certificazioni-audit-iso.webp",
+      alt: "Consulente certificazioni iCura Impresa con un imprenditore durante un audit di sistema qualità: due adulti in ufficio esaminano registri e checklist su un tavolo ordinato, palette sobria toni navy e grigio, fotografia documentaria",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    labelledby="iso9001-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

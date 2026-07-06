@@ -1,0 +1,205 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const schemi = [
+  { id: "iso-9001", nome: "ISO 9001 — Qualità", desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori e un requisito sempre più richiesto da clienti e committenti.", href: "/servizi/certificazioni/iso-9001", cta: "Scopri di più" },
+  { id: "iso-14001", nome: "ISO 14001 — Ambiente", desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.", href: "/servizi/certificazioni/iso-14001", cta: "Scopri di più" },
+  { id: "iso-45001", nome: "ISO 45001 — Sicurezza", desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e può ridurre il premio INAIL.", href: "/servizi/certificazioni/iso-45001", cta: "Scopri di più" },
+  { id: "parita", nome: "Parità di genere — UNI/PdR 125", desc: "Certificazione della parità di genere: dà accesso a esonero contributivo e punteggi premiali nei bandi e nelle gare.", href: "/servizi/certificazioni/parita-genere", cta: "Scopri di più" },
+  { id: "soa", nome: "Attestazione SOA", desc: "Requisito per partecipare alle gare di lavori pubblici sopra i 150.000 €. Attesta categorie e classifiche di opere.", href: "/servizi/certificazioni/soa", cta: "Scopri di più" },
+];
+const altri = schemi.filter((s) => s.id !== "iso-45001");
+
+const sottoAree = [
+  { nome: "Analisi dei gap sulla sicurezza", desc: "Confrontiamo lo stato dell'azienda con i requisiti della norma e con gli obblighi del D.Lgs. 81/08: DVR, procedure e formazione già presenti sono il punto di partenza." },
+  { nome: "Sistema di gestione della sicurezza", desc: "Costruiamo politica, analisi del contesto, valutazione dei rischi, ruoli, procedure operative, gestione delle emergenze e obiettivi di miglioramento, con il coinvolgimento dei lavoratori." },
+  { nome: "Formazione e audit interno", desc: "Formiamo le persone e verifichiamo il sistema con un audit interno prima dell'ente, così le non conformità emergono in tempo." },
+  { nome: "Assistenza all'audit di certificazione", desc: "Ti affianchiamo nelle due fasi dell'audit dell'ente accreditato (Stage 1 e Stage 2) fino al rilascio del certificato." },
+  { nome: "Domanda OT23 e riduzione premio INAIL", desc: "Prepariamo e presentiamo la domanda OT23 per ottenere la riduzione del tasso medio di tariffa INAIL, sfruttando la certificazione come intervento di massimo valore prevenzionale." },
+  { nome: "Integrazione con il Modello 231", desc: "Colleghiamo il sistema all'art. 30 del D.Lgs. 81/08 e agli elementi del Modello Organizzativo 231, per rafforzare la posizione dell'impresa e degli amministratori." },
+];
+
+const ottieni = [
+  "Un certificato rilasciato da un ente terzo accreditato Accredia, con pieno valore riconosciuto",
+  "Accesso alla riduzione del premio INAIL con il modello OT23: dal 5% al 28% del tasso medio di tariffa, in base alla dimensione aziendale",
+  "Un elemento a favore per l'efficacia esimente ex D.Lgs. 231/01 (presunzione di conformità all'art. 30 D.Lgs. 81/08, per le parti corrispondenti)",
+  "Meno infortuni: nelle imprese con sistema certificato lo studio INAIL-Accredia ha rilevato −22,6% di frequenza e −29,2% di gravità",
+];
+
+const fasi = [
+  { titolo: "Analisi dei gap", desc: "Fotografiamo lo stato dell'azienda rispetto alla norma e al D.Lgs. 81/08 e definiamo il piano." },
+  { titolo: "Progettazione del sistema", desc: "Costruiamo il sistema di gestione della sicurezza: valutazione dei rischi, procedure, ruoli, emergenze, obiettivi." },
+  { titolo: "Formazione e audit interno", desc: "Formiamo il personale e proviamo il sistema con una verifica interna prima dell'ente." },
+  { titolo: "Audit di certificazione", desc: "L'ente terzo accreditato Accredia verifica in due fasi e rilascia il certificato." },
+  { titolo: "Mantenimento e OT23", desc: "Gestiamo le sorveglianze annuali, il rinnovo e la domanda OT23 per la riduzione del premio INAIL." },
+];
+
+const faq = [
+  { q: "La ISO 45001 è obbligatoria?", a: "No, non è imposta dalla legge. Diventa però requisito o forte vantaggio competitivo per gare d'appalto, grandi committenti e filiere, e per ridurre la responsabilità dell'impresa." },
+  { q: "Quanto posso risparmiare sul premio INAIL con la ISO 45001?", a: "Tramite il modello OT23 la certificazione — intervento di tipo A che vale da sola i 100 punti richiesti — dà accesso diretto alla riduzione del tasso medio di tariffa: dal 5% delle aziende più grandi fino al 28% per quelle fino a 10 lavoratori-anno. La domanda va presentata entro il 28 febbraio di ogni anno sul portale INAIL." },
+  { q: "La ISO 45001 mi mette al riparo dalla responsabilità 231?", a: "È un forte elemento a favore: un modello conforme alla ISO 45001 si presume conforme all'art. 30 del D.Lgs. 81/08 «per le parti corrispondenti». Non è però automatico: per l'efficacia esimente ex D.Lgs. 231/01 va integrata con gli elementi del Modello 231 (sistema disciplinare, Organismo di Vigilanza) e l'idoneità è valutata in concreto dal giudice." },
+  { q: "Serve avere già un sistema di sicurezza per partire?", a: "No: si parte da una gap analysis sullo stato attuale (DVR, procedure, formazione già presenti) e si costruisce da lì il sistema di gestione conforme alla norma." },
+  { q: "Quanto dura la certificazione?", a: "Tre anni, con audit di sorveglianza annuali e un audit di rinnovo alla scadenza. Il certificato lo rilascia un ente terzo accreditato Accredia; noi prepariamo l'azienda e la affianchiamo." },
+];
+---
+
+<Base
+  title="ISO 45001 — Sicurezza sul lavoro e riduzione premio INAIL"
+  description="Consulenza per la certificazione ISO 45001: sistema di gestione della sicurezza, riduzione del premio INAIL con il modello OT23, collegamento all'art. 30 e al Modello 231, affiancamento all'audit dell'ente accreditato."
+>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/certificazioni" class="breadcrumb-back">&larr; Torna a Certificazioni</a>
+      <p class="eyebrow">Certificazioni · Sicurezza</p>
+      <h1>ISO 45001 — Sicurezza.</h1>
+      <p class="lede">
+        Il sistema di gestione della salute e sicurezza sul lavoro. Riduce gli infortuni, può ridurre il premio INAIL con l'OT23 e rafforza la posizione dell'impresa davanti alla responsabilità 231.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/sicurezza-ispezione-capannone.webp"
+        alt="Sopralluogo di sicurezza in un capannone industriale: tecnico con casco e giacca navy verifica una checklist di sicurezza insieme a un responsabile, ambiente ordinato e luce naturale, fotografia documentaria professionale"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché certificarsi</p>
+        <h2>Meno infortuni, meno premio INAIL, meno responsabilità.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          La ISO 45001 definisce i requisiti di un Sistema di Gestione della Salute e Sicurezza sul Lavoro: politiche, ruoli, valutazione dei rischi e miglioramento continuo per prevenire infortuni e malattie professionali. Condivide la struttura di ISO 9001 e 14001, quindi si integra facilmente con gli altri sistemi.
+        </p>
+        <p>
+          Non è obbligatoria, ma porta vantaggi molto concreti: con il modello OT23 dà accesso alla riduzione del premio INAIL (dal 5% al 28% del tasso medio di tariffa); un modello conforme si presume conforme all'art. 30 del D.Lgs. 81/08 ai fini dell'esimente 231 «per le parti corrispondenti»; e lo studio INAIL-Accredia ha misurato meno infortuni nelle imprese certificate. Il certificato lo rilascia un ente terzo accreditato Accredia.
+        </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>ISO 45001</li>
+          <li>Accredia</li>
+          <li>OT23 · INAIL</li>
+          <li>Art. 30 · D.Lgs. 81/08</li>
+          <li>Modello 231</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="iso45001-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="iso45001-aree" class="section-title">Dal sistema di gestione alla domanda OT23.</h2>
+      <AreaGrid aree={sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="iso45001-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="iso45001-ottieni" class="two-col__title">Un sistema che protegge le persone e il bilancio.</h2>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title="Il percorso verso il certificato." steps={fasi} labelledby="iso45001-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        Il certificato è rilasciato da un ente terzo accreditato Accredia (consulenza e certificazione restano separate). La percentuale OT23 dipende dalla dimensione aziendale e la domanda va presentata entro il 28 febbraio; l'esimente 231 non è automatica e va valutata in concreto. Situazione da verificare caso per caso.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-iso45001"
+    labelledby="iso45001-faq"
+    items={faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="iso45001-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="iso45001-altri" class="section-title">Gli altri schemi di certificazione.</h2>
+      <AreaGrid aree={altri} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Vuoi certificarti ISO 45001?"
+    lede="Verifichiamo quanto puoi risparmiare con l'OT23 e cosa serve per arrivare all'audit — con un solo referente per sicurezza e certificazione."
+    image={{
+      src: "/images/sicurezza-ispezione-capannone.webp",
+      alt: "Consulente sicurezza iCura Impresa durante un sopralluogo con un imprenditore in un capannone: verifica di procedure e checklist, casco e giacca navy, luce naturale, palette sobria, fotografia documentaria",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    labelledby="iso45001-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

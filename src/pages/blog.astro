@@ -1,0 +1,174 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+// Blog — struttura pronta, contenuti reali in arrivo.
+// Ogni articolo diventerà una pagina .astro (o una Content Collection): per ora
+// le card sono anteprime etichettate "In arrivo", non articoli pubblicati.
+const articoli = [
+  {
+    categoria: "Sicurezza sul lavoro",
+    titolo: "DVR: cosa controlla davvero un ispettore",
+    estratto: "Il documento di valutazione dei rischi punto per punto, e gli errori che fanno scattare le contestazioni.",
+    img: "/images/sicurezza-ispezione-capannone.webp",
+    alt: "Tecnico iCura Impresa durante un sopralluogo di sicurezza in un capannone industriale, verifica di una checklist con casco e giacca navy, luce naturale",
+  },
+  {
+    categoria: "Finanza agevolata",
+    titolo: "Bandi e incentivi 2026: la mappa per la tua impresa",
+    estratto: "ZES Unica, Bando ISI INAIL, Transizione 5.0: chi può accedere, con quali scadenze e come non arrivare tardi.",
+    img: "/images/finanza-zes-transizione-impianto.webp",
+    alt: "Impianto industriale moderno oggetto di investimento in transizione tecnologica, macchinari e struttura in acciaio, luce diurna, fotografia documentaria",
+  },
+  {
+    categoria: "Certificazioni",
+    titolo: "ISO 45001 e OT23: ridurre il premio INAIL",
+    estratto: "Come la certificazione della sicurezza dà accesso allo sconto sul premio INAIL e quanto puoi risparmiare.",
+    img: "/images/certificazioni-audit-iso.webp",
+    alt: "Riunione di audit di un sistema di gestione certificato, consulenti adulti confrontano registri e checklist su un tavolo, luce naturale, palette sobria",
+  },
+  {
+    categoria: "Formazione",
+    titolo: "Formazione finanziata: far pagare i corsi ai fondi",
+    estratto: "I fondi interprofessionali in pratica: come trasformare lo 0,30% già versato in corsi a costo zero.",
+    img: "/images/formazione-aula-adulti.webp",
+    alt: "Aula di formazione professionale con adulti che seguono un corso sulla sicurezza, docente accanto a una lavagna a fogli mobili, luce naturale",
+  },
+];
+---
+
+<Base
+  title="Blog"
+  description="Approfondimenti su sicurezza sul lavoro, bandi e finanza agevolata, certificazioni e formazione, a cura del team iCura Impresa. In arrivo."
+>
+  <header class="page-header section">
+    <div class="container">
+      <p class="eyebrow">Blog</p>
+      <h1>Approfondimenti.</h1>
+      <p class="lede">
+        Guide pratiche su sicurezza, bandi, certificazioni e formazione, scritte dai nostri consulenti.
+        Stiamo preparando i primi articoli: torna presto.
+      </p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="blog-list">
+    <div class="container">
+      <h2 id="blog-list" class="sr-only">Articoli in arrivo</h2>
+      <ul class="blog-grid">
+        {articoli.map((a) => (
+          <li class="blog-card group">
+            <div class="blog-card__media">
+              <Placeholder aspect="16/9" src={a.img} alt={a.alt} class="media-grayscale" />
+              <span class="blog-card__badge">In arrivo</span>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__cat">{a.categoria}</span>
+              <h3 class="blog-card__title">{a.titolo}</h3>
+              <p class="blog-card__excerpt">{a.estratto}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="blog-note">
+        Nel frattempo, se hai una domanda specifica sulla tua impresa, <a href="/contatti">scrivici</a>: ti rispondiamo entro 48 ore.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Resta aggiornato"
+    title="Vuoi una risposta senza aspettare l'articolo?"
+    lede="Raccontaci il tuo caso: un consulente ti dice cosa serve, con che tempi e quanto puoi farti finanziare."
+    primary={{ href: "/contatti", label: "Richiedi una consulenza" }}
+    secondary={{ href: "/servizi/consulenza", label: "Scopri i servizi" }}
+    labelledby="blog-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .blog-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+  .blog-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+  }
+  .blog-card:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-3px);
+  }
+  .blog-card__media { position: relative; }
+  .blog-card__media :global(.placeholder) { display: block; }
+  .blog-card__badge {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ink);
+    background: var(--color-highlight);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-pill);
+  }
+  .blog-card__body { display: flex; flex-direction: column; gap: var(--space-2xs); padding: var(--space-lg); flex: 1; }
+  .blog-card__cat {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+  }
+  .blog-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--color-ink);
+  }
+  .blog-card__excerpt { font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.55; margin: 0; }
+
+  .blog-note { margin: var(--space-2xl) 0 0; font-size: var(--text-md); color: var(--color-muted); }
+  .blog-note a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 0.2em; }
+
+  @media (max-width: 64rem) {
+    .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 40rem) {
+    .blog-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .blog-card { transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+    .blog-card:hover { transform: none; }
+  }
+</style>
