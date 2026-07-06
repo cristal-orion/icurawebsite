@@ -25,6 +25,18 @@ const {
 } = Astro.props;
 const headingId = labelledby ?? "faq-heading";
 const toneClass = tone ? ` section--${tone}` : "";
+
+// Dati strutturati FAQPage: rende le domande citabili dai motori di ricerca
+// e dai motori generativi (GEO). Emesso automaticamente dagli stessi `items`.
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((it) => ({
+    "@type": "Question",
+    name: it.q,
+    acceptedAnswer: { "@type": "Answer", text: it.a },
+  })),
+};
 ---
 
 <section class={`section faq${toneClass}`} aria-labelledby={headingId}>
@@ -48,6 +60,8 @@ const toneClass = tone ? ` section--${tone}` : "";
     </div>
   </div>
 </section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
 
 <style>
   .faq__wrap {

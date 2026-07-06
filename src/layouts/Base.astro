@@ -12,15 +12,138 @@ interface Props {
   title: string;
   description?: string;
   pageClass?: string;
+  /** Immagine per l'anteprima social (OG/Twitter). Path assoluto dalla root o URL completo. */
+  image?: string;
+  /** Esclude la pagina dall'indice dei motori di ricerca. */
+  noindex?: boolean;
+  /** Tipo Open Graph (default "website", per gli articoli "article"). */
+  ogType?: string;
+  /** Dati strutturati JSON-LD aggiuntivi, specifici della pagina (Service, Article…). */
+  jsonld?: object | object[];
 }
 
 const {
   title,
   description = "iCura Impresa — consulenza per la sicurezza sul lavoro, formazione, engineering e adempimenti normativi. Napoli, dal 2014.",
   pageClass = "",
+  image = "/images/esternoicura.webp",
+  noindex = false,
+  ogType = "website",
+  jsonld,
 } = Astro.props;
 
 const fullTitle = title === "iCura Impresa" ? title : `${title} · iCura Impresa`;
+
+// URL assoluti a partire da Astro.site (definito in astro.config.mjs).
+const abs = (p: string) => new URL(p, Astro.site).href;
+
+// Canonical con slash finale, coerente con l'output "directory" di Astro
+// e con gli URL del sitemap (evita segnalazioni di duplicati in Search Console).
+const withSlash = (p: string) => (p.endsWith("/") ? p : p + "/");
+const path = withSlash(Astro.url.pathname);
+const canonical = abs(path);
+const ogImage = image.startsWith("http") ? image : abs(image);
+const robots = noindex
+  ? "noindex, nofollow"
+  : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+
+// ── Breadcrumb automatico dal path ──────────────────────────────
+// Il segmento "servizi" non ha una pagina indice, quindi non diventa una tappa.
+const pretty = (s: string) =>
+  s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+const segs = path.split("/").filter(Boolean);
+const crumbs: { name: string; url: string }[] = [{ name: "Home", url: "/" }];
+let acc = "";
+segs.forEach((seg, i) => {
+  acc += "/" + seg;
+  if (seg === "servizi") return;
+  crumbs.push({ name: i === segs.length - 1 ? title : pretty(seg), url: acc });
+});
+
+// ── JSON-LD: identità aziendale (Organization + WebSite) ────────
+const orgId = abs("/#organization");
+const organization = {
+  "@type": ["Organization", "ProfessionalService"],
+  "@id": orgId,
+  name: "iCura Impresa",
+  legalName: "iCura Impresa S.r.l.",
+  url: abs("/"),
+  logo: abs("/images/brand/logo-icura.webp"),
+  image: abs("/images/esternoicura.webp"),
+  description:
+    "Consulenza integrata per la sicurezza sul lavoro, la formazione, l'engineering e l'antincendio, le certificazioni e la finanza agevolata delle imprese. Napoli, dal 2014.",
+  foundingDate: "2014",
+  telephone: "+39 081 658 0779",
+  email: "info@icuraimpresa.it",
+  vatID: "IT09078161214",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Corso Secondigliano, 236",
+    postalCode: "80144",
+    addressLocality: "Napoli",
+    addressRegion: "NA",
+    addressCountry: "IT",
+  },
+  areaServed: { "@type": "Country", name: "Italia" },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "09:00",
+    closes: "18:00",
+  },
+  hasMap:
+    "https://www.google.com/maps/search/?api=1&query=Corso+Secondigliano+236,+80144+Napoli",
+  knowsAbout: [
+    "Sicurezza sul lavoro",
+    "D.Lgs. 81/08",
+    "RSPP",
+    "Documento di Valutazione dei Rischi (DVR)",
+    "Sicurezza nei cantieri (PSC/POS)",
+    "HACCP",
+    "Medicina del lavoro",
+    "GDPR",
+    "Prevenzione incendi e CPI",
+    "Engineering e progettazione impiantistica",
+    "Formazione sulla sicurezza sul lavoro",
+    "Certificazioni ISO 9001, 14001, 45001",
+    "Certificazione della parità di genere UNI/PdR 125",
+    "Attestazione SOA",
+    "Finanza agevolata e bandi",
+    "Bando ISI INAIL",
+    "ZES Unica",
+    "Transizione 5.0",
+  ],
+};
+
+const website = {
+  "@type": "WebSite",
+  "@id": abs("/#website"),
+  url: abs("/"),
+  name: "iCura Impresa",
+  inLanguage: "it-IT",
+  publisher: { "@id": orgId },
+};
+
+const breadcrumb =
+  crumbs.length > 1
+    ? {
+        "@type": "BreadcrumbList",
+        itemListElement: crumbs.map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          item: abs(withSlash(c.url)),
+        })),
+      }
+    : null;
+
+const graph: object[] = [organization, website];
+if (breadcrumb) graph.push(breadcrumb);
+const extra = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [...graph, ...extra],
+};
 ---
 
 <!doctype html>
@@ -58,10 +181,33 @@ const fullTitle = title === "iCura Impresa" ? title : `${title} · iCura Impresa
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0f172a" />
+    <meta name="author" content="iCura Impresa S.r.l." />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="iCura Impresa" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={fullTitle} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Dati strutturati (JSON-LD) -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
   </head>
   <body class={pageClass}>
     <!-- Google Tag Manager (noscript) -->

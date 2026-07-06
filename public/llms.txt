@@ -1,0 +1,43 @@
+# iCura Impresa
+
+> iCura Impresa S.r.l. è una società di consulenza con sede a Napoli, attiva dal 2014 su tutta Italia. Offre un unico interlocutore per la sicurezza sul lavoro, la formazione, l'engineering e l'antincendio, le certificazioni e la finanza agevolata delle imprese.
+
+Contatti: Corso Secondigliano 236, 80144 Napoli (NA) — tel. +39 081 658 0779 — info@icuraimpresa.it — P.IVA 09078161214.
+
+## Servizi
+
+- [Consulenza & Sicurezza](https://www.icuraimpresa.it/servizi/consulenza): sicurezza sul lavoro (D.Lgs. 81/08), DVR, RSPP, cantieri (PSC/POS), HACCP, medicina del lavoro, GDPR e ambiente.
+- [Engineering & Antincendio](https://www.icuraimpresa.it/servizi/engineering): progettazione edile e impiantistica, prevenzione incendi e CPI, collaudi e perizie tecniche.
+- [Formazione](https://www.icuraimpresa.it/servizi/formazione): corsi in aula ed e-learning per lavoratori, preposti, dirigenti, RSPP/RLS, antincendio e primo soccorso, spesso a costo zero con i fondi interprofessionali.
+- [Certificazioni & Gare](https://www.icuraimpresa.it/servizi/certificazioni): ISO 9001/14001/45001, parità di genere UNI/PdR 125, Attestazione SOA e supporto alle gare d'appalto.
+- [Finanza agevolata](https://www.icuraimpresa.it/servizi/finanza-agevolata): Bando ISI INAIL, ZES Unica, Transizione 5.0, sgravi OT23, fondi interprofessionali e bandi regionali/nazionali.
+
+## Consulenza (approfondimenti)
+
+- [Sicurezza sul lavoro (D.Lgs. 81/08)](https://www.icuraimpresa.it/servizi/consulenza/sicurezza-lavoro)
+- [Sicurezza nei cantieri](https://www.icuraimpresa.it/servizi/consulenza/cantieri)
+- [HACCP](https://www.icuraimpresa.it/servizi/consulenza/haccp)
+- [Medicina del lavoro](https://www.icuraimpresa.it/servizi/consulenza/medicina-lavoro)
+- [GDPR e privacy](https://www.icuraimpresa.it/servizi/consulenza/gdpr)
+- [Ambiente](https://www.icuraimpresa.it/servizi/consulenza/ambiente)
+- [Consulenza aziendale](https://www.icuraimpresa.it/servizi/consulenza/aziendale)
+
+## Certificazioni (approfondimenti)
+
+- [ISO 9001 — Qualità](https://www.icuraimpresa.it/servizi/certificazioni/iso-9001)
+- [ISO 14001 — Ambiente](https://www.icuraimpresa.it/servizi/certificazioni/iso-14001)
+- [ISO 45001 — Sicurezza](https://www.icuraimpresa.it/servizi/certificazioni/iso-45001)
+- [Parità di genere — UNI/PdR 125:2022](https://www.icuraimpresa.it/servizi/certificazioni/parita-genere)
+- [Attestazione SOA](https://www.icuraimpresa.it/servizi/certificazioni/soa)
+
+## Bandi e finanza agevolata
+
+- [Bando ISI INAIL](https://www.icuraimpresa.it/bando-isi): contributi a fondo perduto per la sicurezza sul lavoro.
+- [ZES Unica](https://www.icuraimpresa.it/zes-unica): credito d'imposta sugli investimenti per le imprese del Sud.
+
+## Azienda
+
+- [Chi siamo](https://www.icuraimpresa.it/chi-siamo): team multidisciplinare, Napoli, dal 2014.
+- [Blog](https://www.icuraimpresa.it/blog): approfondimenti su sicurezza, bandi, certificazioni e formazione.
+- [Lavora con noi](https://www.icuraimpresa.it/lavora-con-noi): posizioni aperte e candidatura.
+- [Contatti](https://www.icuraimpresa.it/contatti): sede, telefono, email e prenotazione call.

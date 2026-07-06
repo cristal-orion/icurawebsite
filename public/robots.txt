@@ -1,0 +1,12 @@
+# robots.txt — iCura Impresa S.r.l.
+# https://www.icuraimpresa.it
+
+# Regole valide per tutti i crawler (inclusi i bot AI, che rispettano "*").
+# I motori generativi (ChatGPT, Perplexity, Gemini, Claude…) sono benvenuti:
+# vogliamo che i nostri contenuti siano citabili nelle risposte AI (GEO).
+User-agent: *
+Allow: /
+Disallow: /lavora-con-noi/admin
+Disallow: /proposte/
+
+Sitemap: https://www.icuraimpresa.it/sitemap-index.xml
