@@ -1,0 +1,208 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const schemi = [
+  { id: "iso-9001", nome: "ISO 9001 — Qualità", desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori e un requisito sempre più richiesto da clienti e committenti.", href: "/servizi/certificazioni/iso-9001", cta: "Scopri di più" },
+  { id: "iso-14001", nome: "ISO 14001 — Ambiente", desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.", href: "/servizi/certificazioni/iso-14001", cta: "Scopri di più" },
+  { id: "iso-45001", nome: "ISO 45001 — Sicurezza", desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e può ridurre il premio INAIL.", href: "/servizi/certificazioni/iso-45001", cta: "Scopri di più" },
+  { id: "iso-27001", nome: "ISO 27001 — Sicurezza delle informazioni", desc: "Sistema di gestione della sicurezza delle informazioni (ISMS). Protegge dati e sistemi, rafforza il GDPR e apre gare e clienti nell'ICT e nei servizi.", href: "/servizi/certificazioni/iso-27001", cta: "Scopri di più" },
+  { id: "iso-37001", nome: "ISO 37001 — Anti-corruzione", desc: "Sistema di gestione per la prevenzione della corruzione. Rafforza il Modello 231 e vale affidabilità e punteggi nelle gare pubbliche.", href: "/servizi/certificazioni/iso-37001", cta: "Scopri di più" },
+  { id: "parita", nome: "Parità di genere — UNI/PdR 125", desc: "Certificazione della parità di genere: dà accesso a esonero contributivo e punteggi premiali nei bandi e nelle gare.", href: "/servizi/certificazioni/parita-genere", cta: "Scopri di più" },
+  { id: "soa", nome: "Attestazione SOA", desc: "Requisito per partecipare alle gare di lavori pubblici sopra i 150.000 €. Attesta categorie e classifiche di opere.", href: "/servizi/certificazioni/soa", cta: "Scopri di più" },
+];
+const altri = schemi.filter((s) => s.id !== "iso-27001");
+
+const sottoAree = [
+  { nome: "Analisi del contesto e degli asset", desc: "Mappiamo le informazioni che contano — dati dei clienti, know-how, sistemi, fornitori — e definiamo il perimetro dell'ISMS: cosa proteggere e da cosa." },
+  { nome: "Valutazione e trattamento del rischio", desc: "Individuiamo minacce e vulnerabilità, misuriamo il rischio e scegliamo come trattarlo. È il cuore della norma: la sicurezza si costruisce sui rischi reali, non su una checklist standard." },
+  { nome: "Controlli dell'Annex A e Statement of Applicability", desc: "Selezioniamo i controlli dell'Allegato A (organizzativi, sulle persone, fisici e tecnologici) applicabili alla tua realtà e li dichiariamo nella SoA, con la motivazione di ogni scelta." },
+  { nome: "Politiche, procedure e gestione degli incidenti", desc: "Costruiamo politiche, regole d'uso, gestione degli accessi, backup, continuità operativa e una procedura di gestione degli incidenti che funziona anche sotto pressione." },
+  { nome: "Formazione, awareness e audit interno", desc: "La sicurezza è fatta di persone: formiamo il personale, alziamo la consapevolezza sui rischi (phishing, password, dati) e proviamo il sistema con un audit interno prima dell'ente." },
+  { nome: "Assistenza all'audit e integrazione GDPR/NIS2", desc: "Ti affianchiamo nelle due fasi dell'audit dell'ente accreditato (Stage 1 e Stage 2) e colleghiamo l'ISMS agli obblighi GDPR e, dove applicabile, alla direttiva NIS2." },
+];
+
+const ottieni = [
+  "Un certificato rilasciato da un ente terzo accreditato Accredia, con pieno valore riconosciuto",
+  "Un requisito o punteggio sempre più richiesto nelle gare — specie con la PA e nell'ICT — e nella qualifica dei fornitori",
+  "Un rafforzamento concreto della conformità GDPR: misure tecniche e organizzative adeguate ai sensi dell'art. 32",
+  "Una base solida per gli obblighi della direttiva NIS2 e per la fiducia di clienti e partner sui loro dati",
+];
+
+const fasi = [
+  { titolo: "Analisi dei gap", desc: "Fotografiamo lo stato della sicurezza delle informazioni rispetto alla norma e definiamo il perimetro dell'ISMS." },
+  { titolo: "Analisi del rischio e progettazione", desc: "Valutiamo i rischi, scegliamo i controlli dell'Annex A, redigiamo la SoA e costruiamo politiche e procedure." },
+  { titolo: "Formazione e audit interno", desc: "Formiamo le persone, alziamo la consapevolezza e verifichiamo il sistema con un audit interno prima dell'ente." },
+  { titolo: "Audit di certificazione", desc: "L'ente terzo accreditato Accredia verifica in due fasi (Stage 1 e Stage 2) e rilascia il certificato." },
+  { titolo: "Mantenimento", desc: "Gestiamo le sorveglianze annuali, il riesame dei rischi e il rinnovo alla scadenza del triennio." },
+];
+
+const faq = [
+  { q: "La ISO 27001 è obbligatoria?", a: "No, non è obbligatoria per legge. Sta però diventando un requisito d'accesso o un punteggio in molte gare — soprattutto con la Pubblica Amministrazione e nel settore ICT — e un titolo richiesto per entrare negli albi fornitori di grandi committenti che ti affidano i loro dati." },
+  { q: "La ISO 27001 sostituisce il GDPR?", a: "No: sono due cose diverse ma che si rafforzano a vicenda. Un ISMS conforme alla ISO 27001 è un modo strutturato di garantire le «misure tecniche e organizzative adeguate» richieste dall'art. 32 del GDPR. La conformità GDPR resta però più ampia (basi giuridiche, informative, diritti degli interessati): la certificazione la sostiene, non la esaurisce." },
+  { q: "Cosa sono i controlli dell'Annex A?", a: "Sono l'elenco dei possibili controlli di sicurezza previsti dalla norma (nella versione 2022 sono 93, raggruppati in quattro temi: organizzativi, sulle persone, fisici e tecnologici). Non si applicano tutti a tappeto: si scelgono in base al rischio e si dichiarano nella Statement of Applicability (SoA), motivando inclusioni ed esclusioni." },
+  { q: "Serve avere un reparto IT strutturato per partire?", a: "No. La ISO 27001 è una norma organizzativa, non solo tecnica: riguarda processi, persone e responsabilità, non solo firewall e server. Si parte da una gap analysis sullo stato attuale e si costruisce il sistema anche in aziende piccole o che si appoggiano a fornitori IT esterni." },
+  { q: "Quanto dura la certificazione?", a: "Tre anni, con audit di sorveglianza annuali e un audit di rinnovo alla scadenza. Il certificato lo rilascia un ente terzo accreditato Accredia; noi prepariamo l'azienda e la affianchiamo all'audit." },
+];
+---
+
+<Base
+  title="ISO 27001 — Sicurezza delle informazioni"
+  description="Consulenza per la certificazione ISO/IEC 27001: sistema di gestione della sicurezza delle informazioni (ISMS), analisi del rischio, controlli dell'Annex A e SoA, integrazione con GDPR e NIS2, affiancamento all'audit dell'ente accreditato Accredia."
+>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/certificazioni" class="breadcrumb-back">&larr; Torna a Certificazioni</a>
+      <p class="eyebrow">Certificazioni · Informazioni</p>
+      <h1>ISO 27001 — Sicurezza delle informazioni.</h1>
+      <p class="lede">
+        Il sistema di gestione della sicurezza delle informazioni. Protegge dati, know-how e sistemi, rafforza la conformità GDPR ed è sempre più spesso una chiave d'accesso a gare e clienti, specie nell'ICT e nei servizi.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/consulenza-gdpr-privacy.webp"
+        alt="Sicurezza delle informazioni in ufficio: due professionisti adulti verificano su un laptop registri di accesso, backup e procedure di protezione dei dati, ambiente ordinato e luce naturale, palette sobria toni navy e grigio, fotografia documentaria professionale"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché certificarsi</p>
+        <h2>Protegge i dati, e dimostra ai clienti che lo fai davvero.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          La ISO/IEC 27001 definisce i requisiti di un Sistema di Gestione della Sicurezza delle Informazioni (ISMS): un modo strutturato per proteggere la riservatezza, l'integrità e la disponibilità dei dati, partendo dall'analisi dei rischi reali dell'azienda. Non è un antivirus in più: è il metodo con cui decidi cosa proteggere, come e con quali controlli, documentandolo nella Statement of Applicability.
+        </p>
+        <p>
+          Non è obbligatoria, ma porta vantaggi concreti: è sempre più spesso richiesta nelle gare — soprattutto con la PA e nell'ICT — e nella qualifica dei fornitori; rafforza la conformità al GDPR come «misura tecnica e organizzativa adeguata» (art. 32); e offre una base solida per gli obblighi della NIS2. Condivide la struttura di ISO 9001, 14001 e 45001, quindi si integra facilmente con gli altri sistemi. Il certificato lo rilascia un ente terzo accreditato Accredia.
+        </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>ISO/IEC 27001:2022</li>
+          <li>Accredia</li>
+          <li>Annex A · SoA</li>
+          <li>Analisi del rischio</li>
+          <li>GDPR · Art. 32</li>
+          <li>NIS2</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="iso27001-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="iso27001-aree" class="section-title">Dall'analisi del rischio al certificato.</h2>
+      <AreaGrid aree={sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="iso27001-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="iso27001-ottieni" class="two-col__title">Un sistema che protegge i dati e apre il mercato.</h2>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title="Il percorso verso il certificato." steps={fasi} labelledby="iso27001-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        Il certificato è rilasciato da un ente terzo accreditato Accredia: consulenza e certificazione restano ruoli separati (ISO/IEC 17021). La ISO 27001 sostiene la conformità GDPR e NIS2 ma non la sostituisce; i requisiti e i punteggi nelle gare dipendono dalle regole del singolo bando.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-iso27001"
+    labelledby="iso27001-faq"
+    items={faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="iso27001-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="iso27001-altri" class="section-title">Gli altri schemi di certificazione.</h2>
+      <AreaGrid aree={altri} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Vuoi certificarti ISO 27001?"
+    lede="Verifichiamo insieme il perimetro giusto e i rischi da coprire — con un solo referente per sicurezza delle informazioni, GDPR e certificazione."
+    image={{
+      src: "/images/certificazioni-audit-iso.webp",
+      alt: "Consulente certificazioni iCura Impresa con un imprenditore durante un audit del sistema di sicurezza delle informazioni: due adulti in ufficio esaminano registri e checklist su un tavolo ordinato, palette sobria toni navy e grigio, fotografia documentaria",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    labelledby="iso27001-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

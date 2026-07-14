@@ -9,7 +9,7 @@ Contatti: Corso Secondigliano 236, 80144 Napoli (NA) — tel. +39 081 658 0779 �
 - [Consulenza & Sicurezza](https://www.icuraimpresa.it/servizi/consulenza): sicurezza sul lavoro (D.Lgs. 81/08), DVR, RSPP, cantieri (PSC/POS), HACCP, medicina del lavoro, GDPR e ambiente.
 - [Engineering & Antincendio](https://www.icuraimpresa.it/servizi/engineering): progettazione edile e impiantistica, prevenzione incendi e CPI, collaudi e perizie tecniche.
 - [Formazione](https://www.icuraimpresa.it/servizi/formazione): corsi in aula ed e-learning per lavoratori, preposti, dirigenti, RSPP/RLS, antincendio e primo soccorso, spesso a costo zero con i fondi interprofessionali.
-- [Certificazioni & Gare](https://www.icuraimpresa.it/servizi/certificazioni): ISO 9001/14001/45001, parità di genere UNI/PdR 125, Attestazione SOA e supporto alle gare d'appalto.
+- [Certificazioni & Gare](https://www.icuraimpresa.it/servizi/certificazioni): ISO 9001/14001/45001/27001/37001, parità di genere UNI/PdR 125, Attestazione SOA e supporto alle gare d'appalto.
 - [Finanza agevolata](https://www.icuraimpresa.it/servizi/finanza-agevolata): Bando ISI INAIL, ZES Unica, Transizione 5.0, sgravi OT23, fondi interprofessionali e bandi regionali/nazionali.
 
 ## Consulenza (approfondimenti)
@@ -27,6 +27,8 @@ Contatti: Corso Secondigliano 236, 80144 Napoli (NA) — tel. +39 081 658 0779 �
 - [ISO 9001 — Qualità](https://www.icuraimpresa.it/servizi/certificazioni/iso-9001)
 - [ISO 14001 — Ambiente](https://www.icuraimpresa.it/servizi/certificazioni/iso-14001)
 - [ISO 45001 — Sicurezza](https://www.icuraimpresa.it/servizi/certificazioni/iso-45001)
+- [ISO 27001 — Sicurezza delle informazioni](https://www.icuraimpresa.it/servizi/certificazioni/iso-27001)
+- [ISO 37001 — Anti-corruzione](https://www.icuraimpresa.it/servizi/certificazioni/iso-37001)
 - [Parità di genere — UNI/PdR 125:2022](https://www.icuraimpresa.it/servizi/certificazioni/parita-genere)
 - [Attestazione SOA](https://www.icuraimpresa.it/servizi/certificazioni/soa)
 

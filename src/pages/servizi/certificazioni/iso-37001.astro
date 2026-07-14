@@ -1,0 +1,208 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+
+const schemi = [
+  { id: "iso-9001", nome: "ISO 9001 — Qualità", desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori e un requisito sempre più richiesto da clienti e committenti.", href: "/servizi/certificazioni/iso-9001", cta: "Scopri di più" },
+  { id: "iso-14001", nome: "ISO 14001 — Ambiente", desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.", href: "/servizi/certificazioni/iso-14001", cta: "Scopri di più" },
+  { id: "iso-45001", nome: "ISO 45001 — Sicurezza", desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e può ridurre il premio INAIL.", href: "/servizi/certificazioni/iso-45001", cta: "Scopri di più" },
+  { id: "iso-27001", nome: "ISO 27001 — Sicurezza delle informazioni", desc: "Sistema di gestione della sicurezza delle informazioni (ISMS). Protegge dati e sistemi, rafforza il GDPR e apre gare e clienti nell'ICT e nei servizi.", href: "/servizi/certificazioni/iso-27001", cta: "Scopri di più" },
+  { id: "iso-37001", nome: "ISO 37001 — Anti-corruzione", desc: "Sistema di gestione per la prevenzione della corruzione. Rafforza il Modello 231 e vale affidabilità e punteggi nelle gare pubbliche.", href: "/servizi/certificazioni/iso-37001", cta: "Scopri di più" },
+  { id: "parita", nome: "Parità di genere — UNI/PdR 125", desc: "Certificazione della parità di genere: dà accesso a esonero contributivo e punteggi premiali nei bandi e nelle gare.", href: "/servizi/certificazioni/parita-genere", cta: "Scopri di più" },
+  { id: "soa", nome: "Attestazione SOA", desc: "Requisito per partecipare alle gare di lavori pubblici sopra i 150.000 €. Attesta categorie e classifiche di opere.", href: "/servizi/certificazioni/soa", cta: "Scopri di più" },
+];
+const altri = schemi.filter((s) => s.id !== "iso-37001");
+
+const sottoAree = [
+  { nome: "Analisi del rischio corruttivo", desc: "Mappiamo i processi più esposti — gare e appalti, rapporti con la PA, omaggi e ospitalità, sponsorizzazioni, intermediari — e misuriamo dove e come può annidarsi il rischio di corruzione." },
+  { nome: "Politica anti-corruzione e ruoli", desc: "Definiamo la politica, l'impegno del vertice e la funzione di conformità (responsabile anti-corruzione), con ruoli e responsabilità chiari e verificabili." },
+  { nome: "Due diligence su partner e fornitori", desc: "Costruiamo procedure di verifica proporzionate al rischio su soci in affari, fornitori, agenti e operazioni, per non trovarsi esposti da chi lavora con noi." },
+  { nome: "Controlli finanziari e commerciali", desc: "Regoliamo omaggi, ospitalità, donazioni, sponsorizzazioni e conflitti di interesse, con controlli sui flussi finanziari che rendono la corruzione difficile e tracciabile." },
+  { nome: "Whistleblowing e gestione delle segnalazioni", desc: "Attiviamo canali di segnalazione conformi al D.Lgs. 24/2023, con tutela del segnalante e una procedura seria di gestione e indagine." },
+  { nome: "Formazione, audit interno e assistenza all'audit", desc: "Formiamo le persone, verifichiamo il sistema con un audit interno e ti affianchiamo nelle due fasi dell'audit dell'ente accreditato, integrando il tutto con il Modello 231." },
+];
+
+const ottieni = [
+  "Un certificato rilasciato da un ente terzo accreditato Accredia, con pieno valore riconosciuto",
+  "Maggiore affidabilità e punteggi premiali nelle gare pubbliche, e un elemento a supporto del rating di legalità",
+  "Un rafforzamento del Modello 231 sui reati corruttivi (art. 25 D.Lgs. 231/01) e della posizione degli amministratori",
+  "Un presidio concreto su omaggi, conflitti di interesse, due diligence dei partner e rapporti con la PA",
+];
+
+const fasi = [
+  { titolo: "Analisi del rischio corruttivo", desc: "Fotografiamo i processi esposti e definiamo il perimetro e il piano del sistema anti-corruzione." },
+  { titolo: "Progettazione del sistema", desc: "Costruiamo politica, ruoli, controlli finanziari e commerciali, due diligence e canali di whistleblowing." },
+  { titolo: "Formazione e audit interno", desc: "Formiamo le persone sui comportamenti corretti e proviamo il sistema con una verifica interna prima dell'ente." },
+  { titolo: "Audit di certificazione", desc: "L'ente terzo accreditato Accredia verifica in due fasi (Stage 1 e Stage 2) e rilascia il certificato." },
+  { titolo: "Mantenimento e integrazione 231", desc: "Gestiamo le sorveglianze annuali, il rinnovo e il raccordo con il Modello 231 e l'Organismo di Vigilanza." },
+];
+
+const faq = [
+  { q: "La ISO 37001 è obbligatoria?", a: "No, non è imposta dalla legge. Diventa però un vantaggio competitivo concreto nelle gare pubbliche e nei rapporti con la PA e con le grandi committenti, e un segnale di affidabilità verso partner e stakeholder. In alcuni bandi è valorizzata a punteggio." },
+  { q: "Che rapporto ha con il Modello 231?", a: "Sono complementari. La ISO 37001 presidia in modo specifico i reati corruttivi previsti dall'art. 25 del D.Lgs. 231/01 e rafforza l'idoneità del Modello 231 su quel fronte, ma non lo sostituisce: l'efficacia esimente non è automatica e va valutata in concreto dal giudice. Il modo migliore di usarla è integrarla con il Modello 231 e l'Organismo di Vigilanza." },
+  { q: "Vale per il rating di legalità?", a: "È un elemento che può essere valorizzato: il rating di legalità è però rilasciato dall'AGCM sulla base di requisiti propri. La certificazione anti-corruzione documenta presìdi che vanno nella stessa direzione e rafforzano il profilo dell'impresa." },
+  { q: "Copre anche la corruzione tra privati?", a: "Sì. La norma riguarda la prevenzione della corruzione in senso ampio — sia nei confronti della Pubblica Amministrazione sia tra privati, attiva e passiva, diretta e tramite terzi. Non copre invece frode, cartelli o altre condotte illecite diverse dalla corruzione." },
+  { q: "Quanto dura la certificazione?", a: "Tre anni, con audit di sorveglianza annuali e un audit di rinnovo alla scadenza. Il certificato lo rilascia un ente terzo accreditato Accredia; noi prepariamo l'azienda e la affianchiamo all'audit." },
+];
+---
+
+<Base
+  title="ISO 37001 — Sistema di gestione anti-corruzione"
+  description="Consulenza per la certificazione ISO 37001: sistema di gestione per la prevenzione della corruzione, analisi del rischio corruttivo, due diligence, controlli, whistleblowing, integrazione con il Modello 231 e affiancamento all'audit dell'ente accreditato Accredia."
+>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/certificazioni" class="breadcrumb-back">&larr; Torna a Certificazioni</a>
+      <p class="eyebrow">Certificazioni · Anti-corruzione</p>
+      <h1>ISO 37001 — Anti-corruzione.</h1>
+      <p class="lede">
+        Il sistema di gestione per prevenire, individuare e gestire la corruzione. Rafforza il Modello 231, dà affidabilità e punteggi nelle gare pubbliche e mette ordine su omaggi, conflitti di interesse e rapporti con la PA.
+      </p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder
+        aspect="21/9"
+        src="/images/chi-siamo-scrivania-firma.webp"
+        alt="Governance e conformità aziendale in ufficio: due professionisti adulti esaminano contratti e procedure di controllo su una scrivania ordinata, penna e documenti in primo piano, luce naturale, palette sobria toni navy e grigio, fotografia documentaria professionale"
+      />
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Perché certificarsi</p>
+        <h2>Rendere la corruzione difficile, e dimostrarlo.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          La ISO 37001 definisce i requisiti di un Sistema di Gestione per la Prevenzione della Corruzione: politica anti-corruzione, impegno del vertice, funzione di conformità, analisi del rischio, due diligence, controlli finanziari e commerciali e canali di segnalazione. L'obiettivo non è un adempimento in più, ma rendere concretamente più difficile — e più facile da individuare — la corruzione dentro e attorno all'azienda.
+        </p>
+        <p>
+          Non è obbligatoria, ma porta vantaggi molto concreti: dà affidabilità e punteggi premiali nelle gare pubbliche, è utile nei rapporti con la PA e con le filiere, e rafforza il Modello 231 sui reati corruttivi (art. 25 del D.Lgs. 231/01), migliorando la posizione dell'impresa e degli amministratori. Condivide la struttura di ISO 9001, 14001 e 45001, quindi si integra con gli altri sistemi e con il 231. Il certificato lo rilascia un ente terzo accreditato Accredia.
+        </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>ISO 37001</li>
+          <li>Accredia</li>
+          <li>Modello 231 · Art. 25</li>
+          <li>Whistleblowing · D.Lgs. 24/2023</li>
+          <li>Rating di legalità</li>
+          <li>Due diligence</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="iso37001-aree">
+    <div class="container">
+      <p class="eyebrow">Cosa comprende</p>
+      <h2 id="iso37001-aree" class="section-title">Dal rischio corruttivo ai controlli che reggono.</h2>
+      <AreaGrid aree={sottoAree} />
+    </div>
+  </section>
+
+  <section class="section section--alt-2" aria-labelledby="iso37001-ottieni">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Cosa ottieni</p>
+        <h2 id="iso37001-ottieni" class="two-col__title">Un sistema che protegge l'impresa e chi la guida.</h2>
+      </div>
+      <ul class="checklist">
+        {ottieni.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come funziona" title="Il percorso verso il certificato." steps={fasi} labelledby="iso37001-fasi" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note">
+        Il certificato è rilasciato da un ente terzo accreditato Accredia: consulenza e certificazione restano ruoli separati (ISO/IEC 17021). La ISO 37001 rafforza il Modello 231 ma non ne garantisce automaticamente l'efficacia esimente, valutata in concreto dal giudice; punteggi e requisiti nelle gare dipendono dalle regole del singolo bando.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-iso37001"
+    labelledby="iso37001-faq"
+    items={faq}
+    tone="alt-blue"
+  />
+
+  <section class="section section--alt" aria-labelledby="iso37001-altri">
+    <div class="container">
+      <p class="eyebrow">Continua a esplorare</p>
+      <h2 id="iso37001-altri" class="section-title">Gli altri schemi di certificazione.</h2>
+      <AreaGrid aree={altri} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Vuoi certificarti ISO 37001?"
+    lede="Valutiamo il rischio corruttivo della tua azienda e come integrare il sistema con il Modello 231 — con un solo referente per compliance e certificazione."
+    image={{
+      src: "/images/certificazioni-audit-iso.webp",
+      alt: "Consulente certificazioni iCura Impresa con un imprenditore durante un audit del sistema anti-corruzione: due adulti in ufficio esaminano procedure e registri di controllo su un tavolo ordinato, palette sobria toni navy e grigio, fotografia documentaria",
+    }}
+    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    labelledby="iso37001-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+  .note { font-size: var(--text-sm) !important; color: var(--color-muted) !important; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
