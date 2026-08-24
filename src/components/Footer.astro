@@ -66,6 +66,11 @@ const year = new Date().getFullYear();
         <span>Sede legale: Via John Fitzgerald Kennedy 73, Napoli (NA) · P.IVA 09078161214</span>
       </span>
     </div>
+
+    <div class="foot__credit">
+      <span>Design &amp; sviluppo</span>
+      <a href="https://twobee.it/" target="_blank" rel="noopener noreferrer">twobee</a>
+    </div>
   </div>
 </footer>
 
@@ -160,6 +165,29 @@ const year = new Date().getFullYear();
   .foot__meta a { color: color-mix(in srgb, var(--color-paper) 45%, transparent); text-decoration: none; }
   .foot__meta a:hover { color: var(--color-accent); text-decoration: none; }
 
+  .foot__credit {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.4em;
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.04em;
+    color: color-mix(in srgb, var(--color-paper) 32%, transparent);
+  }
+  .foot__credit a {
+    color: color-mix(in srgb, var(--color-paper) 55%, transparent);
+    text-decoration: none;
+    border-bottom: var(--rule-hair) solid color-mix(in srgb, var(--color-paper) 22%, transparent);
+    transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .foot__credit a:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    text-decoration: none;
+  }
+
   @media (max-width: 64rem) {
     .foot__top { grid-template-columns: 1fr 1fr; }
     .foot__brand { grid-column: 1 / -1; }
@@ -167,5 +195,6 @@ const year = new Date().getFullYear();
   @media (max-width: 40rem) {
     .foot__top { grid-template-columns: 1fr; }
     .foot__meta { flex-direction: column; align-items: flex-start; }
+    .foot__credit { justify-content: flex-start; }
   }
 </style>
