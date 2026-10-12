@@ -1,68 +1,8 @@
 ---
 import Base from "@layouts/Base.astro";
-import ServiceIcon from "@components/ServiceIcon.astro";
 import BandiInEvidenza from "@components/BandiInEvidenza.astro";
-
-// Macro-aree (griglia servizi): foto reali + icona + link alle pagine servizio.
-const servizi = [
-  {
-    titolo: "Consulenza e Sicurezza",
-    slogan: "Tu scegli la meta. Insieme costruiamo il percorso. Proteggi ciò che conta.",
-    desc: "Mettiamo a fuoco le esigenze della tua impresa e definiamo insieme priorità, scelte e azioni concrete: organizzazione e deleghe di funzioni, modelli 231, privacy, ambiente. Un interlocutore unico che conosce la tua azienda e ti accompagna nelle decisioni. Persone, ambienti e attività: ti affianchiamo nella valutazione dei rischi e nell’organizzazione della prevenzione, perché la sicurezza diventi parte del lavoro di ogni giorno. Quando arriva un’ispezione, trova un sistema che funziona, non una pila di carte.",
-    comprende: ["Consulenza aziendale e organizzativa", "GDPR, privacy e cybersecurity", "Ambiente", "Sicurezza sul lavoro (D.Lgs. 81/08)", "Sicurezza nei cantieri e patente a crediti", "Sicurezza alimentare HACCP", "Medicina del lavoro"],
-    href: "/servizi/consulenza",
-    icon: "consulenza",
-    img: "/images/macroaree-consulenza.webp",
-    alt: "Consulenza e sicurezza sul lavoro iCura Impresa",
-    dark: false,
-  },
-  {
-    titolo: "Engineering",
-    slogan: "Costruisci su basi sicure.",
-    desc: "Dal rilievo 3D con scanner laser alla progettazione degli spazi e degli impianti, fino alla prevenzione incendi, colleghiamo esigenze operative e competenze tecniche: una sola squadra, un solo responsabile per ogni pratica, dal progetto al collaudo.",
-    comprende: ["Progettazione edile e impiantistica", "Rilievi 3D e nuvole di punti", "Prevenzione incendi e CPI", "Direzione lavori, collaudi e perizie", "Pratiche autorizzative"],
-    href: "/servizi/engineering",
-    icon: "engineering",
-    img: "/images/macroaree-engineering.webp",
-    alt: "Engineering e prevenzione incendi iCura Impresa",
-    dark: true,
-  },
-  {
-    titolo: "Formazione",
-    slogan: "Il futuro cresce con le persone.",
-    desc: "Percorsi formativi per sviluppare competenze utili, affrontare nuove responsabilità e accompagnare l’evoluzione dell’impresa. In aula, a distanza o in azienda, senza fermare il lavoro. E, quando i requisiti lo consentono, con i fondi che hai già versato.",
-    comprende: ["Formazione obbligatoria (Accordo Stato-Regioni 17/04/2025)", "Aula, a distanza, in azienda", "Fondi interprofessionali", "Attestati e registri"],
-    href: "/servizi/formazione",
-    icon: "formazione",
-    img: "/images/macroaree-formazione.webp",
-    alt: "Formazione sicurezza in aula iCura Impresa",
-    dark: false,
-  },
-] as const;
-const serviziWide = [
-  {
-    titolo: "Sistemi di Gestione",
-    slogan: "Dai valore a come lavori.",
-    desc: "Ti aiutiamo a organizzare processi e responsabilità, a sviluppare sistemi di gestione che lavorano ogni giorno e ad affrontare i percorsi di certificazione e di qualificazione per le gare. La certificazione la rilascia l’organismo: noi ti accompagniamo fino a lì.",
-    comprende: ["ISO 9001 — Qualità", "ISO 14001 — Ambiente", "ISO 45001 — Salute e sicurezza", "ISO 27001 — Sicurezza delle informazioni", "ISO 37001 — Anticorruzione", "Parità di genere UNI/PdR 125", "Attestazione SOA"],
-    href: "/servizi/certificazioni",
-    icon: "certificazioni",
-    img: "/images/macroaree-certificazioni.webp",
-    alt: "Certificazioni ISO e attestazione SOA iCura Impresa",
-    dark: true,
-  },
-  {
-    titolo: "Finanza Agevolata",
-    slogan: "Dai risorse alle tue idee.",
-    desc: "Individuiamo le opportunità compatibili con i tuoi progetti e ti accompagniamo nella verifica dei requisiti, nella preparazione delle domande e nella rendicontazione. Ogni bando è un percorso con regole e scadenze: lo seguiamo con te dall’inizio alla fine.",
-    comprende: ["Bando ISI INAIL", "ZES Unica Mezzogiorno", "Iper-ammortamento 2026–2028", "Fondi interprofessionali per la formazione"],
-    href: "/servizi/finanza-agevolata",
-    icon: "finanza-agevolata",
-    img: "/images/macroaree-finanza-agevolata.webp",
-    alt: "Finanza agevolata e bandi iCura Impresa",
-    dark: false,
-  },
-] as const;
+import HeroRotator from "@components/HeroRotator.astro";
+import AreeScroll from "@components/AreeScroll.astro";
 
 const team = [
   { img: "/images/sicurezza-ispezione-capannone.webp", alt: "Area sicurezza e D.Lgs. 81/08 iCura Impresa", h: "Sicurezza sul Lavoro", k: "D.Lgs. 81/08 · Cantieri · HACCP" },
@@ -73,10 +13,10 @@ const team = [
 
 // Come lavoriamo (testi del cliente).
 const passi = [
-  { t: "Ti ascoltiamo", d: "Veniamo in azienda, guardiamo e ascoltiamo: dove vuoi arrivare e che cosa ti frena." },
-  { t: "Definiamo le priorità", d: "Che cosa serve subito, che cosa può aspettare, che cosa si può finanziare." },
-  { t: "Costruiamo il progetto", d: "Responsabili, date, documenti e formazione: un piano chiaro, con nome e cognome." },
-  { t: "Ti affianchiamo nel tempo", d: "Scadenze, verifiche, ispezioni, bandi: restiamo al tuo fianco quando cambia qualcosa." },
+  { t: "Ti ascoltiamo", d: "Veniamo in azienda: dove vuoi arrivare e che cosa ti frena." },
+  { t: "Definiamo le priorità", d: "Che cosa serve subito, che cosa può aspettare, che cosa si finanzia." },
+  { t: "Costruiamo il progetto", d: "Responsabili, date e documenti: un piano chiaro." },
+  { t: "Ti affianchiamo nel tempo", d: "Scadenze, verifiche, ispezioni, bandi: ci siamo quando cambia qualcosa." },
 ];
 ---
 
@@ -85,75 +25,30 @@ const passi = [
   description="iCuraImpresa, Napoli: consulenza aziendale, sicurezza sul lavoro, formazione, engineering, certificazioni ISO, digitale e finanza agevolata. Un solo referente."
   pageClass="page-home"
 >
-  {/* ───── HERO SPLIT ───── */}
-  <section class="hero">
+  {/* ───── HERO A CAROSELLO ───── */}
+  <HeroRotator />
+
+  {/* ───── NUMERI ───── */}
+  <section class="metrics" aria-label="iCura Impresa in numeri">
     <div class="container">
-      <div class="hero__card">
-        <div class="hero__media group">
-          <img
-            src="/images/sicurezza-ispezione-capannone.webp"
-            alt="Tecnico iCura Impresa durante un sopralluogo di sicurezza in un capannone industriale"
-          />
-          <div class="hero__media-veil" aria-hidden="true"></div>
+      <dl class="metrics__list">
+        <div class="metric">
+          <dt class="metric__n">2014</dt>
+          <dd class="metric__label">a Napoli, S.r.l. dal 2018</dd>
         </div>
-
-        <div class="hero__panel">
-          <span class="hero__brand">
-            <img
-              class="hero__brand-mark"
-              src="/images/brand/logo-icura-white.webp"
-              alt=""
-              width="460"
-              height="600"
-              decoding="async"
-              aria-hidden="true"
-            />
-            <span class="hero__brand-name">i<strong>Cura</strong>Impresa</span>
-          </span>
-          <h1 class="hero__title">
-            Realizza <span class="accent">l’azienda dei tuoi sogni.</span>
-          </h1>
-          <p class="hero__lede">
-            Sicurezza sul lavoro, formazione, certificazioni ISO, engineering, digitale e finanza agevolata
-            per le imprese. A Napoli e in Campania, con un referente che risponde con nome e cognome;
-            certificazioni e bandi in tutta Italia.
-          </p>
-          <p class="hero__lede hero__lede--sub">
-            Proteggi le persone. Fai crescere le competenze. Dai forza ai tuoi progetti.
-          </p>
-
-          <div class="hero__ctas">
-            <a href="/contatti" class="hero__cta-primary">Parliamo della tua impresa</a>
-            <a href="#servizi" class="hero__cta-link">
-              Esplora le aree
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
-
-          <dl class="hero__metrics">
-            <div class="metric">
-              <dt class="metric__n">Dal 2014</dt>
-              <dd class="metric__label">a Napoli, S.r.l. dal 2018</dd>
-            </div>
-            <div class="metric">
-              <dt class="metric__n">ISO 9001 dal 2019</dt>
-              <dd class="metric__label">e ISO 14001: ciò che chiediamo ai clienti lo applichiamo a noi</dd>
-            </div>
-            <div class="metric">
-              <dt class="metric__n">SOA OG1 III-bis</dt>
-              <dd class="metric__label">e abilitazioni impianti D.M. 37/2008, lettere A–G</dd>
-            </div>
-            <div class="metric">
-              <dt class="metric__n">Nove persone</dt>
-              <dd class="metric__label">guidate da un ingegnere; un referente per ogni pratica</dd>
-            </div>
-            <div class="metric">
-              <dt class="metric__n">Preventivo scritto</dt>
-              <dd class="metric__label">che dice che cosa è compreso e chi fa che cosa</dd>
-            </div>
-          </dl>
+        <div class="metric">
+          <dt class="metric__n">ISO 9001</dt>
+          <dd class="metric__label">certificati dal 2019</dd>
         </div>
-      </div>
+        <div class="metric">
+          <dt class="metric__n">SOA OG1</dt>
+          <dd class="metric__label">classifica III-bis</dd>
+        </div>
+        <div class="metric">
+          <dt class="metric__n">9</dt>
+          <dd class="metric__label">persone, guidate da un ingegnere</dd>
+        </div>
+      </dl>
     </div>
   </section>
 
@@ -173,64 +68,8 @@ const passi = [
     </div>
   </section>
 
-  {/* ───── GRIGLIA SERVIZI ───── */}
-  <section id="servizi" class="services" aria-labelledby="services-heading">
-    <div class="container">
-      <div class="services__head">
-        <div>
-          <p class="eyebrow">Le aree</p>
-          <h2 id="services-heading" class="services__title">Una squadra <span class="italic">intorno</span> alla tua impresa.</h2>
-        </div>
-        <p class="services__note">
-          Al centro ci sei tu, con la tua impresa. Intorno, le competenze di iCuraImpresa che lavorano
-          insieme per i tuoi obiettivi: scegli un’area per scoprirla.
-        </p>
-      </div>
-
-      <div class="services__grid">
-        {servizi.map((s) => (
-          <a href={s.href} class={`svc-card group${s.dark ? " svc-card--dark" : ""}`}>
-            <span class="svc-card__top" aria-hidden="true">
-              <span class="svc-card__icon"><ServiceIcon name={s.icon} /></span>
-              <svg class="svc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </span>
-            <h3 class="svc-card__title">{s.titolo}</h3>
-            <p class="svc-card__slogan">{s.slogan}</p>
-            <p class="svc-card__desc">{s.desc}</p>
-            <p class="svc-card__desc"><strong>Che cosa comprende:</strong> {s.comprende.join(" · ")}</p>
-            <img src={s.img} alt={s.alt} class="svc-card__img media-grayscale" loading="lazy" decoding="async" />
-          </a>
-        ))}
-      </div>
-
-      <div class="services__grid services__grid--wide">
-        {serviziWide.map((s) => (
-          <a href={s.href} class={`svc-card svc-card--row group${s.dark ? " svc-card--dark" : ""}`}>
-            <span class="svc-card__body">
-              <span class="svc-card__top" aria-hidden="true">
-                <span class="svc-card__icon"><ServiceIcon name={s.icon} /></span>
-                <svg class="svc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-              </span>
-              <h3 class="svc-card__title">{s.titolo}</h3>
-              <p class="svc-card__slogan">{s.slogan}</p>
-              <p class="svc-card__desc">{s.desc}</p>
-            <p class="svc-card__desc"><strong>Che cosa comprende:</strong> {s.comprende.join(" · ")}</p>
-            </span>
-            <img src={s.img} alt={s.alt} class="svc-card__img svc-card__img--row media-grayscale" loading="lazy" decoding="async" />
-          </a>
-        ))}
-      </div>
-
-      <a href="/servizi/digitale" class="services__more">
-        <span class="services__more-body">
-          <span class="services__more-title">Digitale e IA</span>
-          <span class="services__more-slogan">Dai forma digitale al tuo metodo.</span>
-          <span class="services__more-desc">Processi digitalizzati, app e gestionali su misura costruiti con l’intelligenza artificiale, integrati con sistemi di gestione e consulenza.</span>
-        </span>
-        <span class="services__more-arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-  </section>
+  {/* ───── AREE (scroll orizzontale) ───── */}
+  <AreeScroll />
 
   {/* ───── BANDI, SCADENZE E RISPOSTE ───── */}
   <BandiInEvidenza />
@@ -240,9 +79,8 @@ const passi = [
     <div class="container why__grid">
       <div class="why__body">
         <p class="eyebrow">Come lavoriamo</p>
-        <h2 id="why-heading" class="why__title">I tuoi obiettivi sono la <span class="accent">nostra passione.</span></h2>
-        <p class="why__lede">Partiamo da ciò che vuoi realizzare. Mettiamo a fuoco le esigenze, colleghiamo le competenze e costruiamo insieme i prossimi passi.</p>
-        <ol class="why__list">
+        <h2 id="why-heading" class="why__title">Dall’ascolto <span class="accent">al risultato.</span></h2>
+                <ol class="why__list">
           {passi.map((p, i) => (
             <li class="why__item">
               <span class="why__n">{String(i + 1).padStart(2, "0")}</span>
@@ -253,7 +91,7 @@ const passi = [
             </li>
           ))}
         </ol>
-        <p class="why__note"><strong>Sicura. Certificata. Finanziata.</strong> Il nostro impegno: attività, responsabilità e scadenze definite prima di iniziare.</p>
+        <p class="why__note"><strong>Preventivo scritto.</strong> Dice che cosa è compreso e chi fa che cosa, prima di iniziare.</p>
       </div>
       <div class="why__media">
         <img src="/images/chi-siamo-riunione-team.webp" alt="Team di consulenti iCura Impresa in riunione operativa" loading="lazy" decoding="async" />
@@ -266,8 +104,8 @@ const passi = [
     <div class="container">
       <div class="team__head">
         <p class="eyebrow">Le persone</p>
-        <h2 id="team-heading" class="team__title">Una squadra di competenze costruita intorno alla tua impresa.</h2>
-        <p class="team__lede">Ingegneri, tecnici e consulenti che fanno propri i tuoi obiettivi e li portano a compimento. Un referente per ogni pratica, con nome e cognome, dal primo incontro all’ispezione.</p>
+        <h2 id="team-heading" class="team__title">Nove persone, guidate da un ingegnere.</h2>
+        <p class="team__lede">Ingegneri, tecnici e consulenti. Un referente per ogni pratica, con nome e cognome.</p>
       </div>
       <div class="team__grid">
         {team.map((t) => (
@@ -290,8 +128,7 @@ const passi = [
         <p class="eyebrow">Il prossimo passo</p>
         <h2 id="contact-heading" class="contact__title">Raccontaci <span class="accent">dove vuoi</span> arrivare.</h2>
         <p class="contact__lede">
-          Un progetto da sviluppare, persone da formare, un’organizzazione da migliorare: iniziamo dalla tua esigenza.
-          Il prossimo passo della tua impresa comincia da una conversazione.
+          Un progetto, persone da formare, un’ispezione in arrivo: iniziamo dalla tua esigenza.
         </p>
         <div class="contact__cards">
           <div class="contact__box">
@@ -373,86 +210,16 @@ const passi = [
 </Base>
 
 <style>
-  /* ───────── HERO (full-bleed, full-screen) ───────── */
-  .hero { padding: 0; }
-  .hero .container { max-width: none; padding-inline: 0; }
-  .hero__card {
-    display: grid;
-    grid-template-columns: 38% 62%;
-    min-height: calc(100svh - var(--header-h));
-    overflow: hidden;
-  }
-  .hero__media { position: relative; background: var(--color-ink); overflow: hidden; }
-  .hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero__media-veil {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, color-mix(in srgb, var(--color-ink) 45%, transparent), transparent);
-  }
-  .hero__panel {
+  /* ───────── NUMERI (sotto l'hero) ───────── */
+  .metrics {
     background: var(--color-ink);
-    color: var(--color-paper);
-    padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--space-md);
+    padding-block: var(--space-xl);
+    border-top: var(--rule-hair) solid color-mix(in srgb, var(--color-paper) 10%, transparent);
   }
-  .hero__brand { display: inline-flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md); }
-  .hero__brand-mark { height: 4.25rem; width: auto; }
-  .hero__brand-name {
-    font-family: var(--font-wordmark); font-weight: 500; font-size: var(--text-2xl);
-    letter-spacing: -0.025em; color: var(--color-paper);
-  }
-  .hero__brand-name strong { font-weight: 800; }
-  .hero__title {
-    font-size: var(--text-4xl);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    color: var(--color-paper);
-    max-width: 16ch;
-  }
-  .hero__title .accent { color: var(--color-accent); }
-  .hero__lede {
-    font-size: var(--text-lg);
-    line-height: 1.55;
-    color: color-mix(in srgb, var(--color-paper) 80%, transparent);
-    max-width: 48ch;
-  }
-  .hero__lede--sub { margin-top: calc(var(--space-sm) * -1); font-weight: 600; color: var(--color-paper); }
-  .hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-lg); margin-top: var(--space-sm); }
-  .hero__cta-primary {
-    display: inline-flex; align-items: center;
-    padding: 0.9rem 1.8rem;
-    background: var(--color-accent);
-    color: #fff;
-    font-weight: 600;
-    border-radius: var(--radius-pill);
-    text-decoration: none;
-    box-shadow: var(--shadow-accent);
-    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
-  }
-  .hero__cta-primary:hover { background: #fff; color: var(--color-ink); text-decoration: none; }
-  .hero__cta-link {
-    display: inline-flex; align-items: center; gap: 0.5em;
-    color: var(--color-paper); font-weight: 600; font-size: var(--text-sm);
-    text-decoration: none;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .hero__cta-link:hover { color: var(--color-accent); text-decoration: none; }
-
-  .hero__metrics {
-    display: flex; flex-wrap: wrap; gap: var(--space-lg) var(--space-xl);
-    margin: var(--space-lg) 0 0;
-    padding-top: var(--space-lg);
-    border-top: var(--rule-hair) solid color-mix(in srgb, var(--color-paper) 12%, transparent);
-  }
-  .metric { display: flex; flex-direction: column; gap: 0.2rem; margin: 0; max-width: 15rem; }
-  .metric__n { font-family: var(--font-display); font-weight: 700; font-size: var(--text-2xl); color: var(--color-paper); }
-  .metric__label {
-    font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-accent); margin: 0;
-  }
+  .metrics__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-lg); margin: 0; }
+  .metric { display: flex; flex-direction: column; gap: 0.5rem; margin: 0; padding-left: var(--space-md); border-left: 2px solid var(--color-accent); }
+  .metric__n { font-family: var(--font-display); font-weight: 700; font-size: var(--text-2xl); line-height: 1; letter-spacing: -0.02em; color: var(--color-paper); white-space: nowrap; }
+  .metric__label { font-size: var(--text-sm); line-height: 1.4; color: color-mix(in srgb, var(--color-paper) 65%, transparent); margin: 0; }
 
   /* ───────── STRIP AGEVOLAZIONI ───────── */
   .strip { background: var(--color-accent); color: #fff; padding-block: var(--space-md); }
@@ -474,71 +241,9 @@ const passi = [
   }
   .strip__cta:hover { background: var(--color-ink); color: #fff; text-decoration: none; }
 
-  /* ───────── SERVIZI ───────── */
-  .services { padding-block: var(--space-3xl); }
-  .services__head {
-    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end;
-    gap: var(--space-lg); margin-bottom: var(--space-2xl);
-  }
-  .services__title { font-size: var(--text-4xl); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; max-width: 16ch; }
-  .services__title .italic { font-style: italic; font-weight: 400; }
-  .services__note { color: var(--color-muted); max-width: 40ch; font-size: var(--text-md); }
-
-  .services__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-lg); }
-  .services__grid--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--space-lg); }
-
-  .svc-card {
-    display: flex; flex-direction: column;
-    padding: var(--space-xl);
-    background: var(--color-surface);
-    border: var(--rule-hair) solid var(--color-rule);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
-    text-decoration: none; color: inherit;
-    transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
-  }
-  .svc-card:hover { border-color: color-mix(in srgb, var(--color-accent) 40%, transparent); box-shadow: var(--shadow-lift); transform: translateY(-3px); text-decoration: none; }
-  .svc-card--dark { background: var(--color-ink); border-color: color-mix(in srgb, var(--color-accent) 14%, transparent); }
-
-  .svc-card__top { display: flex; align-items: center; justify-content: space-between; color: var(--color-accent); margin-bottom: var(--space-xl); }
-  .svc-card__icon { display: inline-flex; --icon-size: 2rem; color: var(--color-accent); }
-  .svc-card--dark .svc-card__icon { color: var(--color-paper); }
-  .svc-card__arrow { width: 1.25rem; height: 1.25rem; transition: transform var(--dur-base) var(--ease-out); }
-  .svc-card:hover .svc-card__arrow { transform: rotate(45deg); }
-  .svc-card--dark .svc-card__arrow { color: var(--color-paper); }
-
-  .svc-card__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 var(--space-sm); color: var(--color-ink); }
-  .svc-card--dark .svc-card__title { color: var(--color-paper); }
-  .svc-card__slogan { font-family: var(--font-display); font-size: var(--text-md); font-weight: 600; line-height: 1.3; color: var(--color-accent); margin: 0 0 var(--space-sm); }
-  .svc-card__desc { font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-lg); flex: 1; }
-  .svc-card--dark .svc-card__desc { color: color-mix(in srgb, var(--color-paper) 62%, transparent); }
-  .svc-card__img { width: 100%; height: 12rem; object-fit: cover; border-radius: var(--radius-input); }
-
-  .svc-card--row { flex-direction: row; align-items: center; gap: var(--space-xl); }
-  .svc-card--row .svc-card__body { flex: 1; display: flex; flex-direction: column; }
-  .svc-card--row .svc-card__desc { margin-bottom: 0; }
-  .svc-card__img--row { width: 11rem; height: 11rem; flex: none; }
-
-  .services__more {
-    display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg);
-    margin-top: var(--space-lg);
-    padding: var(--space-lg) var(--space-xl);
-    background: var(--color-surface);
-    border: var(--rule-hair) solid var(--color-rule);
-    border-radius: var(--radius-card);
-    text-decoration: none; color: inherit;
-    transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
-  }
-  .services__more:hover { border-color: color-mix(in srgb, var(--color-accent) 40%, transparent); box-shadow: var(--shadow-lift); text-decoration: none; }
-  .services__more-body { display: flex; flex-direction: column; gap: 0.15rem; }
-  .services__more-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; letter-spacing: -0.02em; color: var(--color-ink); }
-  .services__more-slogan { font-family: var(--font-display); font-size: var(--text-md); font-weight: 600; color: var(--color-accent); }
-  .services__more-desc { font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.55; max-width: 70ch; }
-  .services__more-arrow { flex: none; font-size: var(--text-xl); color: var(--color-accent); }
-
   /* ───────── PERCHÉ ───────── */
   .why { padding-block: var(--space-3xl); overflow: hidden; }
-  .why__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: center; }
+  .why__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: stretch; }
   .why__title { font-size: var(--text-4xl); font-weight: 700; letter-spacing: -0.03em; margin-bottom: var(--space-xl); }
   .why__title .accent { color: var(--color-accent); }
   .why__lede { font-size: var(--text-md); line-height: 1.6; color: color-mix(in srgb, var(--color-paper) 72%, transparent); max-width: 52ch; margin: 0 0 var(--space-xl); }
@@ -546,11 +251,12 @@ const passi = [
   .why__note strong { display: block; font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-paper); margin-bottom: 0.2rem; }
   .why__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-lg); }
   .why__item { display: flex; gap: var(--space-md); align-items: flex-start; }
-  .why__n { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-accent); flex: none; }
+  .why__n { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-accent); flex: none; width: 2.5rem; }
   .why__item-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; margin: 0 0 0.3rem; color: var(--color-paper); }
   .why__item-desc { font-size: var(--text-sm); line-height: 1.6; color: color-mix(in srgb, var(--color-paper) 62%, transparent); margin: 0; }
   .why__media { position: relative; border-radius: var(--radius-lg); overflow: hidden; border: var(--rule-hair) solid color-mix(in srgb, var(--color-paper) 12%, transparent); }
-  .why__media img { width: 100%; height: 100%; max-height: 32rem; object-fit: cover; display: block; }
+  .why__media { min-height: 26rem; }
+  .why__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
 
   /* ───────── TEAM ───────── */
   .team { padding-block: var(--space-3xl); }
@@ -623,27 +329,18 @@ const passi = [
 
   /* ───────── RESPONSIVE ───────── */
   @media (max-width: 64rem) {
-    .hero__card { grid-template-columns: 1fr; min-height: auto; }
-    .hero__media { min-height: 60svh; }
     .why__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
-    .why__media { order: -1; }
+    .why__media { order: -1; min-height: 18rem; }
     .team__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .contact__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
-  }
-  @media (max-width: 56rem) {
-    .services__grid, .services__grid--wide { grid-template-columns: 1fr; }
-    .svc-card--row { flex-direction: column; align-items: stretch; }
-    .svc-card__img--row { width: 100%; height: 12rem; }
   }
   @media (max-width: 40rem) {
     .team__grid { grid-template-columns: 1fr; }
     .contact__row, .contact__cards { grid-template-columns: 1fr; }
-    .hero__metrics { gap: var(--space-md) var(--space-lg); }
+    .metrics__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .svc-card, .team-tile__media img { transition: none; }
-    .svc-card:hover { transform: none; }
-    .svc-card:hover .svc-card__arrow { transform: rotate(45deg); }
+    .team-tile__media img { transition: none; }
   }
 </style>

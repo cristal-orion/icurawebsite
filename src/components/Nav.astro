@@ -1,5 +1,7 @@
 ---
 const { pathname } = Astro.url;
+// In home l'header parte scuro (stesso colore dell'hero) e torna chiaro appena si scorre.
+const darkTop = pathname === "/";
 const isActive = (path: string) =>
   path === "/" ? pathname === "/" : pathname.startsWith(path);
 
@@ -98,7 +100,7 @@ const serviziActive =
 
 <a href="#main" class="skip-link">Salta al contenuto</a>
 
-<header class="site-header">
+<header class:list={["site-header", { "site-header--dark-top is-top": darkTop }]} data-site-header>
   <nav class="site-header__inner" aria-label="Navigazione principale">
     <a href="/" class="site-header__wordmark" aria-label="iCuraImpresa, homepage">
       i<strong>Cura</strong>Impresa<span class="site-header__dot" aria-hidden="true">.</span>
@@ -294,6 +296,14 @@ const serviziActive =
     });
   });
 
+  // Header scuro sopra l'hero: diventa chiaro appena inizia lo scroll.
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+  if (header?.classList.contains("site-header--dark-top")) {
+    const sync = () => header.classList.toggle("is-top", scrollY < 8);
+    sync();
+    addEventListener("scroll", sync, { passive: true });
+  }
+
   // Menu mobile (hamburger)
   const navToggle = document.querySelector<HTMLButtonElement>("[data-nav-toggle]");
   const navMobile = document.querySelector<HTMLElement>("[data-nav-mobile]");
@@ -333,10 +343,11 @@ const serviziActive =
     right: 0;
     z-index: 50;
     min-height: var(--header-h);
-    background: color-mix(in srgb, var(--color-paper) 82%, transparent);
+    background: color-mix(in srgb, var(--color-paper) 94%, transparent);
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border-bottom: var(--rule-hair) solid var(--color-rule);
+    transition: background 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
   }
   .site-header__inner {
     display: flex;
@@ -580,6 +591,26 @@ const serviziActive =
   .site-header__burger[aria-expanded="true"] .site-header__burger-bar:nth-child(2) {
     transform: translateY(-3px) rotate(-45deg);
   }
+
+
+  /* ── Variante scura in cima alla home (sopra l'hero navy), testi invertiti ── */
+  .site-header--dark-top.is-top {
+    background: var(--color-ink);
+    border-bottom-color: color-mix(in srgb, var(--color-paper) 8%, transparent);
+  }
+  .site-header--dark-top :is(.site-header__wordmark, .site-nav__link, .site-header__promo, .site-header__phone, .site-header__cta, .site-header__burger) {
+    transition: color 0.35s var(--ease-out), background 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+  }
+  .site-header--dark-top.is-top .site-header__wordmark,
+  .site-header--dark-top.is-top .site-header__burger { color: var(--color-paper); }
+  .site-header--dark-top.is-top .site-nav__link { color: color-mix(in srgb, var(--color-paper) 78%, transparent); }
+  .site-header--dark-top.is-top .site-nav__link:hover,
+  .site-header--dark-top.is-top .site-nav__link.is-active { color: #93c5fd; }
+  .site-header--dark-top.is-top .site-header__promo { color: var(--color-paper); background: color-mix(in srgb, var(--color-highlight) 14%, transparent); }
+  .site-header--dark-top.is-top .site-header__phone { color: #93c5fd; border-color: color-mix(in srgb, #93c5fd 35%, transparent); }
+  .site-header--dark-top.is-top .site-header__phone:hover { background: color-mix(in srgb, #93c5fd 12%, transparent); }
+  .site-header--dark-top.is-top .site-header__cta { background: var(--color-paper); color: var(--color-ink); }
+  .site-header--dark-top.is-top .site-header__cta:hover { background: var(--color-accent); color: #fff; }
 
   /* ── Pannello menu mobile — sheet navy sotto la barra ── */
   .nav-mobile {
