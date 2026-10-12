@@ -147,9 +147,11 @@ const c = {
 };
 
 const img = {
+  src: "/images/digitale-gestionale.webp",
   alt: "Titolare di una piccola impresa italiana e consulente iCura Impresa davanti a un tablet che mostra un gestionale con scadenzario, checklist di sopralluogo e cruscotto a colori sobri; sulla scrivania un faldone di procedure cartacee accanto al tablet; ufficio luminoso con luce naturale, palette desaturata toni navy e grigio, fotografia documentaria professionale, schermi senza testo leggibile, no posa",
 };
 const ctaImg = {
+  src: "/images/digitale-checklist.webp",
   alt: "Tecnico di campo con casco e giacca navy che compila una checklist di sopralluogo su uno smartphone in un capannone italiano, accanto a un quadro elettrico; luce naturale, palette desaturata toni navy e grigio, fotografia documentaria professionale, schermo senza testo leggibile, no posa",
 };
 ---
@@ -168,7 +170,7 @@ const ctaImg = {
 
   <section class="section section--tight">
     <div class="container">
-      <Placeholder aspect="21/9" alt={img.alt} />
+      <Placeholder aspect="21/9" src={img.src} alt={img.alt} />
     </div>
   </section>
 
@@ -227,7 +229,7 @@ const ctaImg = {
     eyebrow="Il prossimo passo"
     title={c.ctaTitle}
     lede={c.ctaLede}
-    image={{ alt: ctaImg.alt }}
+    image={ctaImg}
     primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
     secondary={{ href: "tel:+390816580779", label: "Oppure chiama lo 081 658 0779" }}
     labelledby="digitale-cta"
