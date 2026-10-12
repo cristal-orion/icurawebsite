@@ -10,6 +10,7 @@ Contatti: Corso Secondigliano 236, 80144 Napoli (NA) â€” tel. +39 081 658 0779 â
 - [Engineering & Antincendio](https://www.icuraimpresa.it/servizi/engineering): progettazione edile e impiantistica, prevenzione incendi e CPI, collaudi e perizie tecniche.
 - [Formazione](https://www.icuraimpresa.it/servizi/formazione): corsi in aula ed e-learning per lavoratori, preposti, dirigenti, RSPP/RLS, antincendio e primo soccorso, spesso a costo zero con i fondi interprofessionali.
 - [Certificazioni & Gare](https://www.icuraimpresa.it/servizi/certificazioni): ISO 9001/14001/45001/27001/37001, paritÃ  di genere UNI/PdR 125, Attestazione SOA e supporto alle gare d'appalto.
+- [Digitale e IA](https://www.icuraimpresa.it/servizi/digitale): digitalizzazione dei processi, app e gestionali su misura costruiti con l'intelligenza artificiale, assistenti e automazioni integrati con consulenza e sistemi di gestione.
 - [Finanza agevolata](https://www.icuraimpresa.it/servizi/finanza-agevolata): Bando ISI INAIL, ZES Unica, Transizione 5.0, sgravi OT23, fondi interprofessionali e bandi regionali/nazionali.
 
 ## Consulenza (approfondimenti)
@@ -40,6 +41,9 @@ Contatti: Corso Secondigliano 236, 80144 Napoli (NA) â€” tel. +39 081 658 0779 â
 ## Azienda
 
 - [Chi siamo](https://www.icuraimpresa.it/chi-siamo): team multidisciplinare, Napoli, dal 2014.
-- [Blog](https://www.icuraimpresa.it/blog): approfondimenti su sicurezza, bandi, certificazioni e formazione.
+- [Blog](https://www.icuraimpresa.it/blog): guide pratiche su richiesta di consulenza, fabbisogni formativi e progetti di investimento.
+  - [Come preparare una richiesta di consulenza aziendale](https://www.icuraimpresa.it/blog/preparare-richiesta-consulenza)
+  - [Fabbisogni formativi: da dove iniziare in azienda](https://www.icuraimpresa.it/blog/ricognizione-fabbisogni-formativi)
+  - [Prima delle agevolazioni: prepara il progetto di investimento](https://www.icuraimpresa.it/blog/preparare-progetto-investimento)
 - [Lavora con noi](https://www.icuraimpresa.it/lavora-con-noi): posizioni aperte e candidatura.
 - [Contatti](https://www.icuraimpresa.it/contatti): sede, telefono, email e prenotazione call.

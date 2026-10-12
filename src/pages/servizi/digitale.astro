@@ -1,0 +1,270 @@
+---
+import Base from "@layouts/Base.astro";
+import Placeholder from "@components/Placeholder.astro";
+import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
+import Faq from "@components/Faq.astro";
+import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
+
+const c = {
+  title: "Digitale e IA per le PMI: gestionali e app",
+  description:
+    "Processi digitalizzati, gestionali e app costruiti con l’IA, assistenti e automazioni, integrati con sistemi di gestione e consulenza. Tempi e costi nel preventivo.",
+  eyebrow: "Servizi · 06 · Digitale e IA",
+  h1: "Digitale e IA: processi, gestionali e app su misura per la tua impresa.",
+  lede:
+    "Tutto quello che abbiamo progettato insieme — processi, procedure, controlli, scadenze — può diventare uno strumento digitale su misura, costruito con l’intelligenza artificiale e integrato con i sistemi di gestione. Dai forma digitale al tuo metodo.",
+  aChi: [
+    "Imprese che hanno già procedure, registri e controlli su carta o su fogli di calcolo e vogliono farli diventare strumenti che lavorano da soli.",
+    "Aziende con un sistema di gestione o un sistema di sicurezza da tenere aggiornato: scadenze, formazione, manutenzioni, non conformità.",
+    "Titolari che vogliono un gestionale costruito sulla propria attività, invece di adattare l’attività a un software generico.",
+    "Chi vuole usare l’intelligenza artificiale in azienda con regole chiare, dati protetti e persone che restano al comando.",
+  ],
+  bisognoEyebrow: "Il bisogno",
+  bisognoTitle: "Il metodo c’è. Manca lo strumento che lo faccia vivere.",
+  intro: [
+    "Una consulenza ben fatta produce procedure, responsabilità, scadenze e controlli. Troppo spesso restano in un faldone o in un foglio di calcolo che qualcuno deve ricordarsi di aggiornare: il sistema funziona finché quella persona ha tempo.",
+    "Oggi l’intelligenza artificiale permette di costruire app e gestionali su misura in tempi e a costi che prima erano riservati alle grandi imprese: per un processo circoscritto, di norma settimane e non mesi. Tempi, costi e perimetro si definiscono per ogni progetto nel preventivo, dopo l’analisi. Li progettiamo partendo da quello che l’azienda fa davvero — e che spesso abbiamo disegnato noi con la consulenza e i sistemi di gestione — e li consegniamo su servizi con sede in Italia o nell’Unione europea scelti insieme, con accessi tracciati e la persona sempre nel ruolo di chi decide.",
+  ],
+  chips: [
+    "Processi e procedure",
+    "Scadenzari e registri",
+    "App per il campo: sopralluoghi, audit, cantieri",
+    "Gestionali su misura",
+    "Assistenti IA interni",
+    "Integrazione con i sistemi di gestione",
+  ],
+  areeEyebrow: "Che cosa facciamo",
+  areeTitle: "Dal processo allo strumento, in sei passaggi.",
+  sottoAree: [
+    {
+      id: "processi",
+      nome: "Digitalizzazione dei processi",
+      desc: "Mappiamo il processo com’è, lo semplifichiamo e lo trasformiamo in un flusso digitale: chi fa che cosa, quando, con quali controlli. Ogni passaggio lascia traccia.",
+    },
+    {
+      id: "app",
+      nome: "App su misura costruite con l’IA",
+      desc: "Applicazioni per telefono e PC costruite con l’intelligenza artificiale sul tuo modo di lavorare: raccolta dati in campo, sopralluoghi, verbali, foto, firme. Funzionano anche senza rete e si allineano appena torna.",
+    },
+    {
+      id: "gestionali",
+      nome: "Gestionali integrati",
+      desc: "Gestionali che tengono insieme scadenze, formazione, documenti, manutenzioni e non conformità del sistema di gestione o della sicurezza, con promemoria automatici e cruscotti per chi decide.",
+    },
+    {
+      id: "integrazione",
+      nome: "Integrazione con consulenza e certificazioni",
+      desc: "Quello che progettiamo nella consulenza e nei sistemi di gestione diventa configurazione dello strumento: procedure, moduli, indicatori. L’audit trova dati, non ricostruzioni.",
+    },
+    {
+      id: "assistenti",
+      nome: "Assistenti IA e automazioni",
+      desc: "Assistenti che rispondono su procedure e documenti aziendali, classificano richieste, preparano bozze da verificare. Le decisioni restano alle persone; ogni risposta cita la fonte.",
+    },
+    {
+      id: "dati",
+      nome: "Dati, sicurezza e conformità",
+      desc: "Dati in Europa, accessi per ruolo, registro delle operazioni, cancellazione e portabilità; valutazione d’impatto quando l’IA riguarda i lavoratori, in coordinamento con l’area privacy e cybersecurity.",
+    },
+  ],
+  restaTitle: "Che cosa resta in azienda, a lavoro finito.",
+  resta: [
+    "Un’app o un gestionale funzionante, con codice e dati di tua proprietà secondo il contratto (le licenze dei componenti e dei servizi di terzi sono dichiarate), con documentazione e manuale d’uso.",
+    "I processi digitalizzati con responsabilità, scadenze e controlli configurati.",
+    "La formazione delle persone che lo useranno e un periodo di affiancamento.",
+    "Le regole d’uso dell’intelligenza artificiale in azienda e il registro dei trattamenti aggiornato.",
+    "Assistenza e aggiornamenti nel tempo, con un unico referente.",
+  ],
+  ruoliTitle: "Responsabilità chiare, dal primo giorno.",
+  ruoli: [
+    {
+      titolo: "Svolto direttamente da iCuraImpresa",
+      desc: "Analisi dei processi, progettazione e costruzione di app e gestionali con l’intelligenza artificiale, configurazione, formazione, assistenza.",
+    },
+    {
+      titolo: "Coordinato da iCuraImpresa",
+      desc: "Servizi di hosting e infrastruttura con sede in Europa e fornitori di modelli di IA, con contratti e misure di sicurezza verificati.",
+    },
+    {
+      titolo: "Svolto da terzi",
+      desc: "L’azienda resta titolare dei dati e decide ruoli e accessi; le integrazioni con gestionali già in uso si concordano con i rispettivi fornitori.",
+    },
+  ],
+  fasiTitle: "Quattro fasi, dal processo all’app.",
+  fasi: [
+    { n: "01", titolo: "Analisi", desc: "Guardiamo il processo com’è, con chi lo fa ogni giorno, e decidiamo che cosa digitalizzare per primo." },
+    { n: "02", titolo: "Prototipo", desc: "Un prototipo funzionante da provare sul lavoro reale, costruito con l’IA e corretto insieme; i tempi dipendono dal processo e si fissano nell’analisi." },
+    { n: "03", titolo: "Costruzione", desc: "Versione completa: dati, accessi, integrazioni e prove con le persone che la useranno." },
+    { n: "04", titolo: "Avvio e cura", desc: "Formazione, affiancamento, misurazione dei risultati e aggiornamenti nel tempo." },
+  ],
+  faq: [
+    {
+      q: "Che cosa vuol dire «costruito con l’intelligenza artificiale»?",
+      a: "Usiamo l’IA per progettare, scrivere e provare il software molto più in fretta che in passato: questo rende sostenibile costruire strumenti su misura anche per una piccola impresa. Il risultato è software normale, il cui codice e i cui dati restano di tua proprietà secondo il contratto, con le licenze dei componenti di terzi dichiarate, e che non dipende dall’IA per funzionare.",
+    },
+    {
+      q: "I nostri dati dove finiscono?",
+      a: "Su servizi con sede in Italia o nell’Unione europea, indicati nel contratto, con accessi per ruolo e registro delle operazioni. Prima di usare un modello di IA sui dati aziendali verifichiamo contratti e misure di sicurezza, e valutiamo l’impatto quando riguarda i lavoratori.",
+    },
+    {
+      q: "Possiamo partire da un processo solo?",
+      a: "È il modo migliore. Si sceglie il processo che fa perdere più tempo o che crea più rischi, lo si digitalizza in tempi definiti nell’analisi (di norma settimane, per un processo circoscritto) e si misura il risultato prima di allargare.",
+    },
+    {
+      q: "L’app sostituisce il sistema di gestione o la consulenza?",
+      a: "No: li fa vivere. Il sistema di gestione dice che cosa fare e chi lo fa; lo strumento lo rende quotidiano, tracciato e misurabile. La consulenza resta il punto di partenza.",
+    },
+  ],
+  fonti: [
+    "Regolamento (UE) 2016/679 — protezione dei dati personali (GDPR)",
+    "Regolamento (UE) 2024/1689 — regolamento sull’intelligenza artificiale (AI Act)",
+    "Direttiva (UE) 2022/2555 (NIS2) e D.Lgs. 4 settembre 2024, n. 138",
+    "UNI EN ISO 9001:2015 e ISO/IEC 27001:2022 — sistemi di gestione",
+  ],
+  nota: "Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico.",
+  correlati: [
+    {
+      nome: "Sistemi di Gestione",
+      desc: "Il metodo che lo strumento rende quotidiano.",
+      href: "/servizi/certificazioni",
+    },
+    {
+      nome: "Consulenza aziendale",
+      desc: "Organizzazione, deleghe e procedure da digitalizzare.",
+      href: "/servizi/consulenza/aziendale",
+    },
+    {
+      nome: "GDPR, privacy e cybersecurity",
+      desc: "Dati, accessi e intelligenza artificiale a norma.",
+      href: "/servizi/consulenza/gdpr",
+    },
+  ],
+  ctaTitle: "Un processo da digitalizzare? Parliamone.",
+  ctaLede:
+    "Raccontaci che cosa oggi fate a mano o su fogli di calcolo: ti diciamo che cosa può diventare uno strumento e in quanto tempo.",
+};
+
+const img = {
+  alt: "Titolare di una piccola impresa italiana e consulente iCura Impresa davanti a un tablet che mostra un gestionale con scadenzario, checklist di sopralluogo e cruscotto a colori sobri; sulla scrivania un faldone di procedure cartacee accanto al tablet; ufficio luminoso con luce naturale, palette desaturata toni navy e grigio, fotografia documentaria professionale, schermi senza testo leggibile, no posa",
+};
+const ctaImg = {
+  alt: "Tecnico di campo con casco e giacca navy che compila una checklist di sopralluogo su uno smartphone in un capannone italiano, accanto a un quadro elettrico; luce naturale, palette desaturata toni navy e grigio, fotografia documentaria professionale, schermo senza testo leggibile, no posa",
+};
+---
+
+<Base title={c.title} description={c.description}>
+  <header class="page-header section">
+    <div class="container">
+      <a href="/servizi/consulenza" class="breadcrumb-back">&larr; Torna ai servizi</a>
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1>{c.h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </header>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section section--tight">
+    <div class="container">
+      <Placeholder aspect="21/9" alt={img.alt} />
+    </div>
+  </section>
+
+  <ServiceExtras part="aChi" id="digitale" items={c.aChi} />
+
+  <section class="section section--ink" aria-labelledby="digitale-bisogno">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">{c.bisognoEyebrow}</p>
+        <h2 id="digitale-bisogno">{c.bisognoTitle}</h2>
+      </div>
+      <div class="prose">
+        <p>{c.intro[0]}</p>
+        <p>{c.intro[1]}</p>
+        <ul class="chips" aria-label="Ambiti del servizio">
+          {c.chips.map((ch) => <li>{ch}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" aria-hidden="true" />
+
+  <section class="section" aria-labelledby="digitale-aree">
+    <div class="container">
+      <p class="eyebrow">{c.areeEyebrow}</p>
+      <h2 id="digitale-aree" class="section-title">{c.areeTitle}</h2>
+      <AreaGrid aree={c.sottoAree} />
+    </div>
+  </section>
+
+  <ServiceExtras part="resta" id="digitale" title={c.restaTitle} items={c.resta} />
+
+  <ServiceExtras part="ruoli" id="digitale" title={c.ruoliTitle} ruoli={c.ruoli} />
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Steps eyebrow="Come lavoriamo" title={c.fasiTitle} steps={c.fasi} labelledby="digitale-fasi" />
+
+  <hr class="rule" aria-hidden="true" />
+
+  <Faq
+    eyebrow="Domande frequenti"
+    title="Le domande che ci fanno più spesso."
+    name="faq-digitale"
+    labelledby="digitale-faq"
+    items={c.faq}
+    tone="alt-blue"
+  />
+
+  <ServiceExtras part="fonti" id="digitale" items={c.fonti} nota={c.nota} />
+
+  <ServiceExtras part="correlati" id="digitale" correlati={c.correlati} />
+
+  <CtaBand
+    eyebrow="Il prossimo passo"
+    title={c.ctaTitle}
+    lede={c.ctaLede}
+    image={{ alt: ctaImg.alt }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
+    secondary={{ href: "tel:+390816580779", label: "Oppure chiama lo 081 658 0779" }}
+    labelledby="digitale-cta"
+  />
+</Base>
+
+<style>
+  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
+  .breadcrumb-back {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
+  .page-header h1 {
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-md);
+    max-width: 28ch;
+  }
+  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col h2 { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .prose p { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; margin: 0 0 var(--space-md); max-width: 62ch; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

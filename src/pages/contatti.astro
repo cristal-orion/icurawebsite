@@ -4,15 +4,16 @@ import Placeholder from "@components/Placeholder.astro";
 ---
 
 <Base
-  title="Contatti"
-  description="Scrivici, chiamaci, vieni a trovarci o prenota una call. iCura Impresa, Corso Secondigliano 236, Napoli. Risposta entro 48 ore."
+  title="Contatti: telefono, sede e richiesta"
+  crumb="Contatti"
+  description="Chiama lo 081 658 0779, scrivi a info@icuraimpresa.it o invia una richiesta: ti rispondiamo noi, per email o per telefono. Sede in Corso Secondigliano 236, Napoli."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Contatti</p>
-      <h1>Parliamo della tua impresa.</h1>
+      <h1>Raccontaci dove vuoi arrivare.</h1>
       <p class="page-header__lede">
-        Un sopralluogo gratuito, una call o una email: come preferisci. Ti rispondiamo entro 48 ore, senza impegno.
+        Un progetto da sviluppare, persone da formare, un’organizzazione da migliorare: iniziamo dalla tua esigenza. Compila il modulo e ti ricontattiamo noi, per email o per telefono se ce lo lasci; oppure chiama o scrivi direttamente.
       </p>
     </div>
   </header>
@@ -30,13 +31,7 @@ import Placeholder from "@components/Placeholder.astro";
   <section class="section section--alt-2">
     <div class="container contact-grid">
       <aside class="info">
-        <div class="info__block">
-          <p class="info__label">Sede</p>
-          <p class="info__value">
-            Corso Secondigliano, 236<br />
-            80144 Napoli (NA)
-          </p>
-        </div>
+        <h2 class="info__title">A Napoli. Di persona, al telefono o in videochiamata.</h2>
         <div class="info__block">
           <p class="info__label">Telefono</p>
           <p class="info__value"><a href="tel:+390816580779">081 658 0779</a></p>
@@ -46,8 +41,26 @@ import Placeholder from "@components/Placeholder.astro";
           <p class="info__value"><a href="mailto:info@icuraimpresa.it">info@icuraimpresa.it</a></p>
         </div>
         <div class="info__block">
-          <p class="info__label">Orari</p>
-          <p class="info__value">Lun–Ven · 9:00–18:00</p>
+          <p class="info__label">PEC</p>
+          <p class="info__value"><a href="mailto:icuraimpresa@pec.it">icuraimpresa@pec.it</a></p>
+        </div>
+        <div class="info__block">
+          <p class="info__label">Sede operativa</p>
+          <p class="info__value">
+            Corso Secondigliano 236, 80144 Napoli (NA)
+          </p>
+        </div>
+        <div class="info__block">
+          <p class="info__label">Sede legale</p>
+          <p class="info__value">
+            Via John Fitzgerald Kennedy 73, 80125 Napoli (NA)
+          </p>
+        </div>
+        <div class="info__block">
+          <p class="info__label">Dove lavoriamo</p>
+          <p class="info__value">
+            Di persona a Napoli e in Campania (sopralluoghi, corsi, cantieri); certificazioni, bandi e consulenza anche a distanza in tutta Italia. <a href="/chi-siamo#dove-lavoriamo">Dettagli</a>
+          </p>
         </div>
         <div class="info__block">
           <p class="info__label">Lavora con noi</p>
@@ -60,11 +73,12 @@ import Placeholder from "@components/Placeholder.astro";
       {/* Invio gestito da src/scripts/lead-form.ts → Klaviyo (client-side). */}
       <form class="form" data-lead-form>
         <p class="eyebrow form__eyebrow">Scrivici</p>
-        <h2 class="form__title">Raccontaci di cosa hai bisogno.</h2>
+        <h2 class="form__title">Richiedi un ricontatto</h2>
+        <p class="form__legend">I campi con asterisco (*) sono obbligatori.</p>
         <input type="text" name="company_website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
         <div class="field">
-          <label for="nome">Nome e cognome</label>
+          <label for="nome">Nome e cognome *</label>
           <input id="nome" name="nome" type="text" required autocomplete="name" />
         </div>
 
@@ -74,48 +88,44 @@ import Placeholder from "@components/Placeholder.astro";
         </div>
 
         <div class="field">
-          <label for="email">Email</label>
+          <label for="email">Email *</label>
           <input id="email" name="email" type="email" required autocomplete="email" />
         </div>
 
         <div class="field">
-          <label for="oggetto">Oggetto</label>
+          <label for="oggetto">Di che cosa hai bisogno *</label>
           <select id="oggetto" name="oggetto" required>
-            <option value="">Seleziona…</option>
+            <option value="">Scegli…</option>
             <option>Consulenza &amp; Sicurezza</option>
             <option>Engineering &amp; Antincendio</option>
             <option>Formazione</option>
             <option>Certificazioni</option>
             <option>Finanza agevolata</option>
             <option>Lavora con noi</option>
-            <option>Altro</option>
+            <option>Non lo so ancora: parliamone</option>
           </select>
         </div>
 
         <div class="field">
-          <label for="messaggio">Messaggio</label>
+          <label for="messaggio">Raccontaci in due righe *</label>
           <textarea id="messaggio" name="messaggio" rows="5" required></textarea>
         </div>
 
         <label class="consent">
           <input type="checkbox" name="privacy" required />
-          <span>Acconsento al trattamento dei dati per gestire la mia richiesta, secondo la <a href="/privacy">privacy policy</a>.</span>
+          <span>Ho letto l’<a href="/privacy">informativa privacy</a> e acconsento al trattamento dei dati per rispondere alla mia richiesta. *</span>
         </label>
 
         <label class="consent">
           <input type="checkbox" name="marketing" />
-          <span>Acconsento al trattamento dei miei dati personali per finalità di marketing (comunicazioni commerciali e newsletter). Facoltativo.</span>
+          <span>Voglio ricevere avvisi su bandi, scadenze e novità normative (facoltativo, revocabile in ogni momento).</span>
         </label>
 
         <button type="submit" class="btn btn--primary btn--cta">
-          Invia richiesta
+          Invia la richiesta
           <span class="btn__arrow" aria-hidden="true">→</span>
         </button>
-        <p class="form__trust" aria-hidden="true">
-          <span>Risposta entro 48h</span>
-          <span>Sopralluogo gratuito</span>
-          <span>Nessun impegno</span>
-        </p>
+        <p class="form__call">Oppure chiama: <a href="tel:+390816580779">081 658 0779</a></p>
         <p class="form-status" data-lead-status role="status" aria-live="polite" hidden></p>
 
         <div class="form-thanks" data-lead-success role="status" hidden>
@@ -123,7 +133,7 @@ import Placeholder from "@components/Placeholder.astro";
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
           </span>
           <span class="form-thanks__title">Grazie<span data-thanks-name></span>!</span>
-          <span class="form-thanks__text">Abbiamo ricevuto la tua richiesta: ti ricontattiamo entro 48 ore. A presto.</span>
+          <span class="form-thanks__text">Abbiamo ricevuto la tua richiesta: ti rispondiamo noi, per email o per telefono.</span>
         </div>
       </form>
     </div>
@@ -240,6 +250,7 @@ import Placeholder from "@components/Placeholder.astro";
   }
 
   .info { display: flex; flex-direction: column; gap: var(--space-lg); }
+  .info__title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 var(--space-xs); max-width: 22ch; }
   .info__block { display: flex; flex-direction: column; gap: 0.25rem; }
   .info__label {
     font-family: var(--font-mono);
@@ -263,6 +274,9 @@ import Placeholder from "@components/Placeholder.astro";
     box-shadow: var(--shadow-lift);
   }
   .form__eyebrow { margin-bottom: 0; }
+  .form__legend { font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.5; margin: 0 0 var(--space-2xs); }
+  .form__call { text-align: center; margin: var(--space-xs) 0 0; font-size: var(--text-sm); color: var(--color-ink-2); }
+  .form__call a { color: var(--color-accent); font-weight: 600; }
   .form__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 var(--space-2xs); color: var(--color-ink); }
   .field { display: flex; flex-direction: column; gap: var(--space-2xs); }
   .field label { font-size: var(--text-sm); color: var(--color-ink-2); font-weight: 500; }

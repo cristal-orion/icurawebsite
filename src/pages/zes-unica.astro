@@ -5,69 +5,126 @@ import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
 
 const facts = [
-  { num: "fino al 60%", label: "Credito d'imposta — piccole imprese in Campania" },
-  { num: "2026", label: "Investimenti ammissibili (misura fino al 2028)" },
-  { num: "200.000 €", label: "Soglia minima di progetto" },
+  { num: "fino al 60%", label: "Credito d'imposta per le piccole imprese in Campania (50% medie, 40% grandi)" },
+  { num: "2026–2028", label: "Investimenti agevolati: L. 199/2025, art. 1, commi 438–443" },
+  { num: "200.000 €", label: "Progetto minimo (massimo 100 milioni)" },
+];
+
+const aChi = [
+  "Imprese con strutture produttive in Campania, Puglia, Calabria, Sicilia, Basilicata, Molise, Sardegna, Abruzzo e, per gli investimenti dal 1° gennaio 2026, nelle aree di Marche e Umbria incluse nella ZES Unica.",
+  "Imprese che hanno presentato la comunicazione per il 2026 e devono inviare la comunicazione integrativa a gennaio 2027.",
+  "Imprese che pianificano investimenti nel 2027 o nel 2028 in macchinari, impianti, attrezzature e immobili strumentali.",
 ];
 
 const finanzia = [
   {
-    nome: "Macchinari e impianti",
-    desc: "Acquisto di nuovi macchinari, impianti e attrezzature destinati alla struttura produttiva.",
+    nome: "Macchinari, impianti e attrezzature",
+    desc: "Acquisto di beni strumentali nuovi destinati alla struttura produttiva.",
   },
   {
     nome: "Immobili strumentali",
-    desc: "Acquisto, realizzazione o ampliamento di immobili strumentali all'investimento produttivo.",
+    desc: "Acquisto, realizzazione o ampliamento di immobili strumentali, entro il limite del 50% del valore complessivo dell'investimento per terreni e fabbricati.",
   },
   {
-    nome: "Strutture produttive nel Sud",
-    desc: "Investimenti in unità produttive nelle aree della ZES Unica del Mezzogiorno, Campania inclusa.",
+    nome: "Verifica dei requisiti e calcolo",
+    desc: "Verifichiamo sede, dimensione e tipologia di investimento, e stimiamo l'aliquota applicabile e il credito atteso.",
+  },
+  {
+    nome: "Comunicazione e comunicazione integrativa",
+    desc: "Prepariamo e inviamo la comunicazione nella finestra annuale (31 marzo–30 maggio) e l'integrativa (3–17 gennaio), con fatture elettroniche e certificazione.",
+  },
+  {
+    nome: "Certificazione e compensazione",
+    desc: "Coordiniamo la certificazione del revisore legale e l'utilizzo del credito in compensazione su F24 dopo la ricevuta dell'Agenzia.",
+  },
+  {
+    nome: "Cumulo e controlli",
+    desc: "Verifichiamo cumulabilità e intensità di aiuto (per esempio con l'iper-ammortamento, la cui base si calcola al netto del credito ZES) e ti assistiamo nei controlli, inclusi quelli antimafia sopra 150.000 euro di credito.",
+  },
+];
+
+const resta = [
+  "La verifica scritta dei requisiti e il calcolo del credito atteso.",
+  "La comunicazione e la comunicazione integrativa inviate nelle finestre corrette, a pena di decadenza.",
+  "La certificazione delle spese coordinata con il revisore e il credito pronto per la compensazione.",
+  "Le regole di cumulo verificate prima di investire.",
+];
+
+const ruoli = [
+  {
+    titolo: "Svolto direttamente da iCuraImpresa",
+    desc: "Verifica dei requisiti, calcolo del beneficio, preparazione e invio delle comunicazioni, monitoraggio delle finestre, assistenza ai controlli.",
+  },
+  {
+    titolo: "Coordinato da iCuraImpresa",
+    desc: "Il revisore legale per la certificazione delle spese; il commercialista dell'impresa per la compensazione.",
+  },
+  {
+    titolo: "Svolto da terzi",
+    desc: "L'Agenzia delle Entrate riceve le comunicazioni, ripartisce le risorse e rilascia le ricevute.",
   },
 ];
 
 const fasi = [
-  { n: "01", titolo: "Pre-check", desc: "Verifichiamo che impresa e investimento rientrino nei requisiti della ZES Unica. È gratuito." },
+  { n: "01", titolo: "Verifica preliminare", desc: "Verifichiamo che impresa e investimento rientrino nei requisiti della ZES Unica per l'annualità giusta." },
   { n: "02", titolo: "Calcolo del beneficio", desc: "Stimiamo l'aliquota applicabile e il credito d'imposta atteso sul tuo progetto." },
-  { n: "03", titolo: "Comunicazione all'AdE", desc: "Prepariamo e inviamo la comunicazione all'Agenzia delle Entrate nei termini della misura." },
-  { n: "04", titolo: "Certificazione e compensazione", desc: "Coordiniamo la certificazione delle spese e l'utilizzo del credito in compensazione su F24." },
+  { n: "03", titolo: "Comunicazioni all'Agenzia delle Entrate", desc: "Inviamo la comunicazione nella finestra annuale e l'integrativa a gennaio, con la documentazione richiesta." },
+  { n: "04", titolo: "Certificazione e compensazione", desc: "Coordiniamo la certificazione delle spese e l'utilizzo del credito in F24." },
 ];
 
 const faq = [
   {
-    q: "La mia regione rientra nella ZES Unica?",
-    a: "La ZES Unica copre l'intero Mezzogiorno: Abruzzo, Basilicata, Calabria, Campania, Molise, Puglia, Sardegna e Sicilia. L'aliquota base del credito cambia da regione a regione — più alta in Campania, Puglia, Calabria e Sicilia — e si somma alla maggiorazione per piccole e medie imprese. Nel pre-check verifichiamo la tua sede e il beneficio effettivo.",
+    q: "La finestra 2026 è ancora aperta?",
+    a: "No: la comunicazione per gli investimenti 2026 si poteva inviare dal 31 marzo al 30 maggio 2026. Chi l'ha presentata deve inviare la comunicazione integrativa dal 3 al 17 gennaio 2027, a pena di decadenza. Per nuovi investimenti la prossima finestra è dal 31 marzo al 30 maggio 2027, sulle spese del 2027. Verificato al 7 ottobre 2026.",
   },
   {
-    q: "Quali imprese possono accedere alla ZES Unica?",
-    a: "Le imprese che realizzano investimenti in beni strumentali destinati a strutture produttive nelle regioni del Mezzogiorno, Campania inclusa. L'aliquota del credito dipende dalla dimensione dell'impresa e dalla regione: per le piccole imprese in Campania può arrivare fino al 60%. Nel pre-check verifichiamo la tua posizione esatta.",
+    q: "La mia regione rientra nella ZES Unica?",
+    a: "La ZES Unica copre Abruzzo, Basilicata, Calabria, Campania, Molise, Puglia, Sardegna e Sicilia e, per gli investimenti dal 1° gennaio 2026, le aree di Marche e Umbria incluse. L'aliquota cambia per regione e dimensione d'impresa: in Campania 60% per le piccole, 50% per le medie, 40% per le grandi. Nella verifica preliminare calcoliamo il beneficio effettivo.",
   },
   {
     q: "C'è un importo minimo di investimento?",
-    a: "Sì. Il progetto deve raggiungere una soglia minima di 200.000 €. Non esiste invece un tetto unico nazionale al beneficio: conta il rispetto delle intensità di aiuto previste per dimensione e territorio, che calcoliamo noi.",
+    a: "Sì: il progetto deve raggiungere 200.000 euro (massimo 100 milioni). Terreni e fabbricati non possono superare il 50% del valore complessivo dell'investimento.",
   },
   {
     q: "Come si usa concretamente il credito d'imposta?",
-    a: "Non è un rimborso in denaro: è un credito che abbatte le imposte e i contributi da versare, da utilizzare in compensazione tramite modello F24. Prima dell'utilizzo serve la certificazione delle spese da parte di un revisore legale, che coordiniamo noi.",
+    a: "Non è un rimborso in denaro: è un credito che si utilizza esclusivamente in compensazione tramite modello F24, dopo la ricevuta dell'Agenzia delle Entrate che attesta l'importo spettante. Prima serve la certificazione delle spese da parte di un revisore legale.",
   },
   {
     q: "Posso cumulare la ZES con altre agevolazioni?",
-    a: "In molti casi sì, ma entro i limiti dell'intensità massima di aiuto e con le regole anti-doppio-finanziamento. Verificare la cumulabilità prima di investire fa parte del nostro lavoro: serve a non vedersi revocare il credito in fase di controllo.",
+    a: "In molti casi sì, entro i limiti dell'intensità massima di aiuto e con le regole contro il doppio finanziamento; con l'iper-ammortamento 2026-2028 la base della maggiorazione si calcola al netto del credito ZES. Verificare la cumulabilità prima di investire fa parte del nostro lavoro.",
   },
+];
+
+const fonti = [
+  "D.L. 19 settembre 2023, n. 124, art. 16, convertito con L. 162/2023",
+  "L. 30 dicembre 2025, n. 199, art. 1, commi 438–443",
+  "Agenzia delle Entrate — provvedimento del 30 gennaio 2026, prot. n. 3882/2026 (modelli di comunicazione)",
+  "D.M. 17 maggio 2024 (G.U. n. 117 del 21 maggio 2024) — modalità di accesso",
+];
+
+const correlati = [
+  { nome: "Engineering", desc: "Progettazione di spazi e impianti per l'investimento.", href: "/servizi/engineering" },
+  { nome: "Finanza Agevolata", desc: "Tutte le misure e il loro stato.", href: "/servizi/finanza-agevolata" },
+  { nome: "Bando ISI INAIL", desc: "Fondo perduto per gli investimenti in sicurezza.", href: "/bando-isi" },
 ];
 ---
 
 <Base
-  title="ZES Unica 2026"
-  description="Credito d'imposta ZES Unica 2026: fino al 60% per le piccole imprese della Campania e del Sud sugli investimenti in beni strumentali. iCura Impresa ti segue dal pre-check alla compensazione."
+  title="ZES Unica Mezzogiorno 2026-2028: credito d'imposta"
+  description="Credito d'imposta ZES Unica per gli investimenti al Sud: finestre 2026 e 2027, requisiti, importi minimi e documenti. Verifica dei requisiti con iCuraImpresa."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Finanza agevolata · ZES Unica</p>
-      <h1>ZES Unica 2026.</h1>
+      <h1>ZES Unica Mezzogiorno 2026–2028.</h1>
+      <ul class="chips" aria-label="Aggiornamento">
+        <li>Finestra 2026 chiusa · integrativa 3–17 gennaio 2027 · finestra 2027: 31 marzo–30 maggio (verificato al 7 ottobre 2026)</li>
+      </ul>
       <p class="lede">
-        Il credito d'imposta per chi investe nel Mezzogiorno. Per le imprese della Campania è una delle occasioni più forti del 2026: noi verifichiamo se puoi accedere e seguiamo tutta la pratica.
+        Il credito d'imposta per chi investe nel Mezzogiorno, prorogato al 2028. Per le imprese della Campania resta una delle occasioni più forti: verifichiamo se puoi accedere e seguiamo tutta la pratica, finestra per finestra.
       </p>
     </div>
   </header>
@@ -97,46 +154,51 @@ const faq = [
     </div>
   </section>
 
+  <ServiceExtras part="aChi" id="zes" items={aChi} />
+
   <section class="section section--ink">
     <div class="container two-col">
       <div>
-        <p class="eyebrow">Cos'è</p>
-        <h2>Un credito d'imposta automatico per investire al Sud.</h2>
+        <p class="eyebrow">Il bisogno</p>
+        <h2>Un credito d'imposta con finestre annuali: si pianifica, non si improvvisa.</h2>
       </div>
       <div class="prose">
         <p>
-          La ZES Unica riconosce alle imprese che investono in beni strumentali nelle regioni del Mezzogiorno — Campania compresa — un credito d'imposta proporzionale all'investimento. L'aliquota dipende dalla dimensione dell'impresa e dalla regione: per le piccole imprese in Campania può arrivare fino al 60%.
+          La ZES Unica riconosce alle imprese che investono in beni strumentali destinati a strutture produttive nel Mezzogiorno un credito d'imposta proporzionale all'investimento. L'aliquota dipende dalla dimensione dell'impresa e dalla regione: per le piccole imprese in Campania può arrivare al 60% (50% medie, 40% grandi). La Legge di bilancio 2026 (L. 199/2025, art. 1, commi 438–443) ha esteso la misura agli investimenti 2026, 2027 e 2028, con 2,3 miliardi per il 2026, 1 miliardo per il 2027 e 750 milioni per il 2028.
         </p>
         <p>
-          Vale sugli investimenti realizzati nel 2026, con una soglia minima di progetto di 200.000 €. Il credito si utilizza in compensazione tramite F24, previa certificazione delle spese da parte di un revisore.
+          La procedura prevede ogni anno una comunicazione all'Agenzia delle Entrate dal 31 marzo al 30 maggio, per gli investimenti dal 1° gennaio al 31 dicembre, e una comunicazione integrativa dal 3 al 17 gennaio dell'anno successivo, a pena di decadenza, con la certificazione del revisore. Il credito si utilizza in compensazione con F24 dopo la ricevuta dell'Agenzia. Le risorse sono ripartite tra le comunicazioni ammesse.
         </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>Art. 16 D.L. 124/2023 (L. 162/2023)</li>
+          <li>L. 199/2025, art. 1, commi 438–443</li>
+          <li>Provv. AdE 30/01/2026 prot. 3882</li>
+          <li>D.M. 17 maggio 2024</li>
+          <li>Progetto minimo 200.000 €</li>
+          <li>Certificazione del revisore</li>
+        </ul>
       </div>
     </div>
   </section>
 
   <section class="section section--alt-2">
     <div class="container">
-      <p class="eyebrow">Cosa puoi finanziare</p>
+      <p class="eyebrow">Che cosa facciamo</p>
+      <h2 class="section-title">Che cosa finanzia e come ti aiutiamo.</h2>
       <AreaGrid aree={finanzia} />
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
+  <ServiceExtras part="resta" id="zes" items={resta} />
+
+  <ServiceExtras part="ruoli" id="zes" ruoli={ruoli} />
 
   <Steps
-    eyebrow="Come ti aiutiamo"
-    title="Dal pre-check alla compensazione."
+    eyebrow="Come lavoriamo"
+    title="Dalla verifica alla compensazione."
     steps={fasi}
     labelledby="zes-fasi"
   />
-
-  <section class="section section--tight">
-    <div class="container">
-      <p class="note">
-        Aliquote esatte, finestre di domanda e adempimenti dipendono da dimensione d'impresa, regione e aggiornamenti normativi: il pre-check è gratuito e lo facciamo noi.
-      </p>
-    </div>
-  </section>
 
   <hr class="rule" aria-hidden="true" />
 
@@ -149,14 +211,23 @@ const faq = [
     tone="alt-blue"
   />
 
+  <ServiceExtras
+    part="fonti"
+    id="zes"
+    items={fonti}
+    nota="Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico."
+  />
+
+  <ServiceExtras part="correlati" id="zes" correlati={correlati} />
+
   <CtaBand
     title="Verifichiamo se la tua impresa può accedere."
-    lede="Pre-check gratuito · risposta entro 48 ore. Ti diciamo con onestà se conviene e quanto puoi ottenere."
+    lede="Raccontaci l'investimento e dove si trova la struttura produttiva: ti diciamo con onestà se conviene, in quale annualità e quanto puoi ottenere. Ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve. Oppure chiama lo 081 658 0779."
     image={{
       src: "/images/home-cnc-barriera.webp",
       alt: "Consulente iCura Impresa con un imprenditore valuta un progetto di investimento agevolato: documenti e prospetti su una scrivania ordinata, ambiente ufficio luminoso, palette desaturata sobria toni navy e grigio, fotografia documentaria professionale",
     }}
-    primary={{ href: "/contatti", label: "Richiedi il pre-check" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
     labelledby="zes-cta"
   />
 </Base>

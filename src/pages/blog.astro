@@ -1,90 +1,144 @@
 ---
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
-import CtaBand from "@components/CtaBand.astro";
 
-// Blog — struttura pronta, contenuti reali in arrivo.
-// Ogni articolo diventerà una pagina .astro (o una Content Collection): per ora
-// le card sono anteprime etichettate "In arrivo", non articoli pubblicati.
+// Blog — tre guide pratiche (testi del cliente). Ogni articolo è una pagina in src/pages/blog/.
 const articoli = [
   {
-    categoria: "Sicurezza sul lavoro",
-    titolo: "DVR: cosa controlla davvero un ispettore",
-    estratto: "Il documento di valutazione dei rischi punto per punto, e gli errori che fanno scattare le contestazioni.",
-    img: "/images/sicurezza-ispezione-capannone.webp",
-    alt: "Tecnico iCura Impresa durante un sopralluogo di sicurezza in un capannone industriale, verifica di una checklist con casco e giacca navy, luce naturale",
+    slug: "preparare-richiesta-consulenza",
+    categoria: "Consulenza",
+    titolo: "Come preparare una richiesta di consulenza aziendale",
+    estratto: "Obiettivi, persone coinvolte e informazioni essenziali: una guida per iniziare un confronto utile sull’organizzazione della tua impresa.",
+    data: "2026-10-07",
+    dataLabel: "7 ottobre 2026",
+    img: "/images/consulenza-aziendale-organizzazione.webp",
+    alt: "Riunione di lavoro in una piccola impresa italiana: titolare e responsabili attorno a un tavolo con organigramma e fogli di processo, luce naturale, palette sobria navy e grigio, fotografia documentaria",
   },
   {
-    categoria: "Finanza agevolata",
-    titolo: "Bandi e incentivi 2026: la mappa per la tua impresa",
-    estratto: "ZES Unica, Bando ISI INAIL, Transizione 5.0: chi può accedere, con quali scadenze e come non arrivare tardi.",
+    slug: "ricognizione-fabbisogni-formativi",
+    categoria: "Formazione",
+    titolo: "Fabbisogni formativi: da dove iniziare in azienda",
+    estratto: "Una traccia pratica per raccogliere ruoli, attività, competenze da sviluppare e vincoli organizzativi prima di costruire un piano formativo.",
+    data: "2026-10-07",
+    dataLabel: "7 ottobre 2026",
+    img: "/images/formazione-aula-adulti.webp",
+    alt: "Aula di formazione professionale con adulti che seguono un corso, docente accanto a una lavagna a fogli mobili, luce naturale",
+  },
+  {
+    slug: "preparare-progetto-investimento",
+    categoria: "Finanza Agevolata",
+    titolo: "Prima delle agevolazioni: prepara il progetto di investimento",
+    estratto: "Obiettivi, perimetro, costi indicativi e documenti: le informazioni da mettere in ordine per approfondire un progetto di investimento aziendale.",
+    data: "2026-10-07",
+    dataLabel: "7 ottobre 2026",
     img: "/images/finanza-zes-transizione-impianto.webp",
     alt: "Impianto industriale moderno oggetto di investimento in transizione tecnologica, macchinari e struttura in acciaio, luce diurna, fotografia documentaria",
-  },
-  {
-    categoria: "Certificazioni",
-    titolo: "ISO 45001 e OT23: ridurre il premio INAIL",
-    estratto: "Come la certificazione della sicurezza dà accesso allo sconto sul premio INAIL e quanto puoi risparmiare.",
-    img: "/images/certificazioni-audit-iso.webp",
-    alt: "Riunione di audit di un sistema di gestione certificato, consulenti adulti confrontano registri e checklist su un tavolo, luce naturale, palette sobria",
-  },
-  {
-    categoria: "Formazione",
-    titolo: "Formazione finanziata: far pagare i corsi ai fondi",
-    estratto: "I fondi interprofessionali in pratica: come trasformare lo 0,30% già versato in corsi a costo zero.",
-    img: "/images/formazione-aula-adulti.webp",
-    alt: "Aula di formazione professionale con adulti che seguono un corso sulla sicurezza, docente accanto a una lavagna a fogli mobili, luce naturale",
   },
 ];
 ---
 
 <Base
-  title="Blog"
-  description="Approfondimenti su sicurezza sul lavoro, bandi e finanza agevolata, certificazioni e formazione, a cura del team iCura Impresa. In arrivo."
+  title="Blog e guide pratiche"
+  description="Guide pratiche per preparare una richiesta di consulenza, individuare fabbisogni formativi e organizzare un progetto di investimento aziendale."
 >
   <header class="page-header section">
     <div class="container">
-      <p class="eyebrow">Blog</p>
-      <h1>Approfondimenti.</h1>
+      <p class="eyebrow">Blog · Le coordinate per la tua impresa</p>
+      <h1>Idee chiare. Prossimi passi concreti.</h1>
       <p class="lede">
-        Guide pratiche su sicurezza, bandi, certificazioni e formazione, scritte dai nostri consulenti.
-        Stiamo preparando i primi articoli: torna presto.
+        Approfondimenti per mettere a fuoco un’esigenza, preparare le informazioni utili e iniziare un confronto. Dall’organizzazione alle competenze, fino ai progetti di investimento.
       </p>
+      <div class="hero-ctas">
+        <a href="#guide" class="btn btn--primary">
+          Esplora le guide
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="/servizi/consulenza" class="link-cta">Scopri i servizi</a>
+      </div>
     </div>
   </header>
 
-  <section class="section" aria-labelledby="blog-list">
+  <section class="section" id="guide" aria-labelledby="blog-list">
     <div class="container">
-      <h2 id="blog-list" class="sr-only">Articoli in arrivo</h2>
+      <p class="eyebrow">Approfondimenti</p>
+      <h2 id="blog-list" class="section-title">Parti dal bisogno della tua impresa.</h2>
+      <p class="blog-intro">Tre guide pratiche da leggere, condividere e usare per preparare il prossimo confronto.</p>
+      <p class="blog-count">3 guide disponibili.</p>
       <ul class="blog-grid">
         {articoli.map((a) => (
           <li class="blog-card group">
             <div class="blog-card__media">
               <Placeholder aspect="16/9" src={a.img} alt={a.alt} class="media-grayscale" />
-              <span class="blog-card__badge">In arrivo</span>
             </div>
             <div class="blog-card__body">
               <span class="blog-card__cat">{a.categoria}</span>
-              <h3 class="blog-card__title">{a.titolo}</h3>
+              <h3 class="blog-card__title">
+                <a href={`/blog/${a.slug}`} class="blog-card__link">{a.titolo}</a>
+              </h3>
               <p class="blog-card__excerpt">{a.estratto}</p>
+              <p class="blog-card__meta">
+                <time datetime={a.data}>{a.dataLabel}</time>
+                <span class="blog-card__more">Leggi la guida <span aria-hidden="true">→</span></span>
+              </p>
             </div>
           </li>
         ))}
       </ul>
       <p class="blog-note">
-        Nel frattempo, se hai una domanda specifica sulla tua impresa, <a href="/contatti">scrivici</a>: ti rispondiamo entro 48 ore.
+        Approfondimenti editoriali del 7 ottobre 2026. Le guide aiutano a organizzare informazioni e domande: i requisiti di un servizio o di un’agevolazione richiedono un approfondimento sul caso concreto.
       </p>
     </div>
   </section>
 
-  <CtaBand
-    eyebrow="Resta aggiornato"
-    title="Vuoi una risposta senza aspettare l'articolo?"
-    lede="Raccontaci il tuo caso: un consulente ti dice cosa serve, con che tempi e quanto puoi farti finanziare."
-    primary={{ href: "/contatti", label: "Richiedi una consulenza" }}
-    secondary={{ href: "/servizi/consulenza", label: "Scopri i servizi" }}
-    labelledby="blog-cta"
-  />
+  <section class="section section--alt" aria-labelledby="blog-avvisi">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Rimani in contatto</p>
+        <h2 id="blog-avvisi" class="two-col__title">Gli aggiornamenti, nella tua email.</h2>
+        <p class="two-col__note">
+          Puoi iscriverti agli avvisi su articoli, bandi, scadenze e novità per le imprese. Puoi revocare il consenso in ogni momento.
+        </p>
+        <p class="two-col__note">
+          Hai un’esigenza già definita? <a href="/contatti" class="blog-inline">Raccontaci che cosa ti serve</a> oppure chiama lo <a href="tel:+390816580779" class="blog-inline">081 658 0779</a>.
+        </p>
+      </div>
+
+      {/* Invio gestito da src/scripts/lead-form.ts → Klaviyo (client-side). */}
+      <form class="form" id="avvisi" data-lead-form>
+        <h3 class="form__title">Iscriviti agli avvisi</h3>
+        <input type="text" name="company_website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="field">
+          <label for="av-email">Email</label>
+          <input id="av-email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="nome@azienda.it" />
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" name="marketing" required />
+          <span>Acconsento a ricevere avvisi su articoli, bandi, scadenze e novità normative. Posso revocare il consenso in ogni momento. <a href="/privacy">Informativa</a></span>
+        </label>
+
+        <button type="submit" class="btn btn--primary btn--cta">
+          Avvisami
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="form-status" data-lead-status role="status" aria-live="polite" hidden></p>
+
+        <div class="form-thanks" data-lead-success role="status" hidden>
+          <span class="form-thanks__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          </span>
+          <span class="form-thanks__title">Grazie<span data-thanks-name></span>!</span>
+          <span class="form-thanks__text">Iscrizione registrata. Puoi revocare il consenso in ogni momento.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // Invio iscrizione → Klaviyo (client-side).
+    import "../scripts/lead-form.ts";
+  </script>
 </Base>
 
 <style>
@@ -125,20 +179,6 @@ const articoli = [
   }
   .blog-card__media { position: relative; }
   .blog-card__media :global(.placeholder) { display: block; }
-  .blog-card__badge {
-    position: absolute;
-    top: var(--space-sm);
-    left: var(--space-sm);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-ink);
-    background: var(--color-highlight);
-    padding: 0.25rem 0.6rem;
-    border-radius: var(--radius-pill);
-  }
   .blog-card__body { display: flex; flex-direction: column; gap: var(--space-2xs); padding: var(--space-lg); flex: 1; }
   .blog-card__cat {
     font-family: var(--font-mono);
@@ -160,6 +200,53 @@ const articoli = [
 
   .blog-note { margin: var(--space-2xl) 0 0; font-size: var(--text-md); color: var(--color-muted); }
   .blog-note a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 0.2em; }
+
+
+  .hero-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); margin-top: var(--space-lg); }
+  .blog-intro { font-size: var(--text-lg); color: var(--color-ink-2); max-width: 56ch; margin: 0 0 var(--space-sm); }
+  .blog-count { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted); margin: 0 0 var(--space-lg); }
+  .blog-card { position: relative; }
+  .blog-card__link { color: inherit; text-decoration: none; }
+  .blog-card__link::after { content: ""; position: absolute; inset: 0; }
+  .blog-card__link:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+  .blog-card__meta { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); margin: var(--space-sm) 0 0; font-size: var(--text-sm); color: var(--color-muted); }
+  .blog-card__more { color: var(--color-accent); font-weight: 500; }
+  .blog-inline { color: var(--color-accent); text-decoration: underline; text-underline-offset: 0.2em; }
+
+  /* Form avvisi (stesso stile del modulo contatti) */
+  .two-col { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-xl); align-items: start; }
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: clamp(var(--space-lg), 3vw, var(--space-2xl));
+    background: var(--color-surface);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+  }
+  .form__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 var(--space-2xs); color: var(--color-ink); }
+  .field { display: flex; flex-direction: column; gap: var(--space-2xs); }
+  .field label { font-size: var(--text-sm); color: var(--color-ink-2); font-weight: 500; }
+  .field input {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-input);
+    font-family: var(--font-body);
+    font-size: var(--text-md);
+    color: var(--color-ink);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+  .field input:focus { border-color: var(--color-accent); outline: 2px solid var(--color-focus); outline-offset: 1px; }
+  .consent { display: flex; gap: 0.6rem; align-items: flex-start; font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.5; }
+  .consent a { color: var(--color-accent); }
+  .consent input { margin-top: 0.25rem; }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+  }
 
   @media (max-width: 64rem) {
     .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

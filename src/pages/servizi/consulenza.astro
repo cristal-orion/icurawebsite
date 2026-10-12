@@ -6,112 +6,149 @@ import FeatureRow from "@components/FeatureRow.astro";
 import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
 
 const aree = [
   {
     id: "sicurezza-lavoro",
     nome: "Sicurezza sul lavoro — D.Lgs. 81/08",
-    desc: "DVR e valutazioni dei rischi, nomina e incarico RSPP, sopralluoghi periodici, gestione di scadenze e adempimenti. Tutto il Testo Unico in un unico contratto.",
+    desc: "DVR e valutazioni dei rischi, incarico di RSPP esterno, sopralluoghi periodici, scadenzario e assistenza alle ispezioni.",
     href: "/servizi/consulenza/sicurezza-lavoro",
     cta: "Scopri di più",
   },
   {
     id: "cantieri",
     nome: "Sicurezza nei cantieri",
-    desc: "PSC, POS, fascicolo dell'opera e coordinamento per la sicurezza in fase di progettazione ed esecuzione (CSP/CSE). Per imprese edili e committenti privati.",
+    desc: "PSC, POS, coordinamento in progettazione ed esecuzione (CSP/CSE), notifica preliminare, fascicolo dell'opera e patente a crediti.",
     href: "/servizi/consulenza/cantieri",
     cta: "Scopri di più",
   },
   {
     id: "haccp",
     nome: "Sicurezza alimentare (HACCP)",
-    desc: "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione operatori secondo il Reg. CE 852/2004. Per ristoranti, bar, mense e produzione alimentare.",
+    desc: "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione degli operatori secondo il Reg. CE 852/2004.",
     href: "/servizi/consulenza/haccp",
     cta: "Scopri di più",
   },
   {
     id: "medicina-lavoro",
     nome: "Medicina del lavoro",
-    desc: "Sorveglianza sanitaria, idoneità alla mansione, protocollo sanitario e nomina del medico competente. Visite organizzate direttamente in azienda.",
+    desc: "Sorveglianza sanitaria, protocollo sanitario, idoneità alla mansione e coordinamento del medico competente, con visite organizzate in azienda.",
     href: "/servizi/consulenza/medicina-lavoro",
     cta: "Scopri di più",
   },
   {
     id: "gdpr",
-    nome: "GDPR & Privacy",
-    desc: "Nomina DPO, registro dei trattamenti, informative, valutazioni d'impatto e audit. Per chi tratta dati personali in modo strutturato (Reg. UE 2016/679).",
+    nome: "GDPR, privacy e cybersecurity",
+    desc: "Registro dei trattamenti, informative, DPO, DPIA, videosorveglianza e sicurezza informatica.",
     href: "/servizi/consulenza/gdpr",
     cta: "Scopri di più",
   },
   {
     id: "ambiente",
     nome: "Consulenza ambientale",
-    desc: "Autorizzazione Unica Ambientale (AUA), gestione rifiuti, MUD, registri di carico/scarico ed emissioni in atmosfera. Adempimenti tecnici e scadenze gestite da noi.",
+    desc: "Autorizzazioni ambientali (AUA), gestione dei rifiuti, iscrizione RENTRI, MUD ed emissioni. Scadenze seguite da noi.",
     href: "/servizi/consulenza/ambiente",
     cta: "Scopri di più",
   },
   {
     id: "aziendale",
-    nome: "Consulenza aziendale",
-    desc: "Strutturazione societaria, organizzazione dei processi e supporto continuativo all'impresa. Il punto di raccordo tra sicurezza, qualità e adempimenti.",
+    nome: "Consulenza aziendale e organizzativa",
+    desc: "Organizzazione, deleghe di funzioni, procedure e modello 231.",
     href: "/servizi/consulenza/aziendale",
     cta: "Scopri di più",
   },
 ];
 
+const aChi = [
+  "Imprese di ogni settore con almeno un lavoratore: dal primo dipendente scattano gli obblighi del D.Lgs. 81/08.",
+  "Imprese edili e committenti con cantieri aperti, soggette al Titolo IV e alla patente a crediti.",
+  "Attività alimentari (ristorazione, bar, mense, produzione) soggette al Reg. CE 852/2004.",
+  "Imprese con mansioni a rischio specifico che devono organizzare la sorveglianza sanitaria con il medico competente.",
+  "Datori di lavoro che vogliono un RSPP esterno e uno scadenzario tenuto da qualcun altro.",
+];
+
 const ottieni = [
-  "Tutta la documentazione obbligatoria a norma e pronta in caso di ispezione",
-  "Un calendario delle scadenze (visite, formazione, revisioni) che teniamo noi",
-  "Un solo referente per sicurezza, HACCP, ambiente e privacy, senza rimbalzi tra studi",
-  "Aggiornamenti automatici quando cambia la normativa o la tua organizzazione",
-  "Supporto diretto durante ispezioni di ASL, INAIL, Ispettorato e Vigili del Fuoco",
+  "Documentazione obbligatoria completa, datata, aggiornata e pronta in caso di ispezione.",
+  "Un calendario delle scadenze (visite, formazione, revisioni, autorizzazioni) che teniamo noi.",
+  "Un solo referente per sicurezza, cantieri, HACCP e medicina del lavoro, senza rimbalzi tra studi diversi.",
+  "Aggiornamento dei documenti quando cambia la norma o la tua organizzazione.",
+  "Assistenza diretta durante i controlli di ASL, INAIL, Ispettorato del Lavoro e Vigili del Fuoco.",
+];
+
+const ruoli = [
+  {
+    titolo: "Svolto direttamente da iCuraImpresa",
+    desc: "Valutazione dei rischi, incarico di RSPP esterno, documenti e procedure, scadenzario, assistenza alle ispezioni, consulenza HACCP, coordinamento della sicurezza nei cantieri.",
+  },
+  {
+    titolo: "Coordinato da iCuraImpresa",
+    desc: "Medico competente e sorveglianza sanitaria; analisi di laboratorio e indagini strumentali quando richieste dalla valutazione.",
+  },
+  {
+    titolo: "Svolto da terzi",
+    desc: "Il medico competente firma il protocollo sanitario e i giudizi di idoneità; gli organi di vigilanza (ASL, Ispettorato del Lavoro, INAIL) svolgono i controlli.",
+  },
 ];
 
 const fasi = [
-  { n: "01", titolo: "Sopralluogo", desc: "Veniamo in azienda, vediamo lavorazioni, ambienti e documenti già in essere. È gratuito." },
-  { n: "02", titolo: "Valutazione", desc: "Analizziamo rischi e adempimenti, fotografiamo cosa manca e definiamo le priorità." },
-  { n: "03", titolo: "Messa a norma", desc: "Redigiamo documenti e nomine, pianifichiamo formazione e sorveglianza sanitaria." },
-  { n: "04", titolo: "Gestione continua", desc: "Teniamo lo scadenzario, aggiorniamo i documenti e ti seguiamo durante i controlli." },
+  { n: "01", titolo: "Ti ascoltiamo", desc: "Veniamo in azienda, vediamo lavorazioni, ambienti e documenti già in essere e ascoltiamo dove vuoi arrivare." },
+  { n: "02", titolo: "Definiamo le priorità", desc: "Analizziamo rischi e adempimenti, fotografiamo che cosa manca e stabiliamo che cosa serve subito e che cosa può aspettare." },
+  { n: "03", titolo: "Costruiamo il progetto", desc: "Redigiamo documenti e nomine, pianifichiamo formazione e sorveglianza sanitaria, con responsabili e date." },
+  { n: "04", titolo: "Ti affianchiamo nel tempo", desc: "Teniamo lo scadenzario, aggiorniamo i documenti e ti seguiamo durante i controlli." },
 ];
 
 const faq = [
   {
     q: "Devo fare il DVR anche se ho un solo dipendente?",
-    a: "Sì. L'obbligo del Documento di Valutazione dei Rischi scatta dal primo lavoratore (anche familiare o socio che lavora in azienda). Non esiste più l'autocertificazione: il DVR va redatto e datato. Senza, le sanzioni sono penali a carico del datore di lavoro.",
+    a: "Sì, se c'è almeno un lavoratore ai sensi dell'art. 2 del D.Lgs. 81/08: dal primo dipendente, anche a tempo parziale o determinato, il datore di lavoro deve valutare i rischi e redigere il DVR, datato e firmato (l'autocertificazione non è più ammessa). La presenza di un familiare o di un socio non basta da sola a far scattare l'obbligo: conta la condizione in cui lavora. I componenti dell'impresa familiare (art. 230-bis c.c.) e i soci che lavorano senza vincolo di subordinazione rientrano nell'art. 21 del D.Lgs. 81/08, con obblighi propri (attrezzature conformi, dispositivi di protezione, tesserino di riconoscimento in cantiere) e con formazione e sorveglianza sanitaria facoltative; se invece il familiare o il socio è assunto come dipendente, è un lavoratore a tutti gli effetti. Verifichiamo la tua situazione nel primo incontro. La mancata redazione del DVR è punita con l'arresto o con l'ammenda a carico del datore di lavoro (art. 55, c. 1, D.Lgs. 81/08).",
   },
   {
-    q: "Cosa rischio se non sono in regola con il D.Lgs. 81/08?",
-    a: "Si va da sanzioni amministrative ad ammende e arresto per il datore di lavoro, fino alla sospensione dell'attività imprenditoriale nei casi più gravi. In caso di infortunio, l'assenza di valutazione dei rischi e formazione pesa molto sulla responsabilità. Mettersi in regola costa una frazione di quello che costa non esserlo.",
+    q: "Che cosa rischio se non sono in regola con il D.Lgs. 81/08?",
+    a: "Le violazioni principali sono punite con l'arresto o con l'ammenda a carico del datore di lavoro (art. 55 e seguenti), oltre alla possibile sospensione dell'attività nei casi previsti dall'art. 14. In caso di infortunio, l'assenza di valutazione dei rischi e di formazione pesa sulla responsabilità. Gli importi delle ammende sono rivalutati periodicamente: li verifichiamo sul caso concreto.",
   },
   {
     q: "L'RSPP posso prenderlo esterno o devo nominarlo internamente?",
-    a: "Puoi nominare un RSPP esterno qualificato, ed è la scelta più comune per le PMI: ti diamo una figura competente e aggiornata senza doverla formare e mantenere internamente. In alcuni casi e dimensioni il datore di lavoro può svolgere direttamente il ruolo, dopo formazione specifica.",
+    a: "Nella maggior parte delle imprese puoi incaricare un RSPP esterno qualificato: è la scelta più comune per le PMI. Nei casi previsti dall'art. 31, comma 6, l'RSPP deve essere interno. Il datore di lavoro può svolgere direttamente il ruolo solo entro le soglie dell'Allegato 2 e dopo la formazione specifica.",
   },
   {
     q: "Ogni quanto va aggiornato il DVR?",
-    a: "Va rielaborato a ogni variazione significativa: nuove lavorazioni o macchinari, modifiche dei luoghi, infortuni significativi o evoluzione della normativa. Non è un documento da fare una volta e archiviare — è quello che teniamo aggiornato per te con la gestione continua.",
+    a: "Va rielaborato a ogni variazione significativa: nuove lavorazioni o macchinari, modifiche dei luoghi, infortuni significativi o evoluzione della normativa. Non è un documento da fare una volta e archiviare: è quello che teniamo aggiornato per te con la gestione nel tempo.",
   },
   {
     q: "Seguite anche la sorveglianza sanitaria e il medico competente?",
-    a: "Sì. Mettiamo a disposizione il medico competente, definiamo il protocollo sanitario in base ai rischi e organizziamo le visite direttamente in azienda, coordinandole con il resto degli adempimenti.",
+    a: "Sì. Coordiniamo il medico competente, definiamo con lui il protocollo sanitario in base ai rischi delle mansioni e organizziamo le visite direttamente in azienda, in coordinamento con formazione e scadenze.",
   },
   {
-    q: "Come funziona il contratto?",
-    a: "Di norma lavoriamo con un retainer annuale: documentazione, formazione, aggiornamenti e supporto continuo a una tariffa prevedibile, senza extra a sorpresa. Dopo il sopralluogo gratuito ti diamo un preventivo chiaro su misura della tua attività.",
+    q: "Come funziona l'incarico?",
+    a: "Dopo il primo incontro ricevi un preventivo scritto, su misura della tua attività, che indica che cosa è compreso e che cosa no. Le formule contrattuali (incarico continuativo o interventi singoli) si definiscono insieme in base alle esigenze.",
   },
+];
+
+const fonti = [
+  "D.Lgs. 9 aprile 2008, n. 81 — Testo unico sulla salute e sicurezza sul lavoro",
+  "Reg. (CE) n. 852/2004 sull'igiene dei prodotti alimentari",
+];
+const fontiNota =
+  "Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico.";
+
+const correlati = [
+  { nome: "Formazione", desc: "La formazione obbligatoria che accompagna ogni valutazione dei rischi.", href: "/servizi/formazione" },
+  { nome: "ISO 45001", desc: "Il sistema di gestione della sicurezza, certificabile e utile per la riduzione del premio INAIL.", href: "/servizi/certificazioni/iso-45001" },
+  { nome: "Bando ISI INAIL", desc: "Contributi per investimenti in sicurezza: prepara il progetto per la prossima edizione.", href: "/bando-isi" },
 ];
 ---
 
 <Base
-  title="Consulenza"
-  description="Consulenza integrata per l'impresa: sicurezza sul lavoro (D.Lgs. 81/08), cantieri, HACCP, medicina del lavoro, GDPR, ambiente e organizzazione aziendale. Un solo interlocutore."
+  title="Sicurezza sul lavoro a Napoli: DVR, RSPP, HACCP"
+  description="Consulenza sicurezza sul lavoro a Napoli: DVR, RSPP esterno, nomine, cantieri e patente a crediti, HACCP, medico competente. D.Lgs. 81/08 con un solo referente."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 01</p>
       <h1>Consulenza.</h1>
       <p class="lede">
-        Tutto quello che la legge chiede e che l'impresa non dovrebbe gestire da sola — sicurezza, HACCP, ambiente, privacy — in capo a un solo interlocutore.
+        Tutto quello che la legge chiede per la salute e la sicurezza — D.Lgs. 81/08, cantieri, HACCP, medicina del lavoro — in capo a un solo referente. Proteggi ciò che conta.
       </p>
     </div>
   </header>
@@ -128,19 +165,22 @@ const faq = [
     </div>
   </section>
 
-  {/* ───── Contesto ───── */}
+  {/* ───── A chi si rivolge ───── */}
+  <ServiceExtras part="aChi" id="consulenza" items={aChi} />
+
+  {/* ───── Il bisogno ───── */}
   <section class="section section--alt" aria-labelledby="consulenza-contesto">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">01 — Perché serve</p>
-        <h2 id="consulenza-contesto" class="two-col__title">La sicurezza non è un certificato. È un mestiere quotidiano.</h2>
+        <p class="eyebrow">Il bisogno</p>
+        <h2 id="consulenza-contesto" class="two-col__title">La sicurezza non è un certificato. È un lavoro quotidiano.</h2>
       </div>
       <div class="prose">
         <p>
-          Il D.Lgs. 81/08 non chiede un foglio da archiviare: chiede di valutare i rischi reali, formare le persone, tenere in ordine documenti e scadenze e dimostrarlo in qualsiasi momento davanti a un ispettore. Lo stesso vale per HACCP, ambiente e privacy.
+          Il D.Lgs. 81/08 non chiede un foglio da archiviare: chiede di valutare i rischi reali, formare le persone, tenere in ordine documenti e scadenze e dimostrarlo in qualsiasi momento davanti a un ispettore. Lo stesso vale per i cantieri, l'HACCP e la sorveglianza sanitaria.
         </p>
         <p>
-          Per un'impresa, gestirlo da sola significa rincorrere norme che cambiano e moduli che si moltiplicano. Noi lo trattiamo come un processo continuo, non come un adempimento una tantum: un team multidisciplinare che tiene insieme tutto e ti lascia lavorare.
+          Per un'impresa, gestirlo da sola significa rincorrere norme che cambiano e moduli che si moltiplicano. Noi lo trattiamo come un processo continuo, non come un adempimento una tantum: una squadra di competenze che tiene insieme tutto e ti lascia lavorare.
         </p>
         <ul class="chips" aria-label="Ambiti e normative che seguiamo">
           <li>D.Lgs. 81/08</li>
@@ -149,8 +189,8 @@ const faq = [
           <li>PSC / POS</li>
           <li>HACCP — Reg. CE 852/2004</li>
           <li>Medico competente</li>
-          <li>GDPR — Reg. UE 2016/679</li>
-          <li>AUA / MUD</li>
+          <li>Patente a crediti</li>
+          <li>Sorveglianza sanitaria</li>
         </ul>
       </div>
     </div>
@@ -158,11 +198,14 @@ const faq = [
 
   <hr class="rule" aria-hidden="true" />
 
-  {/* ───── Cosa copriamo ───── */}
+  {/* ───── Che cosa facciamo ───── */}
   <section class="section" aria-labelledby="consulenza-aree">
     <div class="container">
-      <p class="eyebrow">02 — Cosa copriamo</p>
-      <h2 id="consulenza-aree" class="section-title">Un'unica filiera per tutti gli adempimenti.</h2>
+      <p class="eyebrow">Che cosa facciamo</p>
+      <h2 id="consulenza-aree" class="section-title">Un'unica filiera per la salute e la sicurezza.</h2>
+      <p class="lede">
+        Sette servizi, un solo referente che conosce la tua attività. Ogni pagina spiega a chi si rivolge, che cosa facciamo e che cosa consegniamo.
+      </p>
       <AreaGrid aree={aree} />
     </div>
   </section>
@@ -172,31 +215,28 @@ const faq = [
     flip
     id="medicina-focus"
     eyebrow="Medicina del lavoro"
-    title="Sorveglianza sanitaria, organizzata in azienda."
+    title="La sorveglianza fatta a metà pesa quanto non farla."
     image={{
       src: "/images/consulenza-medicina-lavoro.webp",
       alt: "Medico competente durante una visita di sorveglianza sanitaria in azienda: adulto in camice misura la pressione a un lavoratore in abbigliamento tecnico, stanza riservata e ordinata, luce naturale, atmosfera professionale e rispettosa",
     }}
     paras={[
-      "Dove c'è un rischio per la salute serve la sorveglianza sanitaria: protocollo, visite, idoneità alla mansione. Senza medico competente nominato e senza protocollo, l'azienda è scoperta proprio sul punto più delicato.",
-      "Mettiamo a disposizione il medico competente, costruiamo il protocollo sui rischi reali delle mansioni e organizziamo le visite direttamente da te, coordinandole con scadenze e formazione.",
+      "La sorveglianza sanitaria scatta ogni volta che la valutazione dei rischi individua un'esposizione che la richiede. In quei casi il datore di lavoro deve nominare un medico competente e organizzare le visite: non è una scelta discrezionale, è un obbligo che discende dall'art. 41 del D.Lgs. 81/08.",
+      "Il punto debole più comune non è l'assenza totale di sorveglianza, ma quella fatta a metà: un medico nominato solo sulla carta, un protocollo copiato da un'azienda con mansioni diverse, visite in ritardo o senza verbale.",
     ]}
     points={[
       "Nomina del medico competente",
-      "Protocollo sanitario sui rischi reali",
-      "Visite organizzate in sede",
+      "Protocollo sanitario su misura",
+      "Visite mediche in azienda",
     ]}
   />
 
-  {/* ───── Cosa ottieni ───── */}
+  {/* ───── Che cosa consegniamo ───── */}
   <section class="section section--ink" aria-labelledby="consulenza-ottieni">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">03 — Cosa ottieni</p>
-        <h2 id="consulenza-ottieni" class="two-col__title">In regola, e capace di dimostrarlo.</h2>
-        <p class="two-col__note">
-          L'obiettivo non è "avere le carte". È non doverci più pensare, sapendo che è tutto a posto.
-        </p>
+        <p class="eyebrow">Che cosa consegniamo</p>
+        <h2 id="consulenza-ottieni" class="two-col__title">Che cosa resta in azienda, a lavoro finito.</h2>
       </div>
       <ul class="checklist">
         {ottieni.map((o) => (
@@ -209,10 +249,13 @@ const faq = [
     </div>
   </section>
 
-  {/* ───── Come funziona ───── */}
+  {/* ───── Chi fa che cosa ───── */}
+  <ServiceExtras part="ruoli" id="consulenza" ruoli={ruoli} />
+
+  {/* ───── Come lavoriamo ───── */}
   <Steps
-    eyebrow="04 — Come funziona"
-    title="Dal sopralluogo alla gestione continua."
+    eyebrow="Come lavoriamo"
+    title="Dal primo incontro alla gestione nel tempo."
     steps={fasi}
     labelledby="consulenza-fasi"
   />
@@ -222,20 +265,20 @@ const faq = [
   {/* ───── Focus: GDPR ───── */}
   <FeatureRow
     id="gdpr-focus"
-    eyebrow="GDPR & Privacy"
-    title="GDPR: un registro che esiste davvero."
+    eyebrow="GDPR, privacy e cybersecurity"
+    title="Conformità che si dimostra, non si dichiara."
     image={{
       src: "/images/consulenza-gdpr-privacy.webp",
       alt: "Consulente privacy iCura Impresa durante un audit GDPR in ufficio: due adulti esaminano registro trattamenti, laptop e documenti non leggibili su un tavolo ordinato, luce naturale e atmosfera riservata",
     }}
     paras={[
-      "Trattare dati di clienti, dipendenti e fornitori vuol dire avere informative corrette, un registro dei trattamenti aggiornato e, in molti casi, un DPO nominato. Il modello scaricato da internet, davanti a un reclamo o a un controllo del Garante, non basta.",
-      "Mappiamo i trattamenti, redigiamo informative e registro, valutiamo i rischi (DPIA dove serve) e, quando è obbligatorio o opportuno, assumiamo il ruolo di DPO. Conformità al Reg. UE 2016/679 costruita sulla tua organizzazione, non copiata.",
+      "Il Regolamento UE 2016/679 non si esaurisce con un'informativa copiata da internet e un banner dei cookie. Chiede di sapere esattamente quali dati tratti, perché, con quale base giuridica, per quanto tempo, e di poterlo dimostrare: registro dei trattamenti aggiornato, informative coerenti con quello che fai davvero, misure di sicurezza proporzionate al rischio.",
+      "Il punto debole più comune non è l'assenza di documenti, ma documenti scritti una volta e mai più toccati: il registro che non include il nuovo gestionale, l'informativa che non parla delle telecamere installate l'anno dopo, il DPO mai valutato «perché siamo piccoli».",
     ]}
     points={[
-      "Registro dei trattamenti e informative",
-      "Valutazioni d'impatto (DPIA)",
-      "DPO esterno quando serve",
+      "Registro dei trattamenti",
+      "DPO e valutazione dell'obbligo",
+      "Cybersecurity",
     ]}
   />
 
@@ -243,7 +286,7 @@ const faq = [
 
   {/* ───── FAQ ───── */}
   <Faq
-    eyebrow="05 — Domande frequenti"
+    eyebrow="Domande frequenti"
     title="Le domande che ci fanno più spesso."
     name="faq-consulenza"
     labelledby="consulenza-faq"
@@ -251,14 +294,22 @@ const faq = [
     tone="alt-blue"
   />
 
+  {/* ───── Fonti e riferimenti ───── */}
+  <ServiceExtras part="fonti" id="consulenza" items={fonti} nota={fontiNota} />
+
+  {/* ───── Spesso insieme a questo servizio ───── */}
+  <ServiceExtras part="correlati" id="consulenza" correlati={correlati} />
+
   <CtaBand
-    title="Capiamo di cosa ha bisogno la tua impresa."
-    lede="Sopralluogo gratuito · risposta entro 48 ore. Prima capiamo se possiamo esserti utile, poi decidi tu."
+    eyebrow="Il prossimo passo"
+    title="Capiamo di che cosa ha bisogno la tua impresa."
+    lede="Raccontaci settore, numero di addetti e che cosa ti preoccupa: ti diciamo che cosa serve davvero, con quali priorità. Richiedi un ricontatto: ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve."
     image={{
       src: "/images/sicurezza-ispezione-capannone.webp",
       alt: "Consulente iCura Impresa durante un sopralluogo in azienda: adulto con casco bianco e block-notes osserva gli impianti e parla con il responsabile, atmosfera collaborativa e rassicurante, ambiente industriale italiano con luce naturale, palette desaturata sobria toni navy e grigio, fotografia documentaria professionale, no posa",
     }}
-    primary={{ href: "/contatti", label: "Prenota sopralluogo" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
+    secondary={{ href: "tel:+390816580779", label: "Oppure chiama lo 081 658 0779" }}
     labelledby="consulenza-cta"
   />
 </Base>

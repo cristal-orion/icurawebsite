@@ -1,0 +1,72 @@
+---
+import Guida from "@layouts/Guida.astro";
+
+const sezioni = [
+  {
+    id: "attivita-e-ruoli",
+    titolo: "Mappa attività e ruoli, prima dei corsi",
+    blocchi: [
+      { p: "La domanda iniziale non è «quale corso acquistiamo?», ma «quali attività devono saper svolgere le persone?». Parti da reparti, funzioni e sedi; per ogni gruppo descrivi il lavoro effettivo, gli strumenti utilizzati e le principali interazioni con altri ruoli." },
+      { p: "Considera anche le variazioni previste: nuovi ingressi, cambi di mansione, introduzione di strumenti digitali o modifica di una procedura. Due persone con lo stesso titolo possono avere esigenze diverse. Per una prima ricognizione puoi lavorare per gruppi omogenei, senza raccogliere subito informazioni individuali non necessarie." },
+    ],
+  },
+  {
+    id: "competenze-e-difficolta",
+    titolo: "Ascolta le difficoltà e individua le competenze",
+    blocchi: [
+      { p: "Chiedi a chi svolge l’attività e a chi la coordina in quali situazioni emerge una difficoltà. Una procedura poco conosciuta, un’applicazione utilizzata solo in parte o un passaggio di consegne confuso sono punti di partenza più utili di un generico «serve aggiornamento»." },
+      { p: "Per ogni bisogno descrivi la competenza attesa con un’azione: usare una funzione, spiegare un passaggio, eseguire una procedura, riconoscere quando chiedere supporto. Verifica anche se il problema dipenda davvero dall’apprendimento: ruoli incerti, accessi mancanti o istruzioni contraddittorie richiedono interventi organizzativi oltre alla formazione." },
+    ],
+  },
+  {
+    id: "quadro-delle-informazioni",
+    titolo: "Costruisci un quadro delle informazioni disponibili",
+    blocchi: [
+      { p: "Raccogli le informazioni già presenti in azienda: percorsi svolti, materiali utilizzati, riscontri dei partecipanti e documentazione disponibile. Segna ciò che manca o deve essere approfondito, senza trasformare un’informazione incompleta in una conclusione." },
+      { ul: [
+        "Gruppo o ruolo e attività da svolgere.",
+        "Competenza da sviluppare e difficoltà osservata.",
+        "Percorsi già seguiti e documenti disponibili.",
+        "Priorità proposta e referente da coinvolgere.",
+        "Vincoli di turni, sedi, strumenti e accessibilità.",
+      ] },
+      { p: "Questa ricognizione organizza il bisogno. La verifica di eventuali obblighi, requisiti dei percorsi e documenti è un passaggio distinto, da svolgere in relazione al caso concreto. Non dedurre la completezza della formazione dalla sola presenza di un attestato." },
+    ],
+  },
+  {
+    id: "priorita-e-modalita",
+    titolo: "Condividi le priorità e i vincoli pratici",
+    blocchi: [
+      { p: "Confronta le esigenze raccolte con gli obiettivi dell’impresa. Una competenza necessaria per un’attività imminente può richiedere un ordine diverso rispetto a un interesse di sviluppo futuro. Spiega il criterio utilizzato, così chi partecipa comprende il senso del percorso." },
+      { p: "Indica quando le persone possono dedicarsi alla formazione e di quali strumenti dispongono. Aula, attività a distanza e momenti sul lavoro vanno valutati in relazione al contenuto, alle esercitazioni e ai requisiti applicabili. Evita di scegliere una modalità soltanto perché sembra più semplice da inserire in calendario." },
+    ],
+  },
+  {
+    id: "riscontro-sul-lavoro",
+    titolo: "Definisci come raccogliere un riscontro",
+    blocchi: [
+      { p: "Prima di avviare il percorso, chiarisci quale applicazione concreta osserverete dopo. Può essere l’utilizzo di una funzione, una consegna più completa o l’esecuzione di un’attività con maggiore autonomia. Individua chi raccoglierà il riscontro e un momento ragionevole per confrontarlo." },
+      { p: "Una domanda utile: «Dopo questo percorso, che cosa dovrebbe saper fare la persona e in quale situazione potremo osservarlo?»." },
+      { p: "Condividi questa prima fotografia con il referente della <a href=\"/servizi/formazione\">formazione</a>. Aiuta a discutere contenuti, partecipanti e organizzazione del piano, mantenendo collegati l’apprendimento e il lavoro quotidiano." },
+    ],
+  },
+];
+---
+
+<Guida
+  title="Fabbisogni formativi: da dove iniziare in azienda"
+  description="Una traccia pratica per raccogliere ruoli, attività, competenze da sviluppare e vincoli organizzativi prima di costruire un piano formativo."
+  categoria="Formazione"
+  h1="Fabbisogni formativi: da dove iniziare in azienda"
+  lede="Un piano formativo utile parte dalle attività reali delle persone. Prima di scegliere i corsi, costruisci una fotografia condivisa di ciò che serve imparare, aggiornare o applicare meglio."
+  dataIso="2026-10-07"
+  dataLabel="7 ottobre 2026"
+  sezioni={sezioni}
+  servizioHref="/servizi/formazione"
+  ctaTitle="Impostiamo il piano formativo della tua impresa"
+  ctaLede="Raccontaci quali attività svolgete, quali ruoli vuoi coinvolgere e quali competenze desideri sviluppare. Partiamo dalla ricognizione per approfondire le esigenze della tua organizzazione."
+  altre={[
+    { categoria: "Consulenza", titolo: "Come preparare una richiesta di consulenza aziendale", href: "/blog/preparare-richiesta-consulenza" },
+    { categoria: "Finanza Agevolata", titolo: "Prima delle agevolazioni: prepara il progetto di investimento", href: "/blog/preparare-progetto-investimento" },
+  ]}
+/>

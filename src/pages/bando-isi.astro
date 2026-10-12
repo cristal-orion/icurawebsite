@@ -5,11 +5,18 @@ import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
 
 const facts = [
-  { num: "600 mln €", label: "Dotazione a fondo perduto (edizione 2025/2026)" },
-  { num: "fino al 65%", label: "Delle spese — fino all'80% con modelli organizzativi" },
-  { num: "5.000–130.000 €", label: "Importo del contributo" },
+  { num: "65% – 80%", label: "Contributo sulle spese ammissibili (80% per i modelli organizzativi e di responsabilità sociale)" },
+  { num: "5.000–130.000 €", label: "Contributo per progetto" },
+  { num: "26 ottobre 2026", label: "Perfezionamento delle domande ammesse, entro le 18:00" },
+];
+
+const aChi = [
+  "Imprese iscritte alla Camera di Commercio, con le specificità previste per assi e settori (compreso l'agricolo), che vogliono investire in sicurezza.",
+  "Aziende che devono sostituire macchine obsolete, ridurre rischi (rumore, vibrazioni, movimentazione, agenti nocivi) o bonificare amianto.",
+  "Imprese ammesse all'edizione 2025 che devono perfezionare la domanda entro il 26 ottobre 2026.",
 ];
 
 const finanzia = [
@@ -19,7 +26,7 @@ const finanzia = [
   },
   {
     nome: "Riduzione dei rischi",
-    desc: "Interventi su rumore, vibrazioni, agenti nocivi, movimentazione carichi e rischio infortuni.",
+    desc: "Interventi su rumore, vibrazioni, agenti nocivi, movimentazione dei carichi e rischio infortuni.",
   },
   {
     nome: "Modelli organizzativi",
@@ -29,46 +36,85 @@ const finanzia = [
     nome: "Bonifica amianto",
     desc: "Rimozione e smaltimento di materiali contenenti amianto dai luoghi di lavoro.",
   },
+  {
+    nome: "Progetto a punteggio",
+    desc: "Disegniamo l'intervento per raggiungere la soglia di ammissibilità e il punteggio migliore: tipologia, rischio ridotto, parametri premiali.",
+  },
+  {
+    nome: "Domanda, elenchi e perfezionamento",
+    desc: "Prepariamo perizia, preventivi e modulistica; seguiamo l'invio nei tempi previsti e il perfezionamento della documentazione per le domande ammesse.",
+  },
+];
+
+const resta = [
+  "La verifica che impresa e progetto rientrino negli assi dell'edizione in corso o in arrivo.",
+  "Il progetto e la documentazione tecnica pronti prima dell'apertura dello sportello.",
+  "La gestione della domanda, degli elenchi e del perfezionamento con la documentazione.",
+  "Realizzazione, collaudo e rendicontazione seguiti fino all'erogazione del contributo.",
+];
+
+const ruoli = [
+  {
+    titolo: "Svolto direttamente da iCuraImpresa",
+    desc: "Verifica dei requisiti, progetto, perizia e documentazione, domanda, perfezionamento, rendicontazione.",
+  },
+  {
+    titolo: "Svolto da terzi",
+    desc: "L'INAIL fissa calendario e regole, forma gli elenchi, verifica le domande ed eroga il contributo.",
+  },
 ];
 
 const fasi = [
-  { n: "01", titolo: "Pre-check idoneità", desc: "Verifichiamo che impresa e progetto rientrino negli assi di finanziamento del bando. È gratuito." },
-  { n: "02", titolo: "Progetto a punteggio", desc: "Disegniamo l'intervento per massimizzare il punteggio: tipologia, rischio ridotto e parametri premiali." },
-  { n: "03", titolo: "Documentazione", desc: "Prepariamo perizia, preventivi e tutta la modulistica tecnica richiesta dall'INAIL." },
-  { n: "04", titolo: "Click day", desc: "Carichiamo e inviamo la domanda all'apertura dello sportello, dove conta l'ordine cronologico." },
-  { n: "05", titolo: "Rendicontazione", desc: "Seguiamo realizzazione, collaudo e rendiconto fino all'erogazione del contributo." },
+  { n: "01", titolo: "Verifica preliminare", desc: "Verifichiamo che impresa e progetto rientrino negli assi di finanziamento." },
+  { n: "02", titolo: "Progetto", desc: "Disegniamo l'intervento per ammissibilità e punteggio, con perizia e preventivi." },
+  { n: "03", titolo: "Domanda", desc: "Carichiamo e inviamo la domanda nei tempi previsti dall'edizione; seguiamo elenchi e perfezionamento." },
+  { n: "04", titolo: "Rendicontazione", desc: "Seguiamo realizzazione, collaudo e rendiconto fino all'erogazione del contributo." },
 ];
 
 const faq = [
   {
-    q: "Cos'è il click day e perché conta arrivare pronti?",
-    a: "Il Bando ISI assegna i fondi a sportello: alla data fissata si invia la domanda e contano l'ordine cronologico e la velocità di invio, fino a esaurimento delle risorse. Non basta avere un buon progetto — serve essere validati e pronti a inviare nell'istante giusto. Per questo prepariamo tutto in anticipo e simuliamo l'invio.",
+    q: "A che punto è il Bando ISI oggi?",
+    a: "Edizione 2025: compilazione delle domande dal 13 aprile alle 18:00 del 28 maggio 2026; elenchi senza click day pubblicati il 3 giugno 2026; click day (solo asse 5) il 24 giugno 2026 con elenchi provvisori il 3 agosto 2026; perfezionamento delle domande ammesse entro le 18:00 del 26 ottobre 2026 (termini unificati con l'avviso INAIL dell'8 settembre 2026). Edizione 2026: avviso non ancora pubblicato. Verificato al 7 ottobre 2026.",
+  },
+  {
+    q: "Che cos'è il click day e perché conta arrivare pronti?",
+    a: "Nell'edizione 2025 l'INAIL ha previsto elenchi cronologici senza click day per gli assi generali e un click day solo per l'asse 5. Le regole possono cambiare da un'edizione all'altra: quello che non cambia è che il progetto deve essere completo e validato prima che lo sportello apra.",
   },
   {
     q: "Quanto posso ottenere a fondo perduto?",
-    a: "Il contributo copre il 65% delle spese ammissibili, che sale fino all'80% per i progetti dell'Asse dedicato ai modelli organizzativi e di responsabilità sociale. L'importo va da un minimo di 5.000 € a un massimo di 130.000 € per progetto.",
-  },
-  {
-    q: "Che spese posso finanziare con il Bando ISI?",
-    a: "Acquisto di macchinari e attrezzature più sicure in sostituzione di quelle obsolete, interventi di riduzione dei rischi (rumore, vibrazioni, movimentazione carichi, agenti nocivi), adozione di modelli organizzativi e bonifica di materiali contenenti amianto. Nel pre-check valutiamo quali voci massimizzano contributo e punteggio.",
+    a: "Nell'edizione 2025 il contributo copre il 65% delle spese ammissibili (80% per i progetti dell'asse dedicato ai modelli organizzativi), da un minimo di 5.000 a un massimo di 130.000 euro per progetto. Le percentuali dell'edizione 2026 saranno quelle dell'avviso che l'INAIL pubblicherà.",
   },
   {
     q: "La mia impresa può partecipare?",
-    a: "Possono partecipare la generalità delle imprese iscritte alla Camera di Commercio, con alcune specificità per assi e settori (incluso quello agricolo). La verifica di idoneità dell'impresa e del progetto è proprio il primo passo che facciamo, gratuitamente, nel pre-check.",
+    a: "Possono partecipare le imprese iscritte alla Camera di Commercio, con alcune specificità per assi e settori. La verifica di idoneità dell'impresa e del progetto è il primo passo che facciamo insieme.",
   },
+];
+
+const fonti = [
+  "INAIL — Bando ISI 2025: pagina ufficiale, calendario delle scadenze (aggiornato all'8 settembre 2026) e avviso di proroga al 26 ottobre 2026",
+  "Estratto dell'Avviso pubblico ISI 2025 (G.U. n. 293 del 18 dicembre 2025)",
+];
+
+const correlati = [
+  { nome: "Sicurezza sul lavoro", desc: "La valutazione dei rischi da cui parte il progetto.", href: "/servizi/consulenza/sicurezza-lavoro" },
+  { nome: "ISO 45001", desc: "Il sistema di gestione certificato, anche per l'OT23.", href: "/servizi/certificazioni/iso-45001" },
+  { nome: "Finanza Agevolata", desc: "Tutte le misure e il loro stato.", href: "/servizi/finanza-agevolata" },
 ];
 ---
 
 <Base
-  title="Bando ISI INAIL 2025"
-  description="Bando ISI INAIL 2025/2026: 600 milioni a fondo perduto per la sicurezza sul lavoro, contributi fino al 65% (80% con modelli organizzativi), da 5.000 a 130.000 €. iCura Impresa prepara la domanda e ti accompagna al click day."
+  title="Bando ISI INAIL: contributi per la sicurezza"
+  description="Bando ISI INAIL: contributi a fondo perduto per la sicurezza. Stato dell'edizione verificato, requisiti, punteggi e preparazione del progetto. iCuraImpresa, Napoli."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Finanza agevolata · Bando ISI</p>
-      <h1>Bando ISI INAIL 2025.</h1>
+      <h1>Bando ISI INAIL.</h1>
+      <ul class="chips" aria-label="Aggiornamento">
+        <li>Edizione 2025: domande chiuse · edizione 2026 non ancora pubblicata (verificato al 7 ottobre 2026)</li>
+      </ul>
       <p class="lede">
-        600 milioni a fondo perduto per mettere in sicurezza macchinari, processi e ambienti di lavoro. È a sportello, con click day: vince chi arriva pronto. La domanda la prepariamo noi.
+        Contributi a fondo perduto per mettere in sicurezza macchinari, processi e ambienti di lavoro. Le risorse si assegnano a chi arriva preparato: il progetto si costruisce prima che il bando apra.
       </p>
     </div>
   </header>
@@ -98,46 +144,50 @@ const faq = [
     </div>
   </section>
 
+  <ServiceExtras part="aChi" id="isi" items={aChi} />
+
   <section class="section section--ink">
     <div class="container two-col">
       <div>
-        <p class="eyebrow">Cos'è</p>
+        <p class="eyebrow">Il bisogno</p>
         <h2>Contributi a fondo perduto per la sicurezza.</h2>
       </div>
       <div class="prose">
         <p>
-          Il Bando ISI dell'INAIL finanzia a fondo perduto i progetti delle imprese che migliorano le condizioni di salute e sicurezza sul lavoro. L'edizione 2025/2026 mette a disposizione 600 milioni di euro: il contributo copre fino al 65% delle spese, fino all'80% se si adottano modelli organizzativi e di responsabilità sociale.
+          Il Bando ISI dell'INAIL finanzia a fondo perduto i progetti delle imprese che migliorano le condizioni di salute e sicurezza sul lavoro. Nell'edizione 2025 (avviso pubblicato in G.U. n. 293 del 18 dicembre 2025) il contributo copre il 65% delle spese ammissibili per gli assi generali e l'80% per i progetti di adozione di modelli organizzativi e di responsabilità sociale, da 5.000 a 130.000 euro per progetto.
         </p>
         <p>
-          L'importo va da 5.000 a 130.000 € e si possono finanziare anche interventi aggiuntivi. La selezione è a sportello con click day e ordine cronologico di invio: per questo la preparazione anticipata fa la differenza.
+          La procedura prevede fasi precise — compilazione della domanda, elenchi, perfezionamento con la documentazione — con regole che l'INAIL fissa edizione per edizione (per il 2025: elenchi cronologici senza click day per gli assi generali, click day solo per l'asse 5). Per questo la preparazione anticipata fa la differenza: quando esce l'avviso 2026, il progetto deve essere già pronto.
         </p>
+        <ul class="chips" aria-label="Riferimenti">
+          <li>INAIL — Avviso ISI 2025 (G.U. n. 293 del 18/12/2025)</li>
+          <li>Delibera C.d.A. INAIL n. 187/2025</li>
+          <li>Assi 1–5</li>
+          <li>Contributo 65% / 80%</li>
+          <li>Da 5.000 a 130.000 €</li>
+        </ul>
       </div>
     </div>
   </section>
 
   <section class="section section--alt-2">
     <div class="container">
-      <p class="eyebrow">Cosa puoi finanziare</p>
+      <p class="eyebrow">Che cosa facciamo</p>
+      <h2 class="section-title">Che cosa finanzia e come ti aiutiamo.</h2>
       <AreaGrid aree={finanzia} />
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
+  <ServiceExtras part="resta" id="isi" items={resta} />
+
+  <ServiceExtras part="ruoli" id="isi" ruoli={ruoli} />
 
   <Steps
-    eyebrow="Come ti aiutiamo"
-    title="Pronti per il click day."
+    eyebrow="Come lavoriamo"
+    title="Pronti prima dello sportello."
     steps={fasi}
     labelledby="isi-fasi"
   />
-
-  <section class="section section--tight">
-    <div class="container">
-      <p class="note">
-        Calendario, finestre di domanda e click day dell'edizione in corso vengono definiti dall'INAIL anno per anno: ti avvisiamo noi appena aprono e arriviamo pronti.
-      </p>
-    </div>
-  </section>
 
   <hr class="rule" aria-hidden="true" />
 
@@ -150,14 +200,23 @@ const faq = [
     tone="alt-blue"
   />
 
+  <ServiceExtras
+    part="fonti"
+    id="isi"
+    items={fonti}
+    nota="Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico."
+  />
+
+  <ServiceExtras part="correlati" id="isi" correlati={correlati} />
+
   <CtaBand
-    title="Verifichiamo la tua idoneità al Bando ISI."
-    lede="Pre-check gratuito · risposta entro 48 ore. Capiamo se il tuo progetto è finanziabile e prepariamo la domanda."
+    title="Prepariamo il progetto per la prossima edizione."
+    lede="Raccontaci l'investimento in sicurezza che hai in mente: verifichiamo se rientra negli assi del bando e lo prepariamo prima che lo sportello apra. Ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve. Oppure chiama lo 081 658 0779."
     image={{
       src: "/images/bando-isi-click-day-documenti.webp",
       alt: "Scrivania di consulenza pronta per il click day del Bando ISI: fascicoli tecnici, checklist, calcolatrice e laptop con portale non leggibile, mani di un consulente iCura Impresa che ordina i documenti, luce naturale, fotografia documentaria professionale",
     }}
-    primary={{ href: "/contatti", label: "Richiedi il pre-check" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
     labelledby="isi-cta"
   />
 </Base>

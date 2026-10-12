@@ -5,107 +5,152 @@ import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
 
 const c = {
+  "title": "Sicurezza nei cantieri: PSC, POS, patente a crediti",
+  "description": "PSC, POS, coordinamento della sicurezza, notifica preliminare e patente a crediti per imprese e lavoratori autonomi nei cantieri. Napoli e Campania.",
+  "eyebrow": "Consulenza · Sicurezza nei cantieri",
+  "h1": "Sicurezza nei cantieri.",
+  "lede": "PSC, POS, coordinatori, notifica preliminare, fascicolo dell'opera e patente a crediti: gli obblighi del Titolo IV del D.Lgs. 81/08 gestiti da un unico referente, dall'apertura alla chiusura del cantiere.",
+  "aChi": [
+    "Imprese edili e lavoratori autonomi che eseguono lavorazioni in cantieri temporanei o mobili.",
+    "Committenti privati e responsabili dei lavori, anche in ambito condominiale e di ristrutturazione, che devono nominare i coordinatori.",
+    "Imprese che entrano in cantiere come subappaltatrici e devono presentare un POS coerente con il PSC.",
+    "Chi deve verificare la patente a crediti propria o delle imprese che ingaggia."
+  ],
   "chips": [
-    "D.Lgs. 81/08 – Titolo IV",
+    "D.Lgs. 81/08 — Titolo IV",
     "PSC / POS",
-    "Patente a crediti INL",
-    "CSP/CSE art. 98",
+    "Patente a crediti — art. 27",
+    "CSP / CSE — art. 98",
+    "Allegato XV",
     "Allegato XVI"
   ],
-  "ctaLede": "Sopralluogo in cantiere o sul progetto esecutivo, verifica documentale gratuita, risposta entro 48 ore.",
-  "ctaTitle": "Parliamo del tuo cantiere prima che apra",
-  "description": "Gestione completa della sicurezza nei cantieri edili: PSC, POS, CSP/CSE, fascicolo dell'opera e patente a crediti secondo il D.Lgs. 81/08. Un referente iCura dal progetto alla chiusura lavori.",
-  "eyebrow": "Consulenza · Sicurezza nei cantieri",
-  "faq": [
+  "intro": [
+    "Un cantiere non è un'azienda con un indirizzo fisso: cambia ogni giorno, ci lavorano imprese diverse che spesso non si conoscono tra loro, e i rischi (cadute dall'alto, scavi, mezzi in movimento, elettrocuzione) sono tra i più gravi previsti dal D.Lgs. 81/08. Per questo il Titolo IV impone un impianto documentale e di ruoli specifico: PSC, POS, coordinatori, notifica preliminare, fascicolo dell'opera. Dal 1° ottobre 2024 si aggiunge la patente a crediti, con un quadro sanzionatorio inasprito dal D.L. 159/2025.",
+    "Chi sbaglia non rischia solo la sanzione amministrativa: il cantiere può essere sospeso dall'Ispettorato del Lavoro, con perdita di giorni di produzione, penali contrattuali e, in caso di infortunio, responsabilità penale diretta di committente, coordinatori e datori di lavoro delle imprese coinvolte. Seguiamo il cantiere come lo seguirebbe un tecnico interno: verifichiamo che cosa serve davvero nella configurazione specifica (una o più imprese, importo, durata), prepariamo i documenti prima che l'ispettore li chieda e li teniamo aggiornati finché il cantiere resta aperto."
+  ],
+  "sottoAree": [
     {
-      "q": "Con un'unica impresa esecutrice serve comunque il PSC?",
-      "a": "Di regola no. Il Piano di Sicurezza e Coordinamento è obbligatorio quando in cantiere sono previste più imprese esecutrici, anche non contemporaneamente tra loro. Con una sola impresa il committente non nomina i coordinatori e l'impresa lavora con il proprio POS e il DVR aziendale. Attenzione però: se durante i lavori si aggiunge anche un solo subappaltatore o un'altra ditta, l'obbligo di PSC e coordinatori scatta immediatamente, prima che la seconda impresa entri in cantiere."
+      "nome": "PSC — Piano di Sicurezza e Coordinamento",
+      "desc": "Obbligatorio quando in cantiere sono previste più imprese esecutrici, anche non contemporanee. Lo redige il CSP in fase di progettazione e va aggiornato dal CSE se cambiano le lavorazioni o entrano nuove imprese."
     },
     {
-      "q": "La patente a crediti serve anche per lavori privati di piccola entità?",
-      "a": "Sì, l'obbligo non dipende dall'importo dei lavori ma dal tipo di attività: se l'impresa o il lavoratore autonomo eseguono lavorazioni edili o di ingegneria civile rientranti nell'Allegato X del D.Lgs. 81/08 (anche in un cantiere privato, anche di piccole dimensioni), la patente serve. Fanno eccezione le mere forniture di materiali senza posa in opera e le prestazioni intellettuali. Dal 2026 le sanzioni per chi opera senza patente o sotto i 15 crediti sono più severe: verificare la propria posizione prima dell'apertura del cantiere evita di fermare i lavori a metà."
+      "nome": "POS — Piano Operativo di Sicurezza",
+      "desc": "Documento di ogni singola impresa esecutrice, coerente con il PSC quando presente. Descrive i rischi specifici delle lavorazioni che quell'impresa svolge in quel cantiere, non un piano tipo aziendale."
     },
     {
-      "q": "Chi nomina il coordinatore per la sicurezza, l'impresa o il committente?",
-      "a": "Il committente o il responsabile dei lavori, mai l'impresa esecutrice. È il committente a incaricare il CSP in fase di progettazione (quando previsti PSC) e il CSE prima dell'inizio dei lavori, verificandone i requisiti professionali richiesti dall'art. 98. Molti committenti privati, soprattutto in ambito condominiale o di ristrutturazione, non sanno di avere questo obbligo diretto: la responsabilità in caso di infortunio ricade su di loro, non sull'impresa che ha eseguito i lavori."
+      "nome": "CSP e CSE — Coordinatori per la sicurezza",
+      "desc": "Nominati dal committente o dal responsabile dei lavori, devono avere i requisiti professionali dell'art. 98. Svolgiamo l'incarico o affianchiamo il coordinatore nella gestione documentale del cantiere."
     },
     {
-      "q": "Cosa succede se non consegno il fascicolo dell'opera a fine lavori?",
-      "a": "Il fascicolo dell'opera, previsto dall'Allegato XVI, va predisposto dal CSP e aggiornato dal committente ogni volta che l'immobile subisce modifiche, e trasmesso a chi acquista o eredita l'immobile. La sua assenza, ai sensi dell'art. 90 comma 10, comporta la sospensione dell'efficacia del titolo abilitativo (SCIA, permesso di costruire). È un documento che vive più a lungo del cantiere: serve a chi farà manutenzione o ristrutturazione anni dopo, per sapere dove sono reti, sottoservizi e punti critici senza doverli scoprire a martellate."
+      "nome": "Notifica preliminare e comunicazioni agli enti",
+      "desc": "Obbligatoria con più imprese esecutrici o oltre 200 uomini-giorno di lavoro. Va inviata a INL e ASL prima dell'apertura del cantiere, esposta in modo visibile e aggiornata se cambiano i dati principali."
     },
     {
-      "q": "La notifica preliminare va fatta per ogni cantiere?",
-      "a": "No. È obbligatoria quando il cantiere prevede più imprese esecutrici, anche non contemporanee, oppure quando i lavori superano i 200 uomini-giorno complessivi, indipendentemente dal numero di imprese. Va inviata prima dell'inizio lavori all'Ispettorato Nazionale del Lavoro e all'ASL territorialmente competente, ed esposta in cantiere in modo visibile. Va aggiornata se cambiano le imprese esecutrici o i dati principali del cantiere."
+      "nome": "Patente a crediti",
+      "desc": "Obbligatoria dal 1° ottobre 2024 per imprese e lavoratori autonomi che eseguono lavorazioni edili in cantiere (escluse mere forniture, prestazioni intellettuali e imprese con SOA in classifica pari o superiore alla III). Verifichiamo possesso e punteggio minimo di 15 crediti prima dell'ingresso in cantiere."
+    },
+    {
+      "nome": "Fascicolo dell'opera",
+      "desc": "Predisposto dal CSP secondo l'Allegato XVI, contiene le informazioni utili per gli interventi di manutenzione futuri sull'immobile. Il committente deve conservarlo, aggiornarlo e trasmetterlo a chi subentra nella proprietà."
+    }
+  ],
+  "ottieni": [
+    "Un solo referente che segue il cantiere dall'apertura alla chiusura, non un documento consegnato una volta sola.",
+    "PSC e POS scritti sui rischi reali del cantiere, non copiati da un modello generico.",
+    "Verifica della patente a crediti di tutte le imprese e i lavoratori autonomi prima che entrino in cantiere.",
+    "Notifica preliminare, comunicazioni a INL/ASL e fascicolo dell'opera gestiti nei tempi corretti.",
+    "Aggiornamento immediato della documentazione se cambiano le imprese esecutrici o le lavorazioni in corso d'opera."
+  ],
+  "ruoli": [
+    {
+      "titolo": "Svolto direttamente da iCuraImpresa",
+      "desc": "Verifica preliminare, redazione di PSC e POS, incarico di coordinamento (CSP/CSE) con i requisiti dell'art. 98, notifica preliminare, verifica delle patenti a crediti, fascicolo dell'opera."
+    },
+    {
+      "titolo": "Svolto da terzi",
+      "desc": "Il committente o il responsabile dei lavori nomina formalmente i coordinatori; l'Ispettorato Nazionale del Lavoro rilascia e gestisce la patente a crediti."
     }
   ],
   "fasi": [
     {
+      "n": "01",
       "titolo": "Verifica preliminare del cantiere",
-      "desc": "Analizziamo il tipo di intervento, il numero di imprese previste, l'importo e la durata presunta per capire quali obblighi scattano davvero: PSC, notifica preliminare, patente a crediti, nomina coordinatori. Non tutti i cantieri richiedono tutto: lo diciamo con chiarezza fin dal primo incontro."
+      "desc": "Analizziamo il tipo di intervento, il numero di imprese previste, l'importo e la durata presunta per capire quali obblighi scattano davvero. Non tutti i cantieri richiedono tutto: lo diciamo con chiarezza fin dal primo incontro."
     },
     {
-      "titolo": "Redazione PSC, POS e nomina coordinatori",
-      "desc": "Se serve il PSC lo redigiamo (o affianchiamo il CSP incaricato), verifichiamo il POS di ogni impresa esecutrice per la sua coerenza con il piano generale, e supportiamo il committente nella nomina di CSP e CSE con i requisiti richiesti dall'art. 98."
+      "n": "02",
+      "titolo": "PSC, POS e nomina dei coordinatori",
+      "desc": "Se serve il PSC lo redigiamo (o affianchiamo il CSP incaricato), verifichiamo il POS di ogni impresa esecutrice e supportiamo il committente nella nomina di CSP e CSE."
     },
     {
+      "n": "03",
       "titolo": "Notifica preliminare e patente a crediti",
-      "desc": "Predisponiamo e inviamo la notifica preliminare a INL e ASL quando dovuta, e verifichiamo che ogni impresa e lavoratore autonomo in cantiere abbia la patente a crediti in regola, con il punteggio minimo richiesto per operare legalmente."
+      "desc": "Predisponiamo e inviamo la notifica preliminare a INL e ASL quando dovuta e verifichiamo che ogni impresa e lavoratore autonomo abbia la patente a crediti in regola, con il punteggio minimo richiesto."
     },
     {
+      "n": "04",
       "titolo": "Gestione in corso d'opera e fascicolo finale",
-      "desc": "Seguiamo eventuali varianti che introducono nuove imprese o modificano i rischi, aggiorniamo PSC e documentazione, e a fine lavori consegniamo al committente il fascicolo dell'opera compilato e pronto per essere trasmesso a chi gestirà l'immobile in futuro."
+      "desc": "Seguiamo le varianti che introducono nuove imprese o modificano i rischi, aggiorniamo PSC e documentazione e a fine lavori consegniamo al committente il fascicolo dell'opera."
     }
   ],
-  "h1": "Sicurezza nei cantieri.",
-  "intro": [
-    "Un cantiere non è un'azienda con un indirizzo fisso: cambia ogni giorno, ci lavorano imprese diverse che spesso non si conoscono tra loro, e i rischi (cadute dall'alto, scavi, mezzi in movimento, elettrocuzione) sono tra i più gravi previsti dal D.Lgs. 81/08. Per questo il Titolo IV impone un impianto documentale e di ruoli specifico, diverso da quello di un'azienda ordinaria: PSC, POS, coordinatori, notifica preliminare, fascicolo dell'opera. E dal 2024 si aggiunge la patente a crediti, con regole di sanzione inasprite proprio a partire dal 2026.",
-    "Chi sbaglia in questo ambito non rischia solo la sanzione amministrativa: il cantiere può essere sospeso dall'Ispettorato del Lavoro, con perdita di giorni di produzione, penali contrattuali e, in caso di infortunio, responsabilità penale diretta di committente, coordinatori e datori di lavoro delle imprese coinvolte. iCura segue il cantiere come lo seguirebbe un tecnico interno: verifica cosa serve davvero in base alla configurazione specifica (una o più imprese, importo, durata), prepara i documenti prima che l'ispettore li chieda, e li tiene aggiornati finché il cantiere resta aperto."
-  ],
-  "lede": "PSC, POS, coordinatori, notifica preliminare, fascicolo dell'opera e patente a crediti: gli obblighi del Titolo IV D.Lgs. 81/08 gestiti da un unico referente, dall'apertura alla chiusura del cantiere.",
-  "note": "Le soglie per notifica preliminare, obbligo di PSC e patente a crediti dipendono dal numero di imprese coinvolte, dai giorni-uomo previsti e dal tipo di lavorazione: vanno verificate cantiere per cantiere, non genericamente per \"tipo di lavoro edile\".",
-  "ottieni": [
-    "Un solo referente che segue il cantiere dall'apertura alla chiusura, non un documento consegnato una tantum",
-    "PSC e POS scritti sui rischi reali del cantiere, non copiati da un modello generico",
-    "Verifica della patente a crediti di tutte le imprese e i lavoratori autonomi prima che entrino in cantiere",
-    "Notifica preliminare, comunicazioni a INL/ASL e fascicolo dell'opera gestiti nei tempi corretti",
-    "Aggiornamento immediato della documentazione se cambiano le imprese esecutrici o le lavorazioni in corso d'opera"
-  ],
-  "sottoAree": [
+  "faq": [
     {
-      "nome": "PSC – Piano di Sicurezza e Coordinamento",
-      "desc": "Obbligatorio quando in cantiere sono previste più imprese esecutrici, anche non contemporanee. Lo redige il CSP in fase di progettazione e va aggiornato dal CSE se cambiano le lavorazioni o entrano nuove imprese."
+      "q": "Con un'unica impresa esecutrice serve comunque il PSC?",
+      "a": "Di regola no. Il PSC è obbligatorio quando in cantiere sono previste più imprese esecutrici, anche non contemporanee. Con una sola impresa il committente non nomina i coordinatori e l'impresa lavora con il proprio POS. Attenzione però: se durante i lavori si aggiunge anche un solo subappaltatore o un'altra ditta, l'obbligo di PSC e coordinatori scatta prima che la seconda impresa entri in cantiere."
     },
     {
-      "nome": "POS – Piano Operativo di Sicurezza",
-      "desc": "Documento di ogni singola impresa esecutrice, coerente con il PSC quando presente. Deve descrivere i rischi specifici delle lavorazioni che quell'impresa svolge in quel cantiere, non un piano tipo aziendale."
+      "q": "La patente a crediti serve anche per lavori privati di piccola entità?",
+      "a": "Sì: l'obbligo non dipende dall'importo dei lavori ma dal tipo di attività. Se l'impresa o il lavoratore autonomo eseguono lavorazioni in un cantiere temporaneo o mobile (anche privato, anche piccolo), la patente serve, salvo le esclusioni previste dall'art. 27. Il D.L. 159/2025, in vigore dal 31 ottobre 2025, ha inasprito le sanzioni per chi opera senza patente o con crediti insufficienti; dal 1° gennaio 2026 si applicano le decurtazioni legate al lavoro irregolare. Verificare la propria posizione prima dell'apertura del cantiere evita di fermare i lavori a metà."
     },
     {
-      "nome": "CSP e CSE – Coordinatori per la sicurezza",
-      "desc": "Nominati dal committente o dal responsabile dei lavori, devono avere i requisiti professionali dell'art. 98. Verifichiamo la nomina e, dove richiesto, affianchiamo il coordinatore nella gestione documentale del cantiere."
+      "q": "Chi nomina il coordinatore per la sicurezza, l'impresa o il committente?",
+      "a": "Il committente o il responsabile dei lavori, mai l'impresa esecutrice. È il committente a incaricare il CSP in fase di progettazione e il CSE prima dell'inizio dei lavori, verificandone i requisiti dell'art. 98. Molti committenti privati non sanno di avere questo obbligo diretto: la responsabilità in caso di inadempienza ricade su di loro."
     },
     {
-      "nome": "Notifica preliminare e comunicazioni agli enti",
-      "desc": "Obbligatoria con più imprese esecutrici o oltre 200 uomini-giorno di lavoro. Va inviata a INL e ASL prima dell'apertura del cantiere ed esposta in modo visibile, e aggiornata se cambiano i dati principali."
+      "q": "Che cosa succede se non consegno il fascicolo dell'opera a fine lavori?",
+      "a": "Il fascicolo dell'opera (Allegato XVI) va predisposto dal CSP, aggiornato quando l'immobile subisce modifiche e trasmesso a chi acquista o eredita l'immobile. Ai sensi dell'art. 90, comma 10, in assenza del PSC o del fascicolo, quando previsti, è sospesa l'efficacia del titolo abilitativo. È un documento che vive più a lungo del cantiere: serve a chi farà manutenzione anni dopo."
     },
     {
-      "nome": "Patente a crediti",
-      "desc": "Obbligatoria dal 2024 per imprese e lavoratori autonomi che eseguono lavorazioni edili in cantiere (escluse mere forniture e prestazioni intellettuali). Verifichiamo il possesso e il punteggio minimo di 15 crediti prima dell'ingresso in cantiere, con regole di sanzione più severe dal 2026."
-    },
-    {
-      "nome": "Fascicolo dell'opera",
-      "desc": "Predisposto dal CSP secondo l'Allegato XVI, contiene le informazioni utili per interventi di manutenzione futuri sull'immobile. Il committente deve conservarlo, aggiornarlo e trasmetterlo a chi subentra nella proprietà."
+      "q": "La notifica preliminare va fatta per ogni cantiere?",
+      "a": "No. È obbligatoria quando il cantiere prevede più imprese esecutrici, anche non contemporanee, oppure quando i lavori superano i 200 uomini-giorno complessivi (art. 99). Va inviata prima dell'inizio dei lavori all'Ispettorato Nazionale del Lavoro e all'ASL competente, esposta in cantiere e aggiornata se cambiano le imprese o i dati principali."
     }
   ],
-  "title": "Sicurezza nei cantieri — PSC, POS, patente a crediti"
+  "fonti": [
+    "D.Lgs. 81/2008 — Titolo IV (artt. 88-104), art. 27, Allegati XV e XVI",
+    "D.M. 18 settembre 2024, n. 132 — patente a crediti — regolamento attuativo dell'art. 27",
+    "D.L. 159/2025, convertito con L. 198/2025 — inasprimento delle sanzioni e badge di cantiere"
+  ],
+  "fontiNota": "Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico.",
+  "correlati": [
+    {
+      "nome": "Sicurezza sul lavoro",
+      "desc": "DVR, RSPP e nomine per l'impresa, oltre il singolo cantiere.",
+      "href": "/servizi/consulenza/sicurezza-lavoro"
+    },
+    {
+      "nome": "Engineering",
+      "desc": "Progettazione, direzione lavori e pratiche per lo stesso cantiere.",
+      "href": "/servizi/engineering"
+    },
+    {
+      "nome": "Attestazione SOA",
+      "desc": "La qualificazione per i lavori pubblici, per categoria e classifica.",
+      "href": "/servizi/certificazioni/soa"
+    }
+  ],
+  "ctaTitle": "Parliamo del tuo cantiere prima che apra.",
+  "ctaLede": "Indicaci tipo di intervento, numero di imprese e durata prevista: ti diciamo quali obblighi scattano e li prepariamo prima dell'apertura. Richiedi un ricontatto: ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve."
 };
 
 const eyebrow = "Consulenza · Sicurezza nei cantieri";
 const h1 = "Sicurezza nei cantieri.";
 const taglineTitle = "Un cantiere cambia ogni giorno. I documenti devono tenere il passo.";
 const areeTitle = "PSC, POS e patente a crediti, seguiti da un unico referente.";
-const ottieniTitle = "Il cantiere coperto dall'apertura alla chiusura.";
+const ottieniTitle = "Che cosa resta in azienda, a lavoro finito.";
+const ruoliTitle = "Responsabilità chiare, dal primo giorno.";
 const stepsTitle = "Dalla verifica preliminare al fascicolo dell'opera.";
 
 const img = {
@@ -116,45 +161,6 @@ const ctaImg = {
   "src": "/images/consulenza-cantieri-sopralluogo.webp",
   "alt": img.alt
 };
-
-const altriAmbiti = [
-  {
-    "nome": "Sicurezza sul lavoro — D.Lgs. 81/08",
-    "desc": "DVR e valutazioni dei rischi, nomina e incarico RSPP, sopralluoghi periodici, gestione di scadenze e adempimenti. Tutto il Testo Unico in un unico contratto.",
-    "href": "/servizi/consulenza/sicurezza-lavoro",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "Sicurezza alimentare (HACCP)",
-    "desc": "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione operatori secondo il Reg. CE 852/2004. Per ristoranti, bar, mense e produzione alimentare.",
-    "href": "/servizi/consulenza/haccp",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "Medicina del lavoro",
-    "desc": "Sorveglianza sanitaria, idoneità alla mansione, protocollo sanitario e nomina del medico competente. Visite organizzate direttamente in azienda.",
-    "href": "/servizi/consulenza/medicina-lavoro",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "GDPR & Privacy",
-    "desc": "Nomina DPO, registro dei trattamenti, informative, valutazioni d'impatto e audit. Per chi tratta dati personali in modo strutturato (Reg. UE 2016/679).",
-    "href": "/servizi/consulenza/gdpr",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "Consulenza ambientale",
-    "desc": "Autorizzazione Unica Ambientale (AUA), gestione rifiuti, MUD, registri di carico/scarico ed emissioni in atmosfera. Adempimenti tecnici e scadenze gestite da noi.",
-    "href": "/servizi/consulenza/ambiente",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "Consulenza aziendale",
-    "desc": "Strutturazione societaria, organizzazione dei processi e supporto continuativo all'impresa. Il punto di raccordo tra sicurezza, qualità e adempimenti.",
-    "href": "/servizi/consulenza/aziendale",
-    "cta": "Scopri di più"
-  }
-];
 ---
 
 <Base title={c.title} description={c.description}>
@@ -175,15 +181,16 @@ const altriAmbiti = [
     </div>
   </section>
 
+  <ServiceExtras part="aChi" id="cantieri" items={c.aChi} />
+
   <section class="section section--ink">
     <div class="container two-col">
       <div>
-        <p class="eyebrow">Perché serve</p>
+        <p class="eyebrow">Il bisogno</p>
         <h2>{taglineTitle}</h2>
       </div>
       <div class="prose">
-        <p>{c.intro[0]}</p>
-        <p>{c.intro[1]}</p>
+        {c.intro.map((p) => <p>{p}</p>)}
         <ul class="chips" aria-label="Riferimenti normativi">
           {c.chips.map((ch) => <li>{ch}</li>)}
         </ul>
@@ -195,7 +202,7 @@ const altriAmbiti = [
 
   <section class="section" aria-labelledby="cantieri-aree">
     <div class="container">
-      <p class="eyebrow">Cosa comprende</p>
+      <p class="eyebrow">Che cosa facciamo</p>
       <h2 id="cantieri-aree" class="section-title">{areeTitle}</h2>
       <AreaGrid aree={c.sottoAree} />
     </div>
@@ -204,7 +211,7 @@ const altriAmbiti = [
   <section class="section section--alt-2" aria-labelledby="cantieri-ottieni">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">Cosa ottieni</p>
+        <p class="eyebrow">Che cosa consegniamo</p>
         <h2 id="cantieri-ottieni" class="two-col__title">{ottieniTitle}</h2>
       </div>
       <ul class="checklist">
@@ -218,15 +225,11 @@ const altriAmbiti = [
     </div>
   </section>
 
+  <ServiceExtras part="ruoli" id="cantieri" title={ruoliTitle} ruoli={c.ruoli} />
+
   <hr class="rule" aria-hidden="true" />
 
-  <Steps eyebrow="Come funziona" title={stepsTitle} steps={c.fasi} labelledby="cantieri-fasi" />
-
-  <section class="section section--tight">
-    <div class="container">
-      <p class="note">{c.note}</p>
-    </div>
-  </section>
+  <Steps eyebrow="Come lavoriamo" title={stepsTitle} steps={c.fasi} labelledby="cantieri-fasi" />
 
   <hr class="rule" aria-hidden="true" />
 
@@ -239,19 +242,17 @@ const altriAmbiti = [
     tone="alt-blue"
   />
 
-  <section class="section section--alt" aria-labelledby="cantieri-altri">
-    <div class="container">
-      <p class="eyebrow">Continua a esplorare</p>
-      <h2 id="cantieri-altri" class="section-title">Gli altri ambiti di Consulenza.</h2>
-      <AreaGrid aree={altriAmbiti} />
-    </div>
-  </section>
+  <ServiceExtras part="fonti" id="cantieri" items={c.fonti} nota={c.fontiNota} />
+
+  <ServiceExtras part="correlati" id="cantieri" correlati={c.correlati} />
 
   <CtaBand
+    eyebrow="Il prossimo passo"
     title={c.ctaTitle}
     lede={c.ctaLede}
     image={{ src: ctaImg.src ?? undefined, alt: ctaImg.alt }}
-    primary={{ href: "/contatti", label: "Prenota sopralluogo" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
+    secondary={{ href: "tel:+390816580779", label: "Oppure chiama lo 081 658 0779" }}
     labelledby="cantieri-cta"
   />
 </Base>

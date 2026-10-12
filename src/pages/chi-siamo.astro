@@ -4,52 +4,95 @@ import Placeholder from "@components/Placeholder.astro";
 import CtaBand from "@components/CtaBand.astro";
 
 const competenze = [
-  { area: "Ingegneria", desc: "Sicurezza tecnica, progettazione edile e impiantistica, prevenzione incendi e CPI." },
-  { area: "Medicina del lavoro", desc: "Sorveglianza sanitaria, idoneità alla mansione, protocolli e medico competente." },
-  { area: "Certificazioni & qualità", desc: "Sistemi di gestione ISO, Attestazione SOA, parità di genere, procedure di gara." },
-  { area: "Economia", desc: "Consulenza aziendale, finanza agevolata, bandi e crediti d'imposta." },
+  { area: "Consulenza e Sicurezza", desc: "D.Lgs. 81/08, DVR e RSPP, cantieri e patente a crediti, HACCP, medicina del lavoro; organizzazione e deleghe di funzioni, modelli 231, GDPR, privacy e cybersecurity, ambiente." },
+  { area: "Formazione", desc: "Formazione obbligatoria e di sviluppo, in aula, a distanza o in azienda; fondi interprofessionali." },
+  { area: "Engineering", desc: "Progettazione edile e impiantistica, rilievi 3D con scanner SLAM, prevenzione incendi, collaudi e pratiche." },
+  { area: "Sistemi di Gestione", desc: "Sistemi di gestione ISO, parità di genere, attestazione SOA e qualificazione per le gare." },
+  { area: "Digitale e IA", desc: "Processi digitalizzati, app e gestionali su misura costruiti con l’intelligenza artificiale." },
+  { area: "Finanza Agevolata", desc: "Bandi INAIL, ZES Unica, iper-ammortamento e fondi per la formazione: requisiti, domande, rendicontazione." },
 ];
 
 const fatti = [
-  { num: "2014", label: "Nasce come studio di consulenza" },
+  { num: "2014", label: "Nasce a Napoli" },
   { num: "2018", label: "Diventa S.r.l." },
-  { num: "100+", label: "Imprese seguite in Italia" },
-  { num: "5", label: "Aree integrate sotto un tetto" },
+  { num: "2019", label: "Certificata ISO 9001" },
+  { num: "9", label: "Persone, guidate da un ingegnere" },
 ];
 
 const storia = [
   {
     anno: "2014",
-    titolo: "L'inizio",
-    desc: "Nasce a Napoli come studio di consulenza sulla sicurezza sul lavoro, al fianco delle imprese del territorio.",
+    titolo: "L’inizio",
+    desc: "iCuraImpresa nasce a Napoli come progetto multidisciplinare al fianco delle imprese del territorio: sicurezza sul lavoro, formazione, consulenza.",
   },
   {
     anno: "2018",
     titolo: "Diventa S.r.l.",
-    desc: "La struttura cresce e si organizza in società, ampliando le competenze oltre la sola sicurezza.",
+    desc: "La struttura cresce e si organizza in società (ICURAIMPRESA S.r.l., costituita il 26 novembre 2018), ampliando le competenze oltre la sola sicurezza.",
+  },
+  {
+    anno: "2019",
+    titolo: "Certificazione ISO 9001",
+    desc: "Il sistema di gestione per la qualità di iCuraImpresa è certificato ISO 9001:2015 da un organismo accreditato: lo stesso percorso che proponiamo ai clienti, applicato a noi stessi.",
+  },
+  {
+    anno: "2021",
+    titolo: "Abilitazioni impiantistiche",
+    desc: "Abilitazioni per gli impianti ai sensi del D.M. 37/2008, lettere da A a G, accertate dalla Camera di Commercio.",
+  },
+  {
+    anno: "2025",
+    titolo: "Attestazione SOA OG1",
+    desc: "Qualificazione per l’esecuzione di lavori pubblici nella categoria OG1 (classifica III-bis). Il sistema di gestione ambientale è certificato ISO 14001:2015.",
   },
   {
     anno: "Oggi",
-    titolo: "Cinque aree, una regia",
-    desc: "Ingegneri, medici del lavoro, tecnici e commercialisti seguono oltre cento imprese su tutta Italia, da un unico interlocutore.",
+    titolo: "Una squadra",
+    desc: "Consulenza, formazione, sicurezza sul lavoro, engineering, sistemi di gestione, digitale e IA, finanza agevolata: una squadra di competenze costruita intorno a ogni impresa che seguiamo.",
   },
+];
+
+const passi = [
+  { t: "Ti ascoltiamo", d: "Veniamo in azienda, guardiamo e ascoltiamo: dove vuoi arrivare e che cosa ti frena." },
+  { t: "Definiamo le priorità", d: "Che cosa serve subito, che cosa può aspettare, che cosa si può finanziare." },
+  { t: "Costruiamo il progetto", d: "Responsabili, date, documenti e formazione: un piano chiaro, con nome e cognome." },
+  { t: "Ti affianchiamo nel tempo", d: "Scadenze, verifiche, ispezioni, bandi: restiamo al tuo fianco quando cambia qualcosa." },
+];
+
+const inBreve = [
+  { k: "Chi", v: "ICURAIMPRESA S.r.l., società di ingegneri, tecnici e consulenti nata a Napoli nel 2014 come progetto multidisciplinare, costituita in S.r.l. il 26 novembre 2018; nove persone (dato 2025) guidate dal fondatore, l’Ing. Francesco Egidio Rattrovo." },
+  { k: "Che cosa", v: "Consulenza aziendale, formazione sulla sicurezza, sicurezza sul lavoro (DVR, RSPP, cantieri, HACCP, medicina del lavoro), engineering, sistemi di gestione ISO e SOA, digitale e IA, finanza agevolata: un referente per ogni pratica." },
+  { k: "Per chi", v: "Imprese di ogni dimensione, dalla micro impresa con il primo dipendente alla PMI strutturata: edilizia e impianti, ristorazione e alimentare, studi e strutture sanitarie, officine e trasporti, industria, condomini, cooperative e terzo settore." },
+  { k: "Dove", v: "Sede operativa in Corso Secondigliano 236, 80144 Napoli; sede legale in Via John Fitzgerald Kennedy 73, 80125 Napoli. Di persona a Napoli e in Campania; certificazioni, finanza agevolata, consulenza organizzativa e digitale anche a distanza in tutta Italia." },
+  { k: "Credenziali", v: "ISO 9001:2015 dal 2019 e ISO 14001:2015 certificate da organismo accreditato; attestazione SOA OG1 classifica III-bis; abilitazioni impianti D.M. 37/2008 lettere A–G; attività formativa nel sistema Federdat/Ebilav con attestati tramite ente di formazione partner." },
+  { k: "Come", v: "Sopralluogo in azienda, priorità condivise, preventivo scritto che dice che cosa è compreso e chi fa che cosa, affiancamento nel tempo con scadenzario. Registro delle Imprese di Napoli, REA NA-1006960, C.F. e P.IVA 09078161214; telefono 081 658 0779, info@icuraimpresa.it." },
+];
+
+const credenziali = [
+  { t: "ISO 9001:2015", d: "Sistema di gestione per la qualità certificato da organismo accreditato, dal 2019." },
+  { t: "ISO 14001:2015", d: "Sistema di gestione ambientale certificato da organismo accreditato." },
+  { t: "Attestazione SOA OG1", d: "Qualificazione per l’esecuzione di lavori pubblici, categoria OG1, classifica III-bis." },
+  { t: "Abilitazioni D.M. 37/2008", d: "Impianti, lettere da A a G, accertate dalla Camera di Commercio di Napoli." },
+  { t: "Centro di formazione", d: "Attività formativa nel sistema Federdat/Ebilav; attestati rilasciati tramite ente di formazione partner." },
+  { t: "Registro delle Imprese di Napoli", d: "ICURAIMPRESA S.r.l. · REA NA-1006960 · C.F. e P.IVA 09078161214." },
 ];
 ---
 
 <Base
-  title="Chi siamo"
-  description="iCura Impresa: team multidisciplinare di consulenza per la sicurezza sul lavoro. Napoli, dal 2014."
+  title="Chi siamo: la squadra di iCuraImpresa a Napoli"
+  crumb="Chi siamo"
+  description="Una squadra di competenze intorno alla tua impresa. A Napoli dal 2014, S.r.l. dal 2018, ISO 9001 dal 2019, ISO 14001, SOA OG1. Un referente per pratica."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Chi siamo</p>
       <h1 class="page-header__title">
-        Quattro mestieri sotto un solo tetto.
+        Una squadra di competenze costruita intorno alla tua impresa.
       </h1>
       <p class="page-header__lede">
-        Nata nel 2014, S.r.l. dal 2018. Mettiamo insieme ingegneri, medici del lavoro, tecnici e commercialisti per dare alle imprese un unico interlocutore.
+        Nati a Napoli nel 2014, società dal 2018. Ingegneri, tecnici e consulenti che fanno propri i tuoi obiettivi e li portano a compimento: un referente per ogni pratica, dal primo incontro all’ispezione.
       </p>
-      <dl class="fatti" aria-label="iCura Impresa in breve">
+      <dl class="fatti" aria-label="iCuraImpresa in breve">
         {fatti.map((f) => (
           <div class="fatto">
             <dt class="fatto__num">{f.num}</dt>
@@ -63,8 +106,11 @@ const storia = [
   <section class="section section--alt" aria-labelledby="competenze-heading">
     <div class="container two-col">
       <div>
-        <p class="eyebrow">01 — Competenze</p>
-        <h2 id="competenze-heading">Quattro discipline, una sola filiera.</h2>
+        <p class="eyebrow">01 — Le competenze</p>
+        <h2 id="competenze-heading">Aree che si parlano tra loro.</h2>
+        <p class="section-lede">
+          Quando un caso tocca più aree — un investimento che richiede un progetto, una valutazione dei rischi, un corso e un bando — coordiniamo internamente. Un cliente, un referente, nessun rimbalzo tra studi separati.
+        </p>
       </div>
       <ul class="comp-list">
         {competenze.map((c) => (
@@ -81,7 +127,7 @@ const storia = [
     <div class="container two-col">
       <div class="two-col__head">
         <p class="eyebrow">02 — La nostra storia</p>
-        <h2 id="storia-heading" class="two-col__title">Dieci anni al fianco delle imprese.</h2>
+        <h2 id="storia-heading" class="two-col__title">Al fianco delle imprese dal 2014.</h2>
       </div>
       <ol class="timeline">
         {storia.map((s) => (
@@ -97,18 +143,29 @@ const storia = [
     </div>
   </section>
 
-  <section class="section" aria-labelledby="metodo-heading">
+  <section id="metodo" class="section" aria-labelledby="metodo-heading">
     <div class="container metodo-grid">
       <div>
-        <p class="eyebrow">03 — Metodo</p>
-        <h2 id="metodo-heading">Come lavoriamo.</h2>
+        <p class="eyebrow">03 — Come lavoriamo</p>
+        <h2 id="metodo-heading">I tuoi obiettivi sono la nostra passione.</h2>
       </div>
       <div class="prose">
         <p>
-          Un cliente, un referente. Nessun rimbalzo tra studi separati. Quando un caso tocca più aree — un infortunio con risvolti tecnici e sanitari, ad esempio — coordiniamo internamente.
+          Partiamo da ciò che vuoi realizzare. Mettiamo a fuoco le esigenze, colleghiamo le competenze e costruiamo insieme i prossimi passi.
         </p>
+        <ol class="passi">
+          {passi.map((p, i) => (
+            <li class="passo">
+              <span class="passo__n">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <h3 class="passo__titolo">{p.t}</h3>
+                <p class="passo__desc">{p.d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
         <p>
-          Il modello è quello del retainer annuale: documentazione, formazione, aggiornamenti normativi e supporto continuo a una tariffa prevedibile. Niente extra a sorpresa.
+          <strong>Il nostro impegno.</strong> Attività, responsabilità e scadenze definite prima di iniziare: dopo il primo incontro ricevi un preventivo scritto che dice che cosa è compreso, che cosa no e chi fa che cosa.
         </p>
       </div>
       <Placeholder
@@ -123,16 +180,27 @@ const storia = [
   <section id="team" class="section section--alt-blue team" aria-labelledby="team-heading">
     <div class="container team__grid">
       <div class="team__intro">
-        <p class="eyebrow">04 — Il team</p>
-        <h2 id="team-heading" class="team__title">Conosci il nostro team di esperti.</h2>
+        <p class="eyebrow">04 — Le persone</p>
+        <h2 id="team-heading" class="team__title">Rispondiamo noi. Con nome e cognome.</h2>
         <p class="team__lede">
-          Ingegneri, medici del lavoro, tecnici e consulenti che seguono la tua impresa in prima persona. Un solo gruppo, sotto lo stesso tetto, dal sopralluogo alla pratica.
+          Una squadra di nove persone (dato 2025) guidata dal fondatore, l’Ing. Francesco Egidio Rattrovo. Ogni pratica ha un referente che la segue dall’inizio alla fine; quando serve coordiniamo medico competente, laboratori, organismi di certificazione e altri professionisti.
         </p>
+        <p class="team__who">
+          <strong>Ing. Francesco Egidio Rattrovo</strong><br />
+          Fondatore e socio di maggioranza · ingegnere
+        </p>
+        <p class="team__note">
+          I profili dei consulenti, con ruoli e qualifiche, saranno pubblicati con il consenso di ciascuno.
+        </p>
+        <a href="/lavora-con-noi" class="link-cta">
+          Lavora con noi
+          <span class="link-cta__arrow" aria-hidden="true">→</span>
+        </a>
       </div>
       <figure class="team-photo">
         <img
           src="/images/team-icura.webp"
-          alt="Il team di iCura Impresa al completo: ingegneri, medici del lavoro, tecnici e consulenti"
+          alt="Il team di iCura Impresa al completo: ingegneri, tecnici e consulenti"
           width="1100"
           height="1375"
           loading="lazy"
@@ -142,14 +210,63 @@ const storia = [
     </div>
   </section>
 
+  <section class="section" aria-labelledby="inbreve-heading">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">05 — In breve</p>
+        <h2 id="inbreve-heading">iCuraImpresa in dieci righe.</h2>
+      </div>
+      <dl class="breve">
+        {inBreve.map((r) => (
+          <div class="breve__row">
+            <dt class="breve__k">{r.k}</dt>
+            <dd class="breve__v">{r.v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section id="dove-lavoriamo" class="section section--alt" aria-labelledby="dove-heading">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">06 — Dove lavoriamo</p>
+        <h2 id="dove-heading">A Napoli e in Campania di persona; in tutta Italia dove serve.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Sopralluoghi, corsi in aula e in azienda, cantieri e ispezioni richiedono presenza: li facciamo a Napoli e provincia e in Campania. Certificazioni ISO e SOA, finanza agevolata, consulenza organizzativa e digitale si seguono anche a distanza, con incontri in videochiamata, e le pratiche nazionali (Bando ISI, iper-ammortamento, OT23, fondi per la formazione) valgono su tutto il territorio italiano. Per le misure riservate al Mezzogiorno, come la ZES Unica, verifichiamo prima se la tua sede rientra.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="credenziali-heading">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">07 — Credenziali</p>
+        <h2 id="credenziali-heading">Quello che chiediamo ai clienti, lo facciamo anche noi.</h2>
+      </div>
+      <ul class="comp-list">
+        {credenziali.map((c) => (
+          <li class="comp">
+            <h3 class="comp__area">{c.t}</h3>
+            <p class="comp__desc">{c.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <CtaBand
-    title="Vuoi conoscerci?"
-    lede="Una call gratuita di 30 minuti per capire se possiamo esserti utili. Senza impegno, parliamo della tua impresa e di cosa ti serve davvero."
+    title="Raccontaci dove vuoi arrivare."
+    lede="Un progetto da sviluppare, persone da formare, un’organizzazione da migliorare: iniziamo dalla tua esigenza."
     image={{
       src: "/images/chi-siamo-riunione-team.webp",
       alt: "Due consulenti iCura Impresa in videochiamata conoscitiva con un cliente: adulti in ufficio napoletano luminoso davanti a un portatile, espressione cordiale e professionale, scrivania ordinata con block-notes, palette desaturata sobria toni navy e grigio, fotografia documentaria, no posa frontale",
     }}
-    primary={{ href: "/contatti", label: "Prenota la call" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
+    secondary={{ href: "tel:+390816580779", label: "Chiama 081 658 0779" }}
     labelledby="conoscerci-heading"
   />
 </Base>
@@ -227,6 +344,35 @@ const storia = [
     margin: 0 0 var(--space-2xs);
   }
   .comp__desc { font-size: var(--text-md); color: var(--color-ink-2); margin: 0; }
+
+  .section-lede {
+    font-size: var(--text-md);
+    color: var(--color-ink-2);
+    line-height: 1.55;
+    max-width: 44ch;
+    margin: var(--space-md) 0 0;
+  }
+
+  .passi { list-style: none; margin: var(--space-lg) 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-md); }
+  .passo { display: flex; gap: var(--space-md); align-items: flex-start; }
+  .passo__n { flex: none; font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600; color: var(--color-accent); letter-spacing: 0.06em; padding-top: 0.25em; }
+  .passo__titolo { font-size: var(--text-lg); font-weight: 500; letter-spacing: -0.015em; margin: 0 0 var(--space-3xs); }
+  .passo__desc { font-size: var(--text-md) !important; margin: 0; line-height: 1.5; }
+
+  .breve { margin: 0; display: flex; flex-direction: column; }
+  .breve__row {
+    display: grid;
+    grid-template-columns: minmax(6rem, 9rem) 1fr;
+    gap: var(--space-lg);
+    padding: var(--space-md) 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .breve__row:first-child { border-top: 0; padding-top: 0; }
+  .breve__k { font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600; color: var(--color-accent); letter-spacing: 0.06em; text-transform: uppercase; }
+  .breve__v { margin: 0; font-size: var(--text-md); color: var(--color-ink-2); line-height: 1.55; }
+  @media (max-width: 40rem) {
+    .breve__row { grid-template-columns: 1fr; gap: var(--space-3xs); }
+  }
 
   .prose p {
     font-size: var(--text-lg);
@@ -321,6 +467,9 @@ const storia = [
     margin-top: var(--space-md);
     max-width: 46ch;
   }
+
+  .team__who { margin: var(--space-md) 0 0; font-size: var(--text-md); color: var(--color-ink); line-height: 1.45; }
+  .team__note { margin: var(--space-xs) 0 var(--space-md); font-size: var(--text-sm); color: var(--color-muted); max-width: 46ch; }
 
   .team-photo {
     margin: 0;

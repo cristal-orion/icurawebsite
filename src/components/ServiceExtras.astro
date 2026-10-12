@@ -1,0 +1,126 @@
+---
+// Blocchi di testo aggiunti dal cliente alle pagine di servizio.
+// Un solo componente, scelto con `part`, così le ~20 pagine restano coerenti.
+//   aChi       → "A chi si rivolge"            (items: string[])
+//   resta      → "Che cosa resta in azienda"   (items: string[])
+//   ruoli      → "Chi fa che cosa"             (ruoli: {titolo, desc}[])
+//   fonti      → "Fonti e riferimenti"         (items: string[], nota?: string)
+//   correlati  → "Spesso insieme a questo servizio" (correlati: {nome, desc, href}[])
+import AreaGrid from "@components/AreaGrid.astro";
+
+interface Props {
+  part: "aChi" | "resta" | "ruoli" | "fonti" | "correlati";
+  id: string;
+  title?: string;
+  eyebrow?: string;
+  items?: string[];
+  ruoli?: { titolo: string; desc: string }[];
+  nota?: string;
+  correlati?: { nome: string; desc: string; href: string }[];
+}
+const { part, id, title, eyebrow, items = [], ruoli = [], nota, correlati = [] } = Astro.props;
+---
+
+{part === "aChi" && (
+  <section class="section section--tight" aria-labelledby={`${id}-achi`}>
+    <div class="container two-col">
+      <div class="two-col__head">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        <h2 id={`${id}-achi`} class="two-col__title">{title ?? "A chi si rivolge"}</h2>
+      </div>
+      <ul class="checklist">
+        {items.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+{part === "resta" && (
+  <section class="section section--alt-2" aria-labelledby={`${id}-resta`}>
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">{eyebrow ?? "Che cosa consegniamo"}</p>
+        <h2 id={`${id}-resta`} class="two-col__title">{title ?? "Che cosa resta in azienda, a lavoro finito."}</h2>
+      </div>
+      <ul class="checklist">
+        {items.map((o) => (
+          <li class="checklist__item">
+            <span class="checklist__tick" aria-hidden="true">✓</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+{part === "ruoli" && (
+  <section class="section" aria-labelledby={`${id}-ruoli`}>
+    <div class="container">
+      <p class="eyebrow">{eyebrow ?? "Chi fa che cosa"}</p>
+      <h2 id={`${id}-ruoli`} class="section-title">{title ?? "Responsabilità chiare, dal primo giorno."}</h2>
+      <div class="ruoli">
+        {ruoli.map((r) => (
+          <div class="ruoli__item">
+            <h3>{r.titolo}</h3>
+            <p>{r.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{part === "fonti" && (
+  <section class="section section--tight" aria-labelledby={`${id}-fonti`}>
+    <div class="container">
+      <h2 id={`${id}-fonti`} class="fonti__title">{title ?? "Fonti e riferimenti"}</h2>
+      <ul class="fonti">
+        {items.map((f) => <li>{f}</li>)}
+      </ul>
+      {nota && <p class="note">{nota}</p>}
+    </div>
+  </section>
+)}
+
+{part === "correlati" && (
+  <section class="section section--alt" aria-labelledby={`${id}-correlati`}>
+    <div class="container">
+      <p class="eyebrow">{eyebrow ?? "Servizi correlati"}</p>
+      <h2 id={`${id}-correlati`} class="section-title">{title ?? "Spesso insieme a questo servizio"}</h2>
+      <AreaGrid aree={correlati.map((c) => ({ ...c, cta: "Scopri di più" }))} />
+    </div>
+  </section>
+)}
+
+<style>
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .two-col__title { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.02em; margin: 0; max-width: 20ch; }
+  .ruoli {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+  .ruoli__item { border-top: 1px solid var(--color-line, currentColor); padding-top: var(--space-md); }
+  .ruoli__item h3 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-xs); }
+  .ruoli__item p { color: var(--color-ink-2); line-height: 1.55; margin: 0; }
+  .fonti__title { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-sm); }
+  .fonti { padding-left: 1.1em; color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.6; }
+  .note { font-size: var(--text-sm); color: var(--color-muted); margin-top: var(--space-md); }
+
+  @media (max-width: 56rem) {
+    .two-col { grid-template-columns: 1fr; }
+    .ruoli { grid-template-columns: 1fr; }
+  }
+</style>

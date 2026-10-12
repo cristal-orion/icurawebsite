@@ -5,6 +5,7 @@ import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
 
 const aree = [
   {
@@ -13,14 +14,20 @@ const aree = [
     desc: "Pratiche edilizie (CILA, SCIA, permesso di costruire), ristrutturazioni, sopraelevazioni e accatastamenti. Dal progetto al collaudo.",
   },
   {
+    nome: "Rilievi 3D e nuvole di punti",
+    desc: "Rilievo laser con scanner mobile SLAM e camera a 360°: nuvola di punti a colori dell'edificio, dell'impianto o del cantiere in una sola visita, da cui ricaviamo piante, sezioni, modelli 3D e BIM, ortofoto, volumi e as-built.",
+    href: "#rilievi-3d",
+    cta: "Come funziona",
+  },
+  {
     id: "impianti",
     nome: "Impiantistica",
-    desc: "Impianti elettrici, idraulici, termici e antincendio: progetto, direzione lavori e dichiarazioni di conformità (DM 37/2008).",
+    desc: "Impianti elettrici, idraulici, termici e antincendio: progetto, direzione lavori e dichiarazioni di conformità (D.M. 37/2008).",
   },
   {
     id: "antincendio",
     nome: "Prevenzione incendi",
-    desc: "CPI, SCIA antincendio, valutazione del rischio incendio e progettazione per le attività soggette (DPR 151/2011, Codice di Prevenzione Incendi).",
+    desc: "Valutazione del rischio incendio, progettazione per le attività soggette, valutazione del progetto per le categorie B e C, SCIA antincendio e CPI per la categoria C (D.P.R. 151/2011, Codice di prevenzione incendi).",
   },
   {
     id: "collaudi",
@@ -29,8 +36,8 @@ const aree = [
   },
   {
     id: "qualifiche",
-    nome: "Qualifiche e test materiali",
-    desc: "Prove di laboratorio, verifiche periodiche di attrezzature, qualifiche di saldatura WPS/WPQR e controlli non distruttivi.",
+    nome: "Qualifiche e prove sui materiali",
+    desc: "Prove di laboratorio, verifiche periodiche di attrezzature, qualifiche di saldatura WPS/WPQR e controlli non distruttivi, in coordinamento con laboratori e organismi qualificati.",
   },
   {
     id: "pratiche",
@@ -39,16 +46,57 @@ const aree = [
   },
 ];
 
+const aChi = [
+  "Imprese che devono ampliare un capannone, mettere a norma un impianto o avviare la pratica antincendio (SCIA, valutazione del progetto, CPI) per l'attività.",
+  "Committenti privati per ristrutturazioni, pratiche edilizie e antincendio di attività ricettive e commerciali.",
+  "Aziende che hanno bisogno di collaudi, perizie e relazioni tecniche per enti, banche, assicurazioni o contenziosi.",
+  "Chi vuole un solo riferimento tecnico che parli anche con sicurezza e certificazioni.",
+];
+
+const rilievoConsegne = [
+  "Nuvola di punti a colori (E57, LAS, RCP)",
+  "Piante, sezioni e prospetti in CAD",
+  "Modello 3D e BIM (Revit, IFC)",
+  "Ortofoto e rasterizzazioni",
+  "Volumi, superfici, planarità e fuori piombo",
+  "Confronto progetto–costruito e as-built",
+  "Tour virtuale 360° dell'ambiente",
+];
+
+const quandoConviene = [
+  "Ampliamenti e ristrutturazioni: lo stato di fatto completo in una sola visita, senza misure mancanti al tavolo da disegno.",
+  "Impianti industriali: ingombri, percorsi e interferenze misurati prima di ordinare e installare.",
+  "Cantieri: avanzamento, contabilità dei lavori e verifica di quanto realizzato rispetto al progetto.",
+  "Patrimonio immobiliare: documentazione as-built, accatastamenti, due diligence tecniche.",
+  "Sicurezza: planimetrie di emergenza e layout aggiornati, in coordinamento con l'area Sicurezza sul Lavoro.",
+];
+
 const ottieni = [
-  "Un progetto firmato da tecnici abilitati e iscritti all'albo",
-  "Asseverazioni, dichiarazioni di conformità e relazioni a norma",
-  "La gestione completa delle pratiche presso Comune, SUAP e Vigili del Fuoco",
-  "La direzione lavori e il coordinamento con imprese e fornitori",
-  "Un interlocutore tecnico che parla anche con sicurezza e certificazioni quando serve",
+  "Un progetto firmato da tecnici abilitati, con elaborati, calcoli e relazioni.",
+  "Il rilievo 3D dello stato di fatto: nuvola di punti a colori, elaborati CAD e BIM, ortofoto e misure, consegnati in formati aperti e riutilizzabili.",
+  "Asseverazioni, dichiarazioni di conformità e relazioni a norma.",
+  "La gestione completa delle pratiche presso Comune, SUAP e Vigili del Fuoco, fino all'esito.",
+  "La direzione lavori e il coordinamento con imprese e fornitori.",
+  "Un interlocutore tecnico che parla anche con sicurezza e certificazioni quando serve.",
+];
+
+const ruoli = [
+  {
+    titolo: "Svolto direttamente da iCuraImpresa",
+    desc: "Sopralluogo tecnico, rilievo 3D con scanner SLAM ed elaborazione della nuvola di punti, progettazione, relazioni e asseverazioni, direzione lavori, pratiche autorizzative, assistenza ai sopralluoghi degli enti.",
+  },
+  {
+    titolo: "Coordinato da iCuraImpresa",
+    desc: "Prove di laboratorio, controlli non distruttivi e qualifiche di saldatura, eseguiti da laboratori e organismi qualificati.",
+  },
+  {
+    titolo: "Svolto da terzi",
+    desc: "Comune, SUAP e Comando dei Vigili del Fuoco rilasciano titoli e autorizzazioni; le imprese esecutrici realizzano le opere.",
+  },
 ];
 
 const fasi = [
-  { n: "01", titolo: "Sopralluogo tecnico", desc: "Vediamo lo stato di fatto, l'impianto o l'opera e inquadriamo vincoli e obiettivi." },
+  { n: "01", titolo: "Sopralluogo tecnico", desc: "Vediamo lo stato di fatto, l'impianto o l'opera e inquadriamo vincoli e obiettivi; quando serve, lo rileviamo in 3D con lo scanner SLAM." },
   { n: "02", titolo: "Progetto", desc: "Sviluppiamo elaborati, calcoli e relazioni, con il quadro autorizzativo necessario." },
   { n: "03", titolo: "Pratiche", desc: "Depositiamo e seguiamo gli iter presso gli enti competenti fino all'esito." },
   { n: "04", titolo: "Direzione e collaudo", desc: "Seguiamo l'esecuzione, verifichiamo la conformità e chiudiamo con collaudo o certificato." },
@@ -56,67 +104,86 @@ const fasi = [
 
 const faq = [
   {
-    q: "Cos'è il CPI e quando lo devo avere?",
-    a: "Il CPI (Certificato di Prevenzione Incendi) attesta che un'attività rispetta la normativa antincendio. È richiesto per le attività elencate nel DPR 151/2011 — alberghi, autorimesse, depositi, locali di pubblico spettacolo, molte attività produttive. A seconda della categoria si procede con SCIA antincendio o con valutazione del progetto da parte dei Vigili del Fuoco: ti diciamo noi in che caso rientri.",
+    q: "Che cos'è un rilievo 3D con scanner SLAM e quanto è preciso?",
+    a: "È un rilievo laser eseguito con uno scanner mobile: la tecnologia SLAM ricostruisce la posizione dello strumento mentre ci si muove e compone una nuvola di punti continua, a cui la camera a 360° aggiunge il colore reale. La precisione è dell'ordine del centimetro e dipende dall'ambiente e dalla lunghezza del percorso: la indichiamo nell'offerta per il caso specifico, insieme ai formati di consegna (E57, LAS, RCP, CAD, IFC). Rispetto al rilievo tradizionale, misura tutto in una volta sola, anche in interni e sotterranei, e permette di tornare sulla nuvola per ogni misura successiva senza nuovi sopralluoghi.",
+  },
+  {
+    q: "SCIA antincendio, valutazione del progetto e CPI: che differenza c'è e che cosa serve a me?",
+    a: "Sono tre passaggi diversi del D.P.R. 151/2011, che riguarda le attività elencate nel suo Allegato I (alberghi, autorimesse, depositi, locali di pubblico spettacolo, molte attività produttive), divise nelle categorie A, B e C. Per tutte le attività soggette l'esercizio si avvia con la SCIA antincendio, presentata al Comando dei Vigili del Fuoco con l'asseverazione di un tecnico abilitato. Per le categorie B e C, prima della SCIA, il progetto va sottoposto alla valutazione dei Vigili del Fuoco. Il Certificato di Prevenzione Incendi (CPI) è l'atto rilasciato dopo il sopralluogo ed è previsto solo per la categoria C; per le categorie A e B fa fede la ricevuta della SCIA e l'eventuale verbale di visita. L'attestazione di rinnovo periodico si presenta ogni cinque o dieci anni secondo l'attività. Inquadriamo la tua attività nell'Allegato I e ti diciamo quale procedimento serve.",
   },
   {
     q: "Le firme e le asseverazioni sono valide a tutti gli effetti?",
-    a: "Sì. I progetti, i collaudi e le perizie sono firmati da tecnici abilitati e iscritti ai rispettivi albi professionali, con timbro e responsabilità di legge. Sono documenti utilizzabili davanti a enti, banche, assicurazioni e in sede di contenzioso.",
+    a: "Sì. Progetti, collaudi e perizie sono firmati da tecnici abilitati e iscritti ai rispettivi albi, con timbro e responsabilità di legge: sono documenti utilizzabili davanti a enti, banche, assicurazioni e in sede di contenzioso.",
   },
   {
     q: "Vi occupate anche della direzione lavori?",
-    a: "Sì. Possiamo seguire l'intervento dalla progettazione alla direzione lavori, coordinando imprese e fornitori e verificando che quanto realizzato corrisponda al progetto e alle norme, fino al collaudo finale.",
+    a: "Sì. Seguiamo l'intervento dalla progettazione alla direzione lavori, coordinando imprese e fornitori e verificando che quanto realizzato corrisponda al progetto e alle norme, fino al collaudo finale.",
   },
   {
-    q: "Seguite anche le pratiche presso Comune e Vigili del Fuoco?",
-    a: "È parte del servizio. Gestiamo gli iter presso Comune, SUAP, Vigili del Fuoco e gli altri enti: deposito, integrazioni, sopralluoghi e rilascio dell'autorizzazione, così non devi rincorrere uffici e scadenze.",
+    q: "Seguite le pratiche presso Comune e Vigili del Fuoco?",
+    a: "È parte del servizio: deposito, integrazioni, sopralluoghi e rilascio dell'autorizzazione, così non devi rincorrere uffici e scadenze.",
   },
   {
     q: "Lavorate solo con imprese o anche con privati?",
     a: "Con entrambi. Seguiamo imprese (capannoni, attività produttive, impianti) e committenti privati (ristrutturazioni, pratiche edilizie, antincendio per attività ricettive e commerciali).",
   },
 ];
+
+const fonti = [
+  "D.P.R. 1 agosto 2011, n. 151 — procedimenti di prevenzione incendi",
+  "D.M. 3 agosto 2015 — Codice di prevenzione incendi, e successivi aggiornamenti",
+  "D.M. 22 gennaio 2008, n. 37 — impianti negli edifici",
+  "D.P.R. 6 giugno 2001, n. 380 — Testo unico dell'edilizia",
+];
+
+const correlati = [
+  { nome: "Sicurezza nei cantieri", desc: "PSC, POS e coordinamento per lo stesso intervento.", href: "/servizi/consulenza/cantieri" },
+  { nome: "Finanza Agevolata", desc: "Bandi e agevolazioni per l'investimento che stai progettando.", href: "/servizi/finanza-agevolata" },
+  { nome: "Attestazione SOA", desc: "La qualificazione per i lavori pubblici.", href: "/servizi/certificazioni/soa" },
+];
 ---
 
 <Base
-  title="Engineering"
-  description="Progettazione edile e impiantistica, prevenzione incendi e CPI, collaudi e perizie, qualifiche e test materiali, gestione pratiche presso Comune, SUAP e Vigili del Fuoco."
+  title="Engineering e antincendio a Napoli"
+  description="Progettazione, impianti, prevenzione incendi (SCIA, CPI), direzione lavori, collaudi, perizie e rilievi 3D con scanner laser. Studio tecnico iCuraImpresa, Napoli."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 03</p>
-      <h1>Engineering.</h1>
+      <h1>Engineering: progettazione, prevenzione incendi, rilievi 3D, collaudi e pratiche.</h1>
       <p class="lede">
-        Quando il progetto, l'impianto o l'autorizzazione richiede una firma tecnica, ci pensiamo noi — dal disegno al collaudo.
+        Quando il progetto, l'impianto o l'autorizzazione richiede una firma tecnica, ci pensiamo noi — dal disegno al collaudo. Costruisci su basi sicure.
       </p>
     </div>
   </header>
 
   <hr class="rule" aria-hidden="true" />
 
+  <ServiceExtras part="aChi" id="engineering" items={aChi} />
+
   {/* ───── Contesto ───── */}
   <section class="section section--alt" aria-labelledby="engineering-contesto">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">01 — Quando serve</p>
+        <p class="eyebrow">Il bisogno</p>
         <h2 id="engineering-contesto" class="two-col__title">Dove serve una firma, e qualcuno che la sostenga.</h2>
       </div>
       <div class="prose">
         <p>
-          Un capannone da ampliare, un impianto da mettere a norma, un'attività che ha bisogno del CPI, un collaudo da depositare: sono passaggi in cui non basta "fare", serve un tecnico abilitato che progetti, asseveri e risponda di quella firma davanti agli enti.
+          Un capannone da ampliare, un impianto da mettere a norma, un'attività soggetta ai controlli di prevenzione incendi, un collaudo da depositare: sono passaggi in cui non basta «fare». Serve un tecnico abilitato che progetti, asseveri e risponda di quella firma davanti agli enti.
         </p>
         <p>
-          Mettiamo a disposizione ingegneri e tecnici che seguono l'intervento per intero — progetto, pratiche, direzione lavori, collaudo — e che, quando il caso tocca la sicurezza o le certificazioni, parlano la stessa lingua del resto del team.
+          Mettiamo a disposizione ingegneri e tecnici che seguono l'intervento per intero — progetto, pratiche, direzione lavori, collaudo — e che, quando il caso tocca la sicurezza o le certificazioni, parlano la stessa lingua del resto della squadra.
         </p>
         <ul class="chips" aria-label="Ambiti e normative">
-          <li>CILA / SCIA</li>
-          <li>DM 37/2008</li>
-          <li>CPI</li>
-          <li>DPR 151/2011</li>
-          <li>SCIA antincendio</li>
+          <li>CILA / SCIA / permesso di costruire</li>
+          <li>Rilievo 3D — scanner laser SLAM</li>
+          <li>D.M. 37/2008 — impianti</li>
+          <li>D.P.R. 151/2011 — prevenzione incendi</li>
+          <li>Codice di prevenzione incendi (D.M. 3/8/2015)</li>
           <li>Collaudo statico</li>
           <li>WPS / WPQR</li>
-          <li>SUAP / VVF</li>
+          <li>SUAP / Vigili del Fuoco</li>
         </ul>
       </div>
     </div>
@@ -127,8 +194,8 @@ const faq = [
   {/* ───── Aree ───── */}
   <section class="section" aria-labelledby="engineering-aree">
     <div class="container">
-      <p class="eyebrow">02 — Cosa facciamo</p>
-      <h2 id="engineering-aree" class="section-title">Sei aree tecniche integrate.</h2>
+      <p class="eyebrow">Che cosa facciamo</p>
+      <h2 id="engineering-aree" class="section-title">Sette discipline, una squadra tecnica.</h2>
       <AreaGrid aree={aree} />
     </div>
   </section>
@@ -143,15 +210,56 @@ const faq = [
     </div>
   </section>
 
-  {/* ───── Cosa ottieni ───── */}
+  {/* ───── Rilievi 3D ───── */}
+  <section id="rilievi-3d" class="section section--alt-2 rilievi" aria-labelledby="engineering-rilievi">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Rilievi 3D</p>
+        <h2 id="engineering-rilievi" class="two-col__title">Il rilievo che diventa progetto: nuvole di punti a colori con scanner SLAM.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Rileviamo edifici, capannoni, impianti e cantieri con uno scanner laser mobile GeoSLAM con camera a 360°. Si cammina negli ambienti e in pochi minuti si ottiene una nuvola di punti a colori, misurabile e con precisione centimetrica, anche dove il GPS non arriva: interni, sotterranei, aree dense di impianti. Nessuna stazione fissa, nessun fermo dell'attività.
+        </p>
+        <p>
+          Dalla nuvola ricaviamo tutto ciò che serve per progettare e decidere: piante, sezioni e prospetti dello stato di fatto, modelli 3D e BIM, ortofoto e rasterizzazioni di facciate e pavimenti, calcolo di volumi e superfici, verifiche di planarità e fuori piombo, confronto fra progetto e costruito, documentazione as-built. Il rilievo è la base su cui lavorano progettazione, impianti, prevenzione incendi e sicurezza: un dato solo, misurato una volta, usato da tutta la squadra.
+        </p>
+
+        <h3 class="rilievi__sub">Che cosa consegniamo dal rilievo</h3>
+        <ul class="chips" aria-label="Consegne del rilievo 3D">
+          {rilievoConsegne.map((r) => <li>{r}</li>)}
+        </ul>
+
+        <h3 class="rilievi__sub">Quando conviene</h3>
+        <ul class="checklist">
+          {quandoConviene.map((o) => (
+            <li class="checklist__item">
+              <span class="checklist__tick" aria-hidden="true">✓</span>
+              <span>{o}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="rilievi__ctas">
+          <a href="/contatti" class="btn btn--primary">
+            Richiedi un rilievo 3D
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#engineering-faq" class="link-cta">
+            Domande frequenti
+            <span class="link-cta__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ───── Che cosa consegniamo ───── */}
   <section class="section section--ink" aria-labelledby="engineering-ottieni">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">03 — Cosa ottieni</p>
-        <h2 id="engineering-ottieni" class="two-col__title">Dal disegno alla pratica chiusa.</h2>
-        <p class="two-col__note">
-          Un solo riferimento tecnico, dall'idea al collaudo, senza rimbalzi tra studi e uffici.
-        </p>
+        <p class="eyebrow">Che cosa consegniamo</p>
+        <h2 id="engineering-ottieni" class="two-col__title">Che cosa resta in azienda, a lavoro finito.</h2>
       </div>
       <ul class="checklist">
         {ottieni.map((o) => (
@@ -164,9 +272,11 @@ const faq = [
     </div>
   </section>
 
-  {/* ───── Come funziona ───── */}
+  <ServiceExtras part="ruoli" id="engineering" ruoli={ruoli} />
+
+  {/* ───── Come lavoriamo ───── */}
   <Steps
-    eyebrow="04 — Come funziona"
+    eyebrow="Come lavoriamo"
     title="Quattro fasi, dal sopralluogo al collaudo."
     steps={fasi}
     labelledby="engineering-fasi"
@@ -176,7 +286,7 @@ const faq = [
 
   {/* ───── FAQ ───── */}
   <Faq
-    eyebrow="05 — Domande frequenti"
+    eyebrow="Domande frequenti"
     title="Le domande che ci fanno più spesso."
     name="faq-engineering"
     labelledby="engineering-faq"
@@ -184,14 +294,23 @@ const faq = [
     tone="alt-blue"
   />
 
+  <ServiceExtras
+    part="fonti"
+    id="engineering"
+    items={fonti}
+    nota="Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico."
+  />
+
+  <ServiceExtras part="correlati" id="engineering" correlati={correlati} />
+
   <CtaBand
-    title="Progetto, impianto, certificazione: parliamone."
-    lede="Un sopralluogo tecnico per inquadrare l'intervento e dirti come procedere. Senza impegno."
+    title="Progetto, impianto, autorizzazione: parliamone."
+    lede="Descrivici l'intervento: ti diciamo quali titoli servono, chi deve firmare e come procedere. Ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve. Oppure chiama lo 081 658 0779."
     image={{
       src: "/images/home-cnc-barriera.webp",
       alt: "Tecnico iCura Impresa in sopralluogo su un impianto industriale: adulto con casco e tablet rugged verifica un quadro elettrico o un impianto antincendio, atmosfera competente e rassicurante, capannone italiano con luce naturale, palette desaturata sobria toni navy e grigio, fotografia documentaria professionale, no posa",
     }}
-    primary={{ href: "/contatti", label: "Richiedi un sopralluogo" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
     labelledby="engineering-cta"
   />
 </Base>
@@ -206,4 +325,17 @@ const faq = [
     margin-bottom: var(--space-md);
   }
   .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 50ch; }
+
+  .rilievi__sub {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin: var(--space-lg) 0 0;
+  }
+  .rilievi__ctas {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+  }
 </style>

@@ -2,157 +2,156 @@
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
-import FeatureRow from "@components/FeatureRow.astro";
 import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
+
+const aChi = [
+  "Imprese che partecipano a gare pubbliche o lavorano con committenti che richiedono certificazioni come requisito o punteggio.",
+  "Aziende che vogliono un sistema di gestione che lavora ogni giorno, non un certificato in cornice.",
+  "Imprese di costruzioni che devono qualificarsi per i lavori pubblici con l’attestazione SOA.",
+  "Organizzazioni che devono dimostrare qualità, sicurezza, tutela ambientale, protezione delle informazioni, prevenzione della corruzione o parità di genere.",
+];
 
 const aree = [
   {
     id: "iso-9001",
     nome: "ISO 9001 — Qualità",
-    desc: "Sistema di gestione della qualità. Processi più ordinati, meno errori e un requisito sempre più richiesto da clienti e committenti.",
+    desc: "Sistema di gestione della qualità: processi più ordinati, meno errori, un requisito sempre più richiesto da clienti e committenti.",
     href: "/servizi/certificazioni/iso-9001",
-    cta: "Scopri di più",
+    cta: "Vai alla pagina",
   },
   {
     id: "iso-14001",
     nome: "ISO 14001 — Ambiente",
-    desc: "Sistema di gestione ambientale. Controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.",
+    desc: "Sistema di gestione ambientale: controllo degli impatti, conformità normativa e un vantaggio competitivo concreto.",
     href: "/servizi/certificazioni/iso-14001",
-    cta: "Scopri di più",
+    cta: "Vai alla pagina",
   },
   {
     id: "iso-45001",
-    nome: "ISO 45001 — Sicurezza",
-    desc: "Sistema di gestione della salute e sicurezza sul lavoro. Riduce il rischio di infortuni e formalizza le buone prassi.",
+    nome: "ISO 45001 — Salute e sicurezza",
+    desc: "Sistema di gestione della salute e sicurezza sul lavoro: riduce il rischio di infortuni, formalizza le buone prassi, utile per la riduzione del premio INAIL.",
     href: "/servizi/certificazioni/iso-45001",
-    cta: "Scopri di più",
+    cta: "Vai alla pagina",
   },
   {
     id: "iso-27001",
     nome: "ISO 27001 — Sicurezza delle informazioni",
-    desc: "Sistema di gestione della sicurezza delle informazioni (ISMS). Protegge dati e sistemi, rafforza il GDPR e apre gare e clienti nell'ICT e nei servizi.",
+    desc: "Sistema di gestione della sicurezza delle informazioni: protegge dati e sistemi, rafforza la conformità al GDPR e apre gare e clienti nell’ICT e nei servizi.",
     href: "/servizi/certificazioni/iso-27001",
-    cta: "Scopri di più",
+    cta: "Vai alla pagina",
   },
   {
     id: "iso-37001",
-    nome: "ISO 37001 — Anti-corruzione",
-    desc: "Sistema di gestione per la prevenzione della corruzione. Rafforza il Modello 231 e vale affidabilità e punteggi premiali nelle gare pubbliche.",
+    nome: "ISO 37001 — Anticorruzione",
+    desc: "Sistema di gestione per la prevenzione della corruzione: rafforza il modello 231 e vale affidabilità e punteggi nelle gare pubbliche.",
     href: "/servizi/certificazioni/iso-37001",
-    cta: "Scopri di più",
+    cta: "Vai alla pagina",
   },
   {
     id: "parita",
-    nome: "Parità di genere — UNI/PdR 125",
-    desc: "Certificazione della parità di genere: dà accesso a esonero contributivo e punteggi premiali nei bandi pubblici e nelle gare.",
+    nome: "Parità di genere — UNI/PdR 125:2022",
+    desc: "Certificazione della parità di genere: esonero contributivo e punteggi premiali nei bandi e nelle gare, oltre a un segnale concreto verso clienti e dipendenti.",
     href: "/servizi/certificazioni/parita-genere",
-    cta: "Scopri di più",
+    cta: "Vai alla pagina",
   },
   {
     id: "soa",
     nome: "Attestazione SOA",
-    desc: "Requisito per partecipare alle gare di lavori pubblici sopra una certa soglia. Attesta la capacità dell'impresa di eseguire opere pubbliche.",
+    desc: "Requisito per partecipare alle gare di lavori pubblici di importo pari o superiore a 150.000 euro: attesta categorie (OG/OS) e classifiche di importo che l’impresa è qualificata a eseguire.",
     href: "/servizi/certificazioni/soa",
-    cta: "Scopri di più",
+    cta: "Vai alla pagina",
   },
   {
     id: "gare",
-    nome: "Procedure di gara & avvalimenti",
+    nome: "Procedure di gara e avvalimenti",
     desc: "Supporto alla partecipazione a bandi pubblici e privati, con avvalimenti e reperimento dei requisiti tecnici ed economici.",
     href: "/servizi/certificazioni/soa#gare",
-    cta: "Vai a SOA & gare",
+    cta: "Vai alla pagina",
+  },
+];
+
+const resta = [
+  "Un sistema di gestione costruito sui tuoi processi, senza moduli copia-incolla, pronto per l’audit dell’organismo.",
+  "Persone preparate: formazione del personale e verifica interna prima dell’audit.",
+  "Affiancamento durante l’audit di certificazione e nella gestione dei rilievi.",
+  "Il mantenimento nel tempo: verifiche di sorveglianza annuali e rinnovo alla scadenza, seguiti da noi.",
+];
+
+const ruoli = [
+  {
+    titolo: "Svolto direttamente da iCuraImpresa",
+    desc: "Analisi dei gap, progettazione e documentazione del sistema, formazione, audit interni, riesame con la direzione, assistenza all’audit, mantenimento; per la SOA, verifica e raccolta dei requisiti e supporto all’istruttoria.",
+  },
+  {
+    titolo: "Svolto da terzi",
+    desc: "L’organismo di certificazione accreditato (o la SOA autorizzata dall’ANAC) svolge gli audit e rilascia il certificato o l’attestazione: la terzietà è ciò che dà valore al titolo.",
   },
 ];
 
 const fasi = [
-  { n: "01", titolo: "Analisi dei gap", desc: "Confrontiamo l'azienda con lo standard e individuiamo cosa manca davvero." },
-  { n: "02", titolo: "Documentazione", desc: "Costruiamo il sistema di gestione su misura, senza moduli copia-incolla." },
-  { n: "03", titolo: "Formazione e audit interno", desc: "Prepariamo le persone e proviamo il sistema con una verifica interna." },
-  { n: "04", titolo: "Audit di certificazione", desc: "L'ente terzo accreditato verifica e rilascia il certificato." },
-  { n: "05", titolo: "Mantenimento", desc: "Seguiamo le verifiche di sorveglianza annuali e il rinnovo alla scadenza." },
+  { titolo: "Analisi dei gap", desc: "Confrontiamo l’azienda con lo standard e individuiamo che cosa manca davvero." },
+  { titolo: "Documentazione", desc: "Costruiamo il sistema di gestione su misura, con procedure e registrazioni che le persone usano davvero." },
+  { titolo: "Formazione e audit interno", desc: "Prepariamo le persone e proviamo il sistema con una verifica interna e il riesame con la direzione." },
+  { titolo: "Audit di certificazione e mantenimento", desc: "L’organismo terzo accreditato verifica e rilascia il certificato; poi seguiamo le verifiche di sorveglianza annuali e il rinnovo alla scadenza." },
 ];
 
 const faq = [
   {
     q: "Quanto tempo serve per ottenere una certificazione ISO?",
-    a: "Con un percorso seguito, di norma 3–5 mesi dall'avvio all'audit di certificazione, contro i 6–12 di un'azienda che procede da sola. Dipende dalla dimensione, dal numero di sedi e da quanto è già strutturata.",
+    a: "Dipende dalla dimensione, dal numero di sedi e da quanto l’azienda è già strutturata. Dopo l’analisi dei gap ti diamo un calendario realistico, con le tappe e le date dell’audit: non promettiamo tempi standard che non dipendono solo da noi.",
   },
   {
     q: "Il certificato lo rilasciate voi?",
-    a: "No, ed è giusto che sia così: il certificato lo rilascia un ente di certificazione terzo e accreditato (Accredia). Noi prepariamo l'azienda, costruiamo il sistema di gestione, formiamo le persone e vi affianchiamo durante l'audit. La terzietà dell'ente è ciò che dà valore al certificato.",
+    a: "No, ed è giusto che sia così: il certificato lo rilascia un organismo di certificazione terzo e accreditato (Accredia o altro ente di accreditamento riconosciuto). Noi prepariamo l’azienda, costruiamo il sistema, formiamo le persone e ti affianchiamo durante l’audit.",
   },
   {
-    q: "L'attestazione SOA è obbligatoria?",
-    a: "Per partecipare ad appalti di lavori pubblici oltre la soglia prevista dal Codice dei contratti, sì: la SOA attesta categorie e classifiche di importo che l'impresa può eseguire. Ti aiutiamo a capire quali categorie ti servono e a raggiungere i requisiti, anche tramite avvalimento.",
+    q: "L’attestazione SOA è obbligatoria?",
+    a: "Per eseguire lavori pubblici di importo pari o superiore a 150.000 euro, sì (art. 100 D.Lgs. 36/2023 e Allegato II.12): la SOA attesta categorie e classifiche che l’impresa può eseguire. Ti aiutiamo a capire quali categorie ti servono e a raggiungere i requisiti, anche tramite avvalimento.",
   },
   {
     q: "Le certificazioni ISO scadono?",
-    a: "Hanno validità triennale, con audit di sorveglianza annuali che ne confermano il mantenimento e un rinnovo alla scadenza. Per questo offriamo il mantenimento: il sistema deve restare vivo e utile, non solo superare la prima verifica.",
+    a: "I certificati ISO hanno validità triennale, con audit di sorveglianza annuali e un rinnovo alla scadenza. L’attestazione SOA ha efficacia di cinque anni, con verifica del mantenimento dei requisiti al terzo anno. Per questo offriamo il mantenimento: il sistema deve restare vivo e utile.",
   },
   {
-    q: "A cosa serve la certificazione di parità di genere?",
-    a: "La UNI/PdR 125 dà diritto a un esonero sui contributi previdenziali e assegna punteggi premiali nelle gare pubbliche e in molte misure (incluso il PNRR). Oltre al vantaggio economico, è un segnale concreto verso clienti e dipendenti.",
+    q: "A che cosa serve la certificazione della parità di genere?",
+    a: "La UNI/PdR 125:2022 dà diritto a un esonero contributivo (L. 162/2021, art. 5) e a punteggi premiali nelle gare pubbliche e in molte misure di incentivazione. Oltre al vantaggio economico, è un segnale concreto verso clienti e dipendenti.",
   },
   {
     q: "Una certificazione mi aiuta davvero a vincere le gare?",
-    a: "Sì: ISO 9001, 14001 e 45001 sono spesso requisito o danno punteggio tecnico nei capitolati, e la parità di genere aggiunge premialità. Più che un costo, per chi lavora con la PA è un investimento che apre l'accesso a commesse altrimenti precluse.",
+    a: "Sì: ISO 9001, 14001 e 45001 sono spesso requisito o danno punteggio nei capitolati, e la parità di genere aggiunge premialità. Per chi lavora con la pubblica amministrazione è un investimento che apre l’accesso a commesse altrimenti precluse.",
   },
+];
+
+const fonti = [
+  "D.Lgs. 31 marzo 2023, n. 36 — Codice dei contratti pubblici, art. 100 e Allegato II.12 — qualificazione SOA: efficacia quinquennale con verifica triennale",
+  "L. 5 novembre 2021, n. 162 — certificazione della parità di genere",
+  "Accredia — ente italiano di accreditamento",
+];
+const fontiNota = "Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico.";
+
+const correlati = [
+  { nome: "Consulenza aziendale", desc: "Deleghe, organigramma e modello 231 coerenti con il sistema di gestione.", href: "/servizi/consulenza/aziendale" },
+  { nome: "Sicurezza sul lavoro", desc: "Il DVR come base del sistema ISO 45001.", href: "/servizi/consulenza/sicurezza-lavoro" },
+  { nome: "Ambiente", desc: "AUA, rifiuti ed emissioni: la conformità alla base della ISO 14001.", href: "/servizi/consulenza/ambiente" },
 ];
 ---
 
 <Base
-  title="Certificazioni"
-  description="Certificazioni ISO 9001, 14001, 45001, 27001, 37001, parità di genere UNI/PdR 125, Attestazione SOA e supporto alle procedure di gara. Affiancamento dall'analisi dei gap all'audit finale e al mantenimento."
+  title="Certificazioni ISO 9001, 45001 e SOA a Napoli"
+  description="Sistemi di gestione ISO 9001, 14001, 45001, 27001, 37001, parità di genere UNI/PdR 125 e attestazione SOA: consulenza fino all’audit. Napoli e Campania."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 05</p>
-      <h1>Certificazioni.</h1>
+      <h1>Sistemi di gestione: certificazioni ISO, parità di genere e attestazione SOA.</h1>
       <p class="lede">
-        Le certificazioni aprono gare, rassicurano i clienti e mettono ordine nei processi. Ti accompagniamo dall'analisi iniziale all'audit finale e oltre.
+        Le certificazioni aprono gare, rassicurano i clienti e mettono ordine nei processi. Ti accompagniamo dall’analisi iniziale all’audit dell’organismo, e oltre. Dai valore a come lavori.
       </p>
     </div>
   </header>
-
-  {/* ───── Contesto ───── */}
-  <section class="section section--ink" aria-labelledby="cert-contesto">
-    <div class="container two-col">
-      <div class="two-col__head">
-        <p class="eyebrow">01 — Perché certificarsi</p>
-        <h2 id="cert-contesto" class="two-col__title">Una certificazione non è un bollino. È una chiave.</h2>
-      </div>
-      <div class="prose">
-        <p>
-          Sempre più gare, capitolati e clienti privati chiedono una certificazione come requisito d'accesso o come punteggio premiale. Senza, resti fuori; con, parti avanti. Ma il valore non è solo il certificato in cornice: è il sistema di gestione che, fatto bene, riduce errori, infortuni e sprechi.
-        </p>
-        <p>
-          Per questo non vendiamo carta. Costruiamo un sistema che regge la verifica dell'ente terzo e che resta utile all'azienda anche dopo, quando il consulente non c'è più in stanza.
-        </p>
-        <ul class="chips" aria-label="Standard e schemi">
-          <li>ISO 9001</li>
-          <li>ISO 14001</li>
-          <li>ISO 45001</li>
-          <li>ISO 27001</li>
-          <li>ISO 37001</li>
-          <li>UNI/PdR 125</li>
-          <li>SOA</li>
-          <li>Accredia</li>
-          <li>Procedure di gara</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  {/* ───── Cosa certifichiamo ───── */}
-  <section class="section" aria-labelledby="cert-aree">
-    <div class="container">
-      <p class="eyebrow">02 — Cosa certifichiamo</p>
-      <h2 id="cert-aree" class="section-title">Gli schemi su cui ti affianchiamo.</h2>
-      <AreaGrid aree={aree} />
-    </div>
-  </section>
 
   <section class="section section--tight">
     <div class="container">
@@ -164,87 +163,63 @@ const faq = [
     </div>
   </section>
 
-  {/* ───── Focus SOA / gare ───── */}
-  <FeatureRow
-    flip
-    id="soa-focus"
-    eyebrow="Lavori pubblici"
-    title="SOA e gare: la chiave per gli appalti."
-    image={{
-      src: "/images/certificazioni-soa-gare.webp",
-      alt: "Consulente certificazioni iCura Impresa durante la preparazione di una pratica SOA e di gara: piani di cantiere, dossier, laptop e casco su un tavolo, due adulti verificano requisiti e documentazione, luce naturale e stile documentario",
-    }}
-    paras={[
-      "Per partecipare agli appalti di lavori pubblici sopra i 150.000 € serve l'attestazione SOA: certifica le categorie di opere (OG e OS) e la classifica di importo che la tua impresa è qualificata a eseguire. Senza, resti fuori dalla gara.",
-      "Ti accompagniamo dalla verifica dei requisiti — fatturato, organico, lavori eseguiti, regolarità — fino all'attestazione, rilasciata da un organismo vigilato dall'ANAC e valida tre anni. E quando un requisito manca, lavoriamo sull'avvalimento per non farti perdere l'occasione.",
-    ]}
-    points={[
-      "Verifica di categorie OG/OS e classifiche",
-      "Requisiti tecnici, economici e di regolarità",
-      "Avvalimenti e supporto alle procedure di gara",
-    ]}
-    chips={["SOA", "D.Lgs. 36/2023", "OG / OS", "ANAC", "Avvalimento"]}
-  />
+  <ServiceExtras part="aChi" id="cert" items={aChi} />
 
-  <hr class="rule" aria-hidden="true" />
-
-  {/* ───── Il percorso ───── */}
-  <Steps
-    eyebrow="03 — Il percorso"
-    title="Dall'analisi dei gap al mantenimento."
-    steps={fasi}
-    labelledby="cert-fasi"
-  />
-
-  {/* ───── Metodo ───── */}
-  <section class="section metodo" aria-labelledby="cert-metodo">
-    <div class="container metodo__grid">
-      <div>
-        <p class="eyebrow">04 — Come lavoriamo</p>
-        <h2 id="cert-metodo">Affiancamento, non solo carte.</h2>
+  {/* ───── Il bisogno ───── */}
+  <section class="section section--ink" aria-labelledby="cert-contesto">
+    <div class="container two-col">
+      <div class="two-col__head">
+        <p class="eyebrow">Il bisogno</p>
+        <h2 id="cert-contesto" class="two-col__title">Una certificazione non è un bollino. È una chiave.</h2>
       </div>
-      <div class="metodo__body">
+      <div class="prose">
         <p>
-          Analizziamo lo stato dell'azienda, costruiamo la documentazione su misura e prepariamo le persone all'audit dell'ente. Tempi tipici: 3–5 mesi, contro i 6–12 di un percorso non seguito.
+          Sempre più gare, capitolati e clienti privati chiedono una certificazione come requisito d’accesso o come punteggio premiale. Senza, resti fuori; con, parti avanti. Ma il valore non è solo il certificato in cornice: è il sistema di gestione che, fatto bene, riduce errori, infortuni e sprechi.
         </p>
         <p>
-          Niente moduli copia-incolla: il sistema di gestione deve reggere la verifica e restare utile dopo il certificato.
+          Per questo non vendiamo carta. Costruiamo un sistema che regge la verifica dell’organismo terzo e che resta utile all’azienda anche dopo, quando il consulente non è più in stanza. La certificazione la rilascia l’organismo accreditato: noi ti accompagniamo fino a lì e nel mantenimento.
         </p>
-        <a href="/contatti" class="link-cta">
-          Parla con un consulente
-          <span class="link-cta__arrow" aria-hidden="true">→</span>
-        </a>
+        <ul class="chips" aria-label="Standard e schemi">
+          <li>ISO 9001</li>
+          <li>ISO 14001</li>
+          <li>ISO 45001</li>
+          <li>ISO 27001</li>
+          <li>ISO 37001</li>
+          <li>UNI/PdR 125:2022</li>
+          <li>SOA — D.Lgs. 36/2023</li>
+          <li>Accredia</li>
+          <li>Procedure di gara</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
+  {/* ───── Che cosa facciamo ───── */}
+  <section class="section" aria-labelledby="cert-aree">
+    <div class="container">
+      <p class="eyebrow">Che cosa facciamo</p>
+      <h2 id="cert-aree" class="section-title">Gli schemi su cui ti affianchiamo.</h2>
+      <AreaGrid aree={aree} />
+    </div>
+  </section>
 
-  {/* ───── Focus: ISO 14001 / ambiente ───── */}
-  <FeatureRow
-    id="iso14001-focus"
-    eyebrow="Ambiente"
-    title="ISO 14001: gestire l'ambiente, non solo dichiararlo."
-    image={{
-      src: "/images/consulenza-ambiente-rifiuti.webp",
-      alt: "Area rifiuti ordinata di un capannone industriale durante una verifica ambientale: due adulti controllano registri, contenitori e procedure su un tavolo d'ispezione, pavimento con segnaletica e luce naturale dall'alto, fotografia documentaria professionale",
-    }}
-    paras={[
-      "La ISO 14001 certifica che l'impresa tiene sotto controllo i propri impatti ambientali — rifiuti, scarichi, emissioni, consumi — con un sistema di gestione verificato da un ente terzo. Sempre più gare e clienti la chiedono.",
-      "Costruiamo il sistema sulla realtà del tuo ciclo produttivo: analisi degli aspetti ambientali, procedure, indicatori e audit interno, fino alla certificazione e al mantenimento nel tempo.",
-    ]}
-    points={[
-      "Analisi degli aspetti e impatti ambientali",
-      "Procedure, indicatori e audit interno",
-      "Si integra con AUA, rifiuti e MUD",
-    ]}
+  <ServiceExtras part="resta" id="cert" items={resta} />
+
+  <ServiceExtras part="ruoli" id="cert" ruoli={ruoli} />
+
+  {/* ───── Come lavoriamo ───── */}
+  <Steps
+    eyebrow="Come lavoriamo"
+    title="Dall’analisi dei gap al mantenimento."
+    steps={fasi}
+    labelledby="cert-fasi"
   />
 
   <hr class="rule" aria-hidden="true" />
 
   {/* ───── FAQ ───── */}
   <Faq
-    eyebrow="05 — Domande frequenti"
+    eyebrow="Domande frequenti"
     title="Le domande che ci fanno più spesso."
     name="faq-certificazioni"
     labelledby="cert-faq"
@@ -252,14 +227,20 @@ const faq = [
     tone="alt-blue"
   />
 
+  <ServiceExtras part="fonti" id="cert" items={fonti} nota={fontiNota} />
+
+  <ServiceExtras part="correlati" id="cert" correlati={correlati} />
+
   <CtaBand
+    eyebrow="Il prossimo passo"
     title="Quale certificazione ti serve davvero?"
-    lede="Te lo diciamo con onestà, senza venderti percorsi inutili: una valutazione iniziale per capire da dove partire."
+    lede="Te lo diciamo con onestà, senza venderti percorsi inutili: una valutazione iniziale per capire da dove partire. Ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve."
     image={{
       src: "/images/certificazioni-audit-iso.webp",
       alt: "Consulente certificazioni iCura Impresa con un imprenditore durante un audit di sistema: due adulti in ufficio italiano esaminano registri e checklist su un tavolo ordinato, espressione professionale e rassicurante, palette desaturata sobria toni navy e grigio, fotografia documentaria, no posa",
     }}
-    primary={{ href: "/contatti", label: "Richiedi una valutazione" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
+    secondary={{ href: "tel:+390816580779", label: "Oppure chiama lo 081 658 0779" }}
     labelledby="certificazioni-cta"
   />
 </Base>
@@ -275,17 +256,4 @@ const faq = [
   }
   .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 54ch; }
 
-  .metodo { background: var(--color-paper-2); }
-  .metodo__grid {
-    display: grid;
-    grid-template-columns: 5fr 7fr;
-    gap: var(--space-xl);
-    align-items: start;
-  }
-  .metodo h2 { font-size: var(--text-3xl); margin: 0; max-width: 14ch; }
-  .metodo__body p { font-size: var(--text-lg); color: var(--color-ink-2); margin: 0 0 var(--space-md); line-height: 1.55; max-width: 56ch; }
-
-  @media (max-width: 56rem) {
-    .metodo__grid { grid-template-columns: 1fr; }
-  }
 </style>

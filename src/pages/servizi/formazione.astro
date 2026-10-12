@@ -2,135 +2,170 @@
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
+import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
+
+const aChi = [
+  "Datori di lavoro che devono formare lavoratori, preposti e dirigenti secondo l'Accordo Stato-Regioni del 17 aprile 2025.",
+  "Imprese con attestati in scadenza o rilasciati con le regole precedenti, da verificare e aggiornare.",
+  "Aziende che usano carrelli elevatori, piattaforme, gru o macchine movimento terra e devono abilitare gli operatori.",
+  "Imprese che aderiscono (o possono aderire) a un fondo interprofessionale e vogliono finanziare i corsi.",
+];
 
 const corsi = [
   {
     formato: "In aula",
-    desc: "Formazione obbligatoria e specialistica con docenti qualificati. In sede a Napoli o direttamente nella tua azienda.",
-    target: "RSPP, RLS, dirigenti, preposti, addetti antincendio e primo soccorso.",
+    desc: "A Napoli o nella tua sede, con docenti qualificati.",
   },
   {
-    formato: "E-learning",
-    desc: "Piattaforma online accreditata per i moduli teorici. Tracciabile, ripetibile, con attestato a fine percorso.",
-    target: "Lavoratori, formazione generale e aggiornamenti periodici.",
+    formato: "A distanza",
+    desc: "Per i contenuti che l'Accordo consente in e-learning, su piattaforma con tracciamento e verifica finale.",
   },
   {
     formato: "In azienda",
-    desc: "Corsi erogati direttamente nella tua sede, calibrati sui rischi reali delle tue lavorazioni e sui turni del personale.",
-    target: "Squadre operative, aggiornamenti di gruppo, addestramento pratico.",
+    desc: "Sui rischi reali delle tue lavorazioni e sui turni del personale.",
   },
 ];
 
 const catalogo = [
   {
     id: "cat-lavoratori",
-    nome: "Formazione lavoratori",
-    desc: "Formazione generale (4 ore) e specifica per rischio basso, medio o alto (4/8/12 ore), più l'aggiornamento quinquennale (6 ore).",
+    nome: "Formazione dei lavoratori",
+    desc: "Formazione generale (4 ore) e specifica per rischio basso, medio o alto (4, 8 o 12 ore), con aggiornamento quinquennale (6 ore), secondo l'Accordo Stato-Regioni 17/04/2025.",
   },
   {
     id: "cat-ruoli",
     nome: "Ruoli della sicurezza",
-    desc: "Preposti, dirigenti, RSPP e ASPP (moduli A–B–C), RLS. Formazione iniziale e aggiornamenti previsti dall'Accordo Stato-Regioni.",
+    desc: "Preposti (12 ore), dirigenti, datori di lavoro (corso di 16 ore) e datori di lavoro che svolgono direttamente i compiti di RSPP, RSPP e ASPP (moduli A, B, C), RLS: formazione iniziale e aggiornamenti con le durate previste dall'Accordo per ciascun ruolo.",
   },
   {
     id: "cat-emergenze",
     nome: "Gestione delle emergenze",
-    desc: "Addetti antincendio (livelli 1–2–3) e addetti al primo soccorso (gruppi A, B e C), con i relativi aggiornamenti periodici.",
+    desc: "Addetti antincendio (livelli 1, 2 e 3 ai sensi del D.M. 2 settembre 2021) e addetti al primo soccorso (gruppi A, B e C), con i relativi aggiornamenti periodici.",
   },
   {
     id: "cat-attrezzature",
     nome: "Attrezzature — abilitazioni",
-    desc: "Carrelli elevatori, piattaforme PLE, gru, trabattelli, macchine movimento terra. Abilitazioni previste dall'Accordo Stato-Regioni 2012.",
+    desc: "Carrelli elevatori, piattaforme di lavoro elevabili, gru, trattori, macchine movimento terra: abilitazioni previste dall'Accordo Stato-Regioni 17/04/2025 (Allegato II).",
   },
   {
     id: "cat-rischi",
     nome: "Rischi specifici",
-    desc: "Lavori in quota, spazi confinati, rischio chimico, DPI di III categoria, rischio elettrico (PES/PAV/PEI).",
+    desc: "Lavori in quota, spazi confinati, rischio chimico, DPI di terza categoria, rischio elettrico (PES/PAV/PEI).",
   },
+];
+
+const resta = [
+  "Un piano formativo per ruolo, con date, durate, modalità e aggiornamenti.",
+  "Attestati validi a tutti gli effetti di legge, con registro presenze e tracciabilità, pronti da esibire in caso di controllo.",
+  "Lo scadenzario degli aggiornamenti, seguito da noi.",
+  "Quando l'impresa ha i requisiti: pratica di finanziamento con il fondo interprofessionale, dalla domanda alla rendicontazione.",
+];
+
+const ruoli = [
+  {
+    titolo: "Svolto direttamente da iCuraImpresa",
+    desc: "Analisi dei fabbisogni, piano formativo, organizzazione ed erogazione dei corsi in aula e in azienda con i nostri docenti, scadenzario, gestione delle pratiche con i fondi.",
+  },
+  {
+    titolo: "Coordinato da iCuraImpresa",
+    desc: "La formazione a distanza su piattaforma e-learning con tracciamento; gli attestati sono rilasciati tramite un ente di formazione partner, secondo le regole dell'Accordo.",
+  },
+  {
+    titolo: "Svolto da terzi",
+    desc: "I fondi interprofessionali approvano e finanziano i piani; il medico competente o altri soggetti abilitati intervengono dove la norma li richiede (per esempio nel primo soccorso).",
+  },
+];
+
+const fasi = [
+  { n: "01", titolo: "Analisi dei ruoli", desc: "Ci dici quante persone e con quali mansioni: individuiamo chi deve fare che cosa e quali attestati sono ancora validi." },
+  { n: "02", titolo: "Piano e finanziamento", desc: "Costruiamo il piano con durate, modalità e date; verifichiamo se l'impresa può finanziare i corsi con un fondo interprofessionale e, in caso, presentiamo la domanda." },
+  { n: "03", titolo: "Erogazione", desc: "Eroghiamo i corsi in aula, a distanza o in azienda, con registro presenze e verifiche di apprendimento." },
+  { n: "04", titolo: "Attestati e aggiornamenti", desc: "Consegniamo gli attestati, aggiorniamo lo scadenzario e ti avvisiamo prima di ogni scadenza." },
 ];
 
 const faq = [
   {
     q: "La formazione sulla sicurezza è davvero obbligatoria?",
-    a: "Sì. L'art. 37 del D.Lgs. 81/08 impone la formazione di tutti i lavoratori, oltre a quella specifica per preposti, dirigenti, RSPP, RLS e addetti alle emergenze. Non è formale: in caso di ispezione o infortunio, la mancata formazione è una delle prime cose contestate al datore di lavoro.",
+    a: "Sì. L'art. 37 del D.Lgs. 81/08 impone la formazione di tutti i lavoratori, oltre a quella specifica per preposti, dirigenti, datori di lavoro, RSPP, RLS e addetti alle emergenze. In caso di ispezione o infortunio, la mancata formazione è tra le prime cose contestate al datore di lavoro.",
   },
   {
     q: "Quanto dura la formazione e ogni quanto va aggiornata?",
-    a: "La formazione generale dei lavoratori dura 4 ore, quella specifica 4, 8 o 12 ore a seconda del livello di rischio dell'attività. L'aggiornamento è di 6 ore ogni 5 anni. Per i ruoli (preposti, dirigenti, RSPP, antincendio, primo soccorso) durate e aggiornamenti sono diversi: ti diamo noi il piano corretto.",
+    a: "La formazione generale dei lavoratori dura 4 ore, quella specifica 4, 8 o 12 ore in base al livello di rischio; l'aggiornamento è di 6 ore ogni 5 anni. Per gli altri ruoli (preposti, dirigenti, datori di lavoro, RSPP, antincendio, primo soccorso, attrezzature) durate e aggiornamenti sono stabiliti dall'Accordo Stato-Regioni 17/04/2025 e dai decreti di settore: ti diamo noi il piano corretto.",
   },
   {
-    q: "I corsi online valgono come quelli in aula?",
-    a: "Per i moduli teorici e la formazione generale l'e-learning su piattaforma accreditata è pienamente valido e tracciabile. Alcuni contenuti — soprattutto le parti pratiche (antincendio, primo soccorso, uso attrezzature) — richiedono invece l'aula. Componiamo il percorso in modo che sia a norma.",
+    q: "I corsi a distanza valgono come quelli in aula?",
+    a: "Per i contenuti che l'Accordo consente in modalità e-learning (per esempio la formazione generale e parte degli aggiornamenti), la formazione a distanza su piattaforma con tracciamento è valida. Le parti pratiche — antincendio, primo soccorso, attrezzature — richiedono la presenza. Componiamo il percorso in modo che sia a norma.",
   },
   {
-    q: "È vero che può essere a costo zero per l'azienda?",
-    a: "Sì, se l'azienda aderisce a un fondo interprofessionale (o ci fa aderire). Ogni impresa versa già lo 0,30% del costo del lavoro: con i fondi quei contributi tornano sotto forma di corsi finanziati. Gestiamo noi domanda, erogazione e rendicontazione.",
+    q: "Gli attestati rilasciati prima del nuovo Accordo sono ancora validi?",
+    a: "Gli attestati conseguiti con le regole precedenti restano validi fino alla loro scadenza naturale; gli aggiornamenti si fanno con le nuove regole. Se hai dubbi su un attestato, chiedici una verifica: la facciamo con te, documento per documento.",
+  },
+  {
+    q: "È vero che la formazione può essere finanziata?",
+    a: "Se l'impresa aderisce a un fondo interprofessionale (o ci aderisce), i corsi possono essere finanziati con i piani del fondo: le imprese versano all'INPS lo 0,30% delle retribuzioni (contributo ex art. 25 L. 845/1978) e, con l'adesione, quella quota confluisce nel fondo scelto. Verifichiamo i requisiti, presentiamo la domanda e curiamo la rendicontazione. Non tutti i corsi e non tutte le imprese sono finanziabili: te lo diciamo prima.",
   },
   {
     q: "Rilasciate attestati riconosciuti?",
-    a: "Sì. Al termine del corso rilasciamo attestati validi a tutti gli effetti di legge, con registro presenze e tracciabilità, pronti da esibire in caso di controllo.",
+    a: "Sì. Al termine del corso rilasciamo attestati validi a tutti gli effetti di legge, con registro presenze e tracciabilità. Gli attestati sono emessi tramite un ente di formazione partner, secondo quanto previsto dall'Accordo Stato-Regioni.",
   },
+];
+
+const fonti = [
+  "D.Lgs. 81/2008, art. 37",
+  "Accordo Stato-Regioni 17 aprile 2025 (G.U. n. 119 del 24 maggio 2025) — in vigore dal 24 maggio 2025; transitorio concluso il 24 maggio 2026",
+  "D.M. 2 settembre 2021 — formazione antincendio",
+  "D.M. 15 luglio 2003, n. 388 — primo soccorso",
+  "L. 388/2000, art. 118 — fondi paritetici interprofessionali; L. 845/1978, art. 25",
+];
+
+const correlati = [
+  { nome: "Sicurezza sul lavoro", desc: "DVR, RSPP e organigramma: da dove nasce il piano formativo.", href: "/servizi/consulenza/sicurezza-lavoro" },
+  { nome: "Finanza Agevolata", desc: "Fondi e agevolazioni per formazione e investimenti.", href: "/servizi/finanza-agevolata" },
+  { nome: "HACCP", desc: "Formazione degli alimentaristi per le attività del settore alimentare.", href: "/servizi/consulenza/haccp" },
 ];
 ---
 
 <Base
-  title="Formazione finanziata"
-  description="Corsi di formazione sulla sicurezza sul lavoro: lavoratori, preposti, dirigenti, RSPP, RLS, antincendio, primo soccorso e attrezzature. In aula, e-learning, spesso a costo zero con i fondi interprofessionali."
+  title="Corsi sicurezza sul lavoro a Napoli"
+  description="Formazione lavoratori, preposti, dirigenti, RSPP, antincendio, primo soccorso e HACCP: in aula a Napoli, in azienda o a distanza. Attestati e scadenzario inclusi."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 02</p>
-      <h1>Formazione finanziata.</h1>
+      <h1>Formazione sulla sicurezza: corsi obbligatori in aula, a distanza e in azienda.</h1>
       <p class="lede">
-        Aula, e-learning e corsi in azienda. Tutta la formazione obbligatoria sulla sicurezza — spesso a costo zero per l'azienda, tramite i fondi interprofessionali.
+        Aula, formazione a distanza e corsi in azienda. Tutta la formazione obbligatoria sulla sicurezza, costruita sui ruoli reali della tua impresa e, quando i requisiti lo consentono, finanziata con i fondi che hai già versato. Il futuro cresce con le persone.
       </p>
     </div>
   </header>
+
+  <ServiceExtras part="aChi" id="formazione" items={aChi} />
 
   {/* ───── Contesto ───── */}
   <section class="section section--ink" aria-labelledby="formazione-contesto">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">01 — Perché serve</p>
+        <p class="eyebrow">Il bisogno</p>
         <h2 id="formazione-contesto" class="two-col__title">Obbligatoria per legge. Utile per davvero.</h2>
       </div>
       <div class="prose">
         <p>
-          La formazione non è un favore alla burocrazia: è ciò che mette le persone in condizione di lavorare in sicurezza e mette l'azienda al riparo da responsabilità. L'Accordo Stato-Regioni stabilisce contenuti, durate e aggiornamenti per ogni ruolo, e l'81/08 ne fa un obbligo preciso del datore di lavoro.
+          La formazione non è un favore alla burocrazia: è ciò che mette le persone in condizione di lavorare in sicurezza e l'azienda al riparo da responsabilità. L'art. 37 del D.Lgs. 81/08 ne fa un obbligo del datore di lavoro; l'Accordo Stato-Regioni del 17 aprile 2025 stabilisce contenuti, durate, modalità e aggiornamenti per ogni ruolo. Dal 24 maggio 2026 i corsi si erogano solo con le nuove regole.
         </p>
         <p>
-          Noi la rendiamo semplice: capiamo chi deve fare cosa, costruiamo il piano, eroghiamo i corsi e — quando si può — li facciamo pagare ai fondi invece che a te.
+          Noi la rendiamo semplice: capiamo chi deve fare che cosa, costruiamo il piano, eroghiamo i corsi e — quando l'impresa ha i requisiti — li facciamo finanziare dai fondi interprofessionali invece che dal tuo budget.
         </p>
-        <ul class="chips" aria-label="Corsi e ambiti">
-          <li>Lavoratori</li>
-          <li>Preposti</li>
-          <li>Dirigenti</li>
-          <li>RSPP / ASPP</li>
-          <li>RLS</li>
-          <li>Antincendio</li>
-          <li>Primo soccorso</li>
-          <li>Carrelli / PLE</li>
+        <ul class="chips" aria-label="Riferimenti normativi">
+          <li>Art. 37 D.Lgs. 81/08</li>
+          <li>Accordo Stato-Regioni 17/04/2025</li>
+          <li>Allegato II — attrezzature</li>
+          <li>D.M. 2 settembre 2021 — antincendio</li>
+          <li>D.M. 388/2003 — primo soccorso</li>
+          <li>Fondi interprofessionali — art. 118 L. 388/2000</li>
         </ul>
-      </div>
-    </div>
-  </section>
-
-  {/* ───── I tre formati ───── */}
-  <section class="section section--alt-2" aria-labelledby="formazione-formati">
-    <div class="container">
-      <p class="eyebrow">02 — Come eroghiamo</p>
-      <h2 id="formazione-formati" class="section-title">Tre formati, un solo standard di qualità.</h2>
-      <div class="corsi">
-        {corsi.map((c, i) => (
-          <article class="corso">
-            <span class="corso__n">{String(i + 1).padStart(2, "0")}</span>
-            <h3 class="corso__formato">{c.formato}</h3>
-            <p class="corso__desc">{c.desc}</p>
-            <p class="corso__target"><strong>Per chi:</strong> {c.target}</p>
-          </article>
-        ))}
       </div>
     </div>
   </section>
@@ -138,8 +173,8 @@ const faq = [
   {/* ───── Catalogo corsi ───── */}
   <section class="section" aria-labelledby="formazione-catalogo">
     <div class="container">
-      <p class="eyebrow">03 — Catalogo</p>
-      <h2 id="formazione-catalogo" class="section-title">I corsi che eroghiamo.</h2>
+      <p class="eyebrow">Che cosa facciamo</p>
+      <h2 id="formazione-catalogo" class="section-title">I corsi che eroghiamo e come li eroghiamo.</h2>
       <AreaGrid aree={catalogo} />
     </div>
   </section>
@@ -154,22 +189,39 @@ const faq = [
     </div>
   </section>
 
+  {/* ───── Le tre modalità ───── */}
+  <section class="section section--alt-2" aria-labelledby="formazione-formati">
+    <div class="container">
+      <p class="eyebrow">Aula, a distanza, in azienda</p>
+      <h2 id="formazione-formati" class="section-title">Tre modalità, un solo piano: ogni corso nella modalità che l'Accordo consente per quel contenuto.</h2>
+      <div class="corsi">
+        {corsi.map((c, i) => (
+          <article class="corso">
+            <span class="corso__n">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="corso__formato">{c.formato}</h3>
+            <p class="corso__desc">{c.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   {/* ───── Finanziamento ───── */}
   <section class="section finanziamento" aria-labelledby="formazione-fondi">
     <div class="container">
       <div class="finanziamento__inner">
-        <p class="eyebrow">Costo zero</p>
-        <h2 id="formazione-fondi">La formazione finanziata, in pratica.</h2>
+        <p class="eyebrow">Fondi interprofessionali</p>
+        <h2 id="formazione-fondi">Finanziata dai fondi interprofessionali, quando l'impresa ha i requisiti.</h2>
         <p>
-          Ogni azienda versa già lo 0,30% del costo del lavoro ai fondi interprofessionali. Quei soldi tornano sotto forma di corsi. Noi ci occupiamo dell'adesione al fondo, della domanda, dell'erogazione e della rendicontazione: tu formi il personale senza toccare il budget.
+          Le imprese versano all'INPS lo 0,30% delle retribuzioni (contributo ex art. 25 L. 845/1978) e, con l'adesione, quella quota confluisce nel fondo scelto. Verifichiamo i requisiti, presentiamo la domanda e curiamo la rendicontazione. Non tutti i corsi e non tutte le imprese sono finanziabili: te lo diciamo prima.
         </p>
         <div class="finanziamento__ctas">
           <a href="/contatti" class="btn btn--primary">
-            Verifica i fondi disponibili
+            Richiedi un ricontatto
             <span class="btn__arrow" aria-hidden="true">→</span>
           </a>
           <a href="/servizi/finanza-agevolata" class="link-cta">
-            Tutta la finanza agevolata
+            Finanza Agevolata
             <span class="link-cta__arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -177,9 +229,23 @@ const faq = [
     </div>
   </section>
 
+  <ServiceExtras part="resta" id="formazione" items={resta} />
+
+  <ServiceExtras part="ruoli" id="formazione" ruoli={ruoli} />
+
+  {/* ───── Come lavoriamo ───── */}
+  <Steps
+    eyebrow="Come lavoriamo"
+    title="Dal piano formativo agli attestati."
+    steps={fasi}
+    labelledby="formazione-fasi"
+  />
+
+  <hr class="rule" aria-hidden="true" />
+
   {/* ───── FAQ ───── */}
   <Faq
-    eyebrow="04 — Domande frequenti"
+    eyebrow="Domande frequenti"
     title="Le domande che ci fanno più spesso."
     name="faq-formazione"
     labelledby="formazione-faq"
@@ -187,14 +253,23 @@ const faq = [
     tone="alt-blue"
   />
 
+  <ServiceExtras
+    part="fonti"
+    id="formazione"
+    items={fonti}
+    nota="Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico."
+  />
+
+  <ServiceExtras part="correlati" id="formazione" correlati={correlati} />
+
   <CtaBand
     title="Costruiamo il piano formativo della tua impresa."
-    lede="Ci dici quante persone e che ruoli, ti diciamo cosa è obbligatorio, quanto dura e quanto puoi farti finanziare."
+    lede="Ci dici quante persone e che ruoli: ti diciamo che cosa è obbligatorio, quanto dura e se puoi farlo finanziare. Ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve. Oppure chiama lo 081 658 0779."
     image={{
       src: "/images/formazione-aula-adulti.webp",
       alt: "Docente iCura Impresa in aula durante un corso sulla sicurezza sul lavoro: adulto spiega a un gruppo di lavoratori attenti, atmosfera professionale e concreta, aula italiana con luce naturale, palette desaturata sobria toni navy e grigio, fotografia documentaria, no posa",
     }}
-    primary={{ href: "/contatti", label: "Richiedi il piano formativo" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
     labelledby="formazione-cta"
   />
 </Base>
@@ -245,14 +320,6 @@ const faq = [
     margin-bottom: var(--space-md);
     line-height: 1.5;
   }
-  .corso__target {
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-    margin: 0;
-    padding-top: var(--space-md);
-    border-top: var(--rule-hair) solid var(--color-rule-2);
-  }
-  .corso__target strong { color: var(--color-ink-2); font-weight: 600; }
 
   .finanziamento { background: var(--color-paper-3); }
   .finanziamento__inner { max-width: 60rem; }

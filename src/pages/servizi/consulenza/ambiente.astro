@@ -5,112 +5,160 @@ import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
 
 const c = {
-  "title": "Consulenza ambientale — AUA, rifiuti, RENTRI ed emissioni",
-  "description": "Consulenza ambientale a Napoli: AUA, registri rifiuti su RENTRI, MUD ed emissioni in atmosfera. Un solo referente per gli adempimenti del D.Lgs. 152/2006.",
+  "title": "Consulenza ambientale a Napoli: AUA, RENTRI, MUD",
+  "description": "Autorizzazioni ambientali (AUA), gestione dei rifiuti, iscrizione RENTRI, MUD ed emissioni per le imprese di Napoli e Campania. Scadenze seguite da noi.",
   "eyebrow": "Servizi · Ambiente",
   "h1": "Consulenza ambientale.",
   "lede": "Autorizzazioni, rifiuti, emissioni e scadenze del Testo Unico Ambientale gestiti in prima persona, non un modulo da compilare da soli.",
+  "aChi": [
+    "Imprese che producono rifiuti, hanno uno scarico idrico, un impianto termico o un'emissione in atmosfera.",
+    "Produttori di rifiuti pericolosi, anche con pochi dipendenti, tenuti all'iscrizione al RENTRI.",
+    "Attività soggette ad Autorizzazione Unica Ambientale (AUA) o ad autorizzazioni specifiche.",
+    "Chi vuole un solo referente per ambiente, sicurezza, HACCP e privacy."
+  ],
   "chips": [
     "D.Lgs. 152/2006",
     "AUA — D.P.R. 59/2013",
-    "RENTRI",
+    "RENTRI — D.M. 59/2023",
     "MUD",
-    "Emissioni in atmosfera",
-    "Deposito temporaneo"
+    "Emissioni in atmosfera — Parte Quinta",
+    "Deposito temporaneo — art. 185-bis"
   ],
   "intro": [
-    "Chi produce rifiuti, ha uno scarico, un impianto termico o un'emissione in atmosfera non sceglie se avere obblighi ambientali: li ha per legge, dal primo giorno di attività. Il D.Lgs. 152/2006 non lascia margini di interpretazione su registri, autorizzazioni e responsabilità del produttore — e da qualche anno il quadro si è irrigidito ulteriormente, tra il passaggio obbligato ai registri digitali sul RENTRI e sanzioni penali più pesanti per la gestione non autorizzata dei rifiuti.",
-    "Per un'impresa la parte più rischiosa non è quasi mai la sanzione in sé, ma scoprire durante un controllo NOA, ARPA o dei Carabinieri per la Tutela Ambientale che un'autorizzazione è scaduta, un registro non è aggiornato o un rifiuto è stato classificato male. Noi seguiamo la pratica ambientale come seguiamo sicurezza e HACCP: sopralluogo, verifica di cosa serve davvero per la tua attività specifica, e gestione delle scadenze nel tempo — non un pacco di moduli consegnato e dimenticato."
+    "Chi produce rifiuti, ha uno scarico, un impianto termico o un'emissione in atmosfera non sceglie se avere obblighi ambientali: li ha per legge, dal primo giorno di attività. Il D.Lgs. 152/2006 non lascia margini su registri, autorizzazioni e responsabilità del produttore, e negli ultimi anni il quadro si è irrigidito con il passaggio ai registri digitali sul RENTRI e con sanzioni più pesanti per la gestione non autorizzata dei rifiuti.",
+    "La parte più rischiosa non è quasi mai la sanzione in sé, ma scoprire durante un controllo che un'autorizzazione è scaduta, un registro non è aggiornato o un rifiuto è stato classificato male. Seguiamo la pratica ambientale come seguiamo sicurezza e HACCP: sopralluogo, verifica di che cosa serve davvero per la tua attività, gestione delle scadenze nel tempo."
   ],
   "sottoAree": [
     {
       "nome": "Autorizzazione Unica Ambientale (AUA)",
-      "desc": "Istruttoria e pratica AUA presso il SUAP per scarichi idrici, emissioni in atmosfera, rumore e utilizzo agronomico, in un unico titolo con validità 15 anni. Verifichiamo se la tua attività ne ha diritto o necessita di autorizzazioni separate (es. AIA)."
+      "desc": "Istruttoria e pratica AUA presso il SUAP per scarichi idrici, emissioni in atmosfera, rumore e altri titoli accorpabili, in un unico titolo con validità di 15 anni. Verifichiamo se la tua attività ne ha diritto o necessita di autorizzazioni separate."
     },
     {
       "nome": "Registri rifiuti e RENTRI",
-      "desc": "Iscrizione al RENTRI e tenuta del registro cronologico di carico/scarico in formato digitale, come richiesto ormai per tutti i produttori di rifiuti pericolosi e per le altre categorie obbligate secondo le soglie e le scadenze di iscrizione già in vigore."
+      "desc": "Iscrizione al RENTRI e tenuta del registro cronologico di carico e scarico in formato digitale, secondo le soglie e le scadenze previste per ciascuna categoria di produttori."
     },
     {
       "nome": "MUD — Modello Unico di Dichiarazione ambientale",
-      "desc": "Raccolta dati, compilazione e invio telematico del MUD entro la scadenza annuale (fissata di anno in anno da decreto e pubblicata in Gazzetta Ufficiale), per chi rientra tra i soggetti obbligati in base ad attività svolta e numero di dipendenti."
+      "desc": "Raccolta dei dati, compilazione e invio telematico del MUD entro la scadenza annuale, per i soggetti obbligati in base ad attività e numero di dipendenti."
     },
     {
       "nome": "Emissioni in atmosfera",
-      "desc": "Domanda di autorizzazione alle emissioni convogliate o verifica delle condizioni di deroga/esclusione (Allegato IV, Parte Quinta), definizione dei valori limite e della periodicità degli autocontrolli richiesti dall'autorità competente."
+      "desc": "Domanda di autorizzazione alle emissioni convogliate o verifica delle condizioni di esclusione (Allegato IV alla Parte Quinta), valori limite e autocontrolli richiesti dall'autorità competente."
     },
     {
       "nome": "Deposito temporaneo e classificazione dei rifiuti",
-      "desc": "Impostazione corretta del deposito temporaneo (soglie quantitative e temporali di legge), classificazione e codifica CER dei rifiuti prodotti, formulari di identificazione (FIR) digitali e tracciabilità end-to-end."
+      "desc": "Impostazione corretta del deposito temporaneo, classificazione e codifica EER dei rifiuti, formulari di identificazione digitali e tracciabilità."
     },
     {
-      "nome": "Responsabilità del produttore e gestione dei fornitori",
-      "desc": "Verifica delle autorizzazioni di trasportatori e impianti di destino, contrattualistica e procedure interne per limitare la responsabilità del produttore, che resta in capo all'azienda fino al corretto conferimento del rifiuto."
+      "nome": "Responsabilità del produttore e fornitori",
+      "desc": "Verifica delle autorizzazioni di trasportatori e impianti di destino, procedure interne e contratti per limitare la responsabilità del produttore, che resta in capo all'azienda fino al corretto conferimento."
     }
   ],
   "ottieni": [
-    "Autorizzazioni ambientali (AUA e, dove serve, autorizzazioni specifiche) sempre valide e rinnovate in tempo",
-    "Registro RENTRI e FIR digitali tenuti in ordine, senza rincorrere una piattaforma che cambia in continuazione",
-    "MUD presentato entro la scadenza, con i dati raccolti durante l'anno e non improvvisati a ridosso della data limite",
-    "Un solo referente per ambiente, sicurezza, HACCP e privacy, che conosce già la tua attività quando arriva un controllo"
+    "Autorizzazioni ambientali sempre valide e rinnovate in tempo.",
+    "Registro RENTRI e formulari digitali tenuti in ordine.",
+    "MUD presentato entro la scadenza, con i dati raccolti durante l'anno.",
+    "Un solo referente per ambiente, sicurezza, HACCP e privacy, che conosce già la tua attività quando arriva un controllo."
+  ],
+  "ruoli": [
+    {
+      "titolo": "Svolto direttamente da iCuraImpresa",
+      "desc": "Sopralluogo, verifica degli adempimenti, pratiche autorizzative, impostazione di registri e deposito temporaneo, classificazione dei rifiuti, scadenzario, assistenza ai controlli."
+    },
+    {
+      "titolo": "Coordinato da iCuraImpresa",
+      "desc": "Analisi di laboratorio per la classificazione dei rifiuti e gli autocontrolli sulle emissioni, affidate a laboratori accreditati."
+    },
+    {
+      "titolo": "Svolto da terzi",
+      "desc": "SUAP, Regione e autorità competenti rilasciano le autorizzazioni; trasportatori e impianti autorizzati gestiscono i rifiuti conferiti."
+    }
   ],
   "fasi": [
     {
+      "n": "01",
       "titolo": "Sopralluogo",
-      "desc": "Veniamo in azienda: censiamo scarichi, emissioni, rifiuti prodotti e documentazione ambientale già in essere. È gratuito."
+      "desc": "Veniamo in azienda e censiamo scarichi, emissioni, rifiuti prodotti e documentazione ambientale già in essere."
     },
     {
-      "titolo": "Verifica adempimenti",
-      "desc": "Controlliamo quali autorizzazioni servono davvero (AUA, emissioni, scarichi), se sei tenuto all'iscrizione RENTRI e al MUD, e cosa manca."
+      "n": "02",
+      "titolo": "Verifica degli adempimenti",
+      "desc": "Controlliamo quali autorizzazioni servono davvero (AUA, emissioni, scarichi), se sei tenuto all'iscrizione RENTRI e al MUD, e che cosa manca."
     },
     {
+      "n": "03",
       "titolo": "Messa a norma",
       "desc": "Presentiamo le pratiche mancanti, impostiamo registro digitale e deposito temporaneo, classifichiamo correttamente i rifiuti prodotti."
     },
     {
-      "titolo": "Gestione continua",
-      "desc": "Teniamo lo scadenzario di rinnovi e dichiarazioni, aggiorniamo il registro e ti affianchiamo durante i controlli ARPA o NOA."
+      "n": "04",
+      "titolo": "Gestione nel tempo",
+      "desc": "Teniamo lo scadenzario di rinnovi e dichiarazioni, aggiorniamo il registro e ti affianchiamo durante i controlli di ARPA, NOA o Carabinieri per la tutela ambientale."
     }
   ],
   "faq": [
     {
       "q": "Devo fare l'AUA anche se produco un solo tipo di rifiuto e ho uno scarico piccolo?",
-      "a": "Dipende da cosa fai, non da quanto è piccola l'attività. L'AUA (D.P.R. 59/2013) serve quando l'impresa ha scarichi idrici, emissioni in atmosfera, impatto acustico o altri titoli abilitativi che il decreto consente di accorpare in un'unica autorizzazione tramite il SUAP. Il modo corretto per saperlo è verificare quali attività svolgi e quali scarichi/emissioni generi: lo facciamo durante il sopralluogo."
+      "a": "Dipende da che cosa fai, non da quanto è piccola l'attività. L'AUA (D.P.R. 59/2013) serve quando l'impresa ha scarichi idrici, emissioni in atmosfera, impatto acustico o altri titoli che il decreto consente di accorpare in un'unica autorizzazione tramite il SUAP. Lo verifichiamo durante il sopralluogo."
     },
     {
       "q": "Se ho pochi dipendenti, sono comunque obbligato a iscrivermi al RENTRI?",
-      "a": "Se produci rifiuti pericolosi sì: l'iscrizione al RENTRI riguarda ormai anche i produttori di rifiuti pericolosi con meno di 10 dipendenti, con la scadenza di iscrizione già fissata tra dicembre 2025 e febbraio 2026. Per i rifiuti non pericolosi l'obbligo dipende da tipologia di attività e soglie di legge: va verificato caso per caso."
+      "a": "Se produci rifiuti pericolosi sì: l'iscrizione al RENTRI è prevista anche per i produttori di rifiuti pericolosi con meno di dieci dipendenti, secondo il calendario fissato dal D.M. 59/2023. Per i rifiuti non pericolosi l'obbligo dipende da tipologia di attività e soglie: va verificato caso per caso."
     },
     {
-      "q": "Cosa succede se non presento il MUD entro la scadenza?",
-      "a": "La dichiarazione tardiva è ammessa entro una finestra ulteriore, ma resta comunque una violazione sanzionata amministrativamente; oltre quella finestra le sanzioni si aggravano. La data esatta di scadenza cambia ogni anno in base a quando viene pubblicato il decreto che approva il modello, quindi va verificata anno per anno — è una delle cose che teniamo sotto controllo per i clienti in gestione continua."
+      "q": "Che cosa succede se non presento il MUD entro la scadenza?",
+      "a": "La dichiarazione tardiva è ammessa entro una finestra ulteriore, ma resta una violazione sanzionata in via amministrativa; oltre quella finestra le sanzioni si aggravano. La scadenza cambia ogni anno in base al decreto che approva il modello: è una delle date che teniamo sotto controllo per i clienti seguiti nel tempo."
     },
     {
-      "q": "Il registro di carico e scarico deve essere ancora cartaceo?",
-      "a": "No. Con l'entrata a regime del RENTRI il registro cronologico va tenuto in formato digitale sulla piattaforma nazionale; dalla metà di febbraio 2026 non è più possibile vidimare né utilizzare registri cartacei. Chi non si è ancora iscritto al RENTRI nei termini previsti per la propria categoria deve mettersi in regola prima possibile."
+      "q": "Il registro di carico e scarico può essere ancora cartaceo?",
+      "a": "Per i soggetti iscritti al RENTRI il registro cronologico si tiene in formato digitale sulla piattaforma nazionale, secondo le scadenze previste per ciascuna categoria. Verifichiamo in quale categoria rientri e da quando scatta l'obbligo per la tua attività."
     },
     {
-      "q": "Se do i miei rifiuti a un trasportatore autorizzato, la mia responsabilità finisce lì?",
-      "a": "No, non automaticamente. Il produttore resta responsabile della corretta gestione del rifiuto e risponde anche di errori a monte — classificazione sbagliata, formulario compilato male, trasportatore o impianto di destino non regolarmente autorizzato. La responsabilità si riduce solo se la filiera è verificata e documentata correttamente, non per il solo fatto di aver affidato il rifiuto a terzi."
+      "q": "Se affido i rifiuti a un trasportatore autorizzato, la mia responsabilità finisce lì?",
+      "a": "No, non automaticamente. Il produttore resta responsabile della corretta gestione del rifiuto e risponde anche di errori a monte: classificazione sbagliata, formulario compilato male, trasportatore o impianto di destino non regolarmente autorizzato. La responsabilità si riduce solo se la filiera è verificata e documentata."
     },
     {
-      "q": "La mia attività ha bisogno di autorizzazione per le emissioni in atmosfera?",
-      "a": "Dipende dal tipo di impianto e di lavorazione. Alcune attività con emissioni scarsamente rilevanti sono escluse dall'autorizzazione (Allegato IV alla Parte Quinta del D.Lgs. 152/2006), altre restano soggette a domanda con limiti, prescrizioni e autocontrolli periodici. È una verifica tecnica che va fatta sull'impianto reale, non sul tipo di azienda in astratto."
+      "q": "La mia attività ha bisogno dell'autorizzazione per le emissioni in atmosfera?",
+      "a": "Dipende dal tipo di impianto e di lavorazione. Alcune attività con emissioni scarsamente rilevanti sono escluse (Allegato IV alla Parte Quinta del D.Lgs. 152/2006), altre restano soggette a domanda con limiti, prescrizioni e autocontrolli. È una verifica tecnica che va fatta sull'impianto reale."
     }
   ],
-  "note": "Soglie di iscrizione al RENTRI, scadenza annuale del MUD e necessità di AUA o autorizzazioni specifiche dipendono da attività svolta, dimensione dell'impresa e tipo di rifiuti/emissioni prodotti: i numeri esatti vanno sempre verificati sul caso concreto, non applicati per analogia.",
+  "fonti": [
+    "D.Lgs. 3 aprile 2006, n. 152 — Parte Quarta (rifiuti) e Parte Quinta (emissioni)",
+    "D.P.R. 13 marzo 2013, n. 59 — Autorizzazione Unica Ambientale",
+    "D.M. 4 aprile 2023, n. 59 — RENTRI — calendario di iscrizione per categorie di produttori"
+  ],
+  "fontiNota": "Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico.",
+  "correlati": [
+    {
+      "nome": "ISO 14001",
+      "desc": "Il sistema di gestione ambientale, certificabile.",
+      "href": "/servizi/certificazioni/iso-14001"
+    },
+    {
+      "nome": "Sicurezza sul lavoro",
+      "desc": "Agenti chimici, rumore e rischi ambientali nel DVR.",
+      "href": "/servizi/consulenza/sicurezza-lavoro"
+    },
+    {
+      "nome": "Engineering",
+      "desc": "Impianti, scarichi e pratiche autorizzative per nuovi spazi.",
+      "href": "/servizi/engineering"
+    }
+  ],
   "ctaTitle": "Verifichiamo insieme la tua situazione ambientale.",
-  "ctaLede": "Sopralluogo gratuito · risposta entro 48 ore. Prima capiamo cosa ti serve davvero, poi decidi tu."
+  "ctaLede": "Raccontaci che cosa produci e quali rifiuti, scarichi o emissioni genera la tua attività: ti diciamo che cosa serve davvero. Richiedi un ricontatto: ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve."
 };
 
 const eyebrow = "Consulenza · Ambiente";
 const h1 = "Consulenza ambientale.";
 const taglineTitle = "Gli obblighi ambientali non si scelgono. Ci sono dal primo giorno.";
 const areeTitle = "Da AUA e RENTRI alle emissioni in atmosfera.";
-const ottieniTitle = "Autorizzazioni valide, registri in ordine.";
-const stepsTitle = "Dal sopralluogo alla gestione continua.";
+const ottieniTitle = "Che cosa resta in azienda, a lavoro finito.";
+const ruoliTitle = "Responsabilità chiare, dal primo giorno.";
+const stepsTitle = "Dal primo incontro alla gestione nel tempo.";
 
 const img = {
   "src": "/images/consulenza-ambiente-rifiuti.webp",
@@ -120,45 +168,6 @@ const ctaImg = {
   "src": "/images/consulenza-ambiente-rifiuti.webp",
   "alt": "Consulente ambientale iCura Impresa in un'area rifiuti ordinata di un capannone industriale: due adulti verificano registri, contenitori e procedure AUA/MUD, pavimento segnato e luce naturale dall'alto, fotografia documentaria professionale"
 };
-
-const altriAmbiti = [
-  {
-    "nome": "Sicurezza sul lavoro — D.Lgs. 81/08",
-    "desc": "DVR e valutazioni dei rischi, nomina e incarico RSPP, sopralluoghi periodici, gestione di scadenze e adempimenti. Tutto il Testo Unico in un unico contratto.",
-    "href": "/servizi/consulenza/sicurezza-lavoro",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "Sicurezza nei cantieri",
-    "desc": "PSC, POS, fascicolo dell'opera e coordinamento per la sicurezza in fase di progettazione ed esecuzione (CSP/CSE). Per imprese edili e committenti privati.",
-    "href": "/servizi/consulenza/cantieri",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "Sicurezza alimentare (HACCP)",
-    "desc": "Manuale di autocontrollo, analisi dei pericoli, procedure e formazione operatori secondo il Reg. CE 852/2004. Per ristoranti, bar, mense e produzione alimentare.",
-    "href": "/servizi/consulenza/haccp",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "Medicina del lavoro",
-    "desc": "Sorveglianza sanitaria, idoneità alla mansione, protocollo sanitario e nomina del medico competente. Visite organizzate direttamente in azienda.",
-    "href": "/servizi/consulenza/medicina-lavoro",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "GDPR & Privacy",
-    "desc": "Nomina DPO, registro dei trattamenti, informative, valutazioni d'impatto e audit. Per chi tratta dati personali in modo strutturato (Reg. UE 2016/679).",
-    "href": "/servizi/consulenza/gdpr",
-    "cta": "Scopri di più"
-  },
-  {
-    "nome": "Consulenza aziendale",
-    "desc": "Strutturazione societaria, organizzazione dei processi e supporto continuativo all'impresa. Il punto di raccordo tra sicurezza, qualità e adempimenti.",
-    "href": "/servizi/consulenza/aziendale",
-    "cta": "Scopri di più"
-  }
-];
 ---
 
 <Base title={c.title} description={c.description}>
@@ -179,15 +188,16 @@ const altriAmbiti = [
     </div>
   </section>
 
+  <ServiceExtras part="aChi" id="ambiente" items={c.aChi} />
+
   <section class="section section--ink">
     <div class="container two-col">
       <div>
-        <p class="eyebrow">Perché serve</p>
+        <p class="eyebrow">Il bisogno</p>
         <h2>{taglineTitle}</h2>
       </div>
       <div class="prose">
-        <p>{c.intro[0]}</p>
-        <p>{c.intro[1]}</p>
+        {c.intro.map((p) => <p>{p}</p>)}
         <ul class="chips" aria-label="Riferimenti normativi">
           {c.chips.map((ch) => <li>{ch}</li>)}
         </ul>
@@ -199,7 +209,7 @@ const altriAmbiti = [
 
   <section class="section" aria-labelledby="ambiente-aree">
     <div class="container">
-      <p class="eyebrow">Cosa comprende</p>
+      <p class="eyebrow">Che cosa facciamo</p>
       <h2 id="ambiente-aree" class="section-title">{areeTitle}</h2>
       <AreaGrid aree={c.sottoAree} />
     </div>
@@ -208,7 +218,7 @@ const altriAmbiti = [
   <section class="section section--alt-2" aria-labelledby="ambiente-ottieni">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">Cosa ottieni</p>
+        <p class="eyebrow">Che cosa consegniamo</p>
         <h2 id="ambiente-ottieni" class="two-col__title">{ottieniTitle}</h2>
       </div>
       <ul class="checklist">
@@ -222,15 +232,11 @@ const altriAmbiti = [
     </div>
   </section>
 
+  <ServiceExtras part="ruoli" id="ambiente" title={ruoliTitle} ruoli={c.ruoli} />
+
   <hr class="rule" aria-hidden="true" />
 
-  <Steps eyebrow="Come funziona" title={stepsTitle} steps={c.fasi} labelledby="ambiente-fasi" />
-
-  <section class="section section--tight">
-    <div class="container">
-      <p class="note">{c.note}</p>
-    </div>
-  </section>
+  <Steps eyebrow="Come lavoriamo" title={stepsTitle} steps={c.fasi} labelledby="ambiente-fasi" />
 
   <hr class="rule" aria-hidden="true" />
 
@@ -243,19 +249,17 @@ const altriAmbiti = [
     tone="alt-blue"
   />
 
-  <section class="section section--alt" aria-labelledby="ambiente-altri">
-    <div class="container">
-      <p class="eyebrow">Continua a esplorare</p>
-      <h2 id="ambiente-altri" class="section-title">Gli altri ambiti di Consulenza.</h2>
-      <AreaGrid aree={altriAmbiti} />
-    </div>
-  </section>
+  <ServiceExtras part="fonti" id="ambiente" items={c.fonti} nota={c.fontiNota} />
+
+  <ServiceExtras part="correlati" id="ambiente" correlati={c.correlati} />
 
   <CtaBand
+    eyebrow="Il prossimo passo"
     title={c.ctaTitle}
     lede={c.ctaLede}
     image={{ src: ctaImg.src ?? undefined, alt: ctaImg.alt }}
-    primary={{ href: "/contatti", label: "Prenota sopralluogo" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
+    secondary={{ href: "tel:+390816580779", label: "Oppure chiama lo 081 658 0779" }}
     labelledby="ambiente-cta"
   />
 </Base>

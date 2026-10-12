@@ -6,96 +6,162 @@ import ParallaxBand from "@components/ParallaxBand.astro";
 import Steps from "@components/Steps.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
+import ServiceExtras from "@components/ServiceExtras.astro";
+
+const aChi = [
+  "Imprese che stanno pianificando un investimento in macchinari, impianti, sicurezza o nuovi spazi.",
+  "Imprese del Mezzogiorno che possono accedere al credito d'imposta ZES Unica.",
+  "Aziende che vogliono ridurre il premio INAIL o finanziare la formazione con i fondi interprofessionali.",
+  "Chi non ha tempo di seguire bandi, portali e scadenze e vuole un solo referente dalla domanda alla rendicontazione.",
+];
 
 const aree = [
   {
     nome: "Bando ISI INAIL",
-    desc: "Contributi a fondo perduto per investimenti in sicurezza: macchine, impianti, abbattimento rischi. Procedura a sportello (click day) che premia chi arriva pronto. Predisponiamo progetto e documentazione tecnica.",
+    desc: "Contributi a fondo perduto per investimenti in sicurezza: macchine, impianti, riduzione dei rischi. Prepariamo progetto e documentazione tecnica per la prossima edizione.",
     href: "/bando-isi",
-    cta: "Scopri il bando ISI",
+    cta: "Vai alla pagina",
   },
   {
-    nome: "ZES Unica — Mezzogiorno",
-    desc: "Credito d'imposta per investimenti in beni strumentali nelle imprese del Sud. Comunicazione all'Agenzia delle Entrate, asseverazione e calcolo dell'agevolazione.",
+    nome: "ZES Unica Mezzogiorno",
+    desc: "Credito d'imposta per investimenti in beni strumentali nelle imprese del Sud: comunicazione all'Agenzia delle Entrate nelle finestre annuali, certificazione, comunicazione integrativa.",
     href: "/zes-unica",
-    cta: "Scopri la ZES Unica",
+    cta: "Vai alla pagina",
+  },
+  {
+    id: "iperammortamento",
+    nome: "Iper-ammortamento 2026–2028",
+    desc: "Maggiorazione del costo ammortizzabile per i beni strumentali 4.0 e gli impianti per l'autoproduzione da fonti rinnovabili (L. 199/2025, art. 1, commi 427–436): 180% fino a 2,5 milioni, 100% da 2,5 a 10 milioni, 50% da 10 a 20 milioni, per investimenti dal 1° gennaio 2026 al 30 settembre 2028. Prenotazione e conferme sulla piattaforma GSE, perizia tecnica e certificazione contabile.",
   },
   {
     id: "ot23",
-    nome: "Sgravi INAIL — modello OT23",
-    desc: "Riduzione del premio assicurativo per le imprese che adottano interventi di prevenzione oltre l'obbligo di legge. Raccogliamo le prove documentali e compiliamo l'istanza entro la scadenza annuale.",
+    nome: "Riduzione del premio INAIL — modello OT23",
+    desc: "Riduzione del tasso medio di tariffa per le imprese che realizzano interventi di prevenzione oltre l'obbligo di legge. Raccogliamo le prove documentali e presentiamo l'istanza entro la scadenza annuale (ultimo giorno di febbraio).",
   },
   {
-    id: "transizione",
-    nome: "Transizione 5.0 e credito d'imposta",
-    desc: "Beni strumentali 4.0, efficienza energetica, formazione collegata. Verifichiamo l'ammissibilità, prepariamo la perizia tecnica e gestiamo le certificazioni ex-ante ed ex-post.",
-  },
-  {
-    nome: "Formazione finanziata",
-    desc: "Fondi interprofessionali (Fondimpresa, For.Te, Fondir e altri) per formare il personale a costo zero. Adesione al fondo, piano formativo, erogazione e rendicontazione.",
+    nome: "Fondi interprofessionali per la formazione",
+    desc: "Piani formativi finanziati dai fondi a cui l'impresa aderisce: verifica dei requisiti, domanda, erogazione e rendicontazione.",
     href: "/servizi/formazione",
-    cta: "Vai alla formazione",
+    cta: "Vai alla pagina",
   },
   {
     nome: "Bandi regionali e nazionali",
-    desc: "Contributi a fondo perduto e finanziamenti agevolati per investimenti, innovazione, digitalizzazione e crescita. Monitoriamo le aperture, scremiamo i bandi adatti a te e seguiamo la domanda.",
+    desc: "Contributi a fondo perduto e finanziamenti agevolati per investimenti, innovazione, digitalizzazione e crescita (per esempio Nuova Sabatini, quando rifinanziata). Monitoriamo le aperture, selezioniamo i bandi adatti e seguiamo la domanda.",
+  },
+];
+
+const stato = [
+  {
+    nome: "Bando ISI INAIL — edizione 2025 · Domande chiuse",
+    desc: "Compilazione chiusa il 28 maggio 2026; click day (solo asse 5) il 24 giugno 2026; perfezionamento delle domande ammesse entro le 18:00 del 26 ottobre 2026 (termini prorogati con avviso INAIL dell'8 settembre 2026). Edizione 2026: avviso non ancora pubblicato. Il progetto si prepara adesso.",
+  },
+  {
+    nome: "ZES Unica Mezzogiorno — investimenti 2026 · Finestra chiusa",
+    desc: "Comunicazione dal 31 marzo al 30 maggio 2026; comunicazione integrativa dal 3 al 17 gennaio 2027 per chi ha comunicato. Dotazione 2026: 2,3 miliardi. Investimenti 2027: comunicazione dal 31 marzo al 30 maggio 2027 (1 miliardo); 2028: stesse date (750 milioni).",
+  },
+  {
+    nome: "Iper-ammortamento 2026–2028 · Aperto",
+    desc: "Investimenti dal 1° gennaio 2026 al 30 settembre 2028; prenotazioni sulla piattaforma GSE dal 12 giugno 2026, comunicazioni di conferma (acconto 20%) dal 21 luglio 2026. Risorse: 9,8 miliardi nel triennio. Nessun avviso di esaurimento pubblicato dal MIMIT al 6 ottobre 2026.",
+  },
+  {
+    nome: "Riduzione del premio INAIL — OT23 · Prossima scadenza",
+    desc: "Istanza per gli interventi realizzati nel 2026 da presentare entro l'ultimo giorno di febbraio 2027 sul portale INAIL. Gli interventi vanno realizzati e documentati entro il 31 dicembre 2026.",
+  },
+  {
+    nome: "Fondi interprofessionali · Avvisi periodici",
+    desc: "Ogni fondo pubblica i propri avvisi (conto formazione e conto di sistema) con scadenze proprie. Verifichiamo il fondo di adesione dell'impresa e gli avvisi aperti.",
+  },
+  {
+    nome: "Bandi regionali (Campania) e nazionali · Da verificare",
+    desc: "Aperture variabili nell'anno; nessun bando è indicato qui come aperto senza verifica sul caso specifico. Iscriviti agli avvisi: ti scriviamo quando esce una misura che ti riguarda.",
   },
 ];
 
 const ottieni = [
-  "Un'analisi gratuita di ammissibilità prima di muovere un euro",
-  "La scelta dello strumento giusto tra fondo perduto, credito d'imposta e finanziamento agevolato",
-  "Tutta la documentazione tecnica e amministrativa preparata da noi",
-  "Il rispetto delle scadenze e dei portali (click day, piattaforme ministeriali e regionali)",
-  "La rendicontazione finale e la gestione di eventuali controlli dell'ente",
-  "Un solo referente dall'idea di investimento all'incasso del contributo",
+  "Una verifica preliminare dei requisiti dell'impresa e dell'investimento, prima di muovere un euro.",
+  "La scelta dello strumento giusto tra fondo perduto, credito d'imposta, maggiorazione fiscale e finanziamento agevolato, con le regole di cumulo verificate.",
+  "La documentazione tecnica e amministrativa preparata da noi, nei tempi e sui portali previsti.",
+  "La rendicontazione finale e l'assistenza in caso di controlli dell'ente.",
+  "Un solo referente dall'idea di investimento all'incasso del contributo.",
+];
+
+const ruoli = [
+  {
+    titolo: "Svolto direttamente da iCuraImpresa",
+    desc: "Verifica dei requisiti, scelta della misura, progetto e documentazione, domanda, monitoraggio delle scadenze, rendicontazione, assistenza ai controlli.",
+  },
+  {
+    titolo: "Coordinato da iCuraImpresa",
+    desc: "Perizie tecniche asseverate, certificazioni contabili e asseverazioni di soggetti abilitati, quando richieste dalla misura; il commercialista dell'impresa per la parte fiscale e contabile.",
+  },
+  {
+    titolo: "Svolto da terzi",
+    desc: "INAIL, Agenzia delle Entrate, GSE, Regioni e ministeri gestiscono istruttorie, graduatorie ed erogazioni.",
+  },
 ];
 
 const fasi = [
-  { n: "01", titolo: "Pre-check", desc: "Verifichiamo l'idoneità dell'impresa e dell'investimento. È gratuito e senza impegno." },
+  { n: "01", titolo: "Verifica preliminare", desc: "Verifichiamo l'idoneità dell'impresa e dell'investimento rispetto alle misure aperte o in arrivo." },
   { n: "02", titolo: "Progettazione", desc: "Scegliamo lo strumento più conveniente e prepariamo il progetto e la documentazione tecnica." },
-  { n: "03", titolo: "Domanda", desc: "Compilazione e invio nei tempi e sui portali previsti dal bando, con tutte le asseverazioni." },
+  { n: "03", titolo: "Domanda", desc: "Compilazione e invio nei tempi e sui portali previsti dalla misura, con tutte le asseverazioni." },
   { n: "04", titolo: "Rendicontazione", desc: "Seguiamo esecuzione, monitoraggio, rendiconto e gli eventuali controlli fino alla chiusura." },
 ];
 
 const faq = [
   {
-    q: "Quanto costa il vostro servizio?",
-    a: "Il pre-check di ammissibilità è gratuito. Sul resto lavoriamo con una quota fissa concordata e, di norma, una percentuale di success fee legata al contributo effettivamente ottenuto: se non arriva l'agevolazione, non paghi la parte a risultato. I termini esatti li mettiamo nero su bianco prima di partire.",
+    q: "Come funziona il vostro incarico?",
+    a: "Dopo la verifica preliminare ricevi un preventivo scritto che indica che cosa è compreso, con quali tempi e a quali condizioni. Le condizioni economiche si definiscono prima di partire, nero su bianco.",
   },
   {
-    q: "Che differenza c'è tra fondo perduto, credito d'imposta e finanziamento agevolato?",
-    a: "Il fondo perduto è un contributo che non va restituito (es. bando ISI). Il credito d'imposta abbatte le imposte da versare in compensazione (es. ZES, Transizione 5.0). Il finanziamento agevolato è un prestito a condizioni di favore (tasso ridotto, garanzie). In fase di analisi scegliamo quello che ti conviene davvero, e quando è possibile li combiniamo.",
+    q: "Che differenza c'è tra fondo perduto, credito d'imposta, maggiorazione fiscale e finanziamento agevolato?",
+    a: "Il fondo perduto è un contributo che non va restituito (per esempio il Bando ISI). Il credito d'imposta abbatte le imposte da versare in compensazione (per esempio la ZES Unica). L'iper-ammortamento 2026-2028 è una maggiorazione del costo ammortizzabile: non è un credito d'imposta, ma una deduzione maggiorata ai fini delle imposte sui redditi. Il finanziamento agevolato è un prestito a condizioni di favore. In fase di analisi scegliamo ciò che conviene davvero e, quando è possibile, combiniamo gli strumenti.",
   },
   {
-    q: "Che differenza c'è tra credito d'imposta 4.0 e Transizione 5.0?",
-    a: "Il credito 4.0 premia l'acquisto di beni strumentali tecnologicamente avanzati e interconnessi. La Transizione 5.0 va oltre: finanzia investimenti che, oltre a digitalizzare, riducono i consumi energetici della struttura produttiva (almeno il 3%) o del processo (almeno il 5%), con aliquote più alte quanto maggiore è il risparmio. Verifichiamo quale delle due conviene al tuo progetto e gestiamo perizie e certificazioni richieste.",
+    q: "Che cosa è successo a Transizione 5.0 e al credito d'imposta 4.0?",
+    a: "Le risorse di Transizione 5.0 sono state dichiarate esaurite dal MIMIT il 6 novembre 2025 e la misura non è stata rifinanziata; per gli investimenti dal 2026 la Legge di bilancio 2026 ha introdotto l'iper-ammortamento 2026-2028, che sostituisce i crediti d'imposta 4.0 e 5.0. Restano gestibili le posizioni già prenotate con le regole precedenti.",
   },
   {
     q: "Posso cumulare più agevolazioni sullo stesso investimento?",
-    a: "Spesso sì, ma con limiti precisi sull'intensità di aiuto e regole anti-doppio-finanziamento che cambiano da misura a misura. Fa parte del nostro lavoro verificarlo prima, così non rischi di vederti revocare il contributo in fase di controllo.",
+    a: "Spesso sì, ma con limiti precisi sull'intensità di aiuto e regole contro il doppio finanziamento che cambiano da misura a misura (per esempio, la base dell'iper-ammortamento è calcolata al netto del credito ZES). Fa parte del nostro lavoro verificarlo prima, così non rischi la revoca in fase di controllo.",
   },
   {
-    q: "Quanto tempo richiede tutta la procedura?",
-    a: "Dipende dalla misura. Una domanda a sportello richiede settimane di preparazione e poi l'esito è rapido; un bando regionale può avere istruttorie di mesi. Nel pre-check ti diamo una tempistica realistica e le scadenze da rispettare.",
+    q: "Quanto tempo richiede la procedura?",
+    a: "Dipende dalla misura. Una domanda a sportello richiede settimane di preparazione e un esito rapido; un bando regionale può avere istruttorie di mesi. Nella verifica preliminare ti diamo una tempistica realistica e le scadenze da rispettare.",
   },
   {
     q: "Lavorate solo con imprese della Campania?",
-    a: "No. Misure come ZES e Decreto Coesione riguardano il Mezzogiorno, ma sgravi INAIL, bando ISI, Transizione 5.0, formazione finanziata e gran parte dei bandi nazionali valgono su tutta Italia. Seguiamo imprese in più regioni.",
+    a: "Misure come la ZES Unica riguardano il Mezzogiorno, ma Bando ISI, OT23, iper-ammortamento, formazione finanziata e gran parte dei bandi nazionali valgono su tutta Italia.",
   },
+];
+
+const fonti = [
+  "INAIL — Bando ISI 2025: calendario delle scadenze (ultimo aggiornamento 8 settembre 2026) e avviso di proroga al 26 ottobre 2026",
+  "L. 30 dicembre 2025, n. 199 (Legge di bilancio 2026), art. 1, commi 427–436 (iper-ammortamento) e 438–443 (ZES Unica 2026-2028)",
+  "MIMIT — Nuovo Piano Transizione 5.0 / Iper-ammortamento: D.I. 7 maggio 2026, D.D. 10 giugno 2026 e 20 luglio 2026 (pagina aggiornata al 22 luglio 2026)",
+  "Agenzia delle Entrate — provvedimento 30 gennaio 2026, prot. n. 3882/2026 (modelli di comunicazione ZES Unica 2026-2028)",
+  "INAIL — Modello OT23 (edizione annuale)",
+];
+
+const correlati = [
+  { nome: "Engineering", desc: "Progettazione degli spazi e degli impianti che vuoi finanziare.", href: "/servizi/engineering" },
+  { nome: "ISO 45001", desc: "La certificazione che vale per la riduzione del premio INAIL (OT23).", href: "/servizi/certificazioni/iso-45001" },
+  { nome: "Formazione", desc: "I fondi interprofessionali in pratica.", href: "/servizi/formazione" },
 ];
 ---
 
 <Base
-  title="Finanza agevolata"
-  description="Bando ISI, ZES Unica, sgravi INAIL OT23, Transizione 5.0, fondi interprofessionali, bandi regionali e nazionali, credito d'imposta. iCura Impresa ti accompagna dall'analisi di ammissibilità alla rendicontazione."
+  title="Finanza agevolata: Bando ISI e ZES Unica a Napoli"
+  description="Bandi e agevolazioni per investire: Bando ISI INAIL, ZES Unica Mezzogiorno, iper-ammortamento 2026-2028, OT23, fondi per la formazione. iCuraImpresa, Napoli."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Servizi · 04</p>
-      <h1>Finanza agevolata.</h1>
+      <h1>Finanza agevolata: bandi, crediti d'imposta e fondi per investire.</h1>
+      <ul class="chips" aria-label="Aggiornamento">
+        <li>Stato delle misure verificato al 7 ottobre 2026</li>
+      </ul>
       <p class="lede">
-        Contributi, fondi e crediti d'imposta esistono. Il difficile è intercettarli, scegliere quello giusto e portarlo a casa senza errori. Lo facciamo noi.
+        Contributi, crediti d'imposta e agevolazioni esistono. Il difficile è intercettarli, scegliere quello giusto e portarlo a casa senza errori. Lo facciamo con te, dall'inizio alla fine. Dai risorse alle tue idee.
       </p>
     </div>
   </header>
@@ -112,29 +178,29 @@ const faq = [
     </div>
   </section>
 
-  {/* ───── Contesto ───── */}
+  <ServiceExtras part="aChi" id="finanza" items={aChi} />
+
+  {/* ───── Il bisogno ───── */}
   <section class="section section--alt" aria-labelledby="finanza-contesto">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">01 — Il contesto</p>
-        <h2 id="finanza-contesto" class="two-col__title">Ogni anno milioni di euro restano non richiesti.</h2>
+        <p class="eyebrow">Il bisogno</p>
+        <h2 id="finanza-contesto" class="two-col__title">Ogni anno molte risorse restano non richieste.</h2>
       </div>
       <div class="prose">
         <p>
-          Tra fondi europei, nazionali e regionali, le risorse per chi investe non mancano. Quello che manca, alle imprese, è il tempo per monitorarle, la capacità di leggere i bandi e la struttura per gestire domanda, asseverazioni e rendicontazione nei tempi giusti.
+          Tra fondi europei, nazionali e regionali, le risorse per chi investe non mancano. Quello che manca alle imprese è il tempo per monitorarle, la capacità di leggere i bandi e la struttura per gestire domanda, asseverazioni e rendicontazione nei tempi giusti.
         </p>
         <p>
-          Risultato: una parte consistente delle agevolazioni va deserta o finisce a chi è arrivato prima e meglio preparato. Noi facciamo esattamente questo — intercettare la misura adatta alla tua impresa e seguirla dalla A alla Z — così l'agevolazione la prendi tu.
+          Risultato: una parte delle agevolazioni va deserta o finisce a chi è arrivato prima e meglio preparato. Noi facciamo esattamente questo: intercettiamo la misura adatta alla tua impresa e la seguiamo con te dall'inizio alla fine, con lo stato di ogni misura verificato su fonti ufficiali e aggiornato.
         </p>
         <ul class="chips" aria-label="Strumenti che seguiamo">
           <li>Bando ISI INAIL</li>
-          <li>ZES Unica</li>
-          <li>Sgravi OT23</li>
-          <li>Transizione 5.0</li>
-          <li>Credito d'imposta 4.0</li>
+          <li>ZES Unica — art. 16 D.L. 124/2023</li>
+          <li>Iper-ammortamento — L. 199/2025</li>
+          <li>OT23 — INAIL</li>
           <li>Fondi interprofessionali</li>
-          <li>Nuova Sabatini</li>
-          <li>Bandi regionali</li>
+          <li>Bandi regionali e nazionali</li>
         </ul>
       </div>
     </div>
@@ -142,26 +208,42 @@ const faq = [
 
   <hr class="rule" aria-hidden="true" />
 
-  {/* ───── Cosa intercettiamo ───── */}
+  {/* ───── Che cosa facciamo ───── */}
   <section class="section" aria-labelledby="finanza-aree">
     <div class="container">
-      <p class="eyebrow">02 — Cosa intercettiamo</p>
+      <p class="eyebrow">Che cosa facciamo</p>
       <h2 id="finanza-aree" class="section-title">Gli strumenti su cui lavoriamo.</h2>
       <AreaGrid aree={aree} />
     </div>
   </section>
 
-  <hr class="rule" aria-hidden="true" />
+  {/* ───── Stato delle misure ───── */}
+  <section class="section section--alt-2" id="stato" aria-labelledby="finanza-stato">
+    <div class="container">
+      <p class="eyebrow">Stato delle misure</p>
+      <h2 id="finanza-stato" class="section-title">Aperto, chiuso, in arrivo: lo stato di ogni misura.</h2>
+      <p class="stato__intro">
+        Verificato su fonti ufficiali al 7 ottobre 2026. Prima di decidere, lo riverifichiamo insieme sul tuo caso.
+      </p>
+      <AreaGrid aree={stato} />
+    </div>
+  </section>
 
-  {/* ───── Cosa ottieni ───── */}
+  <ParallaxBand
+    title="Portale finanza.icuraimpresa.it"
+    lede="Il portale di iCuraImpresa dedicato alla finanza agevolata: le misure seguite dallo studio e le pratiche delle imprese assistite."
+    src="/images/finanza-zes-transizione-impianto.webp"
+    alt="Consulente di finanza agevolata iCura Impresa in uno stabilimento produttivo: consulente e titolare valutano su tablet un investimento in nuovo macchinario e monitoraggio energetico, barriere di sicurezza e luce naturale, fotografia industriale documentaria"
+    cta={{ href: "https://finanza.icuraimpresa.it/", label: "Apri il portale ↗" }}
+    labelledby="finanza-parallax"
+  />
+
+  {/* ───── Che cosa consegniamo ───── */}
   <section class="section section--alt-blue" aria-labelledby="finanza-ottieni">
     <div class="container two-col">
       <div class="two-col__head">
-        <p class="eyebrow">03 — Cosa ottieni</p>
-        <h2 id="finanza-ottieni" class="two-col__title">Non un consiglio. La pratica chiusa.</h2>
-        <p class="two-col__note">
-          Niente fai-da-te sui portali, niente scadenze perse. Tu decidi l'investimento, al resto pensiamo noi.
-        </p>
+        <p class="eyebrow">Che cosa consegniamo</p>
+        <h2 id="finanza-ottieni" class="two-col__title">Che cosa resta in azienda, a lavoro finito.</h2>
       </div>
       <ul class="checklist">
         {ottieni.map((o) => (
@@ -174,19 +256,11 @@ const faq = [
     </div>
   </section>
 
-  <ParallaxBand
-    eyebrow="Investire conviene"
-    title="Gli investimenti del 2026 sono agevolati."
-    lede="Chi rinnova macchinari, riduce i consumi o investe al Sud può recuperare una parte importante della spesa tra Transizione 5.0, ZES Unica e credito d'imposta. Noi troviamo la misura giusta e la portiamo a casa."
-    src="/images/finanza-zes-transizione-impianto.webp"
-    alt="Consulente di finanza agevolata iCura Impresa in uno stabilimento produttivo: consulente e titolare valutano su tablet un investimento in nuovo macchinario e monitoraggio energetico, barriere di sicurezza e luce naturale, fotografia industriale documentaria"
-    cta={{ href: "/zes-unica", label: "Scopri la ZES Unica" }}
-    labelledby="finanza-parallax"
-  />
+  <ServiceExtras part="ruoli" id="finanza" ruoli={ruoli} />
 
-  {/* ───── Come funziona ───── */}
+  {/* ───── Come lavoriamo ───── */}
   <Steps
-    eyebrow="04 — Come funziona"
+    eyebrow="Come lavoriamo"
     title="Quattro fasi, una persona di riferimento."
     steps={fasi}
     labelledby="finanza-fasi"
@@ -196,7 +270,7 @@ const faq = [
 
   {/* ───── FAQ ───── */}
   <Faq
-    eyebrow="05 — Domande frequenti"
+    eyebrow="Domande frequenti"
     title="Le domande che ci fanno più spesso."
     name="faq-finanza"
     labelledby="finanza-faq"
@@ -204,14 +278,23 @@ const faq = [
     tone="alt"
   />
 
+  <ServiceExtras
+    part="fonti"
+    id="finanza"
+    items={fonti}
+    nota="Contenuti verificati al 7 ottobre 2026. Le norme cambiano: prima di decidere, verifichiamo insieme il caso specifico."
+  />
+
+  <ServiceExtras part="correlati" id="finanza" correlati={correlati} />
+
   <CtaBand
-    title="Capiamo insieme cosa puoi ottenere."
-    lede="Il pre-check è gratuito · risposta entro 48 ore. Vediamo quali contributi e agevolazioni puoi davvero intercettare."
+    title="Capiamo insieme che cosa puoi ottenere."
+    lede="Raccontaci l'investimento che hai in mente: ti diciamo quali misure sono aperte, quali in arrivo e con quali requisiti. Ti rispondiamo noi, per email o per telefono, per capire insieme che cosa serve. Oppure chiama lo 081 658 0779."
     image={{
       src: "/images/bando-documenti-inail.webp",
       alt: "Consulente di finanza agevolata iCura Impresa al lavoro con un imprenditore: due adulti in ufficio napoletano luminoso esaminano documenti e un prospetto di bando sullo schermo, espressione collaborativa e fiduciosa, scrivania ordinata, palette desaturata sobria toni navy e grigio, fotografia documentaria professionale, no posa",
     }}
-    primary={{ href: "/contatti", label: "Verifica le opportunità" }}
+    primary={{ href: "/contatti", label: "Richiedi un ricontatto" }}
     labelledby="finanza-cta"
   />
 </Base>
@@ -226,4 +309,10 @@ const faq = [
     margin-bottom: var(--space-md);
   }
   .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 52ch; }
+
+  .stato__intro {
+    color: var(--color-ink-2);
+    max-width: 60ch;
+    margin: calc(var(--space-md) * -1) 0 var(--space-lg);
+  }
 </style>

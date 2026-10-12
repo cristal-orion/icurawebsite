@@ -1,20 +1,46 @@
 ---
-// Sezione home "agevolazioni in evidenza" — sfondo azzurro (accent-soft),
-// come il vecchio Bando ISI. Due card cliccabili verso le pagine dedicate.
+// Sezione "Bandi, scadenze e risposte" — sfondo azzurro (accent-soft).
+// Card cliccabili con stato e date (testi del cliente, verificati al 7 ottobre 2026).
 const bandi = [
   {
-    badge: "fino al 60%",
-    titolo: "ZES Unica 2026",
-    meta: "Credito d'imposta · Mezzogiorno",
-    desc: "Credito d'imposta per investimenti in beni strumentali nelle imprese della Campania e del Sud. Fino al 60% per le piccole imprese, sugli investimenti realizzati nel 2026.",
-    href: "/zes-unica",
+    badge: "In vigore",
+    titolo: "Accordo Stato-Regioni del 17 aprile 2025",
+    meta: "Formazione",
+    desc: "Nuove durate e nuove abilitazioni per la formazione sulla sicurezza. Il periodo transitorio si è concluso il 24 maggio 2026: i corsi si erogano solo con le nuove regole.",
+    cta: "Chiedi una verifica degli attestati",
+    href: "/servizi/formazione",
   },
   {
-    badge: "fino al 65%",
+    badge: "In vigore",
+    titolo: "Patente a crediti",
+    meta: "Cantieri",
+    desc: "Obbligatoria per imprese e lavoratori autonomi che operano nei cantieri. Regole sanzionatorie più severe dal 31 ottobre 2025 e decurtazioni per lavoro irregolare dal 1° gennaio 2026.",
+    cta: "Controlla i crediti con noi",
+    href: "/servizi/consulenza/cantieri",
+  },
+  {
+    badge: "Aperto",
+    titolo: "Iper-ammortamento 2026–2028",
+    meta: "Investimenti",
+    desc: "Maggiorazione del costo ammortizzabile per i beni 4.0 e gli impianti per l'autoproduzione (L. 199/2025, art. 1, commi 427–436): investimenti dal 1° gennaio 2026 al 30 settembre 2028, prenotazione sulla piattaforma GSE attiva dal 12 giugno 2026.",
+    cta: "Pianifica l'investimento",
+    href: "/servizi/finanza-agevolata",
+  },
+  {
+    badge: "Domande chiuse",
     titolo: "Bando ISI INAIL 2025",
-    meta: "Fondo perduto · Sicurezza sul lavoro",
-    desc: "600 milioni a fondo perduto per investire nella sicurezza: contributi fino al 65% (80% con modelli organizzativi), da 5.000 a 130.000 €.",
+    meta: "Bandi",
+    desc: "Compilazione delle domande chiusa il 28 maggio 2026. Le domande ammesse negli elenchi si perfezionano entro le 18:00 del 26 ottobre 2026. L'avviso ISI 2026 non è ancora stato pubblicato: il progetto si prepara adesso.",
+    cta: "Prepara il progetto",
     href: "/bando-isi",
+  },
+  {
+    badge: "Prossima finestra",
+    titolo: "ZES Unica 2026–2028",
+    meta: "Mezzogiorno",
+    desc: "Finestra 2026 chiusa il 30 maggio. Chi ha presentato la comunicazione invia l'integrativa dal 3 al 17 gennaio 2027; per gli investimenti 2027 la finestra è dal 31 marzo al 30 maggio 2027.",
+    cta: "Verifica i requisiti",
+    href: "/zes-unica",
   },
 ];
 ---
@@ -22,10 +48,10 @@ const bandi = [
 <section class="section bandi-ev" aria-labelledby="bandi-ev-heading">
   <div class="container">
     <header class="bandi-ev__head">
-      <p class="eyebrow">In evidenza</p>
-      <h2 id="bandi-ev-heading" class="bandi-ev__title">Le agevolazioni del momento.</h2>
+      <p class="eyebrow">Un posto dove tornare</p>
+      <h2 id="bandi-ev-heading" class="bandi-ev__title">Bandi, scadenze e risposte: sempre aggiornati.</h2>
       <p class="bandi-ev__lede">
-        Contributi e crediti d'imposta aperti adesso. Verifichiamo se la tua impresa può accedere e seguiamo tutta la pratica.
+        Finanziamenti, norme e certificazioni sono percorsi con requisiti e date. Qui trovi lo stato di ciascuno, verificato su fonti ufficiali; quando cambia qualcosa che ti riguarda, te lo diciamo noi.
       </p>
     </header>
 
@@ -37,12 +63,13 @@ const bandi = [
           <p class="bando-card__meta">{b.meta}</p>
           <p class="bando-card__desc">{b.desc}</p>
           <a href={b.href} class="link-cta bando-card__link">
-            Scopri il bando
+            {b.cta}
             <span class="link-cta__arrow" aria-hidden="true">→</span>
           </a>
         </li>
       ))}
     </ul>
+    <p class="bandi-ev__note">Stato e date verificati su fonti ufficiali al 7 ottobre 2026.</p>
   </div>
 </section>
 
@@ -61,12 +88,18 @@ const bandi = [
     line-height: 1.5;
     margin-top: var(--space-sm);
   }
+  .bandi-ev__note {
+    margin: var(--space-lg) 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+  }
   .bandi-ev__grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--space-lg);
   }
   .bando-card {
@@ -125,9 +158,6 @@ const bandi = [
     inset: 0;
   }
 
-  @media (max-width: 56rem) {
-    .bandi-ev__grid { grid-template-columns: 1fr; }
-  }
   @media (prefers-reduced-motion: reduce) {
     .bando-card:hover { transform: none; }
   }

@@ -1,0 +1,72 @@
+---
+import Guida from "@layouts/Guida.astro";
+
+const sezioni = [
+  {
+    id: "obiettivo-del-progetto",
+    titolo: "Descrivi il cambiamento che vuoi realizzare",
+    blocchi: [
+      { p: "Parti dall’attività dell’impresa e dal problema da affrontare. Vuoi riorganizzare una lavorazione, aggiornare uno strumento o adeguare uno spazio a un’esigenza operativa? Spiega la situazione attuale e il cambiamento atteso, distinguendo il risultato desiderato dalle soluzioni ancora da confrontare." },
+      { p: "Una descrizione concreta permette di discutere il progetto con chi segue gli aspetti tecnici, organizzativi e amministrativi. «Sostituire un impianto per modificare questo passaggio produttivo» è una base di lavoro più chiara di «trovare un contributo». L’opportunità da esaminare deve essere coerente con il progetto." },
+    ],
+  },
+  {
+    id: "perimetro-e-fasi",
+    titolo: "Definisci il perimetro e lo stato delle attività",
+    blocchi: [
+      { p: "Indica la sede interessata, i beni o le attività considerate e le eventuali opere collegate. Una nuova attrezzatura, per esempio, può richiedere verifiche sugli spazi, sulle connessioni e sull’organizzazione del lavoro. Registra questi aspetti come elementi da approfondire, senza considerarli già risolti." },
+      { p: "Descrivi ciò che è soltanto un’idea e ciò che è stato già definito. Segnala preventivi ricevuti, ordini eventualmente effettuati, impegni assunti e attività avviate, con le date disponibili. Queste informazioni devono essere esaminate rispetto alla specifica misura: la preparazione di una scheda non dimostra l’ammissibilità del progetto." },
+    ],
+  },
+  {
+    id: "costi-e-documenti",
+    titolo: "Rendi leggibili costi e documenti disponibili",
+    blocchi: [
+      { p: "Organizza un quadro preliminare delle voci di spesa. Per ciascuna indica descrizione, importo disponibile, fonte e stato: ipotesi interna, preventivo da aggiornare o offerta ricevuta. Evita di sommare valori che si riferiscono a perimetri diversi senza chiarirne le differenze." },
+      { ul: [
+        "Descrizione del bene, del servizio o dell’intervento.",
+        "Documentazione tecnica e preventivi disponibili.",
+        "Attività collegate e aspetti ancora da verificare.",
+        "Calendario ipotizzato e impegni già assunti.",
+        "Referenti interni che possono completare le informazioni.",
+      ] },
+      { p: "Non occorre allegare tutto al primo contatto. Una sintesi ordinata consente di individuare i documenti da approfondire e concordare una modalità adatta alla loro condivisione, evitando l’invio indiscriminato di dati riservati." },
+    ],
+  },
+  {
+    id: "domande-da-portare",
+    titolo: "Prepara le domande per il confronto",
+    blocchi: [
+      { p: "Individua ciò che ti serve capire: quali informazioni aziendali mancano, quali elementi tecnici richiedono una verifica e chi deve partecipare all’approfondimento. Chiedi che siano distinti i requisiti dell’impresa, quelli dell’intervento e le condizioni della misura eventualmente individuata." },
+      { p: "La presenza di una spesa nel progetto non significa che sia agevolabile. Analogamente, l’esistenza di un’opportunità non equivale alla concessione di un beneficio. Il confronto serve a valutare la corrispondenza tra progetto e condizioni applicabili, attraverso i riferimenti ufficiali pertinenti." },
+    ],
+  },
+  {
+    id: "scheda-del-progetto",
+    titolo: "Porta una scheda di progetto al primo incontro",
+    blocchi: [
+      { p: "Riunisci le informazioni in una scheda breve: obiettivo, sede, interventi previsti, stato del progetto, stima delle spese, tempi ipotizzati e questioni aperte. Identifica la versione e il referente che la aggiorna, così eventuali cambiamenti restano riconoscibili." },
+      { p: "Una traccia per iniziare: «Vorremmo realizzare… presso… Il progetto è in questa fase… Disponiamo di questi documenti… Abbiamo già assunto questi impegni… Gli aspetti da chiarire sono…»." },
+      { p: "<a href=\"/servizi/finanza-agevolata\">La pagina Finanza Agevolata</a> presenta l’ambito del servizio. Questa guida prepara il confronto sul progetto: non è un elenco di bandi aperti né una valutazione dei requisiti della tua impresa." },
+    ],
+  },
+];
+---
+
+<Guida
+  title="Prepara il progetto di investimento prima del bando"
+  description="Obiettivi, perimetro, costi indicativi e documenti: le informazioni da mettere in ordine per approfondire un progetto di investimento aziendale."
+  categoria="Finanza Agevolata"
+  h1="Prima delle agevolazioni: prepara il progetto di investimento"
+  lede="Una ricerca di opportunità è più utile quando parte da un progetto comprensibile. Metti in ordine il bisogno dell’impresa e le informazioni disponibili prima di confrontare strumenti e requisiti."
+  dataIso="2026-10-07"
+  dataLabel="7 ottobre 2026"
+  sezioni={sezioni}
+  servizioHref="/servizi/finanza-agevolata"
+  ctaTitle="Parliamo del tuo progetto di investimento"
+  ctaLede="Descrivi che cosa vorresti realizzare, in quale sede e a che punto si trova il progetto. Queste informazioni aiutano a impostare l’approfondimento delle opportunità e dei requisiti applicabili."
+  altre={[
+    { categoria: "Consulenza", titolo: "Come preparare una richiesta di consulenza aziendale", href: "/blog/preparare-richiesta-consulenza" },
+    { categoria: "Formazione", titolo: "Fabbisogni formativi: da dove iniziare in azienda", href: "/blog/ricognizione-fabbisogni-formativi" },
+  ]}
+/>

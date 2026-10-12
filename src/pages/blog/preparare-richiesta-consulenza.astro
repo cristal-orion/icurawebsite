@@ -1,0 +1,71 @@
+---
+import Guida from "@layouts/Guida.astro";
+
+const sezioni = [
+  {
+    id: "partire-da-un-caso",
+    titolo: "Parti da un episodio concreto",
+    blocchi: [
+      { p: "«Dobbiamo organizzarci meglio» esprime un’esigenza, ma lascia aperte molte interpretazioni. Scegli invece un episodio recente: una richiesta rimasta senza risposta, un’attività svolta due volte, una decisione rinviata perché non era chiaro chi dovesse prenderla. Descrivi che cosa è successo e quali persone o reparti sono stati coinvolti." },
+      { p: "Separa i fatti dalle ipotesi. «Il preventivo ha richiesto tre passaggi di approvazione» è un fatto da esaminare; «il software è sbagliato» è una possibile spiegazione. Questa distinzione aiuta a capire se intervenire sul processo, sui ruoli, sugli strumenti o sul coordinamento." },
+    ],
+  },
+  {
+    id: "definire-obiettivo",
+    titolo: "Spiega quale cambiamento ti aspetti",
+    blocchi: [
+      { p: "Collega il problema a un risultato osservabile. Potresti voler rendere chiaro chi approva una spesa, ritrovare più facilmente una procedura o coordinare i referenti di sedi diverse. Scegli una priorità e indica come riconosceresti un miglioramento nel lavoro quotidiano." },
+      { p: "Non occorre presentare numeri perfetti. Se disponi di dati, specifica da dove arrivano; se stai formulando una stima, dichiaralo. Chiarisci anche gli eventi già programmati, come l’apertura di una sede o l’introduzione di un nuovo processo, distinguendoli dalle scadenze ancora indicative." },
+    ],
+  },
+  {
+    id: "raccogliere-informazioni",
+    titolo: "Raccogli le informazioni essenziali",
+    blocchi: [
+      { p: "Prepara una sintesi dell’attività: che cosa produce o offre l’impresa, come è organizzata e quali funzioni partecipano al processo da esaminare. Individua i documenti già disponibili e chi li aggiorna. La loro esistenza è un punto di partenza, non la prova che riflettano il lavoro effettivo." },
+      { ul: [
+        "Una descrizione del processo e delle sue fasi principali.",
+        "I ruoli coinvolti, i referenti e i passaggi decisionali.",
+        "Le procedure o gli strumenti attualmente utilizzati.",
+        "Le difficoltà ricorrenti e i tentativi già effettuati.",
+      ] },
+      { p: "Nel primo messaggio condividi una sintesi, evitando dati riservati di clienti, dipendenti o fornitori. I documenti necessari e le modalità di condivisione potranno essere concordati durante il confronto." },
+    ],
+  },
+  {
+    id: "coinvolgere-referenti",
+    titolo: "Coinvolgi chi conosce il lavoro",
+    blocchi: [
+      { p: "Accanto a chi prende le decisioni, può essere utile ascoltare chi svolge ogni giorno l’attività. Un processo descritto dall’esterno può apparire lineare e nascondere eccezioni, passaggi informali o strumenti utilizzati solo da alcune persone." },
+      { p: "Individua un referente interno e rendi espliciti i vincoli: disponibilità delle persone, strumenti che devono restare operativi e iniziative già in corso. Questo aiuta a discutere un percorso praticabile, con un perimetro comprensibile, prima di scegliere una soluzione." },
+    ],
+  },
+  {
+    id: "primo-messaggio",
+    titolo: "Scrivi un primo messaggio utile",
+    blocchi: [
+      { p: "Puoi seguire questa traccia: «La nostra impresa si occupa di… Vorremmo migliorare… Oggi il processo funziona così… La difficoltà principale è… Sono coinvolti questi ruoli… Abbiamo già a disposizione…»." },
+      { p: "Un esempio: «Gestiamo richieste da più sedi. Le approvazioni passano tra referenti diversi e vorremmo chiarire chi decide e dove registrare gli esiti. Abbiamo un organigramma e una procedura da confrontare con il lavoro effettivo»." },
+      { p: "La <a href=\"/servizi/consulenza/aziendale\">consulenza aziendale</a> può partire da queste informazioni per approfondire organizzazione, responsabilità e coordinamento. Il primo passo è condividere una lettura del bisogno e definire che cosa analizzare." },
+    ],
+  },
+];
+---
+
+<Guida
+  title="Come preparare una richiesta di consulenza"
+  description="Obiettivi, persone coinvolte e informazioni essenziali: una guida per iniziare un confronto utile sull’organizzazione della tua impresa."
+  categoria="Consulenza"
+  h1="Come preparare una richiesta di consulenza aziendale"
+  lede="Non serve avere già la soluzione. Serve mettere a fuoco il problema, il suo effetto sul lavoro e le decisioni da prendere. Ecco come preparare il primo confronto senza perdersi nei documenti."
+  dataIso="2026-10-07"
+  dataLabel="7 ottobre 2026"
+  sezioni={sezioni}
+  servizioHref="/servizi/consulenza/aziendale"
+  ctaTitle="Parliamo dell’organizzazione della tua impresa"
+  ctaLede="Descrivi il punto da cui vuoi partire: un passaggio che si blocca, responsabilità da chiarire o una crescita da organizzare. Useremo queste informazioni per impostare il confronto."
+  altre={[
+    { categoria: "Formazione", titolo: "Fabbisogni formativi: da dove iniziare in azienda", href: "/blog/ricognizione-fabbisogni-formativi" },
+    { categoria: "Finanza Agevolata", titolo: "Prima delle agevolazioni: prepara il progetto di investimento", href: "/blog/preparare-progetto-investimento" },
+  ]}
+/>

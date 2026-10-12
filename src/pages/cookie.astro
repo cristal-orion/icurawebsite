@@ -1,19 +1,19 @@
 ---
 import Base from "@layouts/Base.astro";
 
-const aggiornamento = "15 giugno 2026";
+const aggiornamento = "12 ottobre 2026";
 ---
 
 <Base
-  title="Cookie Policy"
-  description="Informativa sui cookie e gli strumenti di archiviazione utilizzati dal sito di iCura Impresa S.r.l."
+  title="Cookie policy"
+  description="Cookie policy del sito di ICURAIMPRESA S.r.l.: quali cookie e strumenti di memorizzazione usiamo, per quali finalità, con quali durate, e come gestire le preferenze."
 >
   <header class="page-header section">
     <div class="container">
       <p class="eyebrow">Cookie policy</p>
-      <h1>Cookie Policy.</h1>
+      <h1>Cookie e strumenti di memorizzazione.</h1>
       <p class="lede">
-        Quali cookie e strumenti di archiviazione usa questo sito, e come gestirli.
+        Che cosa salviamo nel tuo browser, perché, per quanto tempo e come puoi cambiare idea. Questa pagina integra l'<a href="/privacy">informativa privacy</a>.
       </p>
       <p class="meta">Ultimo aggiornamento: {aggiornamento}</p>
     </div>
@@ -23,48 +23,80 @@ const aggiornamento = "15 giugno 2026";
 
   <section class="section legal">
     <div class="container legal__col">
-      <h2>1. Cosa sono i cookie</h2>
+      <h2>1. Che cosa sono</h2>
       <p>
-        I cookie sono piccoli file di testo che i siti salvano sul dispositivo dell'utente. Strumenti analoghi (come <em>localStorage</em> e <em>sessionStorage</em>) consentono di memorizzare informazioni nel browser. Vengono usati per far funzionare il sito, ricordare preferenze o raccogliere statistiche.
+        I cookie sono piccoli file di testo che i siti salvano nel browser; strumenti analoghi (come la memoria locale del browser, <em>localStorage</em>, e la memoria di sessione, <em>sessionStorage</em>) svolgono funzioni simili senza passare dai cookie. Questo sito ne fa un uso limitato: il banner ti offre due scelte, «Accetta» e «Rifiuta», e lo scorrimento della pagina non vale come consenso.
       </p>
 
-      <h2>2. Cookie tecnici e di funzionalità</h2>
+      <h2>2. Strumenti necessari (sempre attivi)</h2>
       <p>
-        Questo sito è prevalentemente statico e <strong>non utilizza cookie di profilazione</strong>. Utilizza esclusivamente strumenti tecnici necessari al funzionamento, tra cui l'archiviazione locale di un token di sessione per l'area riservata di gestione delle candidature (accessibile solo agli amministratori). Questi strumenti non richiedono il consenso preventivo.
+        Non richiedono consenso perché servono solo a far funzionare il sito e a ricordare le tue scelte. Sono salvati nella memoria del browser e non vengono trasmessi a terzi.
+      </p>
+      <div class="legal__table-wrap">
+        <table>
+          <thead>
+            <tr><th>Nome</th><th>Finalità</th><th>Durata</th><th>Titolare</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>icura-consent</code></td>
+              <td>Registra la tua scelta sui cookie (consenso dato o rifiutato).</td>
+              <td>Fino alla cancellazione dei dati del browser</td>
+              <td>ICURAIMPRESA S.r.l.</td>
+            </tr>
+            <tr>
+              <td>Token di sessione (memoria di sessione)</td>
+              <td>Accesso all'area riservata di gestione delle candidature, riservata agli amministratori.</td>
+              <td>Sessione del browser</td>
+              <td>ICURAIMPRESA S.r.l.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>3. Statistiche (solo con consenso)</h2>
+      <p>
+        Il sito integra Google Tag Manager (Google Ireland Ltd.), configurato con Google Consent Mode: finché non accetti, l'archiviazione per statistiche e pubblicità resta negata. Con «Accetta» gli strumenti di misurazione eventualmente attivati tramite Tag Manager possono utilizzare cookie o strumenti analoghi di Google, secondo la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">relativa informativa</a>. <span class="legal__note">[Da completare a cura del titolare: elenco dei tag attivi nel contenitore Tag Manager, con nome, finalità e durata.]</span>
       </p>
 
-      <h2>3. Strumenti di terze parti</h2>
+      <h2>4. Servizi di terze parti (solo con consenso)</h2>
       <p>
-        Alcune funzionalità si appoggiano a servizi esterni che, quando attivi, possono impostare cookie o utilizzare l'archiviazione locale gestiti direttamente dai rispettivi fornitori:
+        Con il tuo consenso, o su tua richiesta esplicita, il sito carica contenuti forniti da terzi che possono impostare propri cookie secondo le rispettive informative.
       </p>
-      <ul class="legal__list">
-        <li><strong>Assistente virtuale (chatbot)</strong> — per mantenere il contesto della conversazione e il caricamento dei documenti. L'elaborazione si avvale di servizi di intelligenza artificiale di terze parti (vedi <a href="/privacy">Privacy Policy</a>).</li>
-        <li><strong>Contenuti e servizi incorporati</strong> (es. invio del modulo, componenti di terze parti) — possono impostare cookie tecnici propri.</li>
-      </ul>
+      <div class="legal__table-wrap">
+        <table>
+          <thead>
+            <tr><th>Servizio</th><th>Dove</th><th>Finalità</th><th>Titolare</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Google Maps</td>
+              <td>Pagina Contatti (pulsante «Carica la mappa» o consenso)</td>
+              <td>Mostrare la mappa della sede operativa.</td>
+              <td>Google Ireland Ltd. — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">informativa</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <p>
-        Per il trattamento dei dati da parte di questi fornitori si rimanda alle rispettive informative privacy.
+        Il sito può inoltre mettere a disposizione un <strong>assistente virtuale (chatbot)</strong>, per mantenere il contesto della conversazione e il caricamento dei documenti. L'elaborazione si avvale di servizi di intelligenza artificiale di terze parti (vedi <a href="/privacy">informativa privacy</a>).
+      </p>
+      <p>
+        I moduli di richiesta e di iscrizione agli avvisi non usano cookie: i dati sono trasmessi dal tuo browser a Klaviyo solo quando premi il pulsante di invio (vedi l'<a href="/privacy">informativa privacy</a>). Nel percorso di candidatura la pagina «Lavora con noi» comunica con Google Apps Script: per caricare le posizioni aperte, per verificare eventuali candidature già presentate quando avvii il questionario (con email e telefono) e per inviare le risposte alla conclusione, come descritto nell'informativa privacy. I caratteri tipografici sono ospitati sul sito stesso: nessuna richiesta viene inviata a servizi di font esterni.
       </p>
 
-      <h2>4. Cookie analitici e di profilazione</h2>
+      <h2>5. Come gestire le preferenze</h2>
       <p>
-        Al momento il sito <strong>non utilizza</strong> cookie analitici o di profilazione né strumenti di tracciamento pubblicitario. Qualora venissero introdotti, verrà mostrato un banner per la raccolta del consenso e questa pagina sarà aggiornata di conseguenza.
-      </p>
-
-      <h2>5. Come gestire i cookie</h2>
-      <p>
-        Puoi controllare e/o eliminare i cookie e l'archiviazione locale dalle impostazioni del tuo browser. La maggior parte dei browser consente di bloccare i cookie o di essere avvisati prima che vengano salvati. La disattivazione dei cookie tecnici potrebbe però compromettere alcune funzionalità del sito.
-      </p>
-      <p>
-        Istruzioni per i browser più diffusi:
-        <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Chrome</a>,
+        Puoi modificare o revocare le tue scelte in qualsiasi momento cancellando dal browser i dati di navigazione di questo sito: al successivo accesso il banner ti verrà riproposto. Puoi inoltre cancellare o bloccare i cookie dalle impostazioni del browser: <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Chrome</a>,
         <a href="https://support.mozilla.org/it/kb/Gestione%20dei%20cookie" target="_blank" rel="noopener">Firefox</a>,
         <a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Safari</a>,
         <a href="https://support.microsoft.com/it-it/microsoft-edge" target="_blank" rel="noopener">Edge</a>.
+        Bloccando i cookie necessari alcune funzionalità del sito, come la memorizzazione della tua scelta sul banner, potrebbero non funzionare.
       </p>
 
-      <h2>6. Modifiche</h2>
+      <h2>6. Titolare e riferimenti</h2>
       <p>
-        Questa Cookie Policy può essere aggiornata nel tempo. Le modifiche saranno pubblicate su questa pagina con l'indicazione della data di ultimo aggiornamento. Per i dettagli sul trattamento dei dati personali consulta la <a href="/privacy">Privacy Policy</a>.
+        ICURAIMPRESA S.r.l., Via John Fitzgerald Kennedy 73, 80125 Napoli (NA); <a href="mailto:info@icuraimpresa.it">info@icuraimpresa.it</a>. Riferimenti: Regolamento (UE) 2016/679; D.Lgs. 196/2003, art. 122; Linee guida del Garante per la protezione dei dati personali su cookie e altri strumenti di tracciamento del 10 giugno 2021.
       </p>
     </div>
   </section>
@@ -108,5 +140,12 @@ const aggiornamento = "15 giugno 2026";
     gap: var(--space-2xs);
   }
   .legal strong { color: var(--color-ink); }
+  .legal__table-wrap { overflow-x: auto; margin-bottom: var(--space-md); }
+  .legal table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); line-height: 1.5; }
+  .legal th, .legal td { text-align: left; vertical-align: top; padding: var(--space-xs) var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); color: var(--color-ink-2); }
+  .legal th { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-muted); font-weight: 600; }
+  .legal code { font-family: var(--font-mono); font-size: 0.9em; color: var(--color-ink); }
+  .legal a { color: var(--color-accent); }
+  .legal__note { color: var(--color-muted); font-style: italic; }
   .legal em { font-style: italic; }
 </style>
