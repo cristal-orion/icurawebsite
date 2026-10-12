@@ -302,5 +302,20 @@ const structuredData = {
         }
       })();
     </script>
+
+    <script>
+      // Su touch non esiste l'hover: le foto grayscale prendono colore quando
+      // attraversano la fascia centrale dello schermo e tornano B/N quando ne escono.
+      (() => {
+        if (!matchMedia("(hover: none)").matches || !("IntersectionObserver" in window)) return;
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) e.target.classList.toggle("in-focus", e.isIntersecting);
+          },
+          { rootMargin: "-35% 0px -35% 0px", threshold: 0 }
+        );
+        document.querySelectorAll(".media-grayscale").forEach((el) => io.observe(el));
+      })();
+    </script>
   </body>
 </html>

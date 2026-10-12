@@ -445,6 +445,12 @@ html.reveal-ready [data-reveal].is-visible {
 .group:hover .media-grayscale,
 .group:focus-visible .media-grayscale { filter: grayscale(0%); }
 
+/* Touch (nessun hover): il colore arriva quando l'immagine entra nella
+ * fascia centrale dello schermo (classe `in-focus` da Base.astro). */
+@media (hover: none) {
+  .media-grayscale.in-focus { filter: grayscale(0%); }
+}
+
 /* Scrollbar navy (dettaglio tecnico) */
 * { scrollbar-color: var(--color-ink-2) var(--color-paper-2); }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
