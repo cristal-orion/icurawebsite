@@ -1,7 +1,9 @@
 ---
 const { pathname } = Astro.url;
-// In home l'header parte scuro (stesso colore dell'hero) e torna chiaro appena si scorre.
-const darkTop = pathname === "/";
+// Nelle pagine con hero navy l'header parte scuro e torna chiaro appena si scorre.
+const darkTopPages = ["/", "/lavora-con-noi"];
+const darkTop =
+  darkTopPages.includes(pathname.replace(/\/$/, "") || "/") || pathname.startsWith("/acquista");
 const isActive = (path: string) =>
   path === "/" ? pathname === "/" : pathname.startsWith(path);
 
@@ -85,11 +87,12 @@ const agevolazioni = [
   { label: "Bando ISI INAIL", href: "/bando-isi" },
 ];
 
-// Bando in evidenza (badge amber). Cambia qui label/href per evidenziarne un altro.
-const bandoEvidenza = {
-  label: "Bando ISI INAIL",
-  href: "/bando-isi",
-  badge: "In evidenza",
+// Voce in evidenza (badge amber). Cambia qui label/href per evidenziare altro.
+// Bando ISI resta raggiungibile dal menu Finanza Agevolata.
+const promo = {
+  label: "Acquista online",
+  href: "/acquista",
+  badge: "Nuovo",
 };
 
 const serviziActive =
@@ -184,11 +187,11 @@ const serviziActive =
 
     <div class="site-header__actions">
       <a
-        href={bandoEvidenza.href}
-        class={`site-header__promo${isActive(bandoEvidenza.href) ? " is-active" : ""}`}
+        href={promo.href}
+        class={`site-header__promo${isActive(promo.href) ? " is-active" : ""}`}
       >
-        <span class="site-header__promo-badge">{bandoEvidenza.badge}</span>
-        <span class="site-header__promo-label">{bandoEvidenza.label}</span>
+        <span class="site-header__promo-badge">{promo.badge}</span>
+        <span class="site-header__promo-label">{promo.label}</span>
       </a>
       <a href="tel:+390816580779" class="site-header__phone">081 658 0779</a>
       <a href="/contatti" class="site-header__cta">
@@ -212,9 +215,9 @@ const serviziActive =
 </header>
 
 <div class="nav-mobile" id="nav-mobile" data-nav-mobile hidden>
-  <a href={bandoEvidenza.href} class="nav-mobile__promo">
-    <span class="nav-mobile__promo-badge">{bandoEvidenza.badge}</span>
-    <span>{bandoEvidenza.label}</span>
+  <a href={promo.href} class="nav-mobile__promo">
+    <span class="nav-mobile__promo-badge">{promo.badge}</span>
+    <span>{promo.label}</span>
     <span aria-hidden="true">→</span>
   </a>
   <ul class="nav-mobile__list">

@@ -39,6 +39,7 @@ const selezione = [
   { n: "02", titolo: "Racconta come lavori", desc: "Completa 16 domande attitudinali, una alla volta. Risposte e tempi di compilazione accompagnano la candidatura nella valutazione interna." },
   { n: "03", titolo: "Valutazione e colloquio", desc: "La conferma finale attesta la ricezione della candidatura. Se il profilo è in linea con le ricerche, ti contattiamo noi per i passi successivi." },
 ];
+import DotGrid from "@components/DotGrid.astro";
 ---
 
 <Base
@@ -60,6 +61,7 @@ const selezione = [
       </div>
 
       <div class="lavora-hero__panel">
+        <DotGrid />
         <p class="lavora-hero__eyebrow">Lavora con noi</p>
         <h1 id="lavora-heading" class="lavora-hero__title">
           Il futuro cresce con le persone. <span class="accent">Anche le nostre.</span>
@@ -187,16 +189,16 @@ const selezione = [
   const FALLBACK_POSITIONS = [
     { id: 'hse', titolo: 'Tecnico della sicurezza (HSE)',
       descrizione: 'Sopralluoghi, redazione DVR, coordinamento sicurezza in cantiere presso le aziende clienti.',
-      ral: '€ 22.000 – 30.000', location: 'Napoli + cantieri', ordine: 10 },
+      ral: '€ 22.000 – 30.000', location: 'Napoli + cantieri', ordine: 10 },
     { id: 'iso', titolo: 'Consulente certificazioni ISO',
       descrizione: 'Implementazione di sistemi di gestione 9001/14001/45001, preparazione audit, supporto alle imprese.',
-      ral: '€ 24.000 – 32.000', location: 'Napoli', ordine: 20 },
+      ral: '€ 24.000 – 32.000', location: 'Napoli', ordine: 20 },
     { id: 'eng', titolo: 'Ingegnere / progettista junior',
       descrizione: 'Progettazione edile e impiantistica, pratiche, prevenzione incendi. Crescita affiancando il team tecnico.',
-      ral: '€ 20.000 – 28.000', location: 'Napoli', ordine: 30 },
+      ral: '€ 20.000 – 28.000', location: 'Napoli', ordine: 30 },
     { id: 'finanza', titolo: 'Consulente finanza agevolata',
       descrizione: 'Bandi, domande e rendicontazione: dalla lettura dell’avviso pubblico alla chiusura della pratica.',
-      ral: '€ 22.000 – 30.000', location: 'Napoli', ordine: 40 },
+      ral: '€ 22.000 – 30.000', location: 'Napoli', ordine: 40 },
     { id: 'spontanea', titolo: 'Candidatura spontanea',
       descrizione: 'La candidatura spontanea è aperta anche quando non ci sono annunci in linea con il tuo profilo. Non corrisponde a una posizione aperta specifica.',
       ral: 'Da valutare', location: 'Napoli', ordine: 100 }
@@ -641,6 +643,8 @@ const selezione = [
     background: linear-gradient(to top, color-mix(in srgb, var(--color-ink) 45%, transparent), transparent);
   }
   .lavora-hero__panel {
+    position: relative;
+    isolation: isolate;
     background: var(--color-ink);
     color: var(--color-paper);
     padding: clamp(var(--space-lg), 4vw, var(--space-2xl));

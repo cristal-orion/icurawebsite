@@ -1,0 +1,1590 @@
+[
+  {
+    "slug": "corso-lavoratori-generale-4h",
+    "tipo": "corso_calendario",
+    "titolo": "Formazione generale dei lavoratori (4 ore)",
+    "lede": "Il modulo obbligatorio per ogni nuovo assunto, uguale per tutti i settori.",
+    "prezzo": 75.0,
+    "listino": 95.0,
+    "iva": 22,
+    "unita": "partecipante",
+    "perChi": "Titolari e responsabili che devono formare lavoratori appena assunti (o mai formati) di qualunque settore.",
+    "quando": "Entro 60 giorni dall'assunzione, oppure quando manca l'attestato generale in azienda. Se i lavoratori hanno già la formazione generale e serve solo la specifica, scegli il corso specifico del tuo livello di rischio.",
+    "problema": "Senza la formazione generale il lavoratore non può essere considerato formato: è una delle prime cose che un ispettore chiede.",
+    "ricevi": [
+      "4 ore di lezione con docente",
+      "Materiale didattico in PDF",
+      "Verifica finale di apprendimento",
+      "Attestato nominativo dopo la validazione del registro presenze e della verifica"
+    ],
+    "passi": [
+      "Scegli la data e il numero di partecipanti",
+      "Inserisci nome, cognome e codice fiscale di ciascuno (servono per il registro e l'attestato)",
+      "Il giorno del corso: lezione, firma del registro, verifica finale",
+      "Entro 15 giorni ricevi gli attestati via email"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "4 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "aula o videoconferenza sincrona"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "5 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Nessuno. Serve un documento d'identità il giorno del corso."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Cambio partecipante gratuito fino al giorno prima. Cancellazione con rimborso integrale fino a 7 giorni prima; oltre, il posto si può spostare a un'altra data."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Materiale",
+      "Verifica",
+      "Attestato"
+    ],
+    "escluso": [
+      "Formazione specifica per rischio (basso, medio, alto)",
+      "Trasferta se il corso è in azienda"
+    ],
+    "chiEroga": "Docente con i requisiti del D.I. 6 marzo 2013 (qualifica da verificare e dichiarare per ciascuna edizione). iCuraImpresa è certificata ISO 45001 per la progettazione ed erogazione di corsi di formazione (certificato TNV n. 241123033901).",
+    "dopo": [
+      "Email di conferma con i passi successivi",
+      "Promemoria 7 giorni e 1 giorno prima",
+      "Attestati via email dopo la validazione"
+    ],
+    "faq": [
+      {
+        "q": "L'attestato è valido per legge?",
+        "a": "L'attestato documenta la formazione generale ai sensi dell'art. 37 del D.Lgs. 81/08 e dell'Accordo Stato-Regioni in vigore, con registro presenze e verifica finale. La validità dipende dal rispetto dei requisiti del soggetto formatore e del docente, che dichiariamo per ogni edizione."
+      },
+      {
+        "q": "Posso fare il corso online?",
+        "a": "Sì, in videoconferenza sincrona con presenza registrata; non in modalità e-learning asincrona."
+      },
+      {
+        "q": "Se un partecipante non viene?",
+        "a": "Puoi sostituirlo fino al giorno prima scrivendoci. Chi non partecipa all'intera durata non riceve l'attestato."
+      }
+    ]
+  },
+  {
+    "slug": "corso-lavoratori-specifica-basso-4h",
+    "tipo": "corso_calendario",
+    "titolo": "Formazione specifica rischio basso (4 ore)",
+    "lede": "Uffici, commercio, servizi: il modulo che completa la formazione generale.",
+    "prezzo": 75.0,
+    "listino": 95.0,
+    "iva": 22,
+    "unita": "partecipante",
+    "perChi": "Aziende con codice ATECO a rischio basso (uffici, commercio al dettaglio, servizi).",
+    "quando": "Dopo la formazione generale, o insieme a essa nello stesso periodo. Se il tuo settore è a rischio medio o alto, il modulo specifico dura di più: chiedi una data.",
+    "problema": "La formazione generale da sola non basta: la specifica è quella legata ai rischi del tuo settore.",
+    "ricevi": [
+      "4 ore di lezione sui rischi del settore a rischio basso",
+      "Materiale in PDF",
+      "Verifica finale",
+      "Attestato nominativo dopo la validazione"
+    ],
+    "passi": [
+      "Indichi partecipanti e date preferite",
+      "Inserisci i dati dei partecipanti",
+      "Lezione, registro, verifica",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "4 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "aula o videoconferenza sincrona"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "5 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Formazione generale (4 ore) già svolta o acquistata."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Come per gli altri corsi a calendario: cambio partecipante fino al giorno prima, rimborso integrale fino a 7 giorni prima."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Materiale",
+      "Verifica",
+      "Attestato"
+    ],
+    "escluso": [
+      "Formazione generale",
+      "Moduli per rischio medio o alto"
+    ],
+    "chiEroga": "Docente con i requisiti del D.I. 6 marzo 2013 (da dichiarare per edizione).",
+    "dopo": [
+      "Conferma con i passi successivi",
+      "Promemoria",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "Come so se il mio rischio è basso?",
+        "a": "Dipende dal codice ATECO e dalla valutazione dei rischi. Se hai dubbi, prima del corso chiedici una verifica gratuita via email indicando il codice ATECO."
+      }
+    ]
+  },
+  {
+    "slug": "corso-aggiornamento-lavoratori-6h",
+    "tipo": "corso_calendario",
+    "titolo": "Aggiornamento lavoratori (6 ore)",
+    "lede": "Ogni 5 anni, per chi ha già l'attestato.",
+    "prezzo": 90.0,
+    "listino": 115.0,
+    "iva": 22,
+    "unita": "partecipante",
+    "perChi": "Lavoratori con attestato in scadenza (5 anni dalla formazione precedente).",
+    "quando": "Prima della scadenza; se è già passata, l'aggiornamento resta la via più rapida per tornare in regola.",
+    "problema": "Un attestato scaduto vale come assente.",
+    "ricevi": [
+      "6 ore di aggiornamento",
+      "Materiale",
+      "Verifica finale",
+      "Attestato"
+    ],
+    "passi": [
+      "Indichi partecipanti e date preferite",
+      "Dati dei partecipanti",
+      "Lezione, registro, verifica",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "6 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "aula o videoconferenza sincrona"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "5 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Attestato di formazione generale e specifica."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Cambio partecipante fino al giorno prima; rimborso integrale fino a 7 giorni prima."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Materiale",
+      "Verifica",
+      "Attestato"
+    ],
+    "escluso": [
+      "Formazione iniziale"
+    ],
+    "chiEroga": "Docente con i requisiti del D.I. 6 marzo 2013 (da dichiarare per edizione).",
+    "dopo": [
+      "Conferma",
+      "Promemoria",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "Devo rifare tutto se sono scaduto da anni?",
+        "a": "No: l'aggiornamento di 6 ore è comunque la strada; te lo confermiamo guardando l'attestato precedente."
+      }
+    ]
+  },
+  {
+    "slug": "corso-antincendio-livello-1",
+    "tipo": "corso_calendario",
+    "titolo": "Addetto antincendio livello 1 (4 ore)",
+    "lede": "Per le attività a rischio basso: teoria ed esercitazione pratica con estintori.",
+    "prezzo": 120.0,
+    "listino": 150.0,
+    "iva": 22,
+    "unita": "partecipante",
+    "perChi": "Chi deve nominare gli addetti alla squadra antincendio in un'attività a rischio basso (livello 1 secondo il D.M. 2 settembre 2021).",
+    "quando": "Appena l'azienda ha almeno un addetto da nominare; per rischio medio (livello 2) chiedi una data dedicata.",
+    "problema": "Ogni azienda deve avere addetti antincendio formati e nominati; la prova pratica con gli estintori si fa solo in presenza.",
+    "ricevi": [
+      "2 ore di teoria e 2 di esercitazione pratica",
+      "Materiale",
+      "Verifica",
+      "Attestato"
+    ],
+    "passi": [
+      "Indichi partecipanti e date preferite",
+      "Dati dei partecipanti",
+      "Teoria, prova pratica, registro, verifica",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "4 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "aula con prova pratica"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "5 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Nessuno. Abbigliamento comodo per la prova pratica."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Solo in presenza. Cambio partecipante fino al giorno prima; rimborso integrale fino a 7 giorni prima."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Estintori per la prova",
+      "Materiale",
+      "Attestato"
+    ],
+    "escluso": [
+      "Nomina formale dell'addetto (modello fornito su richiesta)",
+      "Livelli 2 e 3"
+    ],
+    "chiEroga": "Docente con i requisiti del D.M. 2 settembre 2021 (da dichiarare per edizione).",
+    "dopo": [
+      "Conferma",
+      "Promemoria con indicazioni sulla sede",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "Quanto dura l'attestato?",
+        "a": "L'aggiornamento è ogni 5 anni (D.M. 2 settembre 2021)."
+      }
+    ]
+  },
+  {
+    "slug": "corso-primo-soccorso-b-c-12h",
+    "tipo": "corso_calendario",
+    "titolo": "Addetto primo soccorso, gruppi B e C (12 ore)",
+    "lede": "Con esercitazioni pratiche; aggiornamento di 4 ore ogni 3 anni.",
+    "prezzo": 155.0,
+    "listino": 195.0,
+    "iva": 22,
+    "unita": "partecipante",
+    "perChi": "Aziende dei gruppi B e C (D.M. 388/2003): la maggior parte delle piccole imprese.",
+    "quando": "Quando manca l'addetto o il suo attestato è scaduto da 3 anni. Se la tua azienda è nel gruppo A (16 ore), chiedi una data.",
+    "problema": "L'addetto al primo soccorso è obbligatorio in ogni azienda, con corso pratico e aggiornamento triennale.",
+    "ricevi": [
+      "12 ore in due o tre incontri, con esercitazioni",
+      "Materiale",
+      "Verifica",
+      "Attestato"
+    ],
+    "passi": [
+      "Scegli la data del primo incontro",
+      "Dati dei partecipanti",
+      "Incontri, prove pratiche, registro, verifica",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "12 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "aula con prove pratiche"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "3 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Nessuno."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Solo in presenza. Cambio partecipante fino al giorno prima; rimborso integrale fino a 7 giorni prima."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Manichino e materiale per le prove",
+      "Attestato"
+    ],
+    "escluso": [
+      "Gruppo A (16 ore)",
+      "Cassetta di primo soccorso"
+    ],
+    "chiEroga": "Personale medico o formatori qualificati secondo il D.M. 388/2003 (da dichiarare per edizione).",
+    "dopo": [
+      "Conferma",
+      "Promemoria",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "Il corso vale per più sedi?",
+        "a": "L'attestato è della persona: vale ovunque lavori, purché l'azienda rientri nei gruppi B o C."
+      }
+    ]
+  },
+  {
+    "slug": "corso-haccp-alimentarista-8h",
+    "tipo": "corso_calendario",
+    "titolo": "Alimentarista HACCP (8 ore)",
+    "lede": "Per chi manipola alimenti: bar, ristoranti, laboratori, negozi.",
+    "prezzo": 65.0,
+    "listino": 85.0,
+    "iva": 22,
+    "unita": "partecipante",
+    "perChi": "Titolari e addetti di attività alimentari in Campania che manipolano alimenti.",
+    "quando": "All'apertura dell'attività o a ogni nuovo addetto; la scadenza dipende dalla normativa regionale.",
+    "problema": "La formazione degli alimentaristi è richiesta dal Reg. CE 852/2004 e dalle norme regionali: il controllo dell'ASL la chiede insieme al manuale HACCP.",
+    "ricevi": [
+      "8 ore di lezione",
+      "Materiale",
+      "Verifica",
+      "Attestato"
+    ],
+    "passi": [
+      "Indichi partecipanti e date preferite",
+      "Dati dei partecipanti",
+      "Lezione, registro, verifica",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "8 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "aula o videoconferenza sincrona"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "3 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Nessuno."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Cambio partecipante fino al giorno prima; rimborso integrale fino a 7 giorni prima."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Materiale",
+      "Attestato"
+    ],
+    "escluso": [
+      "Manuale HACCP dell'attività (servizio separato)",
+      "Corso per il responsabile dell'industria alimentare (12 ore)"
+    ],
+    "chiEroga": "Docente in igiene alimentare (da dichiarare per edizione).",
+    "dopo": [
+      "Conferma",
+      "Promemoria",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "Serve anche il manuale HACCP?",
+        "a": "Sì, è un documento dell'attività, separato dalla formazione: lo prepariamo come servizio a preventivo."
+      }
+    ]
+  },
+  {
+    "slug": "corso-in-azienda-mezza-giornata",
+    "tipo": "corso_azienda",
+    "titolo": "Corso in azienda, mezza giornata (4 ore, fino a 15 partecipanti)",
+    "lede": "Il docente viene da te a Napoli e provincia: formazione generale, specifica o aggiornamento.",
+    "prezzo": 550.0,
+    "listino": 690.0,
+    "iva": 22,
+    "unita": "sessione",
+    "perChi": "Aziende di Napoli e provincia con almeno 6 persone da formare nello stesso giorno.",
+    "quando": "Quando spostare le persone costa più che far venire il docente, o quando serve una data precisa.",
+    "problema": "Formare tutti insieme, nella propria sede, senza fermare l'attività per giorni.",
+    "ricevi": [
+      "4 ore di docenza in sede per un modulo a scelta (generale, specifica rischio basso, aggiornamento)",
+      "Materiale per ogni partecipante",
+      "Registro, verifica, attestati nominativi"
+    ],
+    "passi": [
+      "Acquisti e indichi modulo e date preferite nel brief",
+      "Ti contattiamo entro 2 giorni lavorativi per fissare la data",
+      "Il docente viene in azienda",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "4 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "in azienda"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 2 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "5 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Una sala con sedie e un proiettore o uno schermo; elenco dei partecipanti con codice fiscale."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Data spostabile gratuitamente fino a 5 giorni lavorativi prima; rimborso integrale finché la data non è fissata."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Materiale",
+      "Attestati fino a 15 partecipanti",
+      "Trasferta entro 30 km da Napoli"
+    ],
+    "escluso": [
+      "Oltre 15 partecipanti (preventivo)",
+      "Moduli con prove pratiche (antincendio, primo soccorso: preventivo)",
+      "Trasferte oltre 30 km"
+    ],
+    "chiEroga": "Docente con i requisiti del D.I. 6 marzo 2013 (da dichiarare per sessione).",
+    "dopo": [
+      "Conferma",
+      "Contatto entro 2 giorni lavorativi per la data",
+      "Promemoria",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "Possiamo fare 8 ore in un giorno?",
+        "a": "Sì: acquista due sessioni o chiedi un preventivo per la giornata intera."
+      }
+    ]
+  },
+  {
+    "slug": "consulenza-sicurezza-60",
+    "tipo": "consulenza",
+    "titolo": "Check-up sicurezza in videochiamata (60 minuti)",
+    "lede": "Un tecnico risponde alle tue domande e ti lascia un riepilogo scritto con le priorità.",
+    "prezzo": 120.0,
+    "listino": 150.0,
+    "iva": 22,
+    "unita": "incontro",
+    "perChi": "Titolari e responsabili che devono capire a che punto sono con gli obblighi di sicurezza, prima di spendere in documenti o corsi.",
+    "quando": "Nuova attività, nuova sede, assunzioni, visita ispettiva annunciata, cambio di RSPP. Non adatto se serve un sopralluogo in sede: in quel caso ti indirizziamo al servizio giusto.",
+    "problema": "Sapere che cosa manca davvero, in ordine di priorità, senza impegnarsi in un contratto.",
+    "ricevi": [
+      "60 minuti con un tecnico della sicurezza",
+      "Riepilogo scritto entro 2 giorni lavorativi: che cosa è in regola, che cosa manca, le priorità e i costi indicativi",
+      "Il costo dell'incontro viene scalato se entro 30 giorni affidi a noi un servizio dell'area sicurezza"
+    ],
+    "passi": [
+      "Scegli giorno e ora fra quelli disponibili",
+      "Confermiamo la data e ricevi l'invito per il calendario",
+      "Compili il brief (settore, addetti, documenti esistenti)",
+      "Incontro in videochiamata; riepilogo scritto via email"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "1 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "videochiamata"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Avere a portata di mano: numero di addetti, codice ATECO, DVR o attestati esistenti (anche solo le date)."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Spostabile gratuitamente fino a 24 ore prima; rimborso integrale fino a 24 ore prima. In caso di mancata presenza senza avviso l'incontro si considera erogato."
+      }
+    ],
+    "incluso": [
+      "Incontro",
+      "Riepilogo scritto",
+      "Credito sul servizio successivo entro 30 giorni"
+    ],
+    "escluso": [
+      "Sopralluogo",
+      "Redazione di documenti",
+      "Pareri legali"
+    ],
+    "chiEroga": "Tecnico della sicurezza di iCuraImpresa (nome e qualifica nell'invito).",
+    "dopo": [
+      "Invito con file per il calendario",
+      "Richiesta del brief",
+      "Promemoria 24 ore prima",
+      "Riepilogo scritto entro 2 giorni lavorativi"
+    ],
+    "faq": [
+      {
+        "q": "Posso farla di persona?",
+        "a": "L'incontro è in videochiamata per tenere il prezzo basso; un sopralluogo in sede è un servizio diverso, a preventivo."
+      },
+      {
+        "q": "Serve la partita IVA?",
+        "a": "No: l'offerta è pensata per le imprese, ma può acquistarla anche un privato (per esempio chi sta aprendo un'attività)."
+      }
+    ]
+  },
+  {
+    "slug": "consulenza-finanza-45",
+    "tipo": "consulenza",
+    "titolo": "Verifica delle agevolazioni per la tua impresa (45 minuti)",
+    "lede": "Quali bandi e crediti d'imposta sono realistici per te, con i tempi e i documenti da preparare.",
+    "prezzo": 90.0,
+    "listino": 120.0,
+    "iva": 22,
+    "unita": "incontro",
+    "perChi": "Imprese della Campania che vogliono investire (macchinari, digitale, sicurezza, formazione) e vogliono sapere se esistono agevolazioni.",
+    "quando": "Prima di comprare: molte misure richiedono la domanda prima dell'ordine.",
+    "problema": "Capire in 45 minuti se vale la pena presentare una domanda, e quale.",
+    "ricevi": [
+      "45 minuti con un consulente di finanza agevolata",
+      "Scheda scritta: misure applicabili, intensità del contributo, scadenze, documenti",
+      "Costo scalato se affidi a noi la pratica entro 30 giorni"
+    ],
+    "passi": [
+      "Scegli giorno e ora",
+      "Confermiamo la data e ricevi l'invito",
+      "Compili il brief (investimento previsto, importo, tempi, dimensione dell'impresa)",
+      "Incontro; scheda scritta entro 2 giorni lavorativi"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "45 minuti"
+      },
+      {
+        "k": "Modalità",
+        "v": "videochiamata"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Bilancio o ultima dichiarazione, numero di addetti, descrizione dell'investimento."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Spostabile e rimborsabile fino a 24 ore prima."
+      }
+    ],
+    "incluso": [
+      "Incontro",
+      "Scheda scritta"
+    ],
+    "escluso": [
+      "Presentazione della domanda (a preventivo, in genere con una quota fissa più una percentuale sul contributo)"
+    ],
+    "chiEroga": "Consulente di finanza agevolata di iCuraImpresa (nome nell'invito).",
+    "dopo": [
+      "Invito",
+      "Brief",
+      "Promemoria",
+      "Scheda scritta"
+    ],
+    "faq": [
+      {
+        "q": "Garantite il contributo?",
+        "a": "No. Nessuno può garantirlo: ti diciamo con franchezza le probabilità e i vincoli."
+      }
+    ]
+  },
+  {
+    "slug": "duvri",
+    "tipo": "servizio",
+    "titolo": "DUVRI per un appalto (documento unico di valutazione dei rischi da interferenze)",
+    "lede": "Per il committente che affida lavori o servizi a un'impresa esterna.",
+    "prezzo": 450.0,
+    "listino": 590.0,
+    "iva": 22,
+    "unita": "documento",
+    "perChi": "Aziende che affidano a terzi lavori, servizi o forniture nella propria sede (manutenzioni, pulizie, impianti).",
+    "quando": "Prima dell'inizio dei lavori. Non serve per prestazioni intellettuali, forniture senza posa o lavori di durata inferiore a 5 uomini-giorno senza rischi particolari (art. 26 D.Lgs. 81/08): se hai dubbi, usa il check-up.",
+    "problema": "Il DUVRI è a carico del committente e va redatto prima dell'appalto: senza, la responsabilità in caso di infortunio ricade sul committente.",
+    "ricevi": [
+      "DUVRI completo per un appalto in una sede",
+      "Stima dei costi della sicurezza",
+      "Verbale di cooperazione e coordinamento da far firmare all'appaltatore",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta con il brief: sede, lavori affidati, impresa esterna, durata, DVR esistente",
+      "Entro 2 giorni lavorativi ti contattiamo per i dettagli (sopralluogo se necessario)",
+      "Consegna del documento entro 7 giorni lavorativi dal brief completo",
+      "Revisione su tue osservazioni"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "a distanza, con eventuale sopralluogo"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 7 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "DVR della sede (anche solo in bozza), contratto o ordine dell'appalto, POS o DVR dell'appaltatore se disponibili."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata (cioè prima del nostro primo contatto). Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Documento",
+      "Costi della sicurezza",
+      "Verbale",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Sopralluogo oltre 30 km da Napoli",
+      "Appalti con più di 3 imprese (preventivo)",
+      "DVR del committente"
+    ],
+    "chiEroga": "Tecnico della sicurezza (RSPP) di iCuraImpresa.",
+    "dopo": [
+      "Conferma e richiesta del brief",
+      "Contatto entro 2 giorni lavorativi",
+      "Documento via email"
+    ],
+    "faq": [
+      {
+        "q": "Il prezzo copre più appalti?",
+        "a": "No: un DUVRI per un appalto in una sede. Con 5 o più DUVRI l'anno conviene il contratto annuale: chiedi un preventivo."
+      }
+    ]
+  },
+  {
+    "slug": "revisione-dvr",
+    "tipo": "servizio",
+    "titolo": "Aggiornamento del DVR esistente (una sede, fino a 15 addetti)",
+    "lede": "Il tuo DVR non è più attuale: lo rivediamo e lo aggiorniamo con sopralluogo.",
+    "prezzo": 930.0,
+    "listino": 1190.0,
+    "iva": 22,
+    "unita": "pratica",
+    "perChi": "Aziende con un DVR già redatto (da noi o da altri) che ha più di 3 anni, o che non riflette più l'attività: nuove macchine, nuova sede, più addetti.",
+    "quando": "Quando cambia qualcosa di rilevante o dopo un infortunio. Se non hai un DVR, scegli «DVR nuovo».",
+    "problema": "Un DVR non aggiornato è come non averlo: è il primo documento richiesto in un controllo.",
+    "ricevi": [
+      "Sopralluogo in sede",
+      "DVR aggiornato con le valutazioni dei rischi presenti",
+      "Programma delle misure di miglioramento",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta e ci mandi il DVR attuale nel brief",
+      "Sopralluogo entro 10 giorni lavorativi",
+      "Consegna entro 15 giorni lavorativi dal sopralluogo",
+      "Revisione su tue osservazioni"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "sopralluogo e redazione"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 15 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "DVR attuale, organigramma della sicurezza, elenco di macchine e sostanze."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché non è fissato il sopralluogo."
+      }
+    ],
+    "incluso": [
+      "Sopralluogo entro 30 km",
+      "Documento",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Valutazioni strumentali (rumore, vibrazioni, chimico: preventivo)",
+      "Oltre 15 addetti o più sedi (preventivo)"
+    ],
+    "chiEroga": "RSPP di iCuraImpresa.",
+    "dopo": [
+      "Conferma e brief",
+      "Sopralluogo",
+      "Documento via email"
+    ],
+    "faq": [
+      {
+        "q": "Chi firma il DVR?",
+        "a": "Il datore di lavoro, con RSPP, medico competente e RLS dove previsti: ti guidiamo nelle firme."
+      }
+    ]
+  },
+  {
+    "slug": "dvr-nuovo",
+    "tipo": "servizio",
+    "titolo": "DVR nuovo (una sede, fino a 15 addetti)",
+    "lede": "Dalla prima visita al documento firmato: per chi parte da zero.",
+    "prezzo": 1450.0,
+    "listino": 1850.0,
+    "iva": 22,
+    "unita": "pratica",
+    "perChi": "Nuove attività o aziende senza DVR, con una sede e fino a 15 addetti, in settori senza rischi specialistici (chimico, cancerogeni, ATEX).",
+    "quando": "Prima dell'assunzione del primo lavoratore o subito dopo. Per settori con rischi specialistici serve un preventivo: per questo, prima di incassare, verifichiamo che l'offerta sia adatta.",
+    "problema": "Il DVR è obbligatorio dal primo lavoratore; senza, le sanzioni partono dall'arresto o dall'ammenda (art. 55 D.Lgs. 81/08).",
+    "ricevi": [
+      "Verifica di adeguatezza prima del pagamento (entro 2 giorni lavorativi)",
+      "Sopralluogo",
+      "DVR completo con valutazioni dei rischi presenti",
+      "Organigramma della sicurezza e modelli di nomina",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii l'ordine con il brief: nessun addebito",
+      "Entro 2 giorni lavorativi ti confermiamo che l'offerta è adatta e ricevi il link per pagare (oppure un preventivo su misura)",
+      "Sopralluogo entro 10 giorni lavorativi",
+      "Consegna entro 20 giorni lavorativi dal sopralluogo"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "sopralluogo e redazione"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 20 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Visura camerale, elenco addetti e mansioni, planimetria se disponibile."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché non è fissato il sopralluogo."
+      }
+    ],
+    "incluso": [
+      "Verifica preliminare",
+      "Sopralluogo entro 30 km",
+      "Documento",
+      "Modelli di nomina",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Valutazioni strumentali",
+      "Oltre 15 addetti o più sedi",
+      "Incarico di RSPP esterno (contratto annuale separato)"
+    ],
+    "chiEroga": "RSPP di iCuraImpresa.",
+    "dopo": [
+      "Conferma della richiesta",
+      "Esito della verifica e link di pagamento",
+      "Sopralluogo",
+      "Documento via email"
+    ],
+    "faq": [
+      {
+        "q": "Perché non pago subito?",
+        "a": "Perché un DVR «a pacchetto» non va bene per tutti: preferiamo dirtelo prima di incassare."
+      }
+    ]
+  },
+  {
+    "slug": "informative-privacy",
+    "tipo": "servizio",
+    "titolo": "Informative privacy (clienti, fornitori, dipendenti, sito)",
+    "lede": "I testi che devi consegnare a chi ti dà i suoi dati, scritti sulla tua attività.",
+    "prezzo": 350.0,
+    "listino": 450.0,
+    "iva": 22,
+    "unita": "documento",
+    "perChi": "Micro e piccole imprese e professionisti che raccolgono dati di clienti, fornitori, candidati o dipendenti e non hanno informative aggiornate al GDPR.",
+    "quando": "Quando le informative mancano, sono copiate da internet o sono precedenti al 2018. Se hai già un consulente privacy che le cura, non ti serve.",
+    "problema": "L'informativa è il primo documento che un cliente, un dipendente o l'autorità chiedono: senza, il trattamento è irregolare (artt. 13-14 GDPR).",
+    "ricevi": [
+      "Fino a 3 informative su misura: clienti/fornitori, dipendenti e collaboratori, sito web (con cookie)",
+      "Indicazioni su dove e come consegnarle",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta con il brief: attività, dati trattati, strumenti usati, sito",
+      "Videochiamata di 30 minuti per i chiarimenti",
+      "Consegna entro 7 giorni lavorativi dal brief completo",
+      "Revisione su tue osservazioni"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "a distanza, su documenti e con un incontro in videochiamata"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 7 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Nessun documento obbligatorio; utili eventuali informative esistenti e la lista dei software usati."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata (prima del nostro primo contatto). Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Fino a 3 informative",
+      "Videochiamata",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Registro dei trattamenti e nomine (offerte separate)",
+      "Cookie banner tecnico",
+      "Trattamenti sanitari o su larga scala (preventivo)"
+    ],
+    "chiEroga": "Consulente privacy di iCuraImpresa (nome nella conferma).",
+    "dopo": [
+      "Conferma e richiesta del brief",
+      "Videochiamata entro 3 giorni lavorativi",
+      "Documenti via email"
+    ],
+    "faq": [
+      {
+        "q": "Posso chiedere più di 3 informative?",
+        "a": "Sì: oltre le 3 incluse si aggiungono con preventivo, di norma a prezzo ridotto."
+      }
+    ]
+  },
+  {
+    "slug": "registro-trattamenti",
+    "tipo": "servizio",
+    "titolo": "Registro dei trattamenti (una sede, fino a 15 addetti)",
+    "lede": "La mappa dei dati che tratti, pronta per un controllo e per il tuo DPO se ce l'hai.",
+    "prezzo": 450.0,
+    "listino": 590.0,
+    "iva": 22,
+    "unita": "documento",
+    "perChi": "Imprese con dipendenti o che trattano dati in modo non occasionale (art. 30 GDPR).",
+    "quando": "Quando il registro manca o non è mai stato aggiornato. Con più sedi o oltre 15 addetti chiedi un preventivo.",
+    "problema": "Il registro è il documento che il Garante chiede per primo in un'ispezione; va tenuto aggiornato e firmato dal titolare.",
+    "ricevi": [
+      "Registro dei trattamenti del titolare (e del responsabile se lavori per conto terzi)",
+      "Elenco dei trattamenti con finalità, basi giuridiche, conservazione, misure di sicurezza",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta con il brief",
+      "Videochiamata di 45 minuti per censire i trattamenti",
+      "Consegna entro 10 giorni lavorativi dal brief completo",
+      "Revisione su tue osservazioni"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "a distanza, su documenti e con un incontro in videochiamata"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 10 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Organigramma essenziale, elenco dei software e dei fornitori che trattano dati per te."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata. Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Registro",
+      "Videochiamata",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Valutazione d'impatto (DPIA)",
+      "Nomine e informative (offerte separate)",
+      "Aggiornamenti successivi"
+    ],
+    "chiEroga": "Consulente privacy di iCuraImpresa (nome nella conferma).",
+    "dopo": [
+      "Conferma e richiesta del brief",
+      "Videochiamata entro 3 giorni lavorativi",
+      "Registro via email"
+    ],
+    "faq": [
+      {
+        "q": "Il registro è obbligatorio per tutti?",
+        "a": "L'art. 30 lo esenta solo sotto i 250 dipendenti se il trattamento è occasionale e senza dati particolari: con dipendenti o clienti abituali, in pratica, serve."
+      }
+    ]
+  },
+  {
+    "slug": "nomine-privacy",
+    "tipo": "servizio",
+    "titolo": "Nomine privacy (responsabili esterni e persone autorizzate, fino a 10)",
+    "lede": "Chi tratta dati per te deve essere nominato per iscritto: fornitori e collaboratori.",
+    "prezzo": 250.0,
+    "listino": 320.0,
+    "iva": 22,
+    "unita": "documento",
+    "perChi": "Imprese che usano fornitori esterni per paghe, contabilità, software, assistenza, e che hanno dipendenti che accedono ai dati.",
+    "quando": "Dopo informative e registro, o quando un cliente ti chiede la nomina a responsabile (art. 28 GDPR).",
+    "problema": "Senza nomina scritta, il fornitore o il collaboratore trattano dati senza istruzioni: la responsabilità resta tua.",
+    "ricevi": [
+      "Fino a 10 atti: nomine a responsabile esterno (art. 28) e lettere di autorizzazione (art. 29) con istruzioni",
+      "Elenco di chi nominare in base al tuo brief",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta con il brief: fornitori, collaboratori, ruoli",
+      "Consegna entro 5 giorni lavorativi dal brief completo",
+      "Revisione su tue osservazioni"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "a distanza, su documenti e con un incontro in videochiamata"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 5 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Elenco di fornitori e collaboratori con i dati che trattano."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata. Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Fino a 10 atti",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Nomina del DPO",
+      "Trattative con fornitori che rifiutano la nomina",
+      "Atti oltre i 10 (preventivo)"
+    ],
+    "chiEroga": "Consulente privacy di iCuraImpresa (nome nella conferma).",
+    "dopo": [
+      "Conferma e richiesta del brief",
+      "Atti via email"
+    ],
+    "faq": [
+      {
+        "q": "Li firmate voi con i fornitori?",
+        "a": "No: gli atti li firmi tu con il fornitore. Ti diamo il testo e le istruzioni; su richiesta spieghiamo al fornitore che cosa sta firmando."
+      }
+    ]
+  },
+  {
+    "slug": "formazione-privacy-2h",
+    "tipo": "corso_azienda",
+    "titolo": "Formazione privacy per il personale (2 ore, in videoconferenza, fino a 15 partecipanti)",
+    "lede": "Le regole pratiche per chi tratta dati ogni giorno: email, documenti, telefono, archivio.",
+    "prezzo": 290.0,
+    "listino": 370.0,
+    "iva": 22,
+    "unita": "sessione",
+    "perChi": "Aziende che hanno nominato le persone autorizzate (art. 29 GDPR) e devono istruirle.",
+    "quando": "Dopo le nomine, o a ogni nuovo assunto; una volta l'anno come richiamo.",
+    "problema": "Il GDPR richiede che chi tratta dati sia istruito: la formazione è la prova che le istruzioni sono state date.",
+    "ricevi": [
+      "2 ore in videoconferenza con casi pratici del tuo settore",
+      "Dispensa in PDF",
+      "Attestato di partecipazione e registro presenze"
+    ],
+    "passi": [
+      "Invii la richiesta e indichi 2-3 date possibili nel brief",
+      "Entro 2 giorni lavorativi fissiamo la data",
+      "Sessione in videoconferenza, domande finali",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "2 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "videoconferenza"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 2 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Collegamento internet e un elenco dei partecipanti (nome e cognome)."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Spostamento gratuito fino a 24 ore prima; rimborso integrale finché la data non è fissata."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Dispensa",
+      "Attestati di partecipazione"
+    ],
+    "escluso": [
+      "Formazione in presenza (preventivo)",
+      "Oltre 15 partecipanti"
+    ],
+    "chiEroga": "Consulente privacy di iCuraImpresa (nome nella conferma).",
+    "dopo": [
+      "Conferma e richiesta delle date",
+      "Invito con il link",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "È un attestato con valore legale?",
+        "a": "È un attestato di partecipazione: dimostra che le istruzioni sono state date. Non esiste un attestato privacy «abilitante» per legge."
+      }
+    ]
+  },
+  {
+    "slug": "nomine-sicurezza",
+    "tipo": "servizio",
+    "titolo": "Nomine e deleghe sicurezza (RSPP, addetti emergenze, preposti, RLS)",
+    "lede": "Gli atti di nomina che ogni ispezione chiede insieme al DVR.",
+    "prezzo": 190.0,
+    "listino": 250.0,
+    "iva": 22,
+    "unita": "documento",
+    "perChi": "Aziende che hanno il DVR ma nomine mancanti, scadute o fatte a voce.",
+    "quando": "Quando cambia il personale, dopo un nuovo DVR o prima di un controllo. Non sostituisce la formazione delle figure nominate.",
+    "problema": "Le nomine (art. 17, 18, 31, 43, 47 D.Lgs. 81/08) vanno fatte per iscritto e accettate: senza, le sanzioni ricadono sul datore di lavoro.",
+    "ricevi": [
+      "Fino a 8 atti: RSPP (anche datore di lavoro), addetti antincendio e primo soccorso, preposti, RLS o verbale di mancata elezione, medico competente se presente",
+      "Modulo di accettazione per ogni nominato",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta con il brief: organigramma e attestati esistenti",
+      "Consegna entro 5 giorni lavorativi dal brief completo",
+      "Revisione su tue osservazioni"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "a distanza, su documenti e con un incontro in videochiamata"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 5 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "DVR aggiornato e attestati di formazione delle persone da nominare."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata. Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Fino a 8 atti",
+      "Moduli di accettazione",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Formazione delle figure nominate",
+      "Incarico di RSPP esterno (contratto annuale)",
+      "Più di 8 atti (preventivo)"
+    ],
+    "chiEroga": "Tecnico della sicurezza (RSPP) di iCuraImpresa.",
+    "dopo": [
+      "Conferma e richiesta del brief",
+      "Atti via email"
+    ],
+    "faq": [
+      {
+        "q": "Posso nominare chi non ha ancora fatto il corso?",
+        "a": "La nomina si può firmare, ma la figura è operativa solo con la formazione: te lo segnaliamo e puoi iscrivere le persone ai corsi a calendario."
+      }
+    ]
+  },
+  {
+    "slug": "pos-cantiere",
+    "tipo": "servizio",
+    "titolo": "POS per un cantiere (piano operativo di sicurezza, impresa fino a 10 addetti)",
+    "lede": "Il documento che l'impresa esecutrice deve consegnare prima di entrare in cantiere.",
+    "prezzo": 390.0,
+    "listino": 490.0,
+    "iva": 22,
+    "unita": "documento",
+    "perChi": "Imprese edili e impiantistiche che eseguono lavori in cantiere (art. 89 e 96 D.Lgs. 81/08).",
+    "quando": "Prima dell'inizio dei lavori, con il contratto e il PSC del committente se c'è. Per cantieri con più imprese o lavori in quota complessi chiedi un preventivo.",
+    "problema": "Senza POS il coordinatore o il committente possono sospendere i lavori; il POS va aggiornato se cambiano lavorazioni o personale.",
+    "ricevi": [
+      "POS completo per un cantiere (contenuti dell'allegato XV)",
+      "Schede delle lavorazioni e delle attrezzature dichiarate",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta con il brief: cantiere, lavorazioni, personale, attrezzature, PSC se presente",
+      "Contatto entro 2 giorni lavorativi (sopralluogo se necessario)",
+      "Consegna entro 7 giorni lavorativi dal brief completo",
+      "Revisione su tue osservazioni"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "a distanza, con eventuale sopralluogo"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 7 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "DVR dell'impresa, contratto d'appalto, PSC se esiste, elenco di personale e attrezzature."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata. Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Documento",
+      "Schede",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Sopralluogo oltre 30 km da Napoli",
+      "PSC e PiMUS",
+      "DVR dell'impresa"
+    ],
+    "chiEroga": "Tecnico della sicurezza (RSPP) di iCuraImpresa.",
+    "dopo": [
+      "Conferma e richiesta del brief",
+      "Contatto entro 2 giorni lavorativi",
+      "Documento via email"
+    ],
+    "faq": [
+      {
+        "q": "Il PiMUS per i ponteggi è compreso?",
+        "a": "No: il PiMUS è un documento separato, da preventivare in base al ponteggio."
+      }
+    ]
+  },
+  {
+    "slug": "checkup-documentale-sicurezza",
+    "tipo": "servizio",
+    "titolo": "Check-up documentale sicurezza (una sede, fino a 15 addetti)",
+    "lede": "Verifichiamo il tuo faldone: che cosa c'è, che cosa manca, che cosa scade.",
+    "prezzo": 350.0,
+    "listino": 450.0,
+    "iva": 22,
+    "unita": "pratica",
+    "perChi": "Aziende che hanno già documenti e attestati ma non sanno se sono completi e in corso di validità.",
+    "quando": "Prima di un controllo, di una gara d'appalto o quando cambi consulente. Se parti da zero, meglio il DVR nuovo.",
+    "problema": "Il faldone sicurezza si accumula negli anni: attestati scaduti e nomine mancanti si scoprono durante l'ispezione.",
+    "ricevi": [
+      "Rapporto con l'elenco dei documenti verificati, delle mancanze e delle scadenze (DVR, nomine, formazione, idoneità, manutenzioni)",
+      "Piano delle scadenze a 12 mesi",
+      "Videochiamata di 45 minuti per spiegare il rapporto"
+    ],
+    "passi": [
+      "Invii la richiesta e ci mandi i documenti (o ci dai accesso al tuo archivio)",
+      "Analisi e rapporto entro 10 giorni lavorativi",
+      "Videochiamata di restituzione"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "a distanza, su documenti e con un incontro in videochiamata"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 10 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Documenti in formato digitale o scansionati."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata. Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Rapporto",
+      "Piano delle scadenze",
+      "Videochiamata"
+    ],
+    "escluso": [
+      "Redazione dei documenti mancanti (offerte separate o preventivo)",
+      "Sopralluogo"
+    ],
+    "chiEroga": "Tecnico della sicurezza (RSPP) di iCuraImpresa.",
+    "dopo": [
+      "Conferma e richiesta dei documenti",
+      "Rapporto via email",
+      "Videochiamata"
+    ],
+    "faq": [
+      {
+        "q": "Mi fate anche i documenti mancanti?",
+        "a": "Nel rapporto trovi, per ogni mancanza, l'offerta a prezzo fisso corrispondente oppure la richiesta di preventivo."
+      }
+    ]
+  },
+  {
+    "slug": "manuale-haccp",
+    "tipo": "servizio",
+    "titolo": "Manuale HACCP (un'attività alimentare fino a 5 addetti)",
+    "lede": "Piano di autocontrollo con sopralluogo, schede e registri pronti da compilare.",
+    "prezzo": 590.0,
+    "listino": 750.0,
+    "iva": 22,
+    "unita": "pratica",
+    "perChi": "Bar, ristoranti, pizzerie, laboratori, negozi alimentari e ambulanti con una sede a Napoli e provincia.",
+    "quando": "All'apertura, quando cambi locale o produzione, o se il manuale che hai non corrisponde a quello che fai. Oltre 5 addetti o più sedi: preventivo.",
+    "problema": "Il piano di autocontrollo è obbligatorio (Reg. CE 852/2004) e deve rispecchiare la tua attività reale: un manuale generico non supera il controllo.",
+    "ricevi": [
+      "Manuale HACCP su misura dopo il sopralluogo",
+      "Diagrammi di flusso, analisi dei pericoli, punti critici e limiti",
+      "Registri (temperature, pulizie, non conformità, formazione) pronti da usare",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta con il brief: attività, locali, prodotti, addetti",
+      "Sopralluogo entro 5 giorni lavorativi",
+      "Consegna entro 15 giorni lavorativi dal sopralluogo",
+      "Revisione su tue osservazioni"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "sopralluogo e redazione"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 15 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "SCIA o notifica sanitaria, planimetria se disponibile."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata (prima del sopralluogo). Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Sopralluogo",
+      "Manuale",
+      "Registri",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Sopralluogo oltre 30 km da Napoli",
+      "Analisi di laboratorio",
+      "Corso alimentaristi (offerta separata)"
+    ],
+    "chiEroga": "Consulente per l'igiene alimentare di iCuraImpresa.",
+    "dopo": [
+      "Conferma e richiesta del brief",
+      "Sopralluogo",
+      "Manuale e registri via email"
+    ],
+    "faq": [
+      {
+        "q": "Serve anche il corso per gli addetti?",
+        "a": "Sì, la formazione degli alimentaristi è separata: la trovi nei corsi a calendario."
+      }
+    ]
+  },
+  {
+    "slug": "aggiornamento-manuale-haccp",
+    "tipo": "servizio",
+    "titolo": "Aggiornamento del manuale HACCP esistente",
+    "lede": "Nuovi prodotti, nuove attrezzature o un locale cambiato: il manuale va riallineato.",
+    "prezzo": 290.0,
+    "listino": 370.0,
+    "iva": 22,
+    "unita": "pratica",
+    "perChi": "Attività alimentari che hanno già un manuale HACCP e hanno cambiato qualcosa, o che non lo aggiornano da più di 2 anni.",
+    "quando": "Quando cambiano prodotti, processi, locali, attrezzature o responsabile. Se il manuale non corrisponde più all'attività, serve il manuale nuovo.",
+    "problema": "Un manuale non aggiornato vale come assente durante il controllo.",
+    "ricevi": [
+      "Manuale aggiornato con le modifiche evidenziate",
+      "Registri aggiornati",
+      "Una revisione inclusa"
+    ],
+    "passi": [
+      "Invii la richiesta, ci mandi il manuale attuale e compili il brief con le modifiche",
+      "Eventuale sopralluogo o videochiamata",
+      "Consegna entro 10 giorni lavorativi dal brief completo"
+    ],
+    "dettagli": [
+      {
+        "k": "Modalità",
+        "v": "a distanza, con eventuale sopralluogo"
+      },
+      {
+        "k": "Tempi",
+        "v": "consegna entro 10 giorni lavorativi dal brief completo"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Manuale attuale in formato digitale."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Rimborso integrale finché la pratica non è avviata. Dopo, si rimborsa la quota non lavorata su richiesta motivata."
+      }
+    ],
+    "incluso": [
+      "Aggiornamento",
+      "Registri",
+      "Una revisione"
+    ],
+    "escluso": [
+      "Riscrittura completa (vedi manuale nuovo)",
+      "Analisi di laboratorio"
+    ],
+    "chiEroga": "Consulente per l'igiene alimentare di iCuraImpresa.",
+    "dopo": [
+      "Conferma e richiesta del manuale",
+      "Manuale aggiornato via email"
+    ],
+    "faq": [
+      {
+        "q": "Ogni quanto va aggiornato?",
+        "a": "A ogni cambiamento rilevante e comunque con una verifica almeno annuale."
+      }
+    ]
+  },
+  {
+    "slug": "consulenza-fondi-45",
+    "tipo": "consulenza",
+    "titolo": "Formazione finanziata: verifica dei fondi interprofessionali (45 minuti)",
+    "lede": "Quanta formazione puoi pagare con il fondo a cui già versi, e come si attiva.",
+    "prezzo": 90.0,
+    "listino": 120.0,
+    "iva": 22,
+    "unita": "incontro",
+    "perChi": "Aziende con dipendenti che versano lo 0,30% a un fondo interprofessionale (o non sanno a quale).",
+    "quando": "Prima di pianificare corsi: quasi tutte le aziende con dipendenti hanno un conto formazione che non usano.",
+    "problema": "Lo 0,30% versato all'INPS finisce a un fondo: se non lo usi, lo perdi.",
+    "ricevi": [
+      "45 minuti in videochiamata con il consulente",
+      "Verifica dell'adesione e del conto formazione (con i tuoi dati INPS)",
+      "Riepilogo scritto: fondo, importo stimato disponibile, corsi finanziabili, passi successivi"
+    ],
+    "passi": [
+      "Scegli giorno e ora",
+      "Compili il brief (settore, dipendenti, fondo se noto)",
+      "Videochiamata",
+      "Riepilogo entro 2 giorni lavorativi"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "45 minuti"
+      },
+      {
+        "k": "Modalità",
+        "v": "videochiamata"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Cassetto previdenziale INPS o il tuo consulente del lavoro per leggere l'adesione."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Spostamento gratuito fino a 24 ore prima; rimborso integrale fino a 24 ore prima."
+      }
+    ],
+    "incluso": [
+      "Videochiamata",
+      "Riepilogo scritto"
+    ],
+    "escluso": [
+      "Presentazione del piano formativo (preventivo)",
+      "Adesione o cambio di fondo"
+    ],
+    "chiEroga": "Consulente per la formazione finanziata di iCuraImpresa (nome nell'invito).",
+    "dopo": [
+      "Invito con il link",
+      "Promemoria il giorno prima",
+      "Riepilogo via email"
+    ],
+    "faq": [
+      {
+        "q": "Se poi vogliamo fare i corsi con voi?",
+        "a": "La consulenza si scala dal preventivo del piano formativo."
+      }
+    ]
+  },
+  {
+    "slug": "corso-aggiornamento-antincendio-2h",
+    "tipo": "corso_calendario",
+    "titolo": "Aggiornamento addetto antincendio livello 1 (2 ore)",
+    "lede": "Ogni 5 anni, per chi ha già l'attestato di livello 1: richiamo teorico e prova pratica.",
+    "prezzo": 60.0,
+    "listino": 80.0,
+    "iva": 22,
+    "unita": "partecipante",
+    "perChi": "Addetti antincendio di attività a rischio basso con attestato in scadenza o scaduto da meno di 5 anni.",
+    "quando": "Entro i 5 anni dall'ultimo corso o aggiornamento (D.M. 2 settembre 2021). Per i livelli 2 e 3 chiedi una data dedicata.",
+    "problema": "L'addetto con attestato scaduto non è più formato: la nomina resta scoperta.",
+    "ricevi": [
+      "1 ora di richiamo teorico e 1 ora di prova pratica con estintori",
+      "Attestato di aggiornamento"
+    ],
+    "passi": [
+      "Indichi partecipanti e date preferite",
+      "Dati dei partecipanti",
+      "Lezione, prova pratica, registro",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "2 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "aula con prova pratica"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "5 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Attestato del corso di livello 1 (da inviarci con la richiesta)."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Solo in presenza. Cambio partecipante fino al giorno prima; rimborso integrale fino a 7 giorni prima."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Estintori per la prova",
+      "Attestato"
+    ],
+    "escluso": [
+      "Livelli 2 e 3",
+      "Corso base (offerta separata)"
+    ],
+    "chiEroga": "Docente con i requisiti del D.M. 2 settembre 2021 (da dichiarare per edizione).",
+    "dopo": [
+      "Conferma",
+      "Promemoria con indicazioni sulla sede",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "L'attestato è scaduto da più di 5 anni: posso fare l'aggiornamento?",
+        "a": "Per prudenza consigliamo il corso base: l'aggiornamento presuppone una formazione in corso di validità."
+      }
+    ]
+  },
+  {
+    "slug": "corso-aggiornamento-primo-soccorso-4h",
+    "tipo": "corso_calendario",
+    "titolo": "Aggiornamento addetto primo soccorso, gruppi B e C (4 ore)",
+    "lede": "Ogni 3 anni: la parte pratica che mantiene valido l'attestato.",
+    "prezzo": 85.0,
+    "listino": 110.0,
+    "iva": 22,
+    "unita": "partecipante",
+    "perChi": "Addetti al primo soccorso di aziende dei gruppi B e C con attestato in scadenza (D.M. 388/2003).",
+    "quando": "Entro i 3 anni dall'ultimo corso o aggiornamento. Per il gruppo A (6 ore) chiedi una data dedicata.",
+    "problema": "L'aggiornamento triennale è obbligatorio e riguarda la parte pratica: senza, l'addetto non è più formato.",
+    "ricevi": [
+      "4 ore di esercitazioni pratiche (manovre, emorragie, posizione di sicurezza, uso dei presidi)",
+      "Attestato di aggiornamento"
+    ],
+    "passi": [
+      "Indichi partecipanti e date preferite",
+      "Dati dei partecipanti",
+      "Esercitazioni, registro, verifica",
+      "Attestati entro 15 giorni"
+    ],
+    "dettagli": [
+      {
+        "k": "Durata",
+        "v": "4 ore"
+      },
+      {
+        "k": "Modalità",
+        "v": "aula con prove pratiche"
+      },
+      {
+        "k": "Validità dell'attestato",
+        "v": "3 anni, salvo diversa previsione normativa"
+      },
+      {
+        "k": "Prerequisiti",
+        "v": "Attestato del corso base di 12 ore (da inviarci con la richiesta)."
+      },
+      {
+        "k": "Condizioni",
+        "v": "Solo in presenza. Cambio partecipante fino al giorno prima; rimborso integrale fino a 7 giorni prima."
+      }
+    ],
+    "incluso": [
+      "Docenza",
+      "Materiale per le esercitazioni",
+      "Attestato"
+    ],
+    "escluso": [
+      "Gruppo A",
+      "Corso base (offerta separata)"
+    ],
+    "chiEroga": "Personale medico o formatori qualificati secondo il D.M. 388/2003 (da dichiarare per edizione).",
+    "dopo": [
+      "Conferma",
+      "Promemoria con indicazioni sulla sede",
+      "Attestati via email"
+    ],
+    "faq": [
+      {
+        "q": "Posso fare l'aggiornamento se l'attestato è scaduto da tempo?",
+        "a": "Se è scaduto da molto conviene il corso base di 12 ore: te lo diciamo prima della data."
+      }
+    ]
+  }
+]

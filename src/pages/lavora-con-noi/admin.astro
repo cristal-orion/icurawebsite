@@ -151,7 +151,7 @@ import "@styles/global.css";
             <div class="pos-form-row"><label for="posTitolo">Titolo *</label><input type="text" id="posTitolo" maxlength="80" placeholder="Es. Consulente HSE Senior" /></div>
             <div class="pos-form-row"><label for="posDescrizione">Descrizione *</label><textarea id="posDescrizione" rows="3" maxlength="240" placeholder="Una o due righe sulle responsabilità principali"></textarea></div>
             <div class="pos-form-grid">
-              <div class="pos-form-row"><label for="posRal">RAL / Contratto</label><input type="text" id="posRal" maxlength="40" placeholder="€ 25.000 – 35.000 oppure Da valutare" /></div>
+              <div class="pos-form-row"><label for="posRal">RAL / Contratto</label><input type="text" id="posRal" maxlength="40" placeholder="€ 25.000 – 35.000 oppure Da valutare" /></div>
               <div class="pos-form-row"><label for="posLocation">Location</label><input type="text" id="posLocation" maxlength="40" value="Napoli" /></div>
             </div>
             <div class="pos-form-grid">
@@ -269,10 +269,10 @@ import "@styles/global.css";
         { id: 'c10', nome: 'Valeria', cognome: 'Mazza', email: 'v.mazza@email.com', telefono: '+39 327 6655443', citta: 'Napoli', posizione: 'Consulente finanza agevolata', timestamp: '2026-06-08T08:11:00Z', answers: ans(['si','si','no','incerto','no','si','no','incerto','si','incerto','no','no','incerto','si','incerto','si']) }
       ];
       const MOCK_POSITIONS = [
-        { id: 'hse', attivo: true, titolo: 'Tecnico della sicurezza (HSE)', descrizione: 'Sopralluoghi, redazione DVR, coordinamento sicurezza in cantiere.', ral: '€ 22.000 – 30.000', location: 'Napoli + cantieri', ordine: 10 },
-        { id: 'iso', attivo: true, titolo: 'Consulente certificazioni ISO', descrizione: 'Sistemi di gestione 9001/14001/45001, audit, supporto imprese.', ral: '€ 24.000 – 32.000', location: 'Napoli', ordine: 20 },
-        { id: 'eng', attivo: true, titolo: 'Ingegnere / progettista junior', descrizione: 'Progettazione edile e impiantistica, pratiche, prevenzione incendi.', ral: '€ 20.000 – 28.000', location: 'Napoli', ordine: 30 },
-        { id: 'finanza', attivo: true, titolo: 'Consulente finanza agevolata', descrizione: 'Bandi, domande e rendicontazione.', ral: '€ 22.000 – 30.000', location: 'Napoli', ordine: 40 },
+        { id: 'hse', attivo: true, titolo: 'Tecnico della sicurezza (HSE)', descrizione: 'Sopralluoghi, redazione DVR, coordinamento sicurezza in cantiere.', ral: '€ 22.000 – 30.000', location: 'Napoli + cantieri', ordine: 10 },
+        { id: 'iso', attivo: true, titolo: 'Consulente certificazioni ISO', descrizione: 'Sistemi di gestione 9001/14001/45001, audit, supporto imprese.', ral: '€ 24.000 – 32.000', location: 'Napoli', ordine: 20 },
+        { id: 'eng', attivo: true, titolo: 'Ingegnere / progettista junior', descrizione: 'Progettazione edile e impiantistica, pratiche, prevenzione incendi.', ral: '€ 20.000 – 28.000', location: 'Napoli', ordine: 30 },
+        { id: 'finanza', attivo: true, titolo: 'Consulente finanza agevolata', descrizione: 'Bandi, domande e rendicontazione.', ral: '€ 22.000 – 30.000', location: 'Napoli', ordine: 40 },
         { id: 'spontanea', attivo: false, titolo: 'Candidatura spontanea', descrizione: 'Profilo libero per candidature spontanee.', ral: 'Da valutare', location: 'Napoli', ordine: 100 }
       ];
       function enrichMock(list) {

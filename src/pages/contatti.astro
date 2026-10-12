@@ -76,6 +76,7 @@ import Placeholder from "@components/Placeholder.astro";
         <h2 class="form__title">Richiedi un ricontatto</h2>
         <p class="form__legend">I campi con asterisco (*) sono obbligatori.</p>
         <input type="text" name="company_website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" data-lead-prop="Pagina di provenienza" data-da-field />
 
         <div class="field">
           <label for="nome">Nome e cognome *</label>
@@ -101,6 +102,7 @@ import Placeholder from "@components/Placeholder.astro";
             <option>Formazione</option>
             <option>Certificazioni</option>
             <option>Finanza agevolata</option>
+            <option>Digitale e IA</option>
             <option>Lavora con noi</option>
             <option>Non lo so ancora: parliamone</option>
           </select>
@@ -208,6 +210,29 @@ import Placeholder from "@components/Placeholder.astro";
   <script>
     // Invio lead → Klaviyo (client-side).
     import "../scripts/lead-form.ts";
+
+    // Arrivo da una pagina servizio (?da=/servizi/...): preseleziona l'area.
+    const da = new URLSearchParams(location.search).get("da");
+    if (da && da.startsWith("/")) {
+      const aree: [string, string][] = [
+        ["/servizi/consulenza", "Consulenza & Sicurezza"],
+        ["/servizi/engineering", "Engineering & Antincendio"],
+        ["/servizi/formazione", "Formazione"],
+        ["/blog/ricognizione-fabbisogni-formativi", "Formazione"],
+        ["/servizi/certificazioni", "Certificazioni"],
+        ["/servizi/finanza-agevolata", "Finanza agevolata"],
+        ["/bando-isi", "Finanza agevolata"],
+        ["/zes-unica", "Finanza agevolata"],
+        ["/blog/preparare-progetto-investimento", "Finanza agevolata"],
+        ["/servizi/digitale", "Digitale e IA"],
+        ["/lavora-con-noi", "Lavora con noi"],
+      ];
+      const area = aree.find(([p]) => da.startsWith(p))?.[1];
+      const sel = document.querySelector<HTMLSelectElement>("#oggetto");
+      if (sel && area) sel.value = area;
+      const f = document.querySelector<HTMLInputElement>("[data-da-field]");
+      if (f) f.value = da;
+    }
 
     // La mappa Google si carica solo dopo il consenso (click-to-load o "Accetta").
     const mapWrap = document.querySelector<HTMLElement>("[data-map]");

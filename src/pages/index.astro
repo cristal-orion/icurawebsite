@@ -3,6 +3,7 @@ import Base from "@layouts/Base.astro";
 import BandiInEvidenza from "@components/BandiInEvidenza.astro";
 import HeroRotator from "@components/HeroRotator.astro";
 import AreeScroll from "@components/AreeScroll.astro";
+import ObiettiviPicker from "@components/ObiettiviPicker.astro";
 
 const team = [
   { img: "/images/sicurezza-ispezione-capannone.webp", alt: "Area sicurezza e D.Lgs. 81/08 iCura Impresa", h: "Sicurezza sul Lavoro", k: "D.Lgs. 81/08 · Cantieri · HACCP" },
@@ -68,6 +69,9 @@ const passi = [
     </div>
   </section>
 
+  {/* ───── PARTI DAL TUO OBIETTIVO ───── */}
+  <ObiettiviPicker />
+
   {/* ───── AREE (scroll orizzontale) ───── */}
   <AreeScroll />
 
@@ -122,7 +126,7 @@ const passi = [
   </section>
 
   {/* ───── CONTATTI + FORM ───── */}
-  <section class="contact section--ink" aria-labelledby="contact-heading">
+  <section id="contatto" class="contact section--ink" aria-labelledby="contact-heading">
     <div class="container contact__grid">
       <div class="contact__intro">
         <p class="eyebrow">Il prossimo passo</p>

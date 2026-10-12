@@ -50,12 +50,17 @@ function initLeadForms() {
       const marketingConsent = !!marketingEl?.checked;
 
       const properties: Record<string, string> = {
-        Origine: "Form sito iCura",
+        Origine: form.dataset.leadOrigin || "Form sito iCura",
         Pagina: location.pathname,
         "Consenso marketing": marketingConsent ? "Sì" : "No",
       };
       if (area) properties["Area di interesse"] = area;
       if (messaggio) properties["Messaggio"] = messaggio;
+      // Campi extra (es. form d'ordine): ogni [data-lead-prop="Etichetta"] diventa una proprietà.
+      form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>("[data-lead-prop]").forEach((el) => {
+        const v = el.value.trim();
+        if (v) properties[el.dataset.leadProp!] = v;
+      });
 
       const profileAttributes: Record<string, unknown> = { email, properties };
       if (nome) profileAttributes["first_name"] = nome;

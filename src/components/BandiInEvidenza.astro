@@ -70,11 +70,90 @@ const bandi = [
       ))}
     </ul>
     <p class="bandi-ev__note">Stato e date verificati su fonti ufficiali al 7 ottobre 2026.</p>
+
+    <div class="bandi-ev__extra">
+      {/* Iscrizione agli avvisi: invio via src/scripts/lead-form.ts → Klaviyo, lista con consenso marketing. */}
+      <form class="alert-box" data-lead-form data-lead-origin="Avvisi bandi (home)">
+        <h3 class="alert-box__title">Ti avvisiamo noi</h3>
+        <p class="alert-box__text">Lascia la tua email: quando esce un bando o cambia una regola che riguarda le imprese, ricevi un avviso. Niente altro.</p>
+        <input type="text" name="company_website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="alert-box__row">
+          <label class="sr-only" for="alert-email">Email</label>
+          <input id="alert-email" name="email" type="email" required autocomplete="email" placeholder="La tua email" />
+          <button type="submit" class="btn btn--primary">Avvisami</button>
+        </div>
+        <label class="alert-box__consent">
+          <input type="checkbox" name="marketing" required />
+          <span>Acconsento a ricevere avvisi su bandi, scadenze e novità normative. Posso revocare il consenso in ogni momento dal link in ogni messaggio. <a href="/privacy">Informativa</a></span>
+        </label>
+        <p class="form-status" data-lead-status role="status" aria-live="polite" hidden></p>
+        <div class="form-thanks" data-lead-success role="status" hidden>
+          <span class="form-thanks__title">Fatto!</span>
+          <span class="form-thanks__text">Ti scriveremo solo quando esce un bando o cambia una regola che ti riguarda.</span>
+        </div>
+      </form>
+
+      <div class="client-box">
+        <h3 class="client-box__title">Sei già cliente?</h3>
+        <p class="client-box__text">Entra nella tua area: documenti, scadenze, attestati e pratiche sempre a portata di mano.</p>
+        <a href="https://app.icuraimpresa.it/" class="btn btn--secondary" target="_blank" rel="noopener">
+          Entra nella tua area <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
+<script>
+  import "../scripts/lead-form.ts";
+</script>
+
 <style>
   .bandi-ev { background: var(--color-accent-soft); }
+
+  .bandi-ev__extra {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-2xl);
+  }
+  .alert-box,
+  .client-box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-xl);
+    border-radius: var(--radius-card);
+  }
+  .alert-box { background: var(--color-ink); color: var(--color-paper); }
+  .client-box { background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); align-items: flex-start; }
+  .alert-box__title,
+  .client-box__title { margin: 0; font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.015em; }
+  .alert-box__title { color: var(--color-paper); }
+  .alert-box__text { margin: 0; color: color-mix(in oklch, var(--color-paper) 78%, transparent); line-height: 1.5; max-width: 56ch; }
+  .client-box__text { margin: 0 0 auto; color: var(--color-ink-2); line-height: 1.5; padding-bottom: var(--space-sm); }
+  .alert-box__row { display: flex; gap: var(--space-xs); flex-wrap: wrap; }
+  .alert-box__row input {
+    flex: 1 1 16rem;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid color-mix(in oklch, var(--color-paper) 25%, transparent);
+    background: color-mix(in oklch, var(--color-paper) 8%, transparent);
+    color: var(--color-paper);
+    font: inherit;
+  }
+  .alert-box__row input::placeholder { color: color-mix(in oklch, var(--color-paper) 50%, transparent); }
+  .alert-box__row input:focus { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+  .alert-box__consent { display: flex; gap: 0.55rem; align-items: flex-start; font-size: var(--text-xs); line-height: 1.5; color: color-mix(in oklch, var(--color-paper) 65%, transparent); }
+  .alert-box__consent input { margin-top: 0.2rem; }
+  .alert-box__consent a { color: #93c5fd; }
+  .alert-box .form-status { color: color-mix(in oklch, var(--color-paper) 80%, transparent) !important; }
+  .alert-box .form-thanks__title { color: var(--color-paper); }
+  .alert-box .form-thanks__text { color: color-mix(in oklch, var(--color-paper) 78%, transparent); }
+  @media (max-width: 56rem) {
+    .bandi-ev__extra { grid-template-columns: 1fr; }
+  }
   .bandi-ev__head { margin-bottom: var(--space-xl); max-width: 54ch; }
   .bandi-ev__title {
     font-size: var(--text-3xl);

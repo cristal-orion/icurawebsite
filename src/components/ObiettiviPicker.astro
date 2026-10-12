@@ -1,0 +1,288 @@
+---
+// "Parti dal tuo obiettivo": il visitatore sceglie che cosa vuole realizzare e
+// gli mostriamo le aree che lo riguardano e perché (testi del cliente).
+// "Parliamone" porta al form contatti della home (#contatto) e lo precompila
+// con area e obiettivo. Senza JS i pannelli restano tutti visibili, in lista.
+import DotGrid from "@components/DotGrid.astro";
+
+type Area = { label: string; href: string };
+const obiettivi: { id: string; t: string; d: string; aree: Area[]; formArea: string }[] = [
+  {
+    id: "persone",
+    t: "Proteggere le persone",
+    d: "La valutazione dei rischi, la sorveglianza sanitaria e l’organizzazione della prevenzione sono Sicurezza sul Lavoro; la formazione obbligatoria delle persone è Formazione.",
+    aree: [
+      { label: "Sicurezza sul Lavoro", href: "/servizi/consulenza/sicurezza-lavoro" },
+      { label: "Formazione", href: "/servizi/formazione" },
+    ],
+    formArea: "Consulenza & Sicurezza",
+  },
+  {
+    id: "competenze",
+    t: "Sviluppare competenze",
+    d: "I percorsi formativi, in aula, a distanza o in azienda, sono Formazione; se l’impresa versa a un fondo interprofessionale, verifichiamo se il corso può essere finanziato.",
+    aree: [{ label: "Formazione", href: "/servizi/formazione" }],
+    formArea: "Formazione",
+  },
+  {
+    id: "investimento",
+    t: "Realizzare un investimento",
+    d: "Bandi, crediti d’imposta e iper-ammortamento sono Finanza Agevolata; se l’investimento riguarda spazi o impianti, la progettazione e la prevenzione incendi sono Engineering.",
+    aree: [
+      { label: "Finanza Agevolata", href: "/servizi/finanza-agevolata" },
+      { label: "Engineering", href: "/servizi/engineering" },
+    ],
+    formArea: "Finanza agevolata",
+  },
+  {
+    id: "opportunita",
+    t: "Qualificarmi per nuove opportunità",
+    d: "Certificazioni ISO, parità di genere e attestazione SOA aprono gare e qualificazioni: è Sistemi di Gestione.",
+    aree: [{ label: "Sistemi di Gestione", href: "/servizi/certificazioni" }],
+    formArea: "Certificazioni & Gare",
+  },
+  {
+    id: "organizzazione",
+    t: "Organizzare meglio l’attività",
+    d: "Deleghe, procedure e modelli organizzativi sono Consulenza; un sistema di gestione certificabile è Sistemi di Gestione; trasformare processi e procedure in app e gestionali su misura è Digitale e IA.",
+    aree: [
+      { label: "Consulenza", href: "/servizi/consulenza/aziendale" },
+      { label: "Sistemi di Gestione", href: "/servizi/certificazioni" },
+      { label: "Digitale e IA", href: "/servizi/digitale" },
+    ],
+    formArea: "Consulenza & Sicurezza",
+  },
+];
+---
+
+<section class="goal section--ink" aria-labelledby="goal-heading" data-goal>
+  <DotGrid />
+  <div class="container goal__grid">
+    <div class="goal__intro">
+      <p class="eyebrow">Parti dal tuo obiettivo</p>
+      <h2 id="goal-heading" class="goal__title">Che cosa vuoi realizzare <span class="accent">nella tua impresa?</span></h2>
+      <p class="goal__lede">
+        Scegli un obiettivo: ti indichiamo le aree che lo riguardano e perché. Non è una diagnosi: è il punto da cui iniziare la conversazione.
+      </p>
+      <div class="goal__chips" role="group" aria-label="Obiettivi">
+        {obiettivi.map((o) => (
+          <button type="button" class="goal__chip" data-goal-btn={o.id} aria-pressed="false" aria-controls={`goal-${o.id}`}>
+            {o.t}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="goal__out" aria-live="polite">
+      <div class="goal__empty" data-goal-empty>
+        <span class="goal__empty-icon" aria-hidden="true">←</span>
+        <p>Scegli un obiettivo: qui trovi le aree che lo riguardano e il primo passo da fare.</p>
+      </div>
+      {obiettivi.map((o) => (
+        <div class="goal__panel" id={`goal-${o.id}`} data-goal-panel={o.id}>
+          <p class="goal__kicker">Hai scelto: <strong>{o.t}</strong></p>
+          <p class="goal__desc">{o.d}</p>
+          <ul class="goal__areas">
+            {o.aree.map((a) => (
+              <li>
+                <a href={a.href} class="goal__area">
+                  {a.label}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a
+            href="#contatto"
+            class="btn btn--primary btn--cta goal__talk"
+            data-goal-talk
+            data-form-area={o.formArea}
+            data-motivo={`Obiettivo: ${o.t}`}
+          >
+            Parliamone
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-goal]").forEach((root) => {
+    const btns = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-goal-btn]"));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>("[data-goal-panel]"));
+    const empty = root.querySelector<HTMLElement>("[data-goal-empty]")!;
+    root.classList.add("is-js");
+
+    const select = (id: string) => {
+      for (const b of btns) b.setAttribute("aria-pressed", String(b.dataset.goalBtn === id));
+      for (const p of panels) p.classList.toggle("is-active", p.dataset.goalPanel === id);
+      empty.hidden = true;
+      // Su mobile il pannello sta sotto i pulsanti: portalo in vista.
+      const active = panels.find((p) => p.dataset.goalPanel === id);
+      if (active && matchMedia("(max-width: 56rem)").matches) {
+        const r = active.getBoundingClientRect();
+        if (r.bottom > innerHeight) active.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    };
+    for (const b of btns) b.addEventListener("click", () => select(b.dataset.goalBtn!));
+
+    // "Parliamone": precompila il form contatti della home, se c'è.
+    root.querySelectorAll<HTMLAnchorElement>("[data-goal-talk]").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const form = document.querySelector<HTMLFormElement>("#contatto form");
+        if (!form) return;
+        e.preventDefault();
+        const area = form.querySelector<HTMLSelectElement>("select[name=area]");
+        if (area) {
+          const opt = Array.from(area.options).find((o) => o.text === a.dataset.formArea);
+          if (opt) area.value = opt.value;
+        }
+        const msg = form.querySelector<HTMLTextAreaElement>("textarea[name=messaggio]");
+        if (msg && !msg.value.trim()) msg.value = `${a.dataset.motivo}.\n`;
+        form.scrollIntoView({ behavior: "smooth", block: "start" });
+        form.querySelector<HTMLInputElement>("input[name=nome]")?.focus({ preventScroll: true });
+      });
+    });
+  });
+</script>
+
+<style>
+  .goal { position: relative; isolation: isolate; overflow: clip; padding-block: var(--space-4xl); }
+  .goal__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+  .goal__title {
+    font-size: var(--text-3xl);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    max-width: 16ch;
+    margin: 0 0 var(--space-md);
+  }
+  .goal__lede { font-size: var(--text-lg); line-height: 1.55; max-width: 50ch; margin: 0 0 var(--space-xl); }
+
+  .goal__chips { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+  .goal__chip {
+    font: inherit;
+    font-size: var(--text-md);
+    font-weight: 500;
+    color: var(--color-paper);
+    background: color-mix(in oklch, var(--color-paper) 6%, transparent);
+    border: 1px solid color-mix(in oklch, var(--color-paper) 24%, transparent);
+    border-radius: 999px;
+    padding: 0.7em 1.2em;
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .goal__chip:hover { border-color: var(--color-accent); background: color-mix(in oklch, var(--color-accent) 14%, transparent); }
+  .goal__chip:active { transform: scale(0.97); }
+  .goal__chip:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  .goal__chip[aria-pressed="true"] {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-accent) 25%, transparent), 0 8px 28px -8px var(--color-accent);
+  }
+
+  /* Pannello risultato */
+  .goal__out {
+    position: relative;
+    display: grid;
+    min-height: 19rem;
+    border: 1px solid color-mix(in oklch, var(--color-paper) 16%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in oklch, var(--color-ink) 70%, #1e3a8a);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  }
+  .goal__empty,
+  .goal__panel { grid-area: 1 / 1; padding: clamp(var(--space-lg), 3vw, var(--space-xl)); }
+  .goal__empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-sm);
+    border-radius: inherit;
+    border: 1px dashed color-mix(in oklch, var(--color-paper) 18%, transparent);
+    margin: var(--space-xs);
+  }
+  .goal__empty[hidden] { display: none; }
+  .goal__empty p { margin: 0; max-width: 30ch; font-size: var(--text-md); color: color-mix(in oklch, var(--color-paper) 60%, transparent) !important; }
+  .goal__empty-icon { font-size: var(--text-2xl); color: var(--color-accent); animation: goal-nudge 1.6s var(--ease-out) infinite; }
+  @keyframes goal-nudge { 0%, 100% { transform: none; } 50% { transform: translateX(-6px); } }
+
+  .goal__kicker {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs, 0.75rem);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent) !important;
+  }
+  .goal__kicker strong { color: var(--color-paper); font-weight: 600; }
+  .goal__desc { margin: 0 0 var(--space-lg); font-size: var(--text-md); line-height: 1.6; }
+  .goal__areas { list-style: none; margin: 0 0 var(--space-lg); padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+  .goal__area {
+    display: inline-flex;
+    gap: 0.5em;
+    align-items: center;
+    padding: 0.55em 1em;
+    border-radius: var(--radius-sm, 8px);
+    background: color-mix(in oklch, var(--color-paper) 10%, transparent);
+    color: var(--color-paper);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .goal__area:hover { background: color-mix(in oklch, var(--color-paper) 18%, transparent); text-decoration: none; }
+  .goal__area span { transition: transform var(--dur-fast) var(--ease-out); }
+  .goal__area:hover span { transform: translateX(3px); }
+
+  /* Bottone blu pieno: sul pannello navy stacca meglio del primario invertito. */
+  .goal .goal__talk {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+  .goal .goal__talk:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); }
+
+  /* Con JS: un pannello alla volta, che entra con fade + slide. */
+  .goal.is-js .goal__panel {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 350ms var(--ease-out), transform 500ms var(--ease-out), visibility 0s 350ms;
+  }
+  .goal.is-js .goal__panel.is-active {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity 450ms var(--ease-out) 80ms, transform 600ms var(--ease-out) 80ms, visibility 0s;
+  }
+  .goal.is-js .goal__panel.is-active .goal__area { animation: goal-pop 500ms var(--ease-out) both; }
+  .goal.is-js .goal__panel.is-active li:nth-child(2) .goal__area { animation-delay: 90ms; }
+  .goal.is-js .goal__panel.is-active li:nth-child(3) .goal__area { animation-delay: 180ms; }
+  @keyframes goal-pop { from { opacity: 0; transform: translateY(8px) scale(0.96); } }
+
+  /* Senza JS: niente stato vuoto, pannelli tutti in colonna. */
+  .goal:not(.is-js) .goal__empty { display: none; }
+  .goal:not(.is-js) .goal__out { display: flex; flex-direction: column; }
+  .goal:not(.is-js) .goal__chips { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .goal.is-js .goal__panel,
+    .goal.is-js .goal__panel.is-active { transition: none; transform: none; }
+    .goal.is-js .goal__panel.is-active .goal__area,
+    .goal__empty-icon { animation: none; }
+  }
+
+  @media (max-width: 56rem) {
+    .goal { padding-block: var(--space-3xl); }
+    .goal__grid { grid-template-columns: 1fr; gap: var(--space-lg); }
+    .goal__out { min-height: 0; }
+    .goal__empty-icon { transform: rotate(90deg); align-self: flex-start; animation: none; }
+  }
+</style>

@@ -2,6 +2,7 @@
 import Base from "@layouts/Base.astro";
 import Placeholder from "@components/Placeholder.astro";
 import CtaBand from "@components/CtaBand.astro";
+import DotGrid from "@components/DotGrid.astro";
 
 const competenze = [
   { area: "Consulenza e Sicurezza", desc: "D.Lgs. 81/08, DVR e RSPP, cantieri e patente a crediti, HACCP, medicina del lavoro; organizzazione e deleghe di funzioni, modelli 231, GDPR, privacy e cybersecurity, ambiente." },
@@ -123,15 +124,18 @@ const credenziali = [
     </div>
   </section>
 
-  <section class="section section--ink" aria-labelledby="storia-heading">
+  <section class="section section--ink storia" aria-labelledby="storia-heading" data-storia>
+    <DotGrid />
     <div class="container two-col">
       <div class="two-col__head">
         <p class="eyebrow">02 — La nostra storia</p>
         <h2 id="storia-heading" class="two-col__title">Al fianco delle imprese dal 2014.</h2>
+        <p class="storia__anno" aria-hidden="true"><span data-storia-anno>{storia[0].anno}</span></p>
       </div>
-      <ol class="timeline">
+      <ol class="tl">
         {storia.map((s) => (
-          <li class="tappa">
+          <li class="tappa" data-anno={s.anno}>
+            <span class="tappa__node" aria-hidden="true"></span>
             <span class="tappa__anno">{s.anno}</span>
             <div class="tappa__body">
               <h3 class="tappa__titolo">{s.titolo}</h3>
@@ -272,6 +276,46 @@ const credenziali = [
 </Base>
 
 <script>
+  // Timeline della storia: la linea si riempie con lo scroll, le tappe si
+  // accendono quando la linea le raggiunge e l'anno grande a sinistra segue
+  // la tappa corrente. Senza JS o con reduced-motion resta tutto visibile.
+  const storia = document.querySelector<HTMLElement>("[data-storia]");
+  if (storia && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const list = storia.querySelector<HTMLElement>(".tl")!;
+    const tappe = Array.from(storia.querySelectorAll<HTMLElement>(".tappa"));
+    const anno = storia.querySelector<HTMLElement>("[data-storia-anno]")!;
+    let current = "", raf = 0;
+    storia.classList.add("is-animated");
+
+    const update = () => {
+      raf = 0;
+      const line = innerHeight * 0.6;
+      const r = list.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (line - r.top) / r.height));
+      list.style.setProperty("--p", p.toFixed(4));
+      let active = tappe[0].dataset.anno!;
+      for (const t of tappe) {
+        const node = t.querySelector(".tappa__node")!.getBoundingClientRect();
+        const on = node.top + node.height / 2 < line;
+        t.classList.toggle("is-on", on);
+        if (on) active = t.dataset.anno!;
+      }
+      if (active !== current) {
+        current = active;
+        anno.textContent = active;
+        anno.classList.remove("is-swap");
+        void anno.offsetWidth;
+        anno.classList.add("is-swap");
+      }
+    };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+    addEventListener("scroll", queue, { passive: true });
+    addEventListener("resize", queue);
+    update();
+  }
+</script>
+
+<script>
   // Reveal della foto del team: tendina + zoom che si assesta.
   // Stesso gating del reveal globale: parte solo con JS e motion attivo;
   // l'effetto CSS è agganciato a html.reveal-ready, quindi senza JS o con
@@ -408,43 +452,125 @@ const credenziali = [
   }
 
   /* ───── Timeline (storia) ───── */
-  .timeline {
+  .storia { position: relative; isolation: isolate; overflow: clip; }
+  .storia__anno {
+    margin: var(--space-xl) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    padding-bottom: 0.18em;
+    font-feature-settings: "tnum";
+    color: transparent !important;
+    -webkit-text-stroke: 1.5px color-mix(in oklch, var(--color-accent) 70%, transparent);
+    overflow: hidden;
+  }
+  .storia__anno span { display: inline-block; }
+  .storia__anno span.is-swap { animation: anno-in 700ms var(--ease-out); }
+  @keyframes anno-in {
+    from { transform: translateY(60%); opacity: 0; filter: blur(6px); }
+    to { transform: none; opacity: 1; filter: none; }
+  }
+
+  .tl {
+    --p: 1;
+    --rail-x: 0.45rem;
+    position: relative;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 calc(var(--rail-x) * 2 + var(--space-lg));
   }
+  .tl::before,
+  .tl::after {
+    content: "";
+    position: absolute;
+    left: var(--rail-x);
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 2px;
+    margin-left: -1px;
+    border-radius: 2px;
+  }
+  .tl::before { background: color-mix(in oklch, var(--color-paper) 12%, transparent); }
+  .tl::after {
+    transform-origin: top;
+    transform: scaleY(var(--p));
+    background: linear-gradient(to bottom, #93c5fd, var(--color-accent));
+    box-shadow: 0 0 12px var(--color-accent);
+  }
+
   .tappa {
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(5rem, 7rem) 1fr;
-    gap: var(--space-lg);
-    padding: var(--space-lg) 0;
-    border-top: var(--rule-hair) solid var(--color-rule);
+    grid-template-columns: minmax(4rem, 5.5rem) 1fr;
+    gap: var(--space-md);
+    padding-bottom: var(--space-2xl);
   }
-  .tappa:first-child { border-top: 0; padding-top: 0; }
+  .tappa:last-child { padding-bottom: 0; }
+  .tappa__node {
+    position: absolute;
+    left: calc(-1 * (var(--rail-x) + var(--space-lg)));
+    top: 0.55rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-accent) 25%, transparent), 0 0 18px var(--color-accent);
+    transition: background 400ms, box-shadow 400ms, transform 500ms var(--ease-out);
+  }
   .tappa__anno {
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--color-accent);
     letter-spacing: 0.06em;
-    padding-top: 0.2em;
+    padding-top: 0.45em;
   }
   .tappa__titolo {
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
     font-weight: 500;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
     margin: 0 0 var(--space-2xs);
   }
   .tappa__desc {
-    color: var(--color-ink-2);
     margin: 0;
     font-size: var(--text-md);
     line-height: 1.55;
-    max-width: 56ch;
+    max-width: 52ch;
   }
+
+  /* Stato "spento" solo quando il JS anima (classe is-animated). */
+  .storia.is-animated .tappa__node {
+    background: var(--color-ink);
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-paper) 22%, transparent);
+    transform: translateX(-50%) scale(0.75);
+  }
+  .storia.is-animated .tappa.is-on .tappa__node {
+    background: var(--color-accent);
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-accent) 25%, transparent), 0 0 18px var(--color-accent);
+    transform: translateX(-50%) scale(1);
+  }
+  .storia.is-animated .tappa__anno,
+  .storia.is-animated .tappa__body {
+    opacity: 0.28;
+    transform: translateX(-0.5rem);
+    transition: opacity 600ms var(--ease-out), transform 700ms var(--ease-out);
+  }
+  .storia.is-animated .tappa.is-on .tappa__anno,
+  .storia.is-animated .tappa.is-on .tappa__body {
+    opacity: 1;
+    transform: none;
+  }
+  .storia.is-animated .tappa.is-on .tappa__body { transition-delay: 80ms; }
+
   @media (max-width: 56rem) {
     .fatti { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md); }
-    .tappa { grid-template-columns: 1fr; gap: var(--space-2xs); }
+    .tappa { grid-template-columns: 1fr; gap: var(--space-2xs); padding-bottom: var(--space-xl); }
+    .tappa__anno { padding-top: 0.15em; }
+    .tappa__node { top: 0.3rem; }
+    .storia__anno { display: none; }
   }
 
   /* ───── Team ───── */

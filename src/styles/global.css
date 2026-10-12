@@ -154,7 +154,7 @@ a:hover { text-decoration-thickness: 2px; }
   background: color-mix(in oklch, var(--color-paper) 8%, transparent);
   border-color: color-mix(in oklch, var(--color-paper) 20%, transparent);
 }
-.section--ink a,
+.section--ink a:not(.btn),
 .section--ink .link-cta { color: var(--color-paper) !important; }
 /* bottone primario invertito (l'accent navy sparirebbe sul navy) */
 .section--ink .btn--primary {

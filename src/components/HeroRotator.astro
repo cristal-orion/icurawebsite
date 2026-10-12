@@ -4,6 +4,7 @@
 // Effetti: titolo che sale parola per parola, foto rivelata da una "scansione",
 // chip HUD sulla foto, griglia tecnica di punti che reagisce al cursore.
 // Il titolo SEO è l'<h1> statico; le slide sono contenuto decorativo/navigazione.
+import DotGrid from "@components/DotGrid.astro";
 const slides = [
   {
     area: "Sicurezza sul lavoro.", slogan: "Proteggi ciò che conta.",
@@ -56,7 +57,7 @@ const words = (s: (typeof slides)[number]) => {
   <div class="rot__glows" aria-hidden="true">
     {slides.map((s, i) => <span class:list={["rot__glow", { "is-active": i === 0 }]} style={`--glow: ${s.glow}`}></span>)}
   </div>
-  <canvas class="rot__grid" data-grid aria-hidden="true"></canvas>
+  <DotGrid />
 
   <div class="rot__inner">
     <div class="rot__text">
@@ -165,45 +166,6 @@ const words = (s: (typeof slides)[number]) => {
     // Fuori schermo o tab nascosto: pausa.
     new IntersectionObserver(([e]) => root.classList.toggle("is-paused", !e.isIntersecting)).observe(root);
     document.addEventListener("visibilitychange", () => root.classList.toggle("is-hidden", document.hidden));
-
-    // ── Griglia tecnica di punti: si accende attorno al cursore (solo con mouse) ──
-    const canvas = root.querySelector<HTMLCanvasElement>("[data-grid]")!;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    const GAP = 28, R = 220;
-    let w = 0, h = 0, mx = -9999, my = -9999, raf = 0;
-
-    const draw = () => {
-      raf = 0;
-      ctx.clearRect(0, 0, w, h);
-      for (let y = GAP / 2; y < h; y += GAP) {
-        for (let x = GAP / 2; x < w; x += GAP) {
-          const d = Math.hypot(x - mx, y - my);
-          const k = d < R ? (1 - d / R) ** 2 : 0;
-          ctx.fillStyle = k ? `rgba(96, 165, 250, ${0.1 + k * 0.75})` : "rgba(248, 250, 252, 0.07)";
-          const r = 1 + k * 1.2;
-          ctx.fillRect(x - r / 2, y - r / 2, r, r);
-        }
-      }
-    };
-    const queue = () => { if (!raf) raf = requestAnimationFrame(draw); };
-    const resize = () => {
-      const dpr = Math.min(devicePixelRatio || 1, 2);
-      w = root.clientWidth; h = root.clientHeight;
-      canvas.width = w * dpr; canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      queue();
-    };
-    new ResizeObserver(resize).observe(root);
-
-    if (!reduce && matchMedia("(hover: hover)").matches) {
-      root.addEventListener("pointermove", (e) => {
-        const r = root.getBoundingClientRect();
-        mx = e.clientX - r.left; my = e.clientY - r.top;
-        queue();
-      });
-      root.addEventListener("pointerleave", () => { mx = my = -9999; queue(); });
-    }
   });
 </script>
 
@@ -230,15 +192,6 @@ const words = (s: (typeof slides)[number]) => {
     transition: opacity 1.2s var(--ease-out);
   }
   .rot__glow.is-active { opacity: 1; }
-
-  /* Griglia di punti, sfumata ai bordi */
-  .rot__grid {
-    position: absolute; inset: 0; z-index: -1;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    -webkit-mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, #000 40%, transparent 100%);
-            mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, #000 40%, transparent 100%);
-  }
 
   .rot__inner {
     width: 100%;
