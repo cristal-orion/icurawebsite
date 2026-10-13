@@ -226,9 +226,12 @@ const pad = (n: number) => String(n).padStart(2, "0");
   .aree.is-pinned .aree__meter { display: flex; }
   .aree.is-pinned .aree__head { margin-bottom: var(--space-lg); }
   .aree.is-pinned .aree__title { font-size: var(--text-3xl); max-width: 24ch; }
-  .aree.is-pinned .aree__viewport { flex: 1; min-height: 0; display: flex; align-items: center; }
+  /* Altezze definite a cascata: la card non può superare lo spazio sotto il titolo
+     (prima "100%" non si risolveva e la card cresceva sopra l'intestazione). */
+  .aree.is-pinned .aree__viewport { flex: 1; min-height: 0; display: flex; }
   .aree.is-pinned .aree__track {
-    display: flex; gap: var(--space-2xl);
+    display: flex; align-items: center; gap: var(--space-2xl);
+    height: 100%;
     padding: 0; margin: 0; max-width: none;
     will-change: transform;
   }
@@ -236,11 +239,12 @@ const pad = (n: number) => String(n).padStart(2, "0");
     --d: 1;
     flex: none;
     width: min(66rem, 76vw);
-    height: min(30rem, 100%);
+    min-height: min(30rem, 100%);
+    max-height: 100%;
     transform: scale(calc(1 - var(--d) * 0.1));
     opacity: calc(1 - var(--d) * 0.55);
   }
-  .aree.is-pinned .aree__viewport { height: 100%; }
+  .aree.is-pinned .area__body { min-height: 0; overflow: hidden; }
   .aree.is-pinned .area__media img {
     filter: grayscale(100%);
     transform: scale(1.06);
@@ -262,6 +266,24 @@ const pad = (n: number) => String(n).padStart(2, "0");
     0% { top: 0; opacity: 1; }
     90% { opacity: 1; }
     100% { top: 100%; opacity: 0; }
+  }
+
+  /* Schermi bassi (portatili 13-15"): card e intestazione più compatte */
+  @media (max-height: 64rem) {
+    .aree.is-pinned .aree__sticky { padding-block: var(--space-md); }
+    .aree.is-pinned .aree__head { margin-bottom: var(--space-md); }
+    .aree.is-pinned .aree__title { font-size: var(--text-2xl); }
+    .aree.is-pinned .area__body { padding: var(--space-lg); }
+    .aree.is-pinned .area__top { margin-bottom: var(--space-sm); }
+    .aree.is-pinned .area__title { font-size: var(--text-2xl); }
+    .aree.is-pinned .area__slogan { font-size: var(--text-md); margin-bottom: var(--space-sm); }
+    .aree.is-pinned .area__desc { font-size: var(--text-sm); }
+    .aree.is-pinned .area__tags { margin-top: var(--space-md); }
+    .aree.is-pinned .area__cta { padding-top: var(--space-md); }
+  }
+  @media (max-height: 44rem) {
+    .aree.is-pinned .area__tags { display: none; }
+    .aree.is-pinned .area__desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   }
 
   @media (max-width: 56rem) {
