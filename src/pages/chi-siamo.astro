@@ -149,35 +149,38 @@ const credenziali = [
 
   <section id="metodo" class="section" aria-labelledby="metodo-heading">
     <div class="container metodo-grid">
-      <div>
+      <div class="metodo-intro">
         <p class="eyebrow">03 — Come lavoriamo</p>
         <h2 id="metodo-heading">I tuoi obiettivi sono la nostra passione.</h2>
-      </div>
-      <div class="prose">
-        <p>
+        <p class="metodo-lede">
           Partiamo da ciò che vuoi realizzare. Mettiamo a fuoco le esigenze, colleghiamo le competenze e costruiamo insieme i prossimi passi.
         </p>
+        <Placeholder
+          aspect="3/4"
+          src="/images/chi-siamo-scrivania-firma.webp"
+          alt="Mani di un consulente che firmano un documento su una scrivania, con quaderno di appunti, tazza di caffè e smartphone"
+          class="metodo-photo"
+        />
+      </div>
+      <div class="metodo-body">
         <ol class="passi">
           {passi.map((p, i) => (
             <li class="passo">
               <span class="passo__n">{String(i + 1).padStart(2, "0")}</span>
-              <div>
+              <div class="passo__card">
                 <h3 class="passo__titolo">{p.t}</h3>
                 <p class="passo__desc">{p.d}</p>
               </div>
             </li>
           ))}
         </ol>
-        <p>
-          <strong>Il nostro impegno.</strong> Attività, responsabilità e scadenze definite prima di iniziare: dopo il primo incontro ricevi un preventivo scritto che dice che cosa è compreso, che cosa no e chi fa che cosa.
-        </p>
+        <div class="impegno">
+          <p class="impegno__label">Il nostro impegno</p>
+          <p class="impegno__text">
+            Attività, responsabilità e scadenze definite prima di iniziare: dopo il primo incontro ricevi un <strong>preventivo scritto</strong> che dice che cosa è compreso, che cosa no e chi fa che cosa.
+          </p>
+        </div>
       </div>
-      <Placeholder
-        aspect="3/4"
-        src="/images/chi-siamo-scrivania-firma.webp"
-        alt="Dettaglio di una scrivania da consulente professionista: due mani adulte di etnia mediterranea che firmano un documento cartaceo con penna stilografica nera; quaderno aperto con appunti tecnici a margine, una tazza di caffè espresso sul piattino, smartphone in posizione laterale; luce naturale laterale da finestra invernale napoletana; palette calda desaturata, no laptop visibile, no piante decorative, no posa da stock photo"
-        class="metodo-grid__photo"
-      />
     </div>
   </section>
 
@@ -367,11 +370,12 @@ const credenziali = [
 
   .metodo-grid {
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) minmax(0, 3fr);
-    gap: var(--space-xl);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-2xl);
     align-items: start;
   }
-  .metodo-grid__photo { align-self: stretch; }
+  .metodo-lede { font-size: var(--text-lg); color: var(--color-ink-2); line-height: 1.55; max-width: 40ch; margin: var(--space-md) 0 var(--space-xl); }
+  .metodo-intro :global(.metodo-photo) { max-width: 24rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lift); }
 
   .comp-list {
     list-style: none;
@@ -397,11 +401,43 @@ const credenziali = [
     margin: var(--space-md) 0 0;
   }
 
-  .passi { list-style: none; margin: var(--space-lg) 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-md); }
-  .passo { display: flex; gap: var(--space-md); align-items: flex-start; }
-  .passo__n { flex: none; font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600; color: var(--color-accent); letter-spacing: 0.06em; padding-top: 0.25em; }
-  .passo__titolo { font-size: var(--text-lg); font-weight: 500; letter-spacing: -0.015em; margin: 0 0 var(--space-3xs); }
-  .passo__desc { font-size: var(--text-md) !important; margin: 0; line-height: 1.5; }
+  /* Passi come timeline: numeri in cerchio uniti da una linea verticale */
+  .passi { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-sm); }
+  .passo { position: relative; display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); gap: var(--space-md); align-items: start; }
+  .passo:not(:last-child)::before {
+    content: ""; position: absolute; left: calc(1.375rem - 1px); top: 2.75rem; bottom: calc(-1 * var(--space-sm));
+    width: 2px; background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  }
+  .passo__n {
+    display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%;
+    background: var(--color-accent-soft); color: var(--color-accent);
+    font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600; letter-spacing: 0.04em;
+  }
+  .passo__card {
+    padding: var(--space-md) var(--space-lg);
+    background: var(--color-surface);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .passo:hover .passo__card { border-color: color-mix(in srgb, var(--color-accent) 35%, transparent); box-shadow: var(--shadow-lift); }
+  .passo__titolo { font-size: var(--text-lg); font-weight: 600; letter-spacing: -0.015em; margin: 0 0 var(--space-3xs); }
+  .passo__desc { font-size: var(--text-md); color: var(--color-ink-2); margin: 0; line-height: 1.5; }
+
+  .impegno {
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    background: var(--color-ink);
+    color: #fff;
+    border-radius: var(--radius-lg);
+  }
+  .impegno__label {
+    font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em; color: #93c5fd; margin: 0 0 var(--space-xs);
+  }
+  .impegno__text { font-size: var(--text-lg); line-height: 1.55; color: rgba(255, 255, 255, 0.85); margin: 0; max-width: none; }
+  .impegno__text strong { color: #fff; }
 
   .breve { margin: 0; display: flex; flex-direction: column; }
   .breve__row {
@@ -630,14 +666,12 @@ const credenziali = [
     transform: scale(1);
   }
 
-  @media (max-width: 64rem) {
-    .metodo-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-    .metodo-grid__photo { grid-column: 1 / -1; }
-  }
-
   @media (max-width: 56rem) {
     .two-col { grid-template-columns: 1fr; }
-    .metodo-grid { grid-template-columns: 1fr; }
+    .metodo-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .metodo-intro :global(.metodo-photo) { max-width: 100%; aspect-ratio: 16 / 9; }
+    .passo { gap: var(--space-sm); }
+    .passo__card { padding: var(--space-sm) var(--space-md); }
     .comp-list { grid-template-columns: 1fr; gap: var(--space-md); }
     .team__grid { grid-template-columns: 1fr; gap: var(--space-lg); }
     .team-photo { max-width: 28rem; }

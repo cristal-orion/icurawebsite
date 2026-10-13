@@ -1,6 +1,5 @@
 ---
 import Base from "@layouts/Base.astro";
-import Placeholder from "@components/Placeholder.astro";
 ---
 
 <Base
@@ -9,24 +8,25 @@ import Placeholder from "@components/Placeholder.astro";
   description="Chiama lo 081 658 0779, scrivi a info@icuraimpresa.it o invia una richiesta: ti rispondiamo noi, per email o per telefono. Sede in Corso Secondigliano 236, Napoli."
 >
   <header class="page-header section">
-    <div class="container">
-      <p class="eyebrow">Contatti</p>
-      <h1>Raccontaci dove vuoi arrivare.</h1>
-      <p class="page-header__lede">
-        Un progetto da sviluppare, persone da formare, un’organizzazione da migliorare: iniziamo dalla tua esigenza. Compila il modulo e ti ricontattiamo noi, per email o per telefono se ce lo lasci; oppure chiama o scrivi direttamente.
-      </p>
+    <div class="container page-header__grid">
+      <div>
+        <p class="eyebrow">Contatti</p>
+        <h1>Raccontaci dove vuoi arrivare.</h1>
+        <p class="page-header__lede">
+          Un progetto da sviluppare, persone da formare, un’organizzazione da migliorare: iniziamo dalla tua esigenza. Compila il modulo e ti ricontattiamo noi, per email o per telefono se ce lo lasci; oppure chiama o scrivi direttamente.
+        </p>
+      </div>
+      <figure class="team-photo">
+        <img
+          src="/images/team-icura.webp"
+          alt="Il team di iCura Impresa nella sede di Napoli, foto in bianco e nero"
+          width="1100"
+          height="1375"
+          decoding="async"
+        />
+      </figure>
     </div>
   </header>
-
-  <section class="section section--tight">
-    <div class="container">
-      <Placeholder
-        aspect="21/9"
-        src="/images/team-icura.webp"
-        alt="Il team di iCura Impresa nella sede di Napoli: consulenti adulti in abbigliamento professionale, espressione cordiale e competente, ambiente di lavoro ordinato con luce naturale, palette sobria toni navy e grigio, fotografia documentaria"
-      />
-    </div>
-  </section>
 
   <section class="section section--alt-2">
     <div class="container contact-grid">
@@ -266,6 +266,23 @@ import Placeholder from "@components/Placeholder.astro";
     margin-bottom: var(--space-md);
   }
   .page-header__lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 52ch; }
+  .page-header__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  /* Foto verticale mostrata per intero, nelle sue proporzioni (4:5) */
+  .team-photo { margin: 0; justify-self: end; width: min(100%, 28rem); }
+  .team-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: var(--rule-hair) solid var(--color-rule);
+    box-shadow: var(--shadow-lift);
+  }
 
   .contact-grid {
     display: grid;
@@ -429,6 +446,8 @@ import Placeholder from "@components/Placeholder.astro";
   .map__link { margin: var(--space-sm) 0 0; }
 
   @media (max-width: 56rem) {
+    .page-header__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .team-photo { justify-self: start; }
     .contact-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
     .call { grid-template-columns: 1fr; gap: var(--space-lg); }
   }
