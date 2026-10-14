@@ -4,6 +4,8 @@ const { pathname } = Astro.url;
 const darkTopPages = ["/", "/lavora-con-noi"];
 const darkTop =
   darkTopPages.includes(pathname.replace(/\/$/, "") || "/") || pathname.startsWith("/acquista");
+// In home (tunnel 3D) l'header resta scuro sempre, per non rompere l'immersione.
+const darkAlways = pathname.replace(/\/$/, "") === "";
 const isActive = (path: string) =>
   path === "/" ? pathname === "/" : pathname.startsWith(path);
 
@@ -103,7 +105,7 @@ const serviziActive =
 
 <a href="#main" class="skip-link">Salta al contenuto</a>
 
-<header class:list={["site-header", { "site-header--dark-top is-top": darkTop }]} data-site-header>
+<header class:list={["site-header", { "site-header--dark-top is-top": darkTop }]} data-site-header data-dark-always={darkAlways ? "" : undefined}>
   <nav class="site-header__inner" aria-label="Navigazione principale">
     <a href="/" class="site-header__wordmark" aria-label="iCuraImpresa, homepage">
       i<strong>Cura</strong>Impresa<span class="site-header__dot" aria-hidden="true">.</span>
@@ -301,7 +303,7 @@ const serviziActive =
 
   // Header scuro sopra l'hero: diventa chiaro appena inizia lo scroll.
   const header = document.querySelector<HTMLElement>("[data-site-header]");
-  if (header?.classList.contains("site-header--dark-top")) {
+  if (header?.classList.contains("site-header--dark-top") && !header.hasAttribute("data-dark-always")) {
     const sync = () => header.classList.toggle("is-top", scrollY < 8);
     sync();
     addEventListener("scroll", sync, { passive: true });

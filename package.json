@@ -16,6 +16,7 @@
     "@fontsource-variable/inter-tight": "^5.1.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource-variable/raleway": "^5.2.8",
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "three": "^0.170.0"
   }
 }
