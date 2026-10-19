@@ -142,7 +142,11 @@ const N = labels.length;
     try { return !!document.createElement("canvas").getContext("webgl2"); } catch { return false; }
   })();
 
-  if (root && !reduce && hasGL) init(root);
+  if (root) {
+    if (reduce) console.warn("[tunnel] 3D disattivato: il sistema ha 'riduci movimento' attivo");
+    else if (!hasGL) console.warn("[tunnel] 3D disattivato: WebGL2 non disponibile (accelerazione hardware spenta?)");
+    else init(root);
+  }
 
   async function init(root: HTMLElement) {
     const stage = root.querySelector<HTMLElement>("[data-stage]")!;
@@ -156,9 +160,18 @@ const N = labels.length;
     const labels = cards.map((c) => c.querySelector(".eyebrow")?.textContent?.trim() ?? "");
     const N = cards.length;
 
-    const { createTunnelScene } = await import("../scripts/tunnel-scene");
-    root.classList.add("is-3d");
-    const scene = createTunnelScene(canvas, N);
+    // is-3d deve esserci prima di creare la scena (il canvas è display:none senza,
+    // e il renderer misurerebbe 0×0). Se qualcosa va storto si torna alla colonna.
+    let scene: ReturnType<typeof import("../scripts/tunnel-scene").createTunnelScene>;
+    try {
+      const { createTunnelScene } = await import("../scripts/tunnel-scene");
+      root.classList.add("is-3d");
+      scene = createTunnelScene(canvas, N);
+    } catch (err) {
+      root.classList.remove("is-3d");
+      console.warn("[tunnel] 3D disattivato: scena non creata", err);
+      return;
+    }
 
     // Ogni tappa vale STEP schermate di scroll. Si parte con la prima card ancora
     // lontana (START) e si finisce con l'ultima ferma al centro (END).
