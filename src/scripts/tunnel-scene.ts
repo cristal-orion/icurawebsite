@@ -144,7 +144,12 @@ export function createTunnelScene(canvas: HTMLCanvasElement, stations: number) {
       window.removeEventListener("resize", resize);
       tube.dispose(); ringGeo.dispose(); dustGeo.dispose(); dotTex.dispose();
       wire.geometry.dispose();
+      (wire.material as LineBasicMaterial).dispose();
+      rings.forEach((r) => (r.material as MeshBasicMaterial).dispose());
+      (dust.material as PointsMaterial).dispose();
       renderer.dispose();
+      // libera subito il contesto GPU (i browser ne concedono pochi)
+      renderer.forceContextLoss();
     },
   };
 }

@@ -2,7 +2,9 @@
 // Home "in profondità": dopo l'hero la pagina non scorre in verticale ma lungo un
 // tunnel three.js. Ogni sezione è una card HTML che arriva da lontano (piccola e
 // sfocata), si ferma all'altezza dello spettatore e poi gli passa accanto.
-// Senza WebGL o con "riduci animazioni" le card restano una normale colonna.
+// Senza 3D (riduci movimento, WebGL assente o in software, pc lento) le card restano
+// una colonna: vedi scripts/tunnel-support.ts per come si sceglie, e il blocco COLONNA
+// negli stili per com'è fatta.
 import ServiceIcon from "@components/ServiceIcon.astro";
 import { numeri, obiettivi, aree, bandi, passi, team } from "../data/home";
 
@@ -136,16 +138,38 @@ const N = labels.length;
 </section>
 
 <script>
-  const root = document.querySelector<HTMLElement>("[data-tunnel]");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const hasGL = (() => {
-    try { return !!document.createElement("canvas").getContext("webgl2"); } catch { return false; }
-  })();
+  import { chooseTunnelMode, describeWhy } from "../scripts/tunnel-support";
 
+  const root = document.querySelector<HTMLElement>("[data-tunnel]");
   if (root) {
-    if (reduce) console.warn("[tunnel] 3D disattivato: il sistema ha 'riduci movimento' attivo");
-    else if (!hasGL) console.warn("[tunnel] 3D disattivato: WebGL2 non disponibile (accelerazione hardware spenta?)");
-    else init(root);
+    const { mode, why } = chooseTunnelMode();
+    if (mode === "3d") init(root);
+    else setMode(root, mode, why);
+  }
+
+  // Colonna di card al posto del tunnel. data-mode e data-why restano sulla sezione:
+  // da DevTools si vede perché non c'è il 3D.
+  function setMode(root: HTMLElement, mode: "lite" | "static", why = "", opts: { visibleUpTo?: number; err?: unknown } = {}) {
+    root.dataset.mode = mode;
+    root.dataset.why = why;
+    console.warn(`[tunnel] 3D disattivato: ${describeWhy(why)}`, ...(opts.err ? [opts.err] : []));
+    if (mode === "lite") revealCards(root, opts.visibleUpTo ?? -1);
+  }
+
+  // Le card entrano una a una con lo stesso effetto del resto del sito ([data-reveal] in
+  // global.css, attivo solo con html.reveal-ready: mai con "riduci movimento").
+  function revealCards(root: HTMLElement, visibleUpTo: number) {
+    const slots = [...root.querySelectorAll<HTMLElement>("[data-card]")];
+    slots.slice(0, visibleUpTo + 1).forEach((s) => s.classList.add("is-visible"));
+    if (!("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting && e.boundingClientRect.top > 0) continue; // sotto la piega: aspetta
+        e.target.classList.add("is-visible"); // a schermo, o già superata (scroll ripristinato)
+        io.unobserve(e.target);
+      }
+    }, { rootMargin: "0px 0px -10% 0px" });
+    slots.slice(visibleUpTo + 1).forEach((s) => { s.setAttribute("data-reveal", ""); io.observe(s); });
   }
 
   async function init(root: HTMLElement) {
@@ -169,9 +193,12 @@ const N = labels.length;
       scene = createTunnelScene(canvas, N);
     } catch (err) {
       root.classList.remove("is-3d");
-      console.warn("[tunnel] 3D disattivato: scena non creata", err);
+      setMode(root, "lite", "scene-error", { err });
       return;
     }
+    const ac = new AbortController();
+    const { signal } = ac;
+    let dead = false;
 
     // Ogni tappa vale STEP schermate di scroll. Si parte con la prima card ancora
     // lontana (START) e si finisce con l'ultima ferma al centro (END).
@@ -257,7 +284,30 @@ const N = labels.length;
     let raf = 0;
     let prev = performance.now();
     let active = false;
+
+    // Guardia sulle prestazioni: se il tunnel gira sotto ~25 fps (pc vecchio, GPU in
+    // difficoltà) si torna alla colonna di card invece di farlo scattare. Si usa la
+    // mediana degli intervalli tra frame: un singolo scatto non fa scattare l'allarme.
+    const SLOW = 1000 / 25;
+    const VERY_SLOW = 1000 / 15;
+    const SAMPLE = 30;
+    const intervals: number[] = [];
+    let since = 0; // il primo istante dopo l'ingresso a schermo non conta (immagini, font)
+    let slowRuns = 0;
+    function watchFps(now: number, ms: number) {
+      if (now - since < 700) return;
+      intervals.push(ms);
+      if (intervals.length < SAMPLE) return;
+      intervals.sort((a, b) => a - b);
+      const median = intervals[SAMPLE >> 1];
+      intervals.length = 0;
+      slowRuns = median > SLOW ? slowRuns + 1 : 0;
+      if (median > VERY_SLOW || slowRuns >= 2) downgrade("slow-fps");
+    }
+
     function tick(now: number) {
+      watchFps(now, now - prev);
+      if (dead) return;
       const dt = Math.min((now - prev) / 1000, 0.05);
       prev = now;
       const t = target();
@@ -308,24 +358,51 @@ const N = labels.length;
     }
 
     // Lavora solo quando il tunnel è a schermo.
-    new IntersectionObserver(([e]) => {
+    const io = new IntersectionObserver(([e]) => {
       active = e.isIntersecting;
-      if (active) { prev = performance.now(); scene.start(); raf = requestAnimationFrame(tick); }
-      else { scene.stop(); cancelAnimationFrame(raf); }
-    }).observe(stage);
+      if (active) {
+        prev = since = performance.now();
+        intervals.length = 0;
+        slowRuns = 0;
+        scene.start();
+        raf = requestAnimationFrame(tick);
+      } else { scene.stop(); cancelAnimationFrame(raf); }
+    });
+    io.observe(stage);
 
     window.addEventListener("pointermove", (e) => {
       ptr.x = e.clientX; ptr.y = e.clientY;
       scene.setPointer(e.clientX / window.innerWidth - 0.5, e.clientY / window.innerHeight - 0.5);
-    }, { passive: true });
+    }, { passive: true, signal });
 
     // Con la tastiera: un link dentro una card lontana porta lo scroll fino a lei.
     cards.forEach((card, i) => card.addEventListener("focusin", () => {
       const f = (i - START) / (END - START);
       window.scrollTo({ top: top + f * scrollable, behavior: "instant" as ScrollBehavior });
-    }));
+    }, { signal }));
 
-    window.addEventListener("resize", layout);
+    // Torna alla colonna di card: prestazioni scarse o contesto WebGL perso (succede sui
+    // portatili che cambiano GPU). Si smonta tutto e si riporta il lettore sulla sua card.
+    function downgrade(why: string) {
+      if (dead) return;
+      dead = true;
+      const here = Math.min(Math.max(Math.round(cam), 0), N - 1);
+      const wasOnScreen = active;
+      active = false;
+      cancelAnimationFrame(raf);
+      ac.abort();
+      io.disconnect();
+      scene.destroy();
+      cards.forEach((c) => c.removeAttribute("style"));
+      tilts.forEach((t) => t.removeAttribute("style"));
+      root.style.height = "";
+      root.classList.remove("is-3d");
+      setMode(root, "lite", why, { visibleUpTo: here });
+      if (wasOnScreen) cards[here].scrollIntoView({ block: "start", behavior: "instant" as ScrollBehavior });
+    }
+    canvas.addEventListener("webglcontextlost", (e) => { e.preventDefault(); downgrade("context-lost"); }, { signal });
+
+    window.addEventListener("resize", layout, { signal });
     layout();
     cam = target();
     place(cam);
@@ -354,6 +431,40 @@ const N = labels.length;
     padding: var(--space-2xl) var(--page-gutter);
     display: flex; flex-direction: column; align-items: center; gap: var(--space-xl);
   }
+
+  /* ───────── COLONNA (senza 3D) ─────────
+     Solo CSS, statica e leggera: un filo di luce che collega le card e, dietro a
+     ognuna, due cornici concentriche, cioè gli anelli del tunnel visti di fronte. */
+  .tunnel:not(.is-3d) {
+    overflow-x: clip;
+    background: radial-gradient(ellipse 70% 22rem at 50% 0, rgba(59, 130, 246, 0.18), transparent), var(--color-ink);
+  }
+  .tunnel:not(.is-3d) .tunnel__cards { position: relative; isolation: isolate; gap: calc(var(--space-2xl) + 0.5rem); }
+  .tunnel:not(.is-3d) .tunnel__cards::before {
+    content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 2px; translate: -50% 0;
+    background: linear-gradient(#3b82f6, #6366f1 50%, #06b6d4);
+    opacity: 0.35;
+  }
+  .tunnel:not(.is-3d) .tslot { position: relative; scroll-margin-top: calc(var(--header-h) + var(--space-md)); }
+  .tunnel:not(.is-3d) .tslot::before,
+  .tunnel:not(.is-3d) .tslot::after {
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    border: 1px solid var(--ring, #3b82f6);
+  }
+  .tunnel:not(.is-3d) .tslot::before { inset: -0.75rem; border-radius: calc(var(--radius-lg) + 0.75rem); opacity: 0.4; }
+  .tunnel:not(.is-3d) .tslot::after { inset: -1.5rem; border-radius: calc(var(--radius-lg) + 1.5rem); opacity: 0.18; }
+  /* stessi colori degli anelli del tunnel (PALETTE in tunnel-scene.ts) */
+  .tunnel:not(.is-3d) .tslot:nth-child(6n + 1) { --ring: #3b82f6; }
+  .tunnel:not(.is-3d) .tslot:nth-child(6n + 2) { --ring: #0ea5e9; }
+  .tunnel:not(.is-3d) .tslot:nth-child(6n + 3) { --ring: #6366f1; }
+  .tunnel:not(.is-3d) .tslot:nth-child(6n + 4) { --ring: #2563eb; }
+  .tunnel:not(.is-3d) .tslot:nth-child(6n + 5) { --ring: #06b6d4; }
+  .tunnel:not(.is-3d) .tslot:nth-child(6n + 6) { --ring: #8b5cf6; }
+  /* il reveal del sito mette will-change su ogni card: su un pc vecchio sono layer in più */
+  .tunnel .tslot[data-reveal] { will-change: auto; }
+  /* ombre e riflessi pensati per il tilt: nella colonna costano e non servono */
+  .tunnel:not(.is-3d) .tcard { box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(147, 197, 253, 0.22); }
+  .tunnel:not(.is-3d) .tglare { display: none; }
 
   /* ───────── MODALITÀ TUNNEL ───────── */
   .tunnel.is-3d .tunnel__stage {
@@ -405,10 +516,6 @@ const N = labels.length;
   /* ───────── CARD ───────── */
   .tcard {
     position: relative;
-    /* Tilt alla vanilla-tilt: la card ruota verso il puntatore e i blocchi interni
-       stanno su piani diversi (translateZ), così "escono" dalla card. */
-    transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-    transform-style: preserve-3d;
     width: min(60rem, calc(100vw - 2 * var(--page-gutter)));
     background: var(--color-surface);
     border-radius: var(--radius-lg);
@@ -417,19 +524,28 @@ const N = labels.length;
   }
   .tcard .eyebrow { margin-bottom: var(--space-xs); }
 
+  /* Tilt e piani di profondità: solo nel tunnel. Fuori ogni translateZ/preserve-3d
+     sarebbe un layer in più da comporre (pesante su un pc vecchio) senza alcun effetto.
+     :where() ha specificità zero: le regole restano pari a prima. */
+  /* Tilt alla vanilla-tilt: la card ruota verso il puntatore e i blocchi interni
+     stanno su piani diversi (translateZ), così "escono" dalla card. */
+  :where(.tunnel.is-3d) .tcard {
+    transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform-style: preserve-3d;
+  }
   /* Piani di profondità: ogni contenitore intermedio deve restare 3D. */
-  .tcard :is(.tarea__body, .tgoal, .tgoal__row, .tgoal__aree, .tbandi, .tbandi > li, .tteam, .tteam > li, .tnum, .twhy, .twhy > li, .tcta__actions, .tarea__list) { transform-style: preserve-3d; }
-  .tcard--why > div { transform-style: preserve-3d; }
-  .tcard .eyebrow { transform: translateZ(30px); }
-  .tcard .tcard__title { transform: translateZ(60px); }
-  .tcard :is(.tarea__desc, .tcta__lede, .tcard__note, .tgoal__t, .twhy p) { transform: translateZ(30px); }
-  .tcard :is(.twhy h3, .twhy__n, .tbando__t) { transform: translateZ(45px); }
-  .tcard :is(.tnum__item, .tarea__list li) { transform: translateZ(40px); }
-  .tcard :is(.btn, .tgoal__tag, .tbando__cta) { transform: translateZ(55px); }
-  .tcard .tarea__icon { transform: translateZ(70px); }
-  .tcard .tteam img { transform: translateZ(25px); }
-  .tcard .tteam :is(h3, p) { transform: translateZ(40px); }
-  .tcard .tbando { transform-style: preserve-3d; }
+  :where(.tunnel.is-3d) .tcard :is(.tarea__body, .tgoal, .tgoal__row, .tgoal__aree, .tbandi, .tbandi > li, .tteam, .tteam > li, .tnum, .twhy, .twhy > li, .tcta__actions, .tarea__list) { transform-style: preserve-3d; }
+  :where(.tunnel.is-3d) .tcard--why > div { transform-style: preserve-3d; }
+  :where(.tunnel.is-3d) .tcard .eyebrow { transform: translateZ(30px); }
+  :where(.tunnel.is-3d) .tcard .tcard__title { transform: translateZ(60px); }
+  :where(.tunnel.is-3d) .tcard :is(.tarea__desc, .tcta__lede, .tcard__note, .tgoal__t, .twhy p) { transform: translateZ(30px); }
+  :where(.tunnel.is-3d) .tcard :is(.twhy h3, .twhy__n, .tbando__t) { transform: translateZ(45px); }
+  :where(.tunnel.is-3d) .tcard :is(.tnum__item, .tarea__list li) { transform: translateZ(40px); }
+  :where(.tunnel.is-3d) .tcard :is(.btn, .tgoal__tag, .tbando__cta) { transform: translateZ(55px); }
+  :where(.tunnel.is-3d) .tcard .tarea__icon { transform: translateZ(70px); }
+  :where(.tunnel.is-3d) .tcard .tteam img { transform: translateZ(25px); }
+  :where(.tunnel.is-3d) .tcard .tteam :is(h3, p) { transform: translateZ(40px); }
+  :where(.tunnel.is-3d) .tcard .tbando { transform-style: preserve-3d; }
   .tcard .btn:hover .btn__arrow { transform: translateX(2px); }
 
   /* riflesso di luce che segue il puntatore */
@@ -525,7 +641,8 @@ const N = labels.length;
     .tcard__title--xl { font-size: var(--text-3xl); }
     .tunnel.is-3d .tunnel__hud { display: none; }
   }
+  /* Nel tunnel la card deve stare in uno schermo solo; nella colonna può scorrere. */
   @media (max-width: 52rem) and (max-height: 50rem) {
-    .tarea__list, .tgoal__aree { display: none; }
+    .tunnel.is-3d .tarea__list, .tunnel.is-3d .tgoal__aree { display: none; }
   }
 </style>
