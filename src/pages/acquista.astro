@@ -3,21 +3,31 @@ import Base from "@layouts/Base.astro";
 import DotGrid from "@components/DotGrid.astro";
 import Faq from "@components/Faq.astro";
 import CtaBand from "@components/CtaBand.astro";
-import { offerte, tipi, euro, type Tipo } from "../data/acquista";
+import ShopIcon from "@components/ShopIcon.astro";
+import { offerte, tipi, euro, aree, gruppi, catalogo, areaOf, gruppoDi, meta, type Gruppo, type Area } from "../data/acquista";
 
-const filtri: { id: "" | Tipo; label: string }[] = [
-  { id: "", label: "Tutto" },
-  ...(Object.keys(tipi) as Tipo[]).map((t) => ({ id: t, label: tipi[t].plurale })),
-];
-const conta = (t: "" | Tipo) => (t ? offerte.filter((o) => o.tipo === t).length : offerte.length);
+// Filtri del catalogo: che cosa compri (gruppo) e per che cosa (argomento).
+// I conteggi qui sono quelli di partenza; lo script li ricalcola a ogni scelta.
+const filtriGruppo = (Object.keys(gruppi) as Gruppo[]).map((id) => ({
+  id,
+  label: gruppi[id].label,
+  n: offerte.filter((o) => gruppoDi(o.tipo) === id).length,
+}));
+const filtriArea = (Object.keys(aree) as Area[]).map((id) => ({
+  id,
+  label: aree[id].label,
+  n: offerte.filter((o) => areaOf(o) === id).length,
+}));
+// Quale icona per quale tipo di offerta.
+const icona = (g: Gruppo) => (g === "corsi" ? "corso" : g === "consulenze" ? "consulenza" : "servizio") as "corso" | "consulenza" | "servizio";
 
 // "Che cosa vuoi ottenere?": ogni scelta filtra il catalogo (per tipo o per elenco di offerte).
 const regola = ["dvr-nuovo", "revisione-dvr", "duvri", "nomine-sicurezza", "checkup-documentale-sicurezza", "corso-lavoratori-generale-4h", "corso-lavoratori-specifica-basso-4h", "pos-cantiere", "manuale-haccp", "informative-privacy", "registro-trattamenti", "nomine-privacy"];
 const obiettivi = [
   { t: "Mettermi in regola", d: "DVR, DUVRI, nomine e formazione obbligatoria: le cose che un controllo chiede per prime.", filtro: "", slugs: regola.join(",") },
-  { t: "Formare il personale", d: "Corsi a calendario con attestato, in aula a Napoli o in videoconferenza, e corsi in azienda.", filtro: "corso_calendario", slugs: "" },
-  { t: "Avere una risposta subito", d: "Una consulenza in videochiamata con un tecnico: domande concrete, risposta scritta.", filtro: "consulenza", slugs: "" },
-  { t: "Un documento pronto", d: "Servizi a prezzo fisso con perimetro chiaro: invii il brief, ricevi il documento.", filtro: "servizio", slugs: "" },
+  { t: "Formare il personale", d: "Corsi a calendario con attestato, in aula a Napoli o in videoconferenza, e corsi in azienda.", filtro: "corsi", slugs: "" },
+  { t: "Avere una risposta subito", d: "Una consulenza in videochiamata con un tecnico: domande concrete, risposta scritta.", filtro: "consulenze", slugs: "" },
+  { t: "Un documento pronto", d: "Servizi a prezzo fisso con perimetro chiaro: invii il brief, ricevi il documento.", filtro: "servizi", slugs: "" },
 ];
 
 const passi = [
@@ -69,7 +79,7 @@ const faq = [
       <ul class="goals__list">
         {obiettivi.map((o, i) => (
           <li>
-            <a href="#catalogo" class="goals__item" data-shop-goal={o.filtro} data-shop-slugs={o.slugs} data-shop-goal-label={o.t}>
+            <a href="#catalogo" class="goals__item" data-shop-goal={o.filtro} data-shop-slugs={o.slugs} data-shop-goal-label={o.t} data-shop-goal-idx={i}>
               <span class="goals__n">{String(i + 1).padStart(2, "0")}</span>
               <span class="goals__t">{o.t}</span>
               <span class="goals__d">{o.d}</span>
@@ -95,35 +105,79 @@ const faq = [
         </label>
       </div>
 
-      <div class="catalog__filters" role="group" aria-label="Filtra per tipo">
-        {filtri.map((f) => (
-          <button type="button" class="catalog__filter" data-shop-filter={f.id} aria-pressed={f.id === "" ? "true" : "false"}>
-            {f.label} <span class="catalog__count">{conta(f.id)}</span>
-          </button>
+      <div class="catalog__bar">
+        <div class="catalog__facet" role="group" aria-label="Filtra per tipo">
+          <span class="catalog__facet-label" aria-hidden="true">Tipo</span>
+          <div class="catalog__chips">
+            <button type="button" class="catalog__filter" data-shop-tipo="" aria-pressed="true">
+              Tutto <span class="catalog__count">{offerte.length}</span>
+            </button>
+            {filtriGruppo.map((f) => (
+              <button type="button" class="catalog__filter" data-shop-tipo={f.id} aria-pressed="false">
+                {f.label} <span class="catalog__count">{f.n}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div class="catalog__facet" role="group" aria-label="Filtra per argomento">
+          <span class="catalog__facet-label" aria-hidden="true">Argomento</span>
+          <div class="catalog__chips">
+            <button type="button" class="catalog__filter" data-shop-area="" aria-pressed="true">
+              Tutti <span class="catalog__count">{offerte.length}</span>
+            </button>
+            {filtriArea.map((f) => (
+              <button type="button" class="catalog__filter" data-area={f.id} data-shop-area={f.id} aria-pressed="false">
+                <span class="catalog__dot" aria-hidden="true"></span>{f.label} <span class="catalog__count">{f.n}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <p class="catalog__summary">
+          <span data-shop-summary aria-live="polite">{offerte.length} offerte</span>
+          <span class="catalog__goal" data-shop-active hidden>Obiettivo: <b data-shop-active-label></b></span>
+          <button type="button" class="catalog__reset" data-shop-reset hidden>Azzera i filtri ×</button>
+        </p>
+      </div>
+
+      <div class="catalog__groups">
+        {catalogo.map((g) => (
+          <section class="shop-group" data-group={g.id} aria-labelledby={`grp-${g.id}`}>
+            <header class="shop-group__head">
+              <h3 id={`grp-${g.id}`} class="shop-group__title">{g.label} <span class="shop-group__count" data-group-count>{g.offerte.length}</span></h3>
+              <p class="shop-group__desc">{g.desc}</p>
+            </header>
+            <ul class="catalog__grid">
+              {g.offerte.map((o) => {
+                const area = areaOf(o);
+                return (
+                  <li class="prod" data-gruppo={g.id} data-area={area} data-slug={o.slug} data-text={`${o.titolo} ${o.lede} ${tipi[o.tipo].label} ${aree[area].label}`.toLowerCase()}>
+                    <a href={`/acquista/${o.slug}`} class="prod__link">
+                      <span class="prod__top">
+                        <span class="prod__icon"><ShopIcon name={icona(g.id)} /></span>
+                        <span class="prod__area">{aree[area].label}</span>
+                      </span>
+                      <span class="prod__tipo">{tipi[o.tipo].label}</span>
+                      <span class="prod__titolo">{o.titolo}</span>
+                      <span class="prod__lede">{o.lede}</span>
+                      <ul class="prod__meta" aria-label="In breve">
+                        {meta(o).map((m) => <li>{m}</li>)}
+                      </ul>
+                      <span class="prod__foot">
+                        <span class="prod__prezzo">
+                          {o.listino > o.prezzo && <s>{euro(o.listino)}</s>}
+                          <strong>{euro(o.prezzo)}</strong>
+                          <small>+ IVA · a {o.unita}</small>
+                        </span>
+                        <span class="prod__cta">Dettagli e ordine <span aria-hidden="true">→</span></span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
         ))}
       </div>
-      <p class="catalog__active" data-shop-active hidden>
-        <span data-shop-active-label></span>
-        <button type="button" data-shop-reset>Mostra tutto ×</button>
-      </p>
-
-      <ul class="catalog__grid">
-        {offerte.map((o) => (
-          <li class="prod" data-tipo={o.tipo} data-slug={o.slug} data-text={`${o.titolo} ${o.lede} ${tipi[o.tipo].label}`.toLowerCase()}>
-            <a href={`/acquista/${o.slug}`} class="prod__link">
-              <span class="prod__tipo">{tipi[o.tipo].label}</span>
-              <span class="prod__titolo">{o.titolo}</span>
-              <span class="prod__lede">{o.lede}</span>
-              <span class="prod__prezzo">
-                {o.listino > o.prezzo && <s>{euro(o.listino)}</s>}
-                <strong>{euro(o.prezzo)}</strong>
-                <small>+ IVA · a {o.unita}</small>
-              </span>
-              <span class="prod__cta">Dettagli e ordine <span aria-hidden="true">→</span></span>
-            </a>
-          </li>
-        ))}
-      </ul>
       <p class="catalog__empty" data-shop-empty hidden>
         Nessuna offerta corrisponde. Prova con un’altra parola, oppure <a href="/contatti">scrivici che cosa cerchi</a>.
       </p>
@@ -181,50 +235,121 @@ const faq = [
 <script>
   document.querySelectorAll<HTMLElement>("[data-shop]").forEach((root) => {
     const items = Array.from(root.querySelectorAll<HTMLElement>(".prod"));
-    const filters = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-shop-filter]"));
+    const groups = Array.from(root.querySelectorAll<HTMLElement>("[data-group]"));
+    const tipoBtns = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-shop-tipo]"));
+    const areaBtns = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-shop-area]"));
     const q = root.querySelector<HTMLInputElement>("[data-shop-q]")!;
     const empty = root.querySelector<HTMLElement>("[data-shop-empty]")!;
-    const active = root.querySelector<HTMLElement>("[data-shop-active]")!;
-    const activeLabel = root.querySelector<HTMLElement>("[data-shop-active-label]")!;
-    let tipo = "";
-    let slugs: string[] | null = null;
+    const summary = root.querySelector<HTMLElement>("[data-shop-summary]")!;
+    const goalPill = root.querySelector<HTMLElement>("[data-shop-active]")!;
+    const goalLabel = root.querySelector<HTMLElement>("[data-shop-active-label]")!;
+    const reset = root.querySelector<HTMLButtonElement>("[data-shop-reset]")!;
+    const goals = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-shop-goal]"));
+
+    // Stato dei filtri. `goal` è l'indice dell'obiettivo scelto più su, se questo ha un elenco
+    // fisso di offerte (-1 = nessuno); gli obiettivi per tipo diventano un normale filtro tipo.
+    const state = { tipo: "", area: "", q: "", goal: -1 };
+    const goalSlugs = () => (state.goal >= 0 ? goals[state.goal].dataset.shopSlugs!.split(",") : null);
+
+    // Un'offerta passa se rispetta tutti i filtri, tranne quello in `skip`. Serve per i
+    // conteggi: ogni chip dice quante offerte avrebbe *con gli altri filtri già attivi*.
+    const passes = (el: HTMLElement, skip?: "tipo" | "area") => {
+      const words = state.q.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      const slugs = goalSlugs();
+      return (
+        (skip === "tipo" || !state.tipo || el.dataset.gruppo === state.tipo) &&
+        (skip === "area" || !state.area || el.dataset.area === state.area) &&
+        (!slugs || slugs.includes(el.dataset.slug!)) &&
+        words.every((w) => el.dataset.text!.includes(w))
+      );
+    };
+
+    const setChip = (btn: HTMLButtonElement, count: number, pressed: boolean) => {
+      btn.querySelector(".catalog__count")!.textContent = String(count);
+      btn.setAttribute("aria-pressed", String(pressed));
+      btn.disabled = count === 0 && !pressed; // nessuna offerta con questa combinazione
+    };
 
     const apply = () => {
-      const words = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
       let n = 0;
       for (const el of items) {
-        const ok =
-          (!tipo || el.dataset.tipo === tipo) &&
-          (!slugs || slugs.includes(el.dataset.slug!)) &&
-          words.every((w) => el.dataset.text!.includes(w));
+        const ok = passes(el);
         el.hidden = !ok;
         if (ok) n++;
       }
+      // Una sezione senza offerte visibili sparisce; il numero nel titolo segue i filtri.
+      for (const g of groups) {
+        const k = g.querySelectorAll(".prod:not([hidden])").length;
+        g.hidden = k === 0;
+        g.querySelector("[data-group-count]")!.textContent = String(k);
+      }
+      // Con un obiettivo a elenco fisso nessun chip risulta "premuto".
+      const custom = state.goal >= 0;
+      for (const b of tipoBtns) {
+        const v = b.dataset.shopTipo!;
+        setChip(b, items.filter((el) => passes(el, "tipo") && (!v || el.dataset.gruppo === v)).length, !custom && state.tipo === v);
+      }
+      for (const b of areaBtns) {
+        const v = b.dataset.shopArea!;
+        setChip(b, items.filter((el) => passes(el, "area") && (!v || el.dataset.area === v)).length, !custom && state.area === v);
+      }
+
       empty.hidden = n > 0;
-      for (const f of filters) f.setAttribute("aria-pressed", String(!slugs && f.dataset.shopFilter === tipo));
+      summary.textContent = n === items.length ? `${n} offerte` : `${n} ${n === 1 ? "offerta" : "offerte"} su ${items.length}`;
+      goalPill.hidden = !custom;
+      if (custom) goalLabel.textContent = goals[state.goal].dataset.shopGoalLabel!;
+      reset.hidden = !(state.tipo || state.area || state.q.trim() || custom);
     };
 
-    const setTipo = (t: string) => {
-      tipo = t;
-      slugs = null;
-      active.hidden = true;
-      apply();
+    // Lo stato sta nell'URL: tornando indietro da una scheda prodotto i filtri restano.
+    const sync = () => {
+      const p = new URLSearchParams();
+      if (state.tipo) p.set("tipo", state.tipo);
+      if (state.area) p.set("argomento", state.area);
+      if (state.q.trim()) p.set("q", state.q.trim());
+      if (state.goal >= 0) p.set("obiettivo", String(state.goal));
+      const s = p.toString();
+      history.replaceState(null, "", location.pathname + (s ? `?${s}` : "") + location.hash);
     };
-    for (const f of filters) f.addEventListener("click", () => setTipo(f.dataset.shopFilter!));
-    q.addEventListener("input", apply);
-    root.querySelector("[data-shop-reset]")!.addEventListener("click", () => setTipo(""));
+    const set = (patch: Partial<typeof state>) => {
+      Object.assign(state, { goal: -1 }, patch);
+      apply();
+      sync();
+    };
+
+    for (const b of tipoBtns) b.addEventListener("click", () => set({ tipo: b.dataset.shopTipo! }));
+    for (const b of areaBtns) b.addEventListener("click", () => set({ area: b.dataset.shopArea! }));
+    q.addEventListener("input", () => {
+      state.q = q.value;
+      apply();
+      sync();
+    });
+    reset.addEventListener("click", () => {
+      q.value = "";
+      set({ tipo: "", area: "", q: "" });
+    });
 
     // Le scelte "Che cosa vuoi ottenere?" filtrano il catalogo prima di scorrerci.
-    document.querySelectorAll<HTMLAnchorElement>("[data-shop-goal]").forEach((a) => {
+    goals.forEach((a, i) =>
       a.addEventListener("click", () => {
         q.value = "";
-        tipo = a.dataset.shopGoal!;
-        slugs = a.dataset.shopSlugs ? a.dataset.shopSlugs.split(",") : null;
-        active.hidden = !slugs;
-        activeLabel.textContent = `Obiettivo: ${a.dataset.shopGoalLabel}`;
-        apply();
-      });
-    });
+        set({ tipo: a.dataset.shopGoal!, area: "", q: "", goal: a.dataset.shopSlugs ? i : -1 });
+      }),
+    );
+
+    // Stato iniziale dall'URL (si ignorano valori che non esistono).
+    const params = new URLSearchParams(location.search);
+    const pick = (btns: HTMLButtonElement[], key: string, attr: "shopTipo" | "shopArea") => {
+      const v = params.get(key) ?? "";
+      return btns.some((b) => b.dataset[attr] === v) ? v : "";
+    };
+    state.tipo = pick(tipoBtns, "tipo", "shopTipo");
+    state.area = pick(areaBtns, "argomento", "shopArea");
+    state.q = params.get("q") ?? "";
+    q.value = state.q;
+    const g = Number(params.get("obiettivo") ?? -1);
+    state.goal = Number.isInteger(g) && g >= 0 && g < goals.length && goals[g].dataset.shopSlugs ? g : -1;
+    apply();
   });
 </script>
 
@@ -313,8 +438,25 @@ const faq = [
     color: var(--color-ink);
     outline: none;
   }
-  .catalog__filters { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-bottom: var(--space-lg); }
+  /* Filtri: una riga per tipo, una per argomento, poi il numero di risultati.
+     I numeri nei chip dicono quante offerte darebbe ogni scelta con gli altri filtri attivi. */
+  .catalog__bar { display: grid; gap: var(--space-xs); margin-bottom: var(--space-xl); }
+  .catalog__facet { display: flex; align-items: center; gap: var(--space-sm); }
+  .catalog__facet-label {
+    flex: none;
+    width: 6rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .catalog__chips { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
   .catalog__filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
     font: inherit;
     font-size: var(--text-sm);
     font-weight: 500;
@@ -326,28 +468,66 @@ const faq = [
     cursor: pointer;
     transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }
-  .catalog__filter:hover { border-color: var(--color-accent); }
+  .catalog__filter:hover:not(:disabled) { border-color: var(--color-accent); }
   .catalog__filter[aria-pressed="true"] { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-paper); }
-  .catalog__count { font-family: var(--font-mono); font-size: 0.85em; opacity: 0.6; margin-left: 0.25em; }
-  .catalog__active { display: flex; gap: var(--space-sm); align-items: center; margin: calc(-1 * var(--space-sm)) 0 var(--space-lg); font-weight: 500; color: var(--color-accent); }
-  .catalog__active[hidden] { display: none; }
-  .catalog__active button { font: inherit; font-size: var(--text-sm); background: none; border: 0; color: var(--color-ink-2); text-decoration: underline; cursor: pointer; }
+  .catalog__filter:disabled { opacity: 0.4; cursor: not-allowed; }
+  .catalog__dot { flex: none; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--area, var(--color-accent)); }
+  .catalog__count { font-family: var(--font-mono); font-size: 0.85em; opacity: 0.6; }
+  .catalog__summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2xs) var(--space-md);
+    margin: var(--space-2xs) 0 0;
+    padding-left: calc(6rem + var(--space-sm));
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+  }
+  .catalog__goal { color: var(--color-accent); font-weight: 500; }
+  .catalog__goal[hidden], .catalog__reset[hidden] { display: none; }
+  .catalog__reset { font: inherit; font-size: var(--text-sm); background: none; border: 0; color: var(--color-ink-2); text-decoration: underline; cursor: pointer; }
 
+  /* Colore dell'argomento: pallino nel chip, riga in cima alla card */
+  :is(.prod, .catalog__filter)[data-area="sicurezza"] { --area: #2563eb; }
+  :is(.prod, .catalog__filter)[data-area="alimentare"] { --area: #d97706; }
+  :is(.prod, .catalog__filter)[data-area="privacy"] { --area: #6366f1; }
+  :is(.prod, .catalog__filter)[data-area="agevolazioni"] { --area: #0891b2; }
+
+  /* Sezioni per tipo: con "Tutto" le card non si mescolano più */
+  .catalog__groups { display: grid; gap: var(--space-2xl); }
+  .shop-group[hidden] { display: none; }
+  .shop-group__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2xs) var(--space-lg);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .shop-group__title { display: flex; align-items: baseline; gap: var(--space-xs); margin: 0; font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.015em; }
+  .shop-group__count { font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 500; color: var(--color-muted); }
+  .shop-group__desc { margin: 0; max-width: 60ch; font-size: var(--text-sm); color: var(--color-ink-2); }
+
+  /* ───── Card prodotto ───── */
   .catalog__grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-md);
   }
   .prod[hidden] { display: none; }
   .prod__link {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
     height: 100%;
     padding: var(--space-lg);
+    overflow: hidden;
     background: var(--color-surface);
     border: 1px solid var(--color-rule);
     border-radius: var(--radius-card);
@@ -355,15 +535,31 @@ const faq = [
     text-decoration: none;
     transition: border-color var(--dur-fast) var(--ease-out), transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
   }
+  .prod__link::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: var(--area, var(--color-accent)); }
   .prod__link:hover { border-color: var(--color-accent); transform: translateY(-3px); box-shadow: var(--shadow-lift); text-decoration: none; }
+  .prod__top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); margin-bottom: var(--space-2xs); }
+  .prod__icon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 10px; background: var(--color-accent-soft); color: var(--color-accent); }
+  .prod__area { display: inline-flex; align-items: center; gap: 0.45em; font-size: var(--text-xs); font-weight: 600; color: var(--color-ink-2); text-align: right; }
+  .prod__area::before { content: ""; flex: none; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--area, var(--color-accent)); }
   .prod__tipo { font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent); }
   .prod__titolo { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 500; letter-spacing: -0.01em; line-height: 1.25; }
   .prod__lede { font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.5; }
-  .prod__prezzo { margin-top: auto; padding-top: var(--space-sm); display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2em 0.5em; border-top: 1px solid var(--color-rule); }
+  .prod__meta { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin: var(--space-2xs) 0 0; padding: 0; }
+  .prod__meta li {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-2);
+    background: var(--color-paper-2);
+    border: 1px solid var(--color-rule);
+    border-radius: 10px; /* non tondo del tutto: la modalità può andare su due righe */
+    padding: 0.25em 0.75em;
+  }
+  .prod__foot { margin-top: auto; padding-top: var(--space-sm); border-top: 1px solid var(--color-rule); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-xs) var(--space-md); }
+  .prod__prezzo { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2em 0.5em; }
   .prod__prezzo s { color: var(--color-muted); font-size: var(--text-sm); }
   .prod__prezzo strong { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.01em; }
-  .prod__prezzo small { font-size: var(--text-xs); color: var(--color-muted); }
-  .prod__cta { font-size: var(--text-sm); font-weight: 600; color: var(--color-accent); }
+  .prod__prezzo small { flex-basis: 100%; font-size: var(--text-xs); color: var(--color-muted); }
+  .prod__cta { font-size: var(--text-sm); font-weight: 600; color: var(--color-accent); white-space: nowrap; }
   .prod__cta span { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
   .prod__link:hover .prod__cta span { transform: translateX(3px); }
   .catalog__empty { padding: var(--space-xl); text-align: center; color: var(--color-ink-2); }
@@ -389,6 +585,7 @@ const faq = [
 
   @media (max-width: 64rem) {
     .goals__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .catalog__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .how__grid { grid-template-columns: 1fr; gap: var(--space-lg); }
   }
   @media (max-width: 56rem) {
@@ -397,6 +594,21 @@ const faq = [
   }
   @media (max-width: 40rem) {
     .goals__list { grid-template-columns: 1fr; }
+    .catalog__grid { grid-template-columns: 1fr; }
     .catalog__search { flex-basis: 100%; }
+    /* i filtri diventano due righe scorrevoli in orizzontale: occupano poco schermo */
+    .catalog__facet { flex-direction: column; align-items: stretch; gap: var(--space-2xs); }
+    .catalog__facet-label { width: auto; }
+    .catalog__chips {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      margin-inline: calc(-1 * var(--page-gutter));
+      padding: 0 var(--page-gutter) 0.25rem;
+      scrollbar-width: none;
+    }
+    .catalog__chips::-webkit-scrollbar { display: none; }
+    .catalog__filter { flex: none; }
+    .catalog__summary { padding-left: 0; }
+    .shop-group__head { flex-direction: column; align-items: flex-start; }
   }
 </style>
