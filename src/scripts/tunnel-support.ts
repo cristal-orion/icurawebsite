@@ -14,7 +14,7 @@ const WHY: Record<string, string> = {
   "low-end": "dispositivo con poca CPU o memoria",
   "no-webgl2": "WebGL2 non disponibile (accelerazione hardware spenta?)",
   "software-gl": "WebGL gira in software (accelerazione hardware spenta o GPU non supportata)",
-  "slow-fps": "il 3D girava sotto i 25 fps",
+  "slow-fps": "il 3D è rimasto lento a lungo (sotto i 20 fps)",
   "context-lost": "il contesto WebGL è stato perso",
   "scene-error": "scena non creata",
 };

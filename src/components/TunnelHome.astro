@@ -285,24 +285,32 @@ const N = labels.length;
     let prev = performance.now();
     let active = false;
 
-    // Guardia sulle prestazioni: se il tunnel gira sotto ~25 fps (pc vecchio, GPU in
-    // difficoltà) si torna alla colonna di card invece di farlo scattare. Si usa la
-    // mediana degli intervalli tra frame: un singolo scatto non fa scattare l'allarme.
-    const SLOW = 1000 / 25;
-    const VERY_SLOW = 1000 / 15;
-    const SAMPLE = 30;
+    // Guardia sulle prestazioni: si torna alla colonna solo se il tunnel resta davvero
+    // lento a lungo (pc vecchio, GPU in difficoltà), non per un rallentamento passeggero.
+    // Si usa la mediana degli intervalli tra frame, così un singolo scatto non conta, e
+    // servono più finestre di fila: ~6 s sotto i 20 fps oppure ~8 s sotto i 10 fps.
+    const SLOW = 1000 / 20;
+    const VERY_SLOW = 1000 / 10;
+    const SAMPLE = 40;
     const intervals: number[] = [];
-    let since = 0; // il primo istante dopo l'ingresso a schermo non conta (immagini, font)
+    let since = 0; // dopo ogni interruzione si ricomincia a misurare da capo
     let slowRuns = 0;
+    let verySlowRuns = 0;
+    function restartSampling() {
+      since = performance.now();
+      intervals.length = 0;
+      slowRuns = verySlowRuns = 0;
+    }
     function watchFps(now: number, ms: number) {
-      if (now - since < 700) return;
+      if (now - since < 1000) return; // il primo secondo non conta (immagini, font)
       intervals.push(ms);
       if (intervals.length < SAMPLE) return;
       intervals.sort((a, b) => a - b);
       const median = intervals[SAMPLE >> 1];
       intervals.length = 0;
       slowRuns = median > SLOW ? slowRuns + 1 : 0;
-      if (median > VERY_SLOW || slowRuns >= 2) downgrade("slow-fps");
+      verySlowRuns = median > VERY_SLOW ? verySlowRuns + 1 : 0;
+      if (verySlowRuns >= 2 || slowRuns >= 3) downgrade("slow-fps");
     }
 
     function tick(now: number) {
@@ -361,9 +369,8 @@ const N = labels.length;
     const io = new IntersectionObserver(([e]) => {
       active = e.isIntersecting;
       if (active) {
-        prev = since = performance.now();
-        intervals.length = 0;
-        slowRuns = 0;
+        prev = performance.now();
+        restartSampling();
         scene.start();
         raf = requestAnimationFrame(tick);
       } else { scene.stop(); cancelAnimationFrame(raf); }
@@ -402,6 +409,12 @@ const N = labels.length;
     }
     canvas.addEventListener("webglcontextlost", (e) => { e.preventDefault(); downgrade("context-lost"); }, { signal });
 
+    // Cambio di scheda o finestra, ridimensionamento, condivisione schermo che parte:
+    // rallentamenti passeggeri, non devono contare nella misura.
+    document.addEventListener("visibilitychange", restartSampling, { signal });
+    window.addEventListener("blur", restartSampling, { signal });
+    window.addEventListener("focus", restartSampling, { signal });
+    window.addEventListener("resize", restartSampling, { signal });
     window.addEventListener("resize", layout, { signal });
     layout();
     cam = target();
