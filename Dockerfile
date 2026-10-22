@@ -19,7 +19,15 @@ RUN printf 'server {\n\
     root /usr/share/nginx/html;\n\
     index index.html;\n\
 \n\
+    # Gli asset di Astro hanno un hash nel nome: si possono tenere per sempre.\n\
+    location /_astro/ {\n\
+        add_header Cache-Control "public, max-age=31536000, immutable";\n\
+    }\n\
+\n\
+    # Tutto il resto (HTML compreso) si rivalida a ogni visita con ETag: senza\n\
+    # Cache-Control il browser decide da solo e dopo un deploy tiene pagine vecchie.\n\
     location / {\n\
+        add_header Cache-Control "no-cache";\n\
         try_files $uri $uri/ =404;\n\
     }\n\
 \n\
