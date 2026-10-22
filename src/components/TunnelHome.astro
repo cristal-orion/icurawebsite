@@ -25,6 +25,10 @@ const N = labels.length;
       <span class="tunnel__hud-label" data-hud-label>{labels[0]}</span>
     </div>
     <p class="tunnel__hint" data-hint aria-hidden="true">Scorri per entrare <span>↓</span></p>
+    <a href="#contatto" class="tunnel__skip" data-skip aria-label="Salta le card e vai al modulo di contatto">
+      Vai in fondo
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 6 6 6-6M6 13l6 6 6-6" /></svg>
+    </a>
 
     <ol class="tunnel__cards" data-cards>
       {/* 01 · NUMERI */}
@@ -181,6 +185,7 @@ const N = labels.length;
     const hudBar = root.querySelector<HTMLElement>("[data-hud-bar]")!;
     const hudLabel = root.querySelector<HTMLElement>("[data-hud-label]")!;
     const hint = root.querySelector<HTMLElement>("[data-hint]")!;
+    const skip = root.querySelector<HTMLElement>("[data-skip]")!;
     const labels = cards.map((c) => c.querySelector(".eyebrow")?.textContent?.trim() ?? "");
     const N = cards.length;
 
@@ -277,6 +282,8 @@ const N = labels.length;
       }
       hudBar.style.transform = `scaleX(${Math.min(Math.max(c / (N - 1), 0), 1)})`;
       hint.classList.toggle("is-gone", c > -0.3);
+      // "Vai in fondo" non serve più arrivati all'ultima card: ha già il suo "Scrivici"
+      skip.classList.toggle("is-gone", c > N - 1.5);
       // la camera avanza per (N + 1) "tratte": un po' di tunnel prima e dopo le card
       scene.setProgress((c + 1.2) / (N + 2));
     }
@@ -438,7 +445,7 @@ const N = labels.length;
     color: var(--color-ink);
   }
   .tunnel__stage { position: relative; }
-  .tunnel__canvas, .tunnel__vignette, .tunnel__hud, .tunnel__hint { display: none; }
+  .tunnel__canvas, .tunnel__vignette, .tunnel__hud, .tunnel__hint, .tunnel__skip { display: none; }
   .tunnel__cards {
     list-style: none; margin: 0;
     padding: var(--space-2xl) var(--page-gutter);
@@ -525,6 +532,24 @@ const N = labels.length;
   .tunnel__hint span { display: inline-block; animation: hint 1.6s ease-in-out infinite; }
   .tunnel__hint.is-gone { opacity: 0; }
   @keyframes hint { 50% { transform: translateY(4px); } }
+
+  /* Salta le card: un normale link a #contatto (lo scroll morbido è già globale) */
+  .tunnel.is-3d .tunnel__skip {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    /* in alto a destra: in basso a destra ci sono la chat e, alla prima visita, il banner cookie */
+    position: absolute; right: var(--page-gutter); top: calc(var(--header-h) + var(--space-sm)); z-index: 2000;
+    padding: 0.6rem 1rem; border-radius: var(--radius-pill);
+    font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase;
+    color: #e2e8f0; text-decoration: none;
+    background: rgba(15, 23, 42, 0.72); border: 1px solid rgba(147, 197, 253, 0.35);
+    transition: opacity var(--dur-slow) var(--ease-out), background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .tunnel.is-3d .tunnel__skip:hover,
+  .tunnel.is-3d .tunnel__skip:focus-visible { background: var(--color-accent); border-color: var(--color-accent); color: #fff; text-decoration: none; }
+  .tunnel__skip svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform var(--dur-fast) var(--ease-out); }
+  .tunnel__skip:hover svg { transform: translateY(2px); }
+  /* visibility:hidden lo toglie anche dall'ordine di tabulazione */
+  .tunnel.is-3d .tunnel__skip.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
 
   /* ───────── CARD ───────── */
   .tcard {
@@ -653,6 +678,7 @@ const N = labels.length;
     .tcard__title { font-size: var(--text-2xl); margin-bottom: var(--space-md); }
     .tcard__title--xl { font-size: var(--text-3xl); }
     .tunnel.is-3d .tunnel__hud { display: none; }
+    .tunnel.is-3d .tunnel__skip { padding: 0.45rem 0.8rem; }
   }
   /* Nel tunnel la card deve stare in uno schermo solo; nella colonna può scorrere. */
   @media (max-width: 52rem) and (max-height: 50rem) {
