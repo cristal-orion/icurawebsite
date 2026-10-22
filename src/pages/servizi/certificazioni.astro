@@ -1,5 +1,6 @@
 ---
 import Base from "@layouts/Base.astro";
+import PageHero from "@components/PageHero.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
@@ -143,15 +144,11 @@ const correlati = [
   title="Certificazioni ISO 9001, 45001 e SOA a Napoli"
   description="Sistemi di gestione ISO 9001, 14001, 45001, 27001, 37001, parità di genere UNI/PdR 125 e attestazione SOA: consulenza fino all’audit. Napoli e Campania."
 >
-  <header class="page-header section">
-    <div class="container">
-      <p class="eyebrow">Servizi · 05</p>
-      <h1>Sistemi di gestione: certificazioni ISO, parità di genere e attestazione SOA.</h1>
-      <p class="lede">
-        Le certificazioni aprono gare, rassicurano i clienti e mettono ordine nei processi. Ti accompagniamo dall’analisi iniziale all’audit dell’organismo, e oltre. Dai valore a come lavori.
-      </p>
-    </div>
-  </header>
+  <PageHero>
+    <Fragment slot="eyebrow">Servizi · 05</Fragment>
+    <Fragment slot="title">Sistemi di gestione: certificazioni ISO, parità di genere e attestazione SOA.</Fragment>
+    <Fragment slot="lede">Le certificazioni aprono gare, rassicurano i clienti e mettono ordine nei processi. Ti accompagniamo dall’analisi iniziale all’audit dell’organismo, e oltre. Dai valore a come lavori.</Fragment>
+  </PageHero>
 
   <section class="section section--tight">
     <div class="container">
@@ -246,14 +243,4 @@ const correlati = [
 </Base>
 
 <style>
-  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
-  .page-header h1 {
-    font-size: var(--text-display-s);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 0.95;
-    margin-bottom: var(--space-md);
-  }
-  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 54ch; }
-
 </style>

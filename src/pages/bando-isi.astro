@@ -1,5 +1,6 @@
 ---
 import Base from "@layouts/Base.astro";
+import PageHero from "@components/PageHero.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
@@ -106,20 +107,11 @@ const correlati = [
   title="Bando ISI INAIL: contributi per la sicurezza"
   description="Bando ISI INAIL: contributi a fondo perduto per la sicurezza. Stato dell'edizione verificato, requisiti, punteggi e preparazione del progetto. iCuraImpresa, Napoli."
 >
-  <header class="page-header section">
-    <div class="container">
-      <p class="eyebrow">Finanza agevolata · Bando ISI</p>
-      <h1>Bando ISI INAIL.</h1>
-      <ul class="chips" aria-label="Aggiornamento">
-        <li>Edizione 2025: domande chiuse · edizione 2026 non ancora pubblicata (verificato al 7 ottobre 2026)</li>
-      </ul>
-      <p class="lede">
-        Contributi a fondo perduto per mettere in sicurezza macchinari, processi e ambienti di lavoro. Le risorse si assegnano a chi arriva preparato: il progetto si costruisce prima che il bando apra.
-      </p>
-    </div>
-  </header>
-
-  <hr class="rule" aria-hidden="true" />
+  <PageHero chips={["Edizione 2025: domande chiuse · edizione 2026 non ancora pubblicata (verificato al 7 ottobre 2026)"]} chipsLabel="Aggiornamento">
+    <Fragment slot="eyebrow">Finanza agevolata · Bando ISI</Fragment>
+    <Fragment slot="title">Bando ISI INAIL.</Fragment>
+    <Fragment slot="lede">Contributi a fondo perduto per mettere in sicurezza macchinari, processi e ambienti di lavoro. Le risorse si assegnano a chi arriva preparato: il progetto si costruisce prima che il bando apra.</Fragment>
+  </PageHero>
 
   <section class="section section--tight">
     <div class="container">
@@ -222,16 +214,6 @@ const correlati = [
 </Base>
 
 <style>
-  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
-  .page-header h1 {
-    font-size: var(--text-display-s);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 0.95;
-    margin-bottom: var(--space-md);
-  }
-  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 54ch; }
-
   .facts {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

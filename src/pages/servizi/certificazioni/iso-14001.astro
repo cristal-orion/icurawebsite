@@ -1,5 +1,6 @@
 ---
 import Base from "@layouts/Base.astro";
+import PageHero from "@components/PageHero.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
@@ -67,18 +68,11 @@ const correlati = [
   title="Certificazione ISO 14001 a Napoli"
   description="Sistema di gestione ambientale ISO 14001:2015: analisi iniziale, adempimenti, procedure e audit fino al certificato. Consulenza a Napoli e in Campania."
 >
-  <header class="page-header section">
-    <div class="container">
-      <a href="/servizi/certificazioni" class="breadcrumb-back">&larr; Torna a Certificazioni</a>
-      <p class="eyebrow">Certificazioni · Ambiente</p>
-      <h1>ISO 14001 — Ambiente.</h1>
-      <p class="lede">
-        Gestire l’ambiente, non solo dichiararlo. Un sistema che tiene sotto controllo rifiuti, scarichi, emissioni e consumi — e che vale punti nelle gare e riduzioni sulle garanzie.
-      </p>
-    </div>
-  </header>
-
-  <hr class="rule" aria-hidden="true" />
+  <PageHero back={{ href: "/servizi/certificazioni", label: "Torna a Certificazioni" }}>
+    <Fragment slot="eyebrow">Certificazioni · Ambiente</Fragment>
+    <Fragment slot="title">ISO 14001 — Ambiente.</Fragment>
+    <Fragment slot="lede">Gestire l’ambiente, non solo dichiararlo. Un sistema che tiene sotto controllo rifiuti, scarichi, emissioni e consumi — e che vale punti nelle gare e riduzioni sulle garanzie.</Fragment>
+  </PageHero>
 
   <section class="section section--tight">
     <div class="container">
@@ -163,25 +157,6 @@ const correlati = [
 </Base>
 
 <style>
-  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
-  .breadcrumb-back {
-    display: inline-block;
-    margin-bottom: var(--space-md);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--color-ink-2);
-    text-decoration: none;
-  }
-  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
-  .page-header h1 {
-    font-size: var(--text-display-s);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 0.95;
-    margin-bottom: var(--space-md);
-  }
-  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
-
   .two-col {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);

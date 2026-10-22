@@ -1,5 +1,6 @@
 ---
 import Base from "@layouts/Base.astro";
+import PageHero from "@components/PageHero.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
@@ -132,15 +133,11 @@ const correlati = [
   title="Corsi sicurezza sul lavoro a Napoli"
   description="Formazione lavoratori, preposti, dirigenti, RSPP, antincendio, primo soccorso e HACCP: in aula a Napoli, in azienda o a distanza. Attestati e scadenzario inclusi."
 >
-  <header class="page-header section">
-    <div class="container">
-      <p class="eyebrow">Servizi · 02</p>
-      <h1>Formazione sulla sicurezza: corsi obbligatori in aula, a distanza e in azienda.</h1>
-      <p class="lede">
-        Aula, formazione a distanza e corsi in azienda. Tutta la formazione obbligatoria sulla sicurezza, costruita sui ruoli reali della tua impresa e, quando i requisiti lo consentono, finanziata con i fondi che hai già versato. Il futuro cresce con le persone.
-      </p>
-    </div>
-  </header>
+  <PageHero>
+    <Fragment slot="eyebrow">Servizi · 02</Fragment>
+    <Fragment slot="title">Formazione sulla sicurezza: corsi obbligatori in aula, a distanza e in azienda.</Fragment>
+    <Fragment slot="lede">Aula, formazione a distanza e corsi in azienda. Tutta la formazione obbligatoria sulla sicurezza, costruita sui ruoli reali della tua impresa e, quando i requisiti lo consentono, finanziata con i fondi che hai già versato. Il futuro cresce con le persone.</Fragment>
+  </PageHero>
 
   <ServiceExtras part="aChi" id="formazione" items={aChi} />
 
@@ -275,16 +272,6 @@ const correlati = [
 </Base>
 
 <style>
-  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
-  .page-header h1 {
-    font-size: var(--text-display-s);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 0.95;
-    margin-bottom: var(--space-md);
-  }
-  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
-
   .corsi {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

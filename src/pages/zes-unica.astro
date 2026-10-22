@@ -1,5 +1,6 @@
 ---
 import Base from "@layouts/Base.astro";
+import PageHero from "@components/PageHero.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
@@ -116,20 +117,11 @@ const correlati = [
   title="ZES Unica Mezzogiorno 2026-2028: credito d'imposta"
   description="Credito d'imposta ZES Unica per gli investimenti al Sud: finestre 2026 e 2027, requisiti, importi minimi e documenti. Verifica dei requisiti con iCuraImpresa."
 >
-  <header class="page-header section">
-    <div class="container">
-      <p class="eyebrow">Finanza agevolata · ZES Unica</p>
-      <h1>ZES Unica Mezzogiorno 2026–2028.</h1>
-      <ul class="chips" aria-label="Aggiornamento">
-        <li>Finestra 2026 chiusa · integrativa 3–17 gennaio 2027 · finestra 2027: 31 marzo–30 maggio (verificato al 7 ottobre 2026)</li>
-      </ul>
-      <p class="lede">
-        Il credito d'imposta per chi investe nel Mezzogiorno, prorogato al 2028. Per le imprese della Campania resta una delle occasioni più forti: verifichiamo se puoi accedere e seguiamo tutta la pratica, finestra per finestra.
-      </p>
-    </div>
-  </header>
-
-  <hr class="rule" aria-hidden="true" />
+  <PageHero chips={["Finestra 2026 chiusa · integrativa 3–17 gennaio 2027 · finestra 2027: 31 marzo–30 maggio (verificato al 7 ottobre 2026)"]} chipsLabel="Aggiornamento">
+    <Fragment slot="eyebrow">Finanza agevolata · ZES Unica</Fragment>
+    <Fragment slot="title">ZES Unica Mezzogiorno 2026–2028.</Fragment>
+    <Fragment slot="lede">Il credito d'imposta per chi investe nel Mezzogiorno, prorogato al 2028. Per le imprese della Campania resta una delle occasioni più forti: verifichiamo se puoi accedere e seguiamo tutta la pratica, finestra per finestra.</Fragment>
+  </PageHero>
 
   <section class="section section--tight">
     <div class="container">
@@ -233,16 +225,6 @@ const correlati = [
 </Base>
 
 <style>
-  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
-  .page-header h1 {
-    font-size: var(--text-display-s);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 0.95;
-    margin-bottom: var(--space-md);
-  }
-  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 54ch; }
-
   .facts {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -1,9 +1,11 @@
 ---
 const { pathname } = Astro.url;
 // Nelle pagine con hero navy l'header parte scuro e torna chiaro appena si scorre.
-const darkTopPages = ["/", "/lavora-con-noi"];
+const darkTopPages = ["/", "/lavora-con-noi", "/bando-isi", "/zes-unica"];
 const darkTop =
-  darkTopPages.includes(pathname.replace(/\/$/, "") || "/") || pathname.startsWith("/acquista");
+  darkTopPages.includes(pathname.replace(/\/$/, "") || "/") ||
+  pathname.startsWith("/acquista") ||
+  pathname.startsWith("/servizi/"); // tutte le pagine servizio hanno PageHero
 // In home (tunnel 3D) l'header resta scuro sempre, per non rompere l'immersione.
 const darkAlways = pathname.replace(/\/$/, "") === "";
 const isActive = (path: string) =>

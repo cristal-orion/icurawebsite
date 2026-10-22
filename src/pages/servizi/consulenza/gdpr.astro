@@ -1,5 +1,6 @@
 ---
 import Base from "@layouts/Base.astro";
+import PageHero from "@components/PageHero.astro";
 import Placeholder from "@components/Placeholder.astro";
 import AreaGrid from "@components/AreaGrid.astro";
 import Steps from "@components/Steps.astro";
@@ -173,16 +174,11 @@ const ctaImg = {
 ---
 
 <Base title={c.title} description={c.description}>
-  <header class="page-header section">
-    <div class="container">
-      <a href="/servizi/consulenza" class="breadcrumb-back">&larr; Torna a Consulenza</a>
-      <p class="eyebrow">{eyebrow}</p>
-      <h1>{h1}</h1>
-      <p class="lede">{c.lede}</p>
-    </div>
-  </header>
-
-  <hr class="rule" aria-hidden="true" />
+  <PageHero back={{ href: "/servizi/consulenza", label: "Torna a Consulenza" }}>
+    <Fragment slot="eyebrow">{eyebrow}</Fragment>
+    <Fragment slot="title">{h1}</Fragment>
+    <Fragment slot="lede">{c.lede}</Fragment>
+  </PageHero>
 
   <section class="section section--tight">
     <div class="container">
@@ -267,25 +263,6 @@ const ctaImg = {
 </Base>
 
 <style>
-  .page-header { padding-block: var(--space-4xl) var(--space-xl); }
-  .breadcrumb-back {
-    display: inline-block;
-    margin-bottom: var(--space-md);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--color-ink-2);
-    text-decoration: none;
-  }
-  .breadcrumb-back:hover { color: var(--color-accent); text-decoration: none; }
-  .page-header h1 {
-    font-size: var(--text-display-s);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 0.95;
-    margin-bottom: var(--space-md);
-  }
-  .lede { font-size: var(--text-xl); color: var(--color-ink-2); max-width: 56ch; }
-
   .two-col {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);

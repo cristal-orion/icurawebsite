@@ -250,7 +250,7 @@ const structuredData = {
 
         // Candidati dentro <main>, esclusi quelli dell'hero (ha già la sua animazione).
         let items = Array.from(main.querySelectorAll(SELECTOR)).filter(
-          (el) => !el.closest(".hero-impact, .rot, [data-storia] .tl")
+          (el) => !el.closest(".hero-impact, .rot, .page-hero, [data-storia] .tl")
         );
 
         // Dedup: se un elemento è dentro un altro candidato, tieni solo il più esterno

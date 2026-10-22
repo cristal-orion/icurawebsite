@@ -1,0 +1,204 @@
+---
+// Hero delle pagine servizio: fondo navy con alone blu e griglia di punti che reagisce al
+// cursore (come la hero della home) e il titolo su una card bianca con tilt 3D. È la stessa
+// card del tunnel (TunnelHome.astro), ma ferma nella pagina: col mouse ruota verso il
+// puntatore e il testo "esce" dalla card; sui touch ondeggia piano; con "riduci movimento"
+// resta piatta.
+// Slot: eyebrow, title (contenuto dell'<h1>), lede. Prop `chips` per le note di aggiornamento.
+import DotGrid from "@components/DotGrid.astro";
+
+interface Props {
+  back?: { href: string; label: string };
+  chips?: string[];
+  chipsLabel?: string;
+}
+const { back, chips = [], chipsLabel = "Dettagli" } = Astro.props;
+---
+
+<header class="page-hero">
+  <DotGrid />
+  <div class="container page-hero__inner">
+    {back && <a href={back.href} class="page-hero__back"><span aria-hidden="true">←</span> {back.label}</a>}
+
+    <div class="page-hero__stage" data-hero-tilt>
+      <div class="page-hero__card">
+        <p class="eyebrow page-hero__eyebrow"><slot name="eyebrow" /></p>
+        <h1 class="page-hero__title"><slot name="title" /></h1>
+        <span class="page-hero__glare" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    {chips.length > 0 && (
+      <ul class="page-hero__chips" aria-label={chipsLabel}>
+        {chips.map((c) => <li>{c}</li>)}
+      </ul>
+    )}
+    <p class="page-hero__lede"><slot name="lede" /></p>
+  </div>
+</header>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-hero-tilt]").forEach((stage) => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const card = stage.firstElementChild as HTMLElement;
+    const canHover = matchMedia("(hover: hover)").matches;
+    const MAX_TILT = 8;
+    // `s` è lo stato mostrato, `t` il bersaglio verso cui si avvicina piano.
+    const s = { rx: 0, ry: 0, go: 0 };
+    const t = { rx: 0, ry: 0, go: 0 };
+    let raf = 0;
+    let last = 0;
+    let visible = true;
+
+    function frame(now: number) {
+      raf = 0;
+      if (!visible) return;
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      if (!canHover) {
+        const sec = now / 1000;
+        t.ry = Math.sin(sec * 0.9) * 6;
+        t.rx = Math.cos(sec * 0.7) * 4;
+        t.go = 0.6;
+        card.style.setProperty("--gx", `${((0.5 + t.ry / 12) * 100).toFixed(1)}%`);
+        card.style.setProperty("--gy", `${((0.5 - t.rx / 8) * 100).toFixed(1)}%`);
+      }
+      const k = 1 - Math.exp(-dt * 9);
+      s.rx += (t.rx - s.rx) * k;
+      s.ry += (t.ry - s.ry) * k;
+      s.go += (t.go - s.go) * k;
+      card.style.setProperty("--rx", `${s.rx.toFixed(2)}deg`);
+      card.style.setProperty("--ry", `${s.ry.toFixed(2)}deg`);
+      card.style.setProperty("--go", s.go.toFixed(3));
+
+      const settled = Math.abs(t.rx - s.rx) + Math.abs(t.ry - s.ry) + Math.abs(t.go - s.go) < 0.01;
+      if (canHover && settled && !t.go) {
+        // a riposo: via gli stili inline, la card torna com'era
+        ["--rx", "--ry", "--go", "--gx", "--gy"].forEach((p) => card.style.removeProperty(p));
+        s.rx = s.ry = s.go = 0;
+        return;
+      }
+      raf = requestAnimationFrame(frame);
+    }
+    const run = () => { if (!raf && visible) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+
+    if (canHover) {
+      stage.addEventListener("pointermove", (e) => {
+        if (e.pointerType === "touch") return;
+        const r = stage.getBoundingClientRect();
+        const gx = (e.clientX - r.left) / r.width;
+        const gy = (e.clientY - r.top) / r.height;
+        t.ry = (gx - 0.5) * 2 * MAX_TILT;
+        t.rx = (0.5 - gy) * 2 * MAX_TILT;
+        t.go = 1;
+        card.style.setProperty("--gx", `${(gx * 100).toFixed(1)}%`);
+        card.style.setProperty("--gy", `${(gy * 100).toFixed(1)}%`);
+        run();
+      });
+      stage.addEventListener("pointerleave", () => { t.rx = t.ry = t.go = 0; run(); });
+    }
+
+    // Fuori schermo non si anima (sui touch l'ondeggio è continuo).
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !canHover) run();
+    }).observe(stage);
+    if (!canHover) run();
+  });
+</script>
+
+<style>
+  .page-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background:
+      radial-gradient(ellipse 50% 70% at 82% 38%, color-mix(in srgb, var(--color-accent) 36%, transparent), transparent 70%),
+      radial-gradient(ellipse 32% 45% at 6% 100%, color-mix(in srgb, #6366f1 20%, transparent), transparent 70%),
+      var(--color-ink);
+    color: var(--color-paper);
+    padding-block: var(--space-2xl) var(--space-3xl);
+  }
+  .page-hero__inner { position: relative; }
+
+  .page-hero__back {
+    display: inline-block;
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: color-mix(in srgb, var(--color-paper) 72%, transparent);
+    text-decoration: none;
+  }
+  .page-hero__back:hover { color: #93c5fd; text-decoration: none; }
+
+  /* ───── Card bianca: stesso look delle card del tunnel ───── */
+  .page-hero__stage { width: fit-content; max-width: min(100%, 58rem); }
+  .page-hero__card {
+    position: relative;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 3.5vw, 3rem);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(147, 197, 253, 0.25), 0 0 60px -10px rgba(59, 130, 246, 0.35);
+  }
+  .page-hero__eyebrow { margin-bottom: var(--space-sm); }
+  .page-hero__title {
+    margin: 0;
+    font-size: clamp(2.25rem, 1.6rem + 3.2vw, 4.25rem);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    text-wrap: balance;
+    color: var(--color-ink);
+  }
+
+  /* riflesso azzurro che segue il puntatore (su bianco, il bianco non si vedrebbe) */
+  .page-hero__glare {
+    position: absolute; inset: 0; border-radius: inherit; overflow: hidden;
+    pointer-events: none;
+  }
+  .page-hero__glare::before {
+    content: ""; position: absolute; inset: -50%;
+    background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(59, 130, 246, 0.16), rgba(59, 130, 246, 0) 40%);
+    opacity: var(--go, 0);
+  }
+
+  /* Tilt e rilievo: solo con il movimento consentito. Senza, la card resta piatta. */
+  @media (prefers-reduced-motion: no-preference) {
+    .page-hero__card {
+      transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transform-style: preserve-3d;
+    }
+    .page-hero__eyebrow { transform: translateZ(24px); }
+    .page-hero__title { transform: translateZ(44px); }
+    .page-hero__glare { transform: translateZ(1px); }
+  }
+
+  .page-hero__chips {
+    list-style: none; margin: var(--space-lg) 0 0; padding: 0;
+    display: flex; flex-wrap: wrap; gap: var(--space-2xs);
+  }
+  .page-hero__chips li {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, var(--color-paper) 90%, transparent);
+    background: color-mix(in srgb, var(--color-paper) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-paper) 20%, transparent);
+    border-radius: var(--radius-pill);
+    padding: 0.4em 0.9em;
+  }
+
+  .page-hero__lede {
+    max-width: 56ch;
+    margin: var(--space-xl) 0 0;
+    font-size: var(--text-xl);
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--color-paper) 78%, transparent);
+  }
+
+  @media (max-width: 52rem) {
+    .page-hero { padding-block: var(--space-xl) var(--space-2xl); }
+    .page-hero__lede { margin-top: var(--space-lg); }
+  }
+</style>
