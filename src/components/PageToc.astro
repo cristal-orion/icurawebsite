@@ -1,0 +1,188 @@
+---
+// Indice della pagina: barra che resta sotto l'header mentre si scorre una pagina servizio
+// (sono lunghe: 7-8 schermate). Le voci si costruiscono da sole leggendo le sezioni della
+// pagina (eyebrow, o il titolo se l'eyebrow manca), così nessuna pagina va toccata.
+// Le sezioni ricorrenti hanno un'etichetta corta (il nome intero resta nel tooltip), così
+// su desktop le voci stanno tutte nella barra. Se non ci stanno (telefono, pagine lunghe)
+// compaiono le frecce per scorrere, e la voce accesa resta sempre in vista.
+---
+
+<nav class="page-toc" aria-label="In questa pagina" data-page-toc hidden>
+  <div class="container page-toc__inner">
+    <button type="button" class="page-toc__arrow page-toc__arrow--prev" data-toc-prev aria-label="Voci precedenti" tabindex="-1">‹</button>
+    <div class="page-toc__viewport" data-toc-viewport>
+      <ol class="page-toc__list" data-toc-list></ol>
+    </div>
+    <button type="button" class="page-toc__arrow page-toc__arrow--next" data-toc-next aria-label="Voci successive" tabindex="-1">›</button>
+  </div>
+  <span class="page-toc__progress" aria-hidden="true"><span data-toc-progress></span></span>
+</nav>
+
+<script>
+  // Etichette corte per le sezioni che tornano su tutte le pagine servizio.
+  const CORTE: Record<string, string> = {
+    "a chi si rivolge": "A chi",
+    "il bisogno": "Il bisogno",
+    "che cosa facciamo": "Servizi",
+    "che cosa consegniamo": "Cosa ricevi",
+    "chi fa che cosa": "Ruoli",
+    "come lavoriamo": "Metodo",
+    "domande frequenti": "FAQ",
+    "servizi correlati": "Correlati",
+    "spesso insieme a questo servizio": "Correlati",
+  };
+
+  const toc = document.querySelector<HTMLElement>("[data-page-toc]");
+  const list = toc?.querySelector<HTMLOListElement>("[data-toc-list]");
+  const viewport = toc?.querySelector<HTMLElement>("[data-toc-viewport]");
+  const main = document.querySelector("main") ?? document.body;
+  if (toc && list && viewport) {
+    // Sezioni con un titolo, dopo l'indice; fuori la banda finale di contatto e le fonti.
+    const sezioni = [...main.querySelectorAll<HTMLElement>("section")].filter((s) => {
+      if (!(toc.compareDocumentPosition(s) & Node.DOCUMENT_POSITION_FOLLOWING)) return false;
+      if (s.matches(".cta-band-section") || s.parentElement?.closest("section")) return false;
+      const h2 = s.querySelector("h2");
+      return !!h2 && !/^fonti/i.test(h2.textContent?.trim() ?? "");
+    });
+
+    const voci = sezioni.map((s, i) => {
+      const eyebrow = s.querySelector(".eyebrow")?.textContent?.trim();
+      const h2 = s.querySelector("h2")!.textContent!.trim().replace(/\.$/, "");
+      const pieno = eyebrow && eyebrow.length <= 40 ? eyebrow : h2;
+      const label = CORTE[pieno.toLowerCase()] ?? CORTE[h2.toLowerCase()] ?? pieno;
+      if (!s.id) s.id = `sez-${i + 1}`;
+      s.style.scrollMarginTop = "calc(var(--header-h) + 3.5rem)";
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `#${s.id}`;
+      a.className = "page-toc__link";
+      if (label !== pieno) a.title = pieno;
+      a.append(label);
+      li.append(a);
+      list.append(li);
+      return { s, a };
+    });
+
+    if (voci.length >= 3) {
+      toc.hidden = false;
+      const prev = toc.querySelector<HTMLButtonElement>("[data-toc-prev]")!;
+      const next = toc.querySelector<HTMLButtonElement>("[data-toc-next]")!;
+
+      // Frecce e sfumature solo quando c'è davvero altro da scorrere da quel lato.
+      const bordi = () => {
+        const max = viewport.scrollWidth - viewport.clientWidth;
+        const trabocca = max > 2;
+        toc.classList.toggle("is-overflow", trabocca);
+        toc.classList.toggle("can-prev", trabocca && viewport.scrollLeft > 2);
+        toc.classList.toggle("can-next", trabocca && viewport.scrollLeft < max - 2);
+      };
+      const passo = () => viewport.clientWidth * 0.7;
+      // dopo lo scorrimento morbido si riallineano frecce e sfumature anche senza evento scroll
+      const scorri = (dx: number) => { viewport.scrollBy({ left: dx, behavior: "smooth" }); setTimeout(bordi, 450); };
+      prev.addEventListener("click", () => scorri(-passo()));
+      next.addEventListener("click", () => scorri(passo()));
+      viewport.addEventListener("scroll", bordi, { passive: true });
+
+      // Voce accesa = l'ultima sezione il cui inizio ha superato la parte alta dello schermo.
+      let attiva = -1;
+      const bar = toc.querySelector<HTMLElement>("[data-toc-progress]")!;
+      const aggiorna = () => {
+        const soglia = innerHeight * 0.35;
+        let k = -1;
+        voci.forEach((v, i) => { if (v.s.getBoundingClientRect().top < soglia) k = i; });
+        if (k !== attiva) {
+          voci.forEach((v, i) => {
+            v.a.classList.toggle("is-active", i === k);
+            if (i === k) v.a.setAttribute("aria-current", "location");
+            else v.a.removeAttribute("aria-current");
+          });
+          if (k >= 0 && toc.classList.contains("is-overflow")) {
+            // la voce accesa resta visibile anche quando la barra scorre in orizzontale
+            const a = voci[k].a;
+            viewport.scrollTo({ left: a.offsetLeft - viewport.clientWidth / 2 + a.clientWidth / 2, behavior: "smooth" });
+          }
+          attiva = k;
+        }
+        const tot = document.documentElement.scrollHeight - innerHeight;
+        bar.style.transform = `scaleX(${tot > 0 ? Math.min(scrollY / tot, 1) : 0})`;
+      };
+      let raf = 0;
+      addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; aggiorna(); }); }, { passive: true });
+      addEventListener("resize", () => { bordi(); aggiorna(); });
+      bordi();
+      aggiorna();
+    }
+  }
+</script>
+
+<style>
+  /* Barra piena, un tono sopra il navy: la sfocatura resta solo all'header. */
+  .page-toc {
+    --t-bar: #111a2e;
+    position: sticky;
+    top: var(--header-h);
+    z-index: 30;
+    background: var(--t-bar);
+  }
+  .page-toc[hidden] { display: none; }
+  .page-toc__inner { position: relative; display: flex; align-items: center; min-height: 3.5rem; }
+
+  .page-toc__viewport {
+    flex: 1; min-width: 0;
+    overflow-x: auto; scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+  .page-toc__viewport::-webkit-scrollbar { display: none; }
+  /* sfumature sui lati solo dove c'è altro da vedere (maschera, non riempimento) */
+  .page-toc.can-next .page-toc__viewport { mask-image: linear-gradient(90deg, #000 calc(100% - 3rem), transparent); } /* taste-skill-ignore: segnala che la barra scorre */
+  .page-toc.can-prev .page-toc__viewport { mask-image: linear-gradient(90deg, transparent, #000 3rem); } /* taste-skill-ignore: segnala che la barra scorre */
+  .page-toc.can-prev.can-next .page-toc__viewport { mask-image: linear-gradient(90deg, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); } /* taste-skill-ignore: segnala che la barra scorre */
+
+  .page-toc__list {
+    list-style: none; margin: 0; padding: 0.5rem 0;
+    display: flex; gap: 0.25rem;
+    /* quando c'è spazio le voci si distribuiscono su tutta la barra */
+    justify-content: space-between;
+    width: max-content; min-width: 100%;
+  }
+  .page-toc__list :global(.page-toc__link) {
+    display: inline-flex; align-items: center;
+    padding: 0.5rem 0.95rem; border-radius: 999px;
+    font-size: var(--text-sm); font-weight: 500; white-space: nowrap;
+    color: #a5b4c8; text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+  }
+  .page-toc__list :global(.page-toc__link:hover) { color: #fff; background: #1c2742; text-decoration: none; }
+  .page-toc__list :global(.page-toc__link.is-active) { color: #fff; background: var(--color-accent); }
+  .page-toc__list :global(.page-toc__link:focus-visible) { outline: 2px solid #60a5fa; outline-offset: 2px; }
+
+  /* frecce: compaiono solo se le voci non stanno nella barra */
+  .page-toc__arrow {
+    display: none;
+    flex: none;
+    width: 2rem; height: 2rem;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: #1c2742;
+    color: #e2e8f0;
+    font-size: 1.15rem; line-height: 1;
+    cursor: pointer;
+    transition: opacity var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+  }
+  .page-toc__arrow:hover { background: var(--color-accent); }
+  .page-toc.is-overflow .page-toc__arrow { display: grid; }
+  .page-toc__arrow--prev { margin-right: 0.4rem; }
+  .page-toc__arrow--next { margin-left: 0.4rem; }
+  .page-toc:not(.can-prev) .page-toc__arrow--prev,
+  .page-toc:not(.can-next) .page-toc__arrow--next { opacity: 0.25; pointer-events: none; }
+
+  /* avanzamento nella pagina: una striscia piena sul bordo basso */
+  .page-toc__progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; }
+  .page-toc__progress span { display: block; height: 100%; background: var(--color-accent); transform-origin: left; transform: scaleX(0); }
+
+  @media (max-width: 52rem) {
+    .page-toc__inner { min-height: 3.1rem; }
+    .page-toc__list :global(.page-toc__link) { padding: 0.45rem 0.75rem; }
+  }
+</style>

@@ -1,0 +1,723 @@
+---
+// Home "schedario": un cassetto 3D di cartelle, una per area (più bandi e chi siamo).
+// Al passaggio la cartella si solleva; al clic esce dal cassetto e si apre al centro
+// come un fascicolo: dentro la copertina c'è l'area, nella tasca i servizi come fogli.
+// Tutto è HTML in CSS 3D (niente WebGL): testo nitido e indicizzabile.
+// Su mobile il cassetto diventa una pila e il fascicolo un pannello dal basso.
+// Stile: superfici piene a gradini di tono, niente gradienti, ombre, contorni o numerazioni.
+import DotGrid from "@components/DotGrid.astro";
+import { numeri, obiettivi, aree, bandi, passi } from "../data/home";
+import { menu } from "../data/menu";
+
+type Foglio = { t: string; k?: string; href?: string };
+type Cartella = {
+  id: string; titolo: string; slogan: string; desc: string;
+  img: string; alt: string; href: string; cta: string;
+  fogli: Foglio[]; numeri?: boolean; evidenza?: boolean;
+};
+
+const cartelle: Cartella[] = [
+  ...aree.map((a) => ({
+    id: a.href.split("/").pop()!,
+    titolo: a.titolo, slogan: a.slogan, desc: a.desc,
+    img: a.img, alt: a.alt, href: a.href,
+    cta: `Vai a ${a.titolo}`,
+    fogli: (menu.find((m) => m.href === a.href)?.voci ?? []).map((v) => ({ t: v.label, href: v.href })),
+  })),
+  {
+    id: "bandi", titolo: "Bandi e scadenze", slogan: "Sempre aggiornati, verificati su fonti ufficiali.",
+    desc: "Norme in vigore, agevolazioni aperte e prossime finestre: ti diciamo che cosa riguarda la tua impresa e che cosa fare adesso. Stato e date verificati al 7 ottobre 2026.",
+    img: "/images/bando-documenti-inail.webp", alt: "Documenti per il bando ISI INAIL", href: "/servizi/finanza-agevolata",
+    cta: "Vai alla finanza agevolata", evidenza: true,
+    fogli: bandi.map((b) => ({ t: b.titolo, k: `${b.badge}: ${b.cta.toLowerCase()}`, href: b.href })),
+  },
+  {
+    id: "chi-siamo", titolo: "Chi siamo", slogan: "Nove persone, guidate da un ingegnere.",
+    desc: "A Napoli dal 2014: un solo referente per sicurezza, formazione, engineering, certificazioni e bandi. Prima di iniziare, un preventivo scritto che dice che cosa è compreso e chi fa che cosa.",
+    img: "/images/chi-siamo-riunione-team.webp", alt: "Team di consulenti iCura Impresa in riunione operativa", href: "/chi-siamo",
+    cta: "Conosci il team", numeri: true,
+    fogli: passi.map((p) => ({ t: p.t, k: p.d })),
+  },
+];
+
+// Fondo di ogni cartella: blu accent mescolato al navy, più chiaro davanti e più scuro in
+// fondo. Senza bordi, sono questi gradini di tono a separare una cartella dall'altra.
+const mix = (p: number) => {
+  const a = [0x3b, 0x82, 0xf6], b = [0x0f, 0x17, 0x2a];
+  return "#" + a.map((v, k) => Math.round(v * p + b[k] * (1 - p)).toString(16).padStart(2, "0")).join(""); // taste-skill-ignore: è un colore esadecimale
+};
+const fondo = (c: Cartella, i: number) => (c.evidenza ? "var(--color-highlight)" : mix(0.6 - i * 0.065));
+
+// Obiettivi → cartelle da evidenziare (le aree linkate cadono dentro una cartella per prefisso).
+const goals = obiettivi.map((o) => ({
+  t: o.t,
+  ids: [...new Set(o.aree.map((a) => cartelle.find((c) => a.href.startsWith(c.href))?.id).filter(Boolean))].join(" "),
+}));
+
+const N = cartelle.length;
+---
+
+<section class="arch" data-arch style={`--n: ${N}`} aria-labelledby="arch-title">
+  <DotGrid />
+
+  <div class="arch__head">
+    <h1 id="arch-title" class="arch__h1">Un solo archivio per la tua impresa.</h1>
+    <p class="arch__lede">Consulenza e sicurezza sul lavoro, formazione, engineering, certificazioni e bandi: a Napoli dal 2014. Apri una cartella, dentro ogni servizio ha il suo foglio.</p>
+    <a href="#contatto" class="btn btn--primary arch__cta">Richiedi una consulenza <span class="btn__arrow" aria-hidden="true">→</span></a>
+  </div>
+
+  <div class="arch__stage" data-stage>
+    <div class="drawer" data-drawer>
+      <ul class="drawer__folders">
+        {cartelle.map((c, i) => (
+          <li class:list={["folder", { "folder--evidenza": c.evidenza }]} data-folder={c.id} style={`--i: ${i}; --ri: ${N - 1 - i}; --c: ${fondo(c, i)}`}>
+            <button type="button" class="folder__btn" data-open={c.id} aria-haspopup="dialog" aria-controls={`dossier-${c.id}`}>
+              <span class="folder__in">
+                <span class="folder__tab">{c.titolo}</span>
+                <span class="folder__body">
+                  <span class="folder__text">
+                    <span class="folder__title">{c.titolo}</span>
+                    <span class="folder__slogan">{c.slogan}</span>
+                  </span>
+                  <img class="folder__img" src={c.img} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async" />
+                </span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div class="drawer__side drawer__side--l" aria-hidden="true"></div>
+      <div class="drawer__side drawer__side--r" aria-hidden="true"></div>
+      <div class="drawer__front" aria-hidden="true">
+        <span class="drawer__plate">Archivio iCura Impresa</span>
+        <span class="drawer__handle"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="arch__goals" role="group" aria-labelledby="arch-goals-t">
+    <p id="arch-goals-t" class="arch__goals-label">Non sai da dove partire? Scegli un obiettivo.</p>
+    {goals.map((g) => <button type="button" class="arch__goal" data-goal={g.ids} aria-pressed="false">{g.t}</button>)}
+  </div>
+</section>
+
+{/* Fascicoli aperti: livello fisso spostato sotto <body> dallo script. */}
+<div class="dossiers" data-dossiers hidden>
+  <div class="dossiers__backdrop" data-close></div>
+  {cartelle.map((c, i) => (
+    <section class:list={["dossier", { "dossier--evidenza": c.evidenza }]} id={`dossier-${c.id}`} data-dossier={c.id} style={`--c: ${fondo(c, i)}`} role="dialog" aria-modal="true" aria-labelledby={`dossier-${c.id}-t`} inert>
+      <div class="dossier__cover">
+        <div class="dossier__front" aria-hidden="true">
+          <span class="dossier__tab">{c.titolo}</span>
+          <span class="dossier__front-title">{c.titolo}</span>
+          <span class="dossier__front-slogan">{c.slogan}</span>
+        </div>
+        <div class="dossier__back">
+          <img class="dossier__img" src={c.img} alt={c.alt} loading="lazy" decoding="async" />
+          <div class="dossier__copy">
+            <h2 id={`dossier-${c.id}-t`} class="dossier__title">{c.slogan}</h2>
+            <p class="dossier__desc">{c.desc}</p>
+            {c.numeri && (
+              <dl class="dossier__nums">{numeri.map((m) => <div><dt>{m.n}</dt><dd>{m.l}</dd></div>)}</dl>
+            )}
+            <a href={c.href} class="btn btn--primary dossier__cta">{c.cta} <span class="btn__arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="dossier__pocket">
+        <h3 class="dossier__count">{c.numeri ? "Come lavoriamo" : `Dentro il fascicolo ${c.titolo}`}</h3>
+        <ul class="dossier__sheets">
+          {c.fogli.map((f, j) => {
+            const Tag = f.href ? "a" : "div";
+            return (
+              <li style={`--s: ${j}`}>
+                <Tag class="sheet" href={f.href}>
+                  <span class="sheet__t">{f.t}</span>
+                  {f.k && <span class="sheet__k">{f.k}</span>}
+                  {f.href && <span class="sheet__go" aria-hidden="true">→</span>}
+                </Tag>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  ))}
+  <nav class="dossiers__bar" aria-label="Fascicoli">
+    <button type="button" class="dossiers__btn" data-step="-1">← <span data-prev-label></span></button>
+    <button type="button" class="dossiers__btn dossiers__btn--close" data-close>Chiudi</button>
+    <button type="button" class="dossiers__btn" data-step="1"><span data-next-label></span> →</button>
+  </nav>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-arch]");
+  const overlay = document.querySelector<HTMLElement>("[data-dossiers]");
+  if (root && overlay) {
+    const drawer = root.querySelector<HTMLElement>("[data-drawer]")!;
+    const stage = root.querySelector<HTMLElement>("[data-stage]")!;
+    const dossiers = [...overlay.querySelectorAll<HTMLElement>("[data-dossier]")];
+    const ids = dossiers.map((d) => d.dataset.dossier!);
+    const folderOf = (id: string) => root.querySelector<HTMLElement>(`[data-folder="${id}"]`)!;
+    const titleOf = (i: number) => folderOf(ids[(i + ids.length) % ids.length]).querySelector(".folder__title")!.textContent!;
+    const prevLabel = overlay.querySelector<HTMLElement>("[data-prev-label]")!;
+    const nextLabel = overlay.querySelector<HTMLElement>("[data-next-label]")!;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, reduce ? 0 : ms));
+
+    // Il livello dei fascicoli va sotto <body>: così posso rendere inerte tutto il resto.
+    document.body.append(overlay);
+    const outside = () => [...document.body.children].filter((el) => el !== overlay) as HTMLElement[];
+
+    let current = -1;
+    let busy = false;
+
+    // Tempi allineati alle transizioni CSS (vedi blocco FASCICOLO negli stili).
+    const PULL = 260, IN = 420, COVER = 820;
+
+    const show = async (i: number) => {
+      const d = dossiers[i];
+      current = i;
+      prevLabel.textContent = titleOf(i - 1);
+      nextLabel.textContent = titleOf(i + 1);
+      d.inert = false;
+      d.classList.add("is-in");
+      await wait(IN);
+      d.classList.add("is-open");
+      d.querySelector<HTMLElement>(".dossier__title")!.focus({ preventScroll: true });
+      await wait(COVER);
+    };
+
+    const hide = async () => {
+      const d = dossiers[current];
+      d.classList.remove("is-open");
+      await wait(COVER * 0.7);
+      d.classList.remove("is-in");
+      await wait(IN);
+      d.inert = true;
+    };
+
+    const open = async (i: number) => {
+      if (busy || current !== -1) return;
+      busy = true;
+      folderOf(ids[i]).classList.add("is-pulled");
+      overlay.hidden = false;
+      document.documentElement.classList.add("has-dossier");
+      outside().forEach((el) => (el.inert = true));
+      await wait(PULL);
+      await show(i);
+      busy = false;
+    };
+
+    const close = async () => {
+      if (busy || current === -1) return;
+      busy = true;
+      const id = ids[current];
+      await hide();
+      overlay.hidden = true;
+      document.documentElement.classList.remove("has-dossier");
+      outside().forEach((el) => (el.inert = false));
+      folderOf(id).classList.remove("is-pulled");
+      folderOf(id).querySelector<HTMLElement>("[data-open]")!.focus({ preventScroll: true });
+      current = -1;
+      busy = false;
+    };
+
+    const step = async (delta: number) => {
+      if (busy || current === -1) return;
+      busy = true;
+      const from = current;
+      await hide();
+      folderOf(ids[from]).classList.remove("is-pulled");
+      const to = (from + delta + ids.length) % ids.length;
+      folderOf(ids[to]).classList.add("is-pulled");
+      await show(to);
+      busy = false;
+    };
+
+    root.querySelectorAll<HTMLButtonElement>("[data-open]").forEach((btn) =>
+      btn.addEventListener("click", () => open(ids.indexOf(btn.dataset.open!))),
+    );
+    overlay.querySelectorAll("[data-close]").forEach((el) => el.addEventListener("click", close));
+    overlay.querySelectorAll<HTMLButtonElement>("[data-step]").forEach((btn) =>
+      btn.addEventListener("click", () => step(Number(btn.dataset.step))),
+    );
+    document.addEventListener("keydown", (e) => {
+      if (current === -1) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "ArrowLeft") step(-1);
+    });
+    // Le titolazioni ricevono il focus all'apertura, senza entrare nell'ordine di tabulazione.
+    dossiers.forEach((d) => d.querySelector<HTMLElement>(".dossier__title")!.setAttribute("tabindex", "-1"));
+
+    // Obiettivi: evidenziano le cartelle che servono, le altre si spengono.
+    const goalBtns = [...root.querySelectorAll<HTMLButtonElement>("[data-goal]")];
+    goalBtns.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const on = btn.getAttribute("aria-pressed") !== "true";
+        goalBtns.forEach((b) => b.setAttribute("aria-pressed", String(b === btn && on)));
+        const match = on ? btn.dataset.goal!.split(" ") : [];
+        drawer.classList.toggle("is-filtered", on);
+        ids.forEach((id) => folderOf(id).classList.toggle("is-match", match.includes(id)));
+      }),
+    );
+
+    // Il cassetto segue il cursore: lieve rotazione, interpolata a ogni frame. Verso l'alto
+    // si inclina di più (si guarda meglio dentro), così le linguette non si nascondono.
+    if (!reduce && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+      const tick = () => {
+        x += (tx - x) * 0.08;
+        y += (ty - y) * 0.08;
+        drawer.style.setProperty("--tilt-x", `${(y * 3).toFixed(2)}deg`);
+        drawer.style.setProperty("--tilt-y", `${(x * 9).toFixed(2)}deg`);
+        raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.001 ? requestAnimationFrame(tick) : 0;
+      };
+      const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
+      root.addEventListener("pointermove", (e) => {
+        const r = stage.getBoundingClientRect();
+        tx = Math.max(-1, Math.min(1, (e.clientX - r.left) / r.width * 2 - 1));
+        ty = Math.max(-1, Math.min(1, (e.clientY - r.top) / r.height * 2 - 1));
+        kick();
+      });
+      root.addEventListener("pointerleave", () => { tx = 0; ty = 0; kick(); });
+    }
+
+    // Entrata del cassetto quando entra in vista.
+    new IntersectionObserver(([e], io) => {
+      if (!e.isIntersecting) return;
+      root.classList.add("is-ready");
+      io.disconnect();
+    }, { threshold: 0.2 }).observe(stage);
+  }
+</script>
+
+<style>
+  /* ───────── HERO / ARCHIVIO ─────────
+     Desktop: testo, azione e obiettivi a sinistra, cassetto a destra. Sotto i 64rem una colonna. */
+  .arch {
+    --folder-w: 100%;
+    --folder-h: clamp(10rem, 42svh - 7rem, 15rem);
+    --tab-w: 12rem;
+    --tab-h: 2.5rem;
+    --gap: 44px;      /* profondità tra una cartella e l'altra */
+    --rise: 2.5rem;   /* ogni cartella più indietro sta più su: la sua linguetta resta tutta visibile */
+    --lift: 4.5rem;   /* quanto sale al passaggio */
+    --front-h: calc(var(--folder-h) * 0.5);
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: calc(100svh - var(--header-h));
+    display: grid;
+    grid-template-columns: minmax(20rem, 30rem) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas: "head stage" "goals stage";
+    align-content: center;
+    column-gap: clamp(var(--space-lg), 4vw, var(--space-2xl));
+    padding: var(--space-lg) max(var(--page-gutter), (100vw - var(--page-max)) / 2);
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .arch__head { grid-area: head; align-self: end; }
+  .arch__h1 {
+    font-family: var(--font-display); font-size: clamp(2.4rem, 1.5rem + 2.4vw, 3.75rem);
+    font-weight: 650; letter-spacing: -0.03em; line-height: 1; margin: 0;
+    color: var(--color-paper);
+  }
+  .arch__lede {
+    margin: var(--space-md) 0 0; max-width: 36ch;
+    font-size: var(--text-lg); line-height: 1.5;
+    color: color-mix(in srgb, var(--color-paper) 82%, transparent);
+  }
+  .arch__cta { margin-top: var(--space-lg); }
+
+  .arch__goals {
+    grid-area: goals; align-self: start;
+    margin: var(--space-xl) 0 0;
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2xs);
+  }
+  .arch__goals-label {
+    width: 100%; margin: 0 0 var(--space-3xs);
+    font-size: var(--text-md); font-weight: 600;
+    color: var(--color-paper);
+  }
+  .arch__goal {
+    font: inherit; font-size: var(--text-sm); cursor: pointer;
+    padding: 0.5rem 0.95rem; border: 0; border-radius: var(--radius-pill);
+    color: var(--color-paper);
+    background: var(--color-ink-inset);
+    transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .arch__goal:hover { background: #2a3a55; }
+  .arch__goal:active { transform: scale(0.97); }
+  .arch__goal:focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+  .arch__goal[aria-pressed="true"] { background: var(--color-accent); color: #fff; }
+
+  /* ───────── CASSETTO 3D ─────────
+     Lo spettatore sta sopra (perspective-origin alto): le cartelle in fondo salgono e
+     rimpiccioliscono. La prima cartella è la più vicina; le linguette scalano da sinistra a destra. */
+  .arch__stage {
+    grid-area: stage;
+    display: grid; place-items: end center;
+    padding-top: calc(var(--tab-h) + (var(--n) - 1) * var(--rise) + var(--lift) - 1rem);
+    perspective: 1500px;
+    perspective-origin: 50% -40%;
+  }
+  .drawer {
+    --tilt-x: 0deg; --tilt-y: 0deg;
+    position: relative;
+    width: var(--folder-w); height: var(--folder-h);
+    transform-style: preserve-3d;
+    transform: rotateX(calc(-12deg + var(--tilt-x))) rotateY(var(--tilt-y));
+  }
+  /* Le cartelle stanno tutte nella stessa cella: `order` le dipinge dalla più lontana alla
+     più vicina. Chrome fa l'hit-test in ordine di pittura anche in 3D, quindi senza questo
+     il clic su una linguetta finirebbe sulla cartella dietro. Il DOM (e il Tab) resta in ordine. */
+  .drawer__folders {
+    list-style: none; margin: 0; padding: 0;
+    position: absolute; inset: 0;
+    display: grid;
+    transform-style: preserve-3d;
+  }
+
+  .folder {
+    grid-area: 1 / 1;
+    order: var(--ri);
+    position: relative;
+    transform-style: preserve-3d;
+    transform: translate3d(0, calc(var(--i) * -1 * var(--rise)), calc(var(--i) * -1 * var(--gap)));
+    transition: transform 520ms var(--ease-out), opacity 400ms var(--ease-out), filter 400ms var(--ease-out);
+  }
+  .folder--evidenza { --ink: var(--color-ink); }
+  .drawer.is-filtered .folder:not(.is-match) { filter: saturate(0.3) brightness(0.5); }
+  .folder.is-pulled {
+    transform: translate3d(0, calc(var(--i) * -1 * var(--rise) - 130%), calc(var(--i) * -1 * var(--gap) + 160px));
+    opacity: 0;
+    transition-duration: 380ms, 300ms, 300ms;
+    transition-timing-function: var(--ease-in);
+  }
+
+  /* Il bottone resta fermo e fa da area di clic (corpo + linguetta, ::after); a salire è
+     solo la parte visibile (.folder__in, senza puntatore). Se salisse tutta la cartella,
+     coprirebbe le linguette dietro e resterebbe "agganciata" al cursore. */
+  .folder__btn {
+    all: unset; box-sizing: border-box;
+    position: absolute; inset: 0;
+    cursor: pointer;
+    transform-style: preserve-3d;
+  }
+  .folder__btn::after {
+    content: ""; position: absolute; bottom: 100%;
+    left: calc(var(--i) * (100% - var(--tab-w)) / (var(--n) - 1));
+    width: var(--tab-w); height: var(--tab-h);
+  }
+  .folder__btn:focus-visible .folder__tab { outline: 2px solid #93c5fd; outline-offset: 3px; }
+
+  /* Entrata: le cartelle salgono nel cassetto una dopo l'altra (sul livello interno, così
+     la transform della cartella resta libera per l'uscita). */
+  .folder__in {
+    --fill: var(--c);
+    position: absolute; inset: 0; display: block; pointer-events: none;
+    color: var(--ink, #fff);
+    translate: 0 60%; opacity: 0;
+  }
+  .arch.is-ready .folder__in {
+    translate: 0 0; opacity: 1;
+    transition: translate 900ms var(--ease-out), opacity 600ms var(--ease-out), transform 520ms var(--ease-out);
+    transition-delay: calc(var(--ri) * 70ms + 150ms), calc(var(--ri) * 70ms + 150ms), 0s;
+  }
+  .folder__btn:focus-visible .folder__in,
+  .drawer.is-filtered .folder.is-match .folder__in { transform: translateY(calc(-1 * var(--lift))); }
+  .folder__btn:focus-visible .folder__in { --fill: var(--color-accent); color: #fff; }
+  /* Solo con un puntatore vero: su touch l'hover resterebbe acceso dopo il tocco. */
+  @media (hover: hover) {
+    .folder__btn:hover .folder__in { transform: translateY(calc(-1 * var(--lift))); --fill: var(--color-accent); color: #fff; }
+    .folder__btn:hover .folder__body > * { opacity: 1; }
+  }
+
+  .folder__tab, .folder__body { background: var(--fill); transition: background var(--dur-base) var(--ease-out); }
+  .folder__tab {
+    position: absolute; bottom: calc(100% - 1px);
+    left: calc(var(--i) * (100% - var(--tab-w)) / (var(--n) - 1));
+    width: var(--tab-w); height: var(--tab-h);
+    display: flex; align-items: center;
+    padding: 0 1rem;
+    border-radius: 10px 10px 0 0;
+    font-size: 0.875rem; font-weight: 600; line-height: 1.1;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .folder__body {
+    position: absolute; inset: 0;
+    display: grid; grid-template-columns: minmax(0, 1fr) 36%; align-items: start; gap: var(--space-lg);
+    padding: var(--space-md) var(--space-lg) 0;
+    border-radius: 0 10px 10px 10px;
+  }
+  /* Delle cartelle dietro si vede solo una striscia: il contenuto compare quando salgono. */
+  .folder__body > * { opacity: 0; transition: opacity 300ms var(--ease-out); }
+  .folder:first-child .folder__body > *,
+  .folder__btn:focus-visible .folder__body > *,
+  .drawer.is-filtered .folder.is-match .folder__body > * { opacity: 1; }
+  .folder__text { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+  .folder__title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 650; letter-spacing: -0.015em; line-height: 1.1; }
+  .folder__slogan { font-size: var(--text-md); opacity: 0.82; }
+  /* La foto è "pinzata" dentro la cartella: il frontale del cassetto ne copre la parte bassa. */
+  .folder__img { width: 100%; height: calc(var(--folder-h) - var(--space-md)); object-fit: cover; display: block; }
+
+  /* Pareti e frontale del cassetto: superfici piene, un gradino sopra il fondo. */
+  .drawer__side {
+    position: absolute; bottom: 0;
+    width: calc((var(--n) + 1) * var(--gap) + 60px); height: var(--front-h);
+    transform-origin: 0 50%;
+    background: #172238;
+    pointer-events: none;
+  }
+  .drawer__side--l { left: 0; transform: translateZ(60px) rotateY(90deg); }
+  .drawer__side--r { left: 100%; transform: translateZ(60px) rotateY(90deg); }
+  .drawer__front {
+    position: absolute; left: -2px; right: -2px; bottom: -2px; height: var(--front-h);
+    transform: translateZ(60px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-sm);
+    border-radius: 6px 6px 12px 12px;
+    background: var(--color-ink-inset);
+    pointer-events: none;
+  }
+  .drawer__plate {
+    font-size: var(--text-md); font-weight: 600; letter-spacing: -0.01em;
+    color: color-mix(in srgb, var(--color-paper) 72%, transparent);
+  }
+  .drawer__handle { width: 9rem; height: 0.4rem; border-radius: var(--radius-pill); background: var(--color-accent); }
+
+  /* ───────── FASCICOLO APERTO ─────────
+     Stati: [chiuso, sotto lo schermo] → .is-in (chiuso, al centro) → .is-open (copertina
+     girata a sinistra, fogli fuori). Ritardi diversi in andata e ritorno: all'apertura
+     prima arriva la cartella e poi si apre, alla chiusura il contrario.
+     Fuori la cartella è blu come nel cassetto; dentro è carta chiara. */
+  .dossiers {
+    position: fixed; inset: 0; z-index: 200;
+    display: grid; place-items: center;
+    perspective: 2200px;
+  }
+  .dossiers[hidden] { display: none; }
+  :global(html.has-dossier) { overflow: hidden; }
+  .dossiers__backdrop {
+    position: absolute; inset: 0;
+    background: rgba(2, 6, 23, 0.84);
+    animation: dossier-fade 300ms var(--ease-out);
+  }
+  @keyframes dossier-fade { from { opacity: 0; } }
+
+  .dossier {
+    --dw: min(70rem, calc(100vw - 4rem));
+    --dh: min(38rem, calc(100svh - 9rem));
+    position: absolute;
+    width: var(--dw); height: var(--dh);
+    display: grid; grid-template-columns: 1fr 1fr;
+    transform-style: preserve-3d;
+    transform: translate3d(-25%, 70vh, -200px) rotateX(55deg) scale(0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 420ms var(--ease-in), opacity 300ms var(--ease-in), visibility 0s 420ms;
+  }
+  .dossier--evidenza { --ink: var(--color-ink); }
+  .dossier.is-in {
+    transform: translate3d(-25%, 0, 0);
+    opacity: 1; visibility: visible;
+    transition: transform 420ms var(--ease-out), opacity 250ms var(--ease-out), visibility 0s;
+  }
+  .dossier.is-open { transform: translate3d(0, 0, 0); transition: transform 820ms var(--ease-in-out); }
+
+  .dossier__cover, .dossier__pocket { grid-area: 1 / 2; }
+  .dossier__cover {
+    position: relative; z-index: 2;
+    transform-style: preserve-3d;
+    transform-origin: 0 50%;
+    transform: translateZ(2px);
+    transition: transform 820ms var(--ease-in-out);
+  }
+  .dossier.is-open .dossier__cover { transform: translateZ(2px) rotateY(-180deg); }
+
+  .dossier__front, .dossier__back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 0 12px 12px 0;
+  }
+  .dossier__front {
+    display: flex; flex-direction: column; justify-content: flex-end; gap: var(--space-xs);
+    padding: var(--space-xl);
+    background: var(--c);
+    color: var(--ink, #fff);
+  }
+  .dossier__tab {
+    position: absolute; bottom: calc(100% - 1px); right: 2rem;
+    padding: 0.6rem 1.2rem; border-radius: 10px 10px 0 0;
+    font-size: var(--text-sm); font-weight: 600;
+    background: var(--c);
+  }
+  .dossier__front-title { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .dossier__front-slogan { font-size: var(--text-lg); opacity: 0.82; }
+
+  /* Interno della copertina: dopo il giro sta a sinistra, quindi l'angolo tondo va a sinistra. */
+  .dossier__back {
+    transform: rotateY(180deg);
+    border-radius: 12px 0 0 12px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    background: var(--color-paper-2);
+    color: var(--color-ink);
+  }
+  .dossier__img { width: 100%; height: 38%; object-fit: cover; flex: none; display: block; }
+  .dossier__copy { padding: var(--space-lg) var(--space-xl); display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .dossier__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.02em; line-height: 1.08; margin: 0 0 var(--space-sm); color: var(--color-ink); outline: none; }
+  .dossier__desc { font-size: var(--text-md); line-height: 1.55; color: var(--color-ink); margin: 0; max-width: 54ch; }
+  .dossier__nums { display: grid; grid-template-columns: repeat(4, auto); gap: var(--space-sm); margin: var(--space-md) 0 0; }
+  .dossier__nums dt { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); color: var(--color-ink); }
+  .dossier__nums dd { margin: 0; font-size: var(--text-sm); line-height: 1.3; color: var(--color-ink-2); }
+  .dossier__cta { margin-top: auto; align-self: flex-start; }
+
+  /* Tasca: un gradino di tono sotto l'interno della copertina, con i fogli bianchi sopra. */
+  .dossier__pocket {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: 0 12px 12px 0;
+    background: var(--color-paper-3);
+    color: var(--color-ink);
+    overflow: auto;
+  }
+  /* L'unica ombra della pagina: il fascicolo aperto galleggia davvero sopra il resto. */
+  .dossier.is-open .dossier__pocket,
+  .dossier.is-open .dossier__back { box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7); } /* taste-skill-ignore: dialogo aperto */
+  .dossier__count { font-size: var(--text-md); font-weight: 600; color: var(--color-ink); margin: 0 0 var(--space-sm); }
+  .dossier__sheets { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .dossier__sheets li {
+    opacity: 0;
+    translate: 40px 24px;
+    rotate: 3deg;
+    transition: translate 300ms var(--ease-in), opacity 200ms var(--ease-in), rotate 300ms var(--ease-in);
+  }
+  .dossier.is-open .dossier__sheets li {
+    opacity: 1; translate: 0 0;
+    rotate: calc((mod(var(--s), 3) - 1) * 0.6deg);
+    transition: translate 600ms var(--ease-out), opacity 400ms var(--ease-out), rotate 600ms var(--ease-out);
+    transition-delay: calc(560ms + var(--s) * 60ms);
+  }
+  .sheet {
+    display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: var(--space-sm);
+    padding: 0.85rem 1.1rem;
+    background: var(--color-surface);
+    color: var(--color-ink); text-decoration: none;
+    border-radius: 6px;
+    transition: transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+  }
+  a.sheet:focus-visible { transform: translateX(-10px); background: var(--color-accent-soft); text-decoration: none; }
+  @media (hover: hover) { a.sheet:hover { transform: translateX(-10px); background: var(--color-accent-soft); text-decoration: none; } }
+  a.sheet:active { transform: translateX(-10px) scale(0.99); }
+  .sheet__t { font-weight: 600; font-size: var(--text-md); line-height: 1.3; }
+  .sheet__k { grid-column: 1; font-size: var(--text-sm); color: var(--color-ink-2); line-height: 1.4; margin-top: 0.2rem; }
+  .sheet__go { grid-column: 2; grid-row: 1 / span 2; color: var(--color-accent); font-weight: 700; transition: transform var(--dur-base) var(--ease-out); }
+  a.sheet:hover .sheet__go { transform: translateX(4px); }
+
+  .dossiers__bar {
+    position: absolute; bottom: 1.25rem; left: 50%; translate: -50% 0;
+    display: flex; gap: var(--space-2xs);
+    animation: dossier-fade 400ms 400ms var(--ease-out) backwards;
+  }
+  .dossiers__btn {
+    font: inherit; font-size: var(--text-sm); cursor: pointer; white-space: nowrap;
+    padding: 0.6rem 1.1rem; border: 0; border-radius: var(--radius-pill);
+    color: var(--color-paper); background: var(--color-ink-inset);
+    transition: background var(--dur-base) var(--ease-out);
+  }
+  .dossiers__btn:hover { background: #2a3a55; }
+  .dossiers__btn:focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+  .dossiers__btn--close { background: var(--color-paper); color: var(--color-ink); font-weight: 600; }
+  .dossiers__btn--close:hover { background: #fff; }
+
+  /* ───────── SCHERMI MEDI ───────── */
+  @media (max-width: 80rem) {
+    .arch { --tab-w: 10.5rem; --gap: 36px; grid-template-columns: minmax(18rem, 25rem) minmax(0, 1fr); }
+    .folder__tab { font-size: 0.8125rem; padding: 0 0.75rem; }
+  }
+  @media (max-width: 64rem) {
+    .arch {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "head" "stage" "goals";
+      align-content: start;
+    }
+    .arch__stage { margin-top: var(--space-md); }
+    .arch__goals { margin-top: var(--space-lg); }
+    /* Mezza pagina stretta: fascicolo più alto, foto e titolo più contenuti. */
+    .dossier { --dh: min(46rem, calc(100svh - 8rem)); }
+    .dossier__img { height: 28%; }
+    .dossier__title { font-size: var(--text-xl); }
+    .dossier__copy, .dossier__pocket { padding: var(--space-md) var(--space-lg); }
+  }
+
+  /* ───────── MOBILE ─────────
+     Il cassetto diventa una pila: linguette alternate a destra e sinistra, la prima cartella
+     in alto. Il fascicolo arriva dal basso come pannello, senza copertina che gira. */
+  @media (max-width: 40rem) {
+    .arch {
+      --folder-h: 9rem;
+      --tab-w: 64%;
+      --tab-h: 2.5rem;
+      --rise: 3.1rem;
+      --gap: 10px;
+      --lift: 0.9rem;
+      --front-h: 3.4rem;
+      padding-top: var(--space-lg);
+    }
+    /* Niente prospettiva: in verticale le cartelle in fondo finirebbero sopra il titolo. */
+    .arch__stage { padding-top: calc(var(--tab-h) + (var(--n) - 1) * var(--rise) + 1rem); perspective: none; }
+    .drawer { transform: none; }
+    /* Ordine invertito: la prima sta in cima (più indietro), l'ultima davanti. */
+    .folder { order: var(--i); transform: translate3d(0, calc(var(--ri) * -1 * var(--rise)), calc(var(--ri) * -1 * var(--gap))); }
+    .folder.is-pulled { transform: translate3d(0, calc(var(--ri) * -1 * var(--rise)), calc(var(--ri) * -1 * var(--gap))); opacity: 0.4; }
+    .folder__tab, .folder__btn::after { left: calc(mod(var(--i), 2) * (100% - var(--tab-w))); }
+    .folder__body { padding: var(--space-sm); gap: var(--space-sm); border-radius: 10px; grid-template-columns: minmax(0, 1fr) 30%; }
+    /* Il nome è già sulla linguetta; il corpo si legge solo sulla cartella davanti. */
+    .folder__title { display: none; }
+    .folder:first-child .folder__body > * { opacity: 0; }
+    .folder:last-child .folder__body > * { opacity: 1; }
+    .folder__img { height: 4rem; }
+    .drawer__side { display: none; }
+    .drawer__plate { font-size: var(--text-sm); }
+    .drawer__handle { display: none; }
+
+    .dossiers { place-items: end center; perspective: none; }
+    .dossier {
+      --dw: 100vw; --dh: auto;
+      max-height: 88svh;
+      grid-template-columns: 1fr;
+      overflow-y: auto;
+      border-radius: 16px 16px 0 0;
+      background: var(--color-paper-2);
+      transform: translateY(100%);
+      opacity: 1;
+      padding-bottom: 4.5rem;
+    }
+    .dossier.is-in, .dossier.is-open { transform: none; }
+    .dossier__cover, .dossier__pocket { grid-area: auto; }
+    .dossier__cover, .dossier.is-open .dossier__cover { transform: none; }
+    .dossier__front { display: none; }
+    .dossier__back { position: static; transform: none; backface-visibility: visible; border-radius: 0; box-shadow: none !important; } /* taste-skill-ignore: toglie l'ombra */
+    .dossier__img { height: 11rem; }
+    .dossier__copy { padding: var(--space-md); }
+    .dossier__cta { margin-top: var(--space-md); }
+    .dossier__nums { grid-template-columns: repeat(2, auto); }
+    .dossier__pocket { border-radius: 0; padding: var(--space-md); overflow: visible; box-shadow: none !important; } /* taste-skill-ignore: toglie l'ombra */
+    .dossiers__bar { position: fixed; bottom: 0.75rem; }
+    .dossiers__btn [data-prev-label], .dossiers__btn [data-next-label] { display: none; }
+    /* Sul pannello chiaro il bottone chiaro sparirebbe. */
+    .dossiers__btn--close, .dossiers__btn--close:hover { background: var(--color-accent); color: #fff; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .folder, .folder__in, .dossier, .dossier__cover, .dossier__sheets li, .sheet { transition: none !important; }
+    .folder__in { translate: none; opacity: 1; }
+    .dossiers__backdrop, .dossiers__bar { animation: none; }
+  }
+</style>

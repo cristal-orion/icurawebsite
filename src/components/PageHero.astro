@@ -5,7 +5,9 @@
 // puntatore e il testo "esce" dalla card; sui touch ondeggia piano; con "riduci movimento"
 // resta piatta.
 // Slot: eyebrow, title (contenuto dell'<h1>), lede. Prop `chips` per le note di aggiornamento.
+// Sulle pagine /servizi/* sotto la hero compare l'indice della pagina (PageToc).
 import DotGrid from "@components/DotGrid.astro";
+import PageToc from "@components/PageToc.astro";
 
 interface Props {
   back?: { href: string; label: string };
@@ -13,6 +15,7 @@ interface Props {
   chipsLabel?: string;
 }
 const { back, chips = [], chipsLabel = "Dettagli" } = Astro.props;
+const conIndice = Astro.url.pathname.startsWith("/servizi/");
 ---
 
 <header class="page-hero">
@@ -36,6 +39,8 @@ const { back, chips = [], chipsLabel = "Dettagli" } = Astro.props;
     <p class="page-hero__lede"><slot name="lede" /></p>
   </div>
 </header>
+
+{conIndice && <PageToc />}
 
 <script>
   document.querySelectorAll<HTMLElement>("[data-hero-tilt]").forEach((stage) => {
