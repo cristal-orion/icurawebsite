@@ -37,83 +37,105 @@ export const tipi: Record<Tipo, { label: string; plurale: string }> = {
   servizio: { label: "Servizio a prezzo fisso", plurale: "Servizi a prezzo fisso" },
 };
 
-const fmt = new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR" });
-export const euro = (n: number) => fmt.format(n);
+// "1.450 €" e non "1450,00 €": separatore delle migliaia sempre, decimali solo se servono.
+const fmt = new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR", useGrouping: "always" } as Intl.NumberFormatOptions);
+const fmtTondo = new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR", useGrouping: "always", maximumFractionDigits: 0 } as Intl.NumberFormatOptions);
+export const euro = (n: number) => (Number.isInteger(n) ? fmtTondo : fmt).format(n);
 export const conIva = (n: number, iva = 22) => Math.round(n * (100 + iva)) / 100;
 
 // ── Come si organizza il catalogo ────────────────────────────────────────────
-// Due assi di filtro: il gruppo (che cosa compri) e l'argomento (per che cosa).
-// Il JSON del cliente non li ha: si ricavano qui, così nuove offerte finiscono
-// da sole nel posto giusto (l'argomento si legge dallo slug).
-export type Gruppo = "corsi" | "consulenze" | "servizi";
-export type Area = "sicurezza" | "alimentare" | "privacy" | "agevolazioni";
+// Cinque reparti, pensati come li cerca chi compra ("mi serve il DVR", "devo fare
+// l'HACCP"), non per tipo tecnico. Il JSON del cliente non li ha: si ricavano da
+// tipo e slug, così le offerte nuove finiscono da sole nel reparto giusto.
+export type Categoria = "formazione" | "documenti" | "haccp" | "privacy" | "consulenze";
+export type IconaShop = "formazione" | "sicurezza" | "haccp" | "privacy" | "consulenza";
 
-export const gruppi: Record<Gruppo, { label: string; desc: string; tipi: Tipo[] }> = {
-  corsi: {
-    label: "Corsi",
-    desc: "Con attestato: a calendario a Napoli o in videoconferenza, oppure in azienda.",
-    tipi: ["corso_calendario", "corso_azienda"],
+export const categorie: Record<Categoria, { label: string; breve: string; desc: string; icona: IconaShop }> = {
+  formazione: {
+    label: "Corsi sicurezza",
+    breve: "Corsi",
+    desc: "Lavoratori, antincendio, primo soccorso: in aula a Napoli, in videoconferenza o direttamente in azienda. Con attestato.",
+    icona: "formazione",
+  },
+  documenti: {
+    label: "Documenti sicurezza",
+    breve: "Documenti",
+    desc: "DVR, DUVRI, POS e nomine a prezzo fisso: invii il brief, ricevi il documento pronto entro la data indicata.",
+    icona: "sicurezza",
+  },
+  haccp: {
+    label: "Alimentare · HACCP",
+    breve: "HACCP",
+    desc: "Il corso per gli alimentaristi e il manuale di autocontrollo, nuovo o da aggiornare.",
+    icona: "haccp",
+  },
+  privacy: {
+    label: "Privacy e GDPR",
+    breve: "Privacy",
+    desc: "Informative, registro dei trattamenti, nomine e formazione del personale.",
+    icona: "privacy",
   },
   consulenze: {
-    label: "Consulenze",
-    desc: "Un tecnico in videochiamata: domande concrete e un riepilogo scritto.",
-    tipi: ["consulenza"],
-  },
-  servizi: {
-    label: "Servizi a prezzo fisso",
-    desc: "Perimetro chiaro: invii il brief, ricevi il documento o la pratica.",
-    tipi: ["servizio"],
+    label: "Consulenze in videochiamata",
+    breve: "Consulenze",
+    desc: "Un tecnico per 45–60 minuti su sicurezza, agevolazioni o fondi per la formazione, con un riepilogo scritto.",
+    icona: "consulenza",
   },
 };
 
-export const aree: Record<Area, { label: string }> = {
-  sicurezza: { label: "Sicurezza sul lavoro" },
-  alimentare: { label: "Alimentare · HACCP" },
-  privacy: { label: "Privacy e GDPR" },
-  agevolazioni: { label: "Agevolazioni e fondi" },
-};
+export const categoriaDi = (o: Offerta): Categoria =>
+  o.tipo === "consulenza" ? "consulenze"
+  : /haccp/.test(o.slug) ? "haccp"
+  : /privacy|trattament/.test(o.slug) ? "privacy"
+  : o.tipo === "corso_calendario" || o.tipo === "corso_azienda" ? "formazione"
+  : "documenti";
 
-export const gruppoDi = (t: Tipo): Gruppo =>
-  (Object.keys(gruppi) as Gruppo[]).find((g) => gruppi[g].tipi.includes(t))!;
-
-export const areaOf = (o: Offerta): Area =>
-  /privacy|trattament/.test(o.slug) ? "privacy"
-  : /haccp/.test(o.slug) ? "alimentare"
-  : /finanza|fondi/.test(o.slug) ? "agevolazioni"
-  : "sicurezza";
-
-// Ordine di lettura dentro ogni gruppo: prima l'argomento, poi i temi vicini
-// (un corso e il suo aggiornamento stanno accanto). Le offerte nuove vanno in fondo.
+// Ordine di lettura dentro ogni reparto: un corso e il suo aggiornamento stanno
+// accanto, il documento "nuovo" prima della revisione. Le offerte nuove vanno in fondo.
 const ORDINE = [
   "corso-lavoratori-generale-4h", "corso-lavoratori-specifica-basso-4h", "corso-aggiornamento-lavoratori-6h",
   "corso-antincendio-livello-1", "corso-aggiornamento-antincendio-2h",
   "corso-primo-soccorso-b-c-12h", "corso-aggiornamento-primo-soccorso-4h", "corso-in-azienda-mezza-giornata",
-  "corso-haccp-alimentarista-8h", "formazione-privacy-2h",
+  "dvr-nuovo", "revisione-dvr", "duvri", "pos-cantiere", "nomine-sicurezza", "checkup-documentale-sicurezza",
+  "corso-haccp-alimentarista-8h", "manuale-haccp", "aggiornamento-manuale-haccp",
+  "informative-privacy", "registro-trattamenti", "nomine-privacy", "formazione-privacy-2h",
   "consulenza-sicurezza-60", "consulenza-finanza-45", "consulenza-fondi-45",
-  "dvr-nuovo", "revisione-dvr", "duvri", "nomine-sicurezza", "pos-cantiere", "checkup-documentale-sicurezza",
-  "manuale-haccp", "aggiornamento-manuale-haccp",
-  "informative-privacy", "registro-trattamenti", "nomine-privacy",
 ];
 const posto = (o: Offerta) => {
   const i = ORDINE.indexOf(o.slug);
   return i === -1 ? ORDINE.length + offerte.indexOf(o) : i;
 };
 
-export const catalogo = (Object.keys(gruppi) as Gruppo[]).map((id) => ({
-  id,
-  ...gruppi[id],
-  offerte: offerte.filter((o) => gruppoDi(o.tipo) === id).sort((a, b) => posto(a) - posto(b)),
-}));
+export const catalogo = (Object.keys(categorie) as Categoria[]).map((id) => {
+  const lista = offerte.filter((o) => categoriaDi(o) === id).sort((a, b) => posto(a) - posto(b));
+  return { id, ...categorie[id], offerte: lista, daPrezzo: Math.min(...lista.map((o) => o.prezzo)) };
+});
 
-// Due informazioni brevi per la card: durata e modalità, oppure modalità e tempi di consegna.
+// Sconto primo ordine rispetto al listino, in percentuale intera.
+export const sconto = (o: Offerta) => (o.listino > o.prezzo ? Math.round((1 - o.prezzo / o.listino) * 100) : 0);
+
+// Tre dati in breve per la card, in forma di scheda tecnica.
 const dettaglio = (o: Offerta, k: string) => o.dettagli.find((d) => d.k === k)?.v;
-const maiuscola = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-export function meta(o: Offerta): string[] {
+const MODALITA: [RegExp, string][] = [
+  [/^aula o videoconferenza/, "Aula o video"],
+  [/^aula con prov/, "Aula + pratica"],
+  [/^in azienda/, "In azienda"],
+  [/^videoconferenza/, "Video"],
+  [/^videochiamata/, "Videochiamata"],
+  [/^sopralluogo/, "Con sopralluogo"],
+  [/eventuale sopralluogo/, "A distanza + sopralluogo"],
+  [/^a distanza/, "A distanza"],
+];
+export function scheda(o: Offerta): { k: string; v: string }[] {
   const durata = dettaglio(o, "Durata")?.replace(/^1 ore\b/, "1 ora");
-  const modalita = dettaglio(o, "Modalità");
-  const consegna = dettaglio(o, "Tempi")?.match(/entro (\d+ giorni lavorativi)/)?.[1];
-  return [
-    durata ? maiuscola(durata) : consegna ? `Consegna in ${consegna}` : "",
-    modalita ? maiuscola(modalita) : "",
-  ].filter(Boolean);
+  const consegna = dettaglio(o, "Tempi")?.match(/entro (\d+) giorni lavorativi/)?.[1];
+  const mod = dettaglio(o, "Modalità") ?? "";
+  const modalita = MODALITA.find(([re]) => re.test(mod))?.[1] ?? mod;
+  const attestato = dettaglio(o, "Validità dell'attestato")?.match(/^\d+ anni/)?.[0];
+  const righe = [
+    durata ? { k: "Durata", v: durata } : consegna ? { k: "Consegna", v: `${consegna} gg lav.` } : null,
+    modalita ? { k: "Modalità", v: modalita } : null,
+    attestato ? { k: "Attestato", v: `valido ${attestato}` } : { k: "Prezzo a", v: o.unita },
+  ];
+  return righe.filter((r): r is { k: string; v: string } => !!r);
 }
