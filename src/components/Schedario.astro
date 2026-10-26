@@ -408,6 +408,8 @@ const N = cartelle.length;
     position: absolute; inset: 0;
     cursor: pointer;
     transform-style: preserve-3d;
+    /* niente rettangolo del browser al tocco: colorerebbe anche il corpo nascosto */
+    -webkit-tap-highlight-color: transparent;
   }
   .folder__btn::after {
     content: ""; position: absolute; bottom: 100%;
@@ -663,8 +665,10 @@ const N = cartelle.length;
     .arch {
       --folder-h: 9rem;
       --tab-w: 64%;
-      --tab-h: 2.5rem;
-      --rise: 3.1rem;
+      /* passo = altezza della linguetta: ogni linguetta parte esattamente dove inizia il corpo
+         della cartella dietro, così gli angoli combaciano e sui bordi non restano gradini */
+      --tab-h: 2.75rem;
+      --rise: var(--tab-h);
       --gap: 10px;
       --lift: 0.9rem;
       --front-h: 3.4rem;
@@ -677,7 +681,12 @@ const N = cartelle.length;
     .folder { order: var(--i); transform: translate3d(0, calc(var(--ri) * -1 * var(--rise)), calc(var(--ri) * -1 * var(--gap))); }
     .folder.is-pulled { transform: translate3d(0, calc(var(--ri) * -1 * var(--rise)), calc(var(--ri) * -1 * var(--gap))); opacity: 0.4; }
     .folder__tab, .folder__btn::after { left: calc(mod(var(--i), 2) * (100% - var(--tab-w))); }
-    .folder__body { padding: var(--space-sm); gap: var(--space-sm); border-radius: 10px; grid-template-columns: minmax(0, 1fr) 30%; }
+    /* L'angolo sotto la linguetta resta squadrato, se no tra linguetta e corpo si apre un dentino. */
+    .folder__body { padding: var(--space-sm); gap: var(--space-sm); border-radius: 0 14px 10px 10px; grid-template-columns: minmax(0, 1fr) 30%; }
+    .folder:nth-child(even) .folder__body { border-radius: 14px 0 10px 10px; }
+    /* (14px contro i 10px della linguetta: l'angolo dietro resta dentro la curva davanti, niente filo) */
+    /* Al tocco la cartella si accende (sui touch non c'è hover a farlo). */
+    .folder__btn:active .folder__in { --fill: var(--color-accent); color: #fff; }
     /* Il nome è già sulla linguetta; il corpo si legge solo sulla cartella davanti. */
     .folder__title { display: none; }
     .folder:first-child .folder__body > * { opacity: 0; }
