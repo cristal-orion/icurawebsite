@@ -1,0 +1,773 @@
+---
+// Home "edificio": un palazzo 3D dove ogni area del sito è un piano (vedi data/edificio.ts
+// per chi sta a che piano e perché). Si sceglie il piano dalla pulsantiera dell'ascensore
+// o cliccando l'edificio; la scheda a destra mostra che cosa c'è su quel piano.
+// Tutto il testo è HTML (indicizzabile, leggibile dagli screen reader); la scena three.js
+// è solo la parte visiva. Senza WebGL o con "riduci movimento" il palazzo diventa una
+// sezione 2D fatta di HTML, con la stessa pulsantiera e la stessa scheda.
+import DotGrid from "@components/DotGrid.astro";
+import { piani, numeri, obiettiviPiani } from "../data/edificio";
+
+const dallAlto = piani.map((p, i) => ({ ...p, i })).reverse();
+const nomePiano = (t: string) => (t === "T" ? "Piano terra" : t === "Tetto" ? "Tetto" : t === "−1" ? "Piano −1" : `Piano ${t}`);
+const goals = obiettiviPiani.map((o) => ({ t: o.t, idx: o.ids.map((id) => piani.findIndex((p) => p.id === id)).join(" ") }));
+// cosa scrivere sull'insegna dentro ogni piano (e i numeri dell'azienda nella hall)
+const info = piani.map((p) => ({ piano: `${nomePiano(p.tasto)} · ${p.nome}`, area: p.titolo }));
+---
+
+<section class="tower" data-tower data-kinds={piani.map((p) => p.kind).join(" ")} data-ids={piani.map((p) => p.id).join(" ")} data-info={JSON.stringify(info)} aria-labelledby="tower-title">
+  <DotGrid />
+  <div class="tower__bg" aria-hidden="true"></div>
+
+  <div class="container tower__head">
+    <p class="tower__eyebrow">iCura Impresa · Napoli, dal 2014</p>
+    <h1 id="tower-title" class="tower__h1">Un solo edificio <span>per la tua impresa.</span></h1>
+    <p class="tower__lede">Ogni piano è un’area: sali con l’ascensore e scopri che cosa facciamo, dalla progettazione nelle fondamenta ai bandi sul tetto.</p>
+  </div>
+
+  <div class="tower__body">
+    {/* ── pulsantiera dell'ascensore ── */}
+    <nav class="lift" aria-label="Piani dell'edificio">
+      <p class="lift__label">Ascensore</p>
+      <ol class="lift__keys" data-lift>
+        {dallAlto.map((p) => (
+          <li style={`--o:${p.i}`}>
+            <button type="button" class="lift__key" data-floor={p.i} aria-pressed="false" aria-controls="tower-card">
+              <span class:list={["lift__n", { "lift__n--long": p.tasto.length > 2 }]}>{p.tasto}</span>
+              <span class="lift__txt">
+                <span class="lift__nome">{p.nome}</span>
+                <span class="lift__area">{p.titolo}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      <button type="button" class="lift__all" data-overview aria-pressed="true">Tutto l’edificio</button>
+    </nav>
+
+    {/* ── il palazzo ── */}
+    <div class="tower__stage" data-stage>
+      <canvas class="tower__canvas" data-canvas aria-hidden="true"></canvas>
+      <ul class="tower__tags" data-tags aria-hidden="true">
+        {piani.map((p, i) => <li class="tower__tag" data-tag={i}><b>{p.tasto}</b> {p.titolo}</li>)}
+      </ul>
+
+      {/* sezione 2D: al posto del 3D quando non si può (WebGL assente, riduci movimento…) */}
+      <ol class="section2d" data-section2d aria-hidden="true">
+        {dallAlto.map((p) => (
+          <li class="section2d__floor" data-kind={p.kind}>
+            <button type="button" tabindex="-1" data-floor={p.i}>
+              <span class="section2d__n">{p.tasto}</span>
+              <span class="section2d__nome">{p.nome}</span>
+              <span class="section2d__area">{p.titolo}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      <p class="tower__hint" data-hint>Trascina per girare intorno · clicca un piano</p>
+      {/* dentro un piano: etichette sugli oggetti, pannello del piano, uscita */}
+      <div class="room" data-room>
+        {piani.map((p, i) => (
+          <div class="room__floor" data-room-floor={i} hidden>
+            <ul class="room__tags" aria-label={`Argomenti del piano ${p.titolo}`}>
+              {p.voci.map((v, j) => (
+                <li class="room__tag" data-room-tag={j}>
+                  {v.href ? (
+                    <a href={v.href}><b>{v.t}</b>{v.k && <small>{v.k}</small>}<i>Apri →</i></a>
+                  ) : (
+                    <span><b>{v.t}</b>{v.k && <small>{v.k}</small>}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <div class="room__panel">
+              <p class="room__label"><span>{nomePiano(p.tasto)}</span> · {p.nome}</p>
+              <h2 class="room__title">{p.titolo}</h2>
+              <p class="room__slogan">{p.slogan}</p>
+              {p.numeri && (
+                <dl class="room__nums">{numeri.map((m) => <div><dt>{m.n}</dt><dd>{m.l}</dd></div>)}</dl>
+              )}
+              <a href={p.href} class="room__cta">{p.cta} <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        ))}
+        <button type="button" class="room__exit" data-exit>
+          <span aria-hidden="true">↑</span> Esci dall’edificio
+        </button>
+        <p class="room__hint" aria-hidden="true">Scorri o fai swipe per uscire · trascina per guardarti intorno</p>
+      </div>
+      <div class="tower__orbit" role="group" aria-label="Gira intorno all'edificio">
+        <button type="button" class="tower__rot" data-rot="-1" aria-label="Gira a sinistra">⟲</button>
+        <button type="button" class="tower__rot" data-rot="1" aria-label="Gira a destra">⟳</button>
+      </div>
+    </div>
+    <div class="tower__flash" data-flash aria-hidden="true"></div>
+
+    {/* ── scheda del piano ── */}
+    <div class="card" id="tower-card" aria-live="polite">
+      <article class="card__panel is-active" data-panel="overview">
+        <p class="card__floor">Panoramica</p>
+        <h2 class="card__title">Otto piani, un solo referente.</h2>
+        <p class="card__desc">Consulenza e sicurezza sul lavoro, formazione, engineering, certificazioni, digitale e bandi. Scegli un piano per vedere che cosa facciamo lì.</p>
+        <dl class="card__nums">
+          {numeri.map((m) => <div><dt>{m.n}</dt><dd>{m.l}</dd></div>)}
+        </dl>
+        <a href="#contatto" class="card__cta">Richiedi una consulenza <span aria-hidden="true">→</span></a>
+      </article>
+
+      {piani.map((p, i) => (
+        <article class="card__panel" data-panel={i} hidden>
+          <p class="card__floor"><span>{nomePiano(p.tasto)}</span> · {p.nome}</p>
+          <h2 class="card__title">{p.titolo}</h2>
+          <p class="card__slogan">{p.slogan}</p>
+          <p class="card__desc">{p.desc}</p>
+          {p.numeri && (
+            <dl class="card__nums">{numeri.map((m) => <div><dt>{m.n}</dt><dd>{m.l}</dd></div>)}</dl>
+          )}
+          <p class="card__sub">{p.vociTitolo}</p>
+          <ul class="card__voci">
+            {p.voci.map((v) => (
+              <li>
+                {v.href ? (
+                  <a href={v.href} class="card__voce"><span>{v.t}{v.k && <small>{v.k}</small>}</span><i aria-hidden="true">→</i></a>
+                ) : (
+                  <span class="card__voce card__voce--txt"><span>{v.t}{v.k && <small>{v.k}</small>}</span></span>
+                )}
+              </li>
+            ))}
+          </ul>
+          <div class="card__actions">
+            <button type="button" class="card__enter" data-enter={i}>Entra nel piano <span aria-hidden="true">→</span></button>
+            <a href={p.href} class="card__cta">{p.cta} <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="container tower__goals" role="group" aria-labelledby="tower-goals-t">
+    <p id="tower-goals-t" class="tower__goals-label">Non sai a che piano andare? Scegli un obiettivo.</p>
+    {goals.map((g) => <button type="button" class="tower__goal" data-goal={g.idx} aria-pressed="false">{g.t}</button>)}
+  </div>
+</section>
+
+<script>
+  import { chooseTunnelMode, describeWhy } from "../scripts/tunnel-support";
+
+  const root = document.querySelector<HTMLElement>("[data-tower]");
+  if (root) init(root);
+
+  async function init(root: HTMLElement) {
+    const keys = [...root.querySelectorAll<HTMLButtonElement>(".lift__key")];
+    const overview = root.querySelector<HTMLButtonElement>("[data-overview]")!;
+    const panels = [...root.querySelectorAll<HTMLElement>("[data-panel]")];
+    const tags = [...root.querySelectorAll<HTMLElement>("[data-tag]")];
+    const goals = [...root.querySelectorAll<HTMLButtonElement>("[data-goal]")];
+    const floors2d = [...root.querySelectorAll<HTMLButtonElement>("[data-section2d] [data-floor]")];
+    const stage = root.querySelector<HTMLElement>("[data-stage]")!;
+    const canvas = root.querySelector<HTMLCanvasElement>("[data-canvas]")!;
+    const hint = root.querySelector<HTMLElement>("[data-hint]")!;
+    const card = root.querySelector<HTMLElement>("#tower-card")!;
+    const flash = root.querySelector<HTMLElement>("[data-flash]")!;
+    const exitBtn = root.querySelector<HTMLButtonElement>("[data-exit]")!;
+    const room = root.querySelector<HTMLElement>("[data-room]")!;
+    const roomFloors = [...root.querySelectorAll<HTMLElement>("[data-room-floor]")];
+    const stanzaTags = roomFloors.map((r) => [...r.querySelectorAll<HTMLElement>("[data-room-tag]")]);
+    let dentroPiano: number | null = null;
+
+    type Scene = import("../scripts/edificio-scene").EdificioScene;
+    let scene: Scene | null = null;
+    let selected: number | null = null;
+    let lit: number[] = [];
+
+    // ── stato → interfaccia ──
+    const render = () => {
+      keys.forEach((k) => {
+        const i = Number(k.dataset.floor);
+        k.setAttribute("aria-pressed", String(selected === i));
+        k.classList.toggle("is-lit", lit.includes(i));
+      });
+      floors2d.forEach((b) => {
+        const i = Number(b.dataset.floor);
+        b.parentElement!.classList.toggle("is-active", selected === i);
+        b.parentElement!.classList.toggle("is-lit", lit.includes(i));
+        b.parentElement!.classList.toggle("is-dim", (selected !== null || lit.length > 0) && selected !== i && !lit.includes(i));
+      });
+      tags.forEach((t) => {
+        const i = Number(t.dataset.tag);
+        t.classList.toggle("is-active", selected === i);
+        t.classList.toggle("is-lit", lit.includes(i));
+        t.classList.toggle("is-dim", (selected !== null || lit.length > 0) && selected !== i && !lit.includes(i));
+      });
+      overview.setAttribute("aria-pressed", String(selected === null));
+      const id = selected === null ? "overview" : String(selected);
+      panels.forEach((p) => {
+        const on = p.dataset.panel === id;
+        p.hidden = !on;
+        p.classList.toggle("is-active", on);
+      });
+      root.classList.toggle("has-floor", selected !== null);
+      scene?.select(selected);
+      scene?.highlight(lit);
+    };
+
+    // ogni piano ha il suo indirizzo (/#piano-formazione): si può condividere e ci si torna
+    const ids = root.dataset.ids!.split(" ");
+    const select = (i: number | null, quiet = false, scorri = true) => {
+      selected = i;
+      if (i !== null) hint.classList.add("is-gone");
+      render();
+      if (!quiet) history.replaceState(null, "", location.pathname + location.search + (i === null ? "" : `#piano-${ids[i]}`));
+      // su telefono la scheda sta sotto l'edificio: ci si porta lo sguardo
+      if (!quiet && scorri && i !== null && matchMedia("(max-width: 64rem)").matches) {
+        card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    };
+
+    // con il 3D il tasto dell'ascensore porta dentro il piano; senza, lo seleziona
+    keys.forEach((k) => k.addEventListener("click", () => {
+      const i = Number(k.dataset.floor);
+      if (root.classList.contains("is-3d")) entra(i);
+      else select(selected === i ? null : i);
+    }));
+    floors2d.forEach((b) => b.addEventListener("click", () => select(Number(b.dataset.floor))));
+    overview.addEventListener("click", () => { lit = []; goals.forEach((g) => g.setAttribute("aria-pressed", "false")); select(null); });
+
+    // frecce su/giù nella pulsantiera: si sale e si scende di piano
+    keys.forEach((k, pos) => k.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+      e.preventDefault();
+      const next = keys[(pos + (e.key === "ArrowDown" ? 1 : keys.length - 1)) % keys.length];
+      next.focus();
+      next.click();
+    }));
+    root.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      if (scene?.dentro()) esci();
+      else if (selected !== null) select(null);
+    });
+
+    // obiettivi: accendono i piani giusti (un secondo clic li spegne)
+    goals.forEach((g) => g.addEventListener("click", () => {
+      const on = g.getAttribute("aria-pressed") !== "true";
+      goals.forEach((x) => x.setAttribute("aria-pressed", String(x === g && on)));
+      lit = on ? g.dataset.goal!.split(" ").filter(Boolean).map(Number) : [];
+      select(lit.length === 1 ? lit[0] : null);
+    }));
+
+    // piano chiesto nell'indirizzo
+    const dalHash = ids.indexOf(location.hash.replace(/^#piano-/, ""));
+    if (dalHash >= 0) select(dalHash, true);
+    else render();
+
+    // ── 3D o sezione 2D ──
+    const { mode, why } = chooseTunnelMode();
+    if (mode !== "3d") return fallback(why);
+    try {
+      const { createEdificioScene } = await import("../scripts/edificio-scene");
+      type Kind = import("../data/edificio").Kind;
+      scene = createEdificioScene(canvas, root.dataset.kinds!.split(" ") as Kind[], JSON.parse(root.dataset.info!));
+    } catch (err) {
+      console.warn("[edificio] 3D non disponibile", err);
+      return fallback("scene-error");
+    }
+    root.classList.add("is-3d");
+    scene.resize();
+    render();
+    if (selected !== null) scene.select(selected, true);
+
+    // etichette agganciate al 3D: quelle dei piani fuori, quelle degli oggetti dentro
+    scene.onFrame(() => {
+      if (scene!.dentro()) {
+        if (dentroPiano === null) return;
+        const a = scene!.ancoreStanza();
+        stanzaTags[dentroPiano].forEach((t, j) => {
+          const p = a[j];
+          if (!p) return;
+          t.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(-50%, -100%)`;
+          // nascosta se dietro la camera o fuori dallo schermo (sul telefono ci si gira trascinando)
+          const largo = stage.clientWidth;
+          t.style.visibility = p.dietro || p.x < largo * 0.06 || p.x > largo * 0.94 ? "hidden" : "";
+        });
+        return;
+      }
+      const a = scene!.anchors();
+      // un'etichetta che uscirebbe dal riquadro si nasconde invece di restare tagliata
+      tags.forEach((t, i) => {
+        t.style.transform = `translate(${a[i].x.toFixed(1)}px, ${a[i].y.toFixed(1)}px) translate(-100%, -50%)`;
+        const fuori = a[i].x - t.offsetWidth - 12 < 0 || a[i].y < 10 || a[i].y > stage.clientHeight - 10;
+        t.style.visibility = fuori ? "hidden" : "";
+      });
+    });
+
+    // clic e passaggio: fuori sui piani, dentro sugli oggetti della stanza
+    let hov = -1;
+    let hovSt = -1;
+    canvas.addEventListener("pointermove", (e) => {
+      if (canvas.classList.contains("is-dragging")) return;
+      if (scene!.dentro()) {
+        const j = scene!.pickStanza(e.clientX, e.clientY);
+        if (j !== hovSt) {
+          hovSt = j;
+          scene!.hoverStanza(j);
+          canvas.style.cursor = j >= 0 ? "pointer" : "";
+          if (dentroPiano !== null) stanzaTags[dentroPiano].forEach((t, k) => t.classList.toggle("is-hover", k === j));
+        }
+        return;
+      }
+      const i = scene!.pick(e.clientX, e.clientY);
+      if (i !== hov) { hov = i; scene!.hover(i); canvas.style.cursor = i >= 0 ? "pointer" : ""; }
+    });
+    canvas.addEventListener("pointerleave", () => { hov = -1; hovSt = -1; scene!.hover(-1); scene!.hoverStanza(-1); canvas.style.cursor = ""; });
+    canvas.addEventListener("click", (e) => {
+      if (scene!.dragged()) return; // era un trascinamento per girare, non un clic
+      if (scene!.dentro()) {
+        // clic su un oggetto: si apre la sua pagina
+        const j = scene!.pickStanza(e.clientX, e.clientY);
+        const link = j >= 0 && dentroPiano !== null ? stanzaTags[dentroPiano][j]?.querySelector("a") : null;
+        if (link) link.click();
+        return;
+      }
+      const i = scene!.pick(e.clientX, e.clientY);
+      if (i >= 0) entra(i);
+    });
+    root.querySelectorAll<HTMLButtonElement>("[data-enter]").forEach((b) => b.addEventListener("click", () => entra(Number(b.dataset.enter))));
+
+    // ── ENTRARE E USCIRE DA UN PIANO ──
+    // Entrata: la camera vola dentro la vetrata, un lampo, e il riquadro diventa a tutto
+    // schermo con la stanza del piano. Uscita: rotellina, swipe, Esc o il pulsante.
+    let occupato = false;
+    let bloccoRotella = 0;
+    const attesa = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    async function entra(i: number) {
+      if (occupato || !scene) return;
+      occupato = true;
+      if (scene.dentro()) { scene.esci(); root.classList.remove("is-inside"); }
+      select(i, false, false);
+      root.classList.add("is-diving");
+      await scene.tuffo(i);
+      flash.classList.add("is-on");
+      await attesa(230);
+      dentroPiano = i;
+      roomFloors.forEach((r, k) => { r.hidden = k !== i; });
+      root.classList.add("is-inside");
+      document.documentElement.classList.add("tower-lock");
+      scene.resize();
+      scene.entra(i);
+      flash.classList.remove("is-on");
+      root.classList.remove("is-diving");
+      setTimeout(() => { if (dentroPiano === i) room.classList.add("is-ready"); }, 650);
+      exitBtn.focus({ preventScroll: true });
+      occupato = false;
+    }
+    async function esci() {
+      if (occupato || !scene?.dentro()) return;
+      occupato = true;
+      flash.classList.add("is-on");
+      await attesa(230);
+      scene.esci();
+      room.classList.remove("is-ready");
+      root.classList.remove("is-inside");
+      document.documentElement.classList.remove("tower-lock");
+      roomFloors.forEach((r) => { r.hidden = true; });
+      const fuori = dentroPiano;
+      dentroPiano = null;
+      scene.resize();
+      // si torna all'edificio intero: nessun piano scelto, la camera parte dal piano appena
+      // lasciato e si allontana fino a inquadrare tutto il palazzo (scheda di panoramica)
+      lit = [];
+      goals.forEach((g) => g.setAttribute("aria-pressed", "false"));
+      select(null, false, false);
+      // si torna con il palazzo in vista, senza che l'inerzia della rotellina faccia scorrere la pagina
+      bloccoRotella = performance.now() + 900;
+      stage.scrollIntoView({ block: "center" });
+      flash.classList.remove("is-on");
+      // il focus torna al tasto del piano (per chi usa la tastiera), senza contorno se si è usciti con rotellina o swipe
+      if (fuori !== null) keys.find((k) => Number(k.dataset.floor) === fuori)?.focus({ preventScroll: true, focusVisible: false } as FocusOptions);
+      occupato = false;
+    }
+    exitBtn.addEventListener("click", esci);
+    addEventListener("wheel", (e) => {
+      if (scene?.dentro()) { e.preventDefault(); if (Math.abs(e.deltaY) > 4) esci(); return; }
+      if (performance.now() < bloccoRotella) e.preventDefault();
+    }, { passive: false });
+    let touchY: number | null = null;
+    stage.addEventListener("touchstart", (e) => { touchY = scene?.dentro() ? e.touches[0].clientY : null; }, { passive: true });
+    stage.addEventListener("touchmove", (e) => {
+      if (touchY === null || !scene?.dentro()) return;
+      if (Math.abs(e.touches[0].clientY - touchY) > 60) { touchY = null; esci(); }
+    }, { passive: true });
+
+    // girare con i pulsanti o con le frecce ← → (quando il focus è sul palazzo o sui pulsanti)
+    const QUARTO = Math.PI / 4;
+    root.querySelectorAll<HTMLButtonElement>("[data-rot]").forEach((b) =>
+      b.addEventListener("click", () => scene!.rotate(Number(b.dataset.rot) * QUARTO)));
+    stage.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      scene!.rotate((e.key === "ArrowRight" ? 1 : -1) * QUARTO);
+    });
+    canvas.addEventListener("pointerdown", () => hint.classList.add("is-gone"), { once: true });
+
+    // si disegna solo quando il palazzo è a schermo
+    new IntersectionObserver(([e]) => (e.isIntersecting ? scene!.start() : scene!.stop())).observe(stage);
+    new ResizeObserver(() => scene!.resize()).observe(stage);
+    canvas.addEventListener("webglcontextlost", (e) => { e.preventDefault(); scene!.stop(); root.classList.remove("is-3d"); fallback("context-lost"); });
+
+    function fallback(why?: string) {
+      root.classList.add("is-2d");
+      root.dataset.why = why ?? "";
+      if (why) console.info(`[edificio] sezione 2D: ${describeWhy(why)}`);
+    }
+  }
+</script>
+
+<style>
+  .tower {
+    --cyan: #22d3ee;
+    --sky: #60a5fa;
+    --line: rgba(147, 197, 253, 0.18);
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    color: #e2e8f0;
+    background:
+      radial-gradient(ellipse 45% 55% at 50% 55%, rgba(59, 130, 246, 0.22), transparent 70%),
+      radial-gradient(ellipse 30% 40% at 85% 10%, rgba(34, 211, 238, 0.1), transparent 70%),
+      var(--color-ink);
+    padding-block: var(--space-xl) var(--space-xl);
+  }
+  .tower__bg {
+    position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      linear-gradient(rgba(147, 197, 253, 0.05) 1px, transparent 1px) 0 0 / 48px 48px,
+      linear-gradient(90deg, rgba(147, 197, 253, 0.05) 1px, transparent 1px) 0 0 / 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 30%, transparent 85%);
+  }
+
+  /* ── titolo ── */
+  .tower__head { text-align: center; }
+  .tower__eyebrow { margin: 0 0 var(--space-xs); font: 600 var(--text-xs)/1 var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan); }
+  .tower__h1 { margin: 0; font-size: clamp(2rem, 1.4rem + 2.6vw, 3.4rem); font-weight: 650; letter-spacing: -0.03em; line-height: 1.04; color: #fff; text-wrap: balance; }
+  .tower__h1 span { color: var(--sky); }
+  .tower__lede { margin: var(--space-sm) auto 0; max-width: 60ch; font-size: var(--text-md); line-height: 1.55; color: #94a3b8; }
+
+  /* ── corpo: pulsantiera | palazzo | scheda ── */
+  .tower__body {
+    display: grid;
+    grid-template-columns: 15.5rem minmax(0, 1fr) 24rem;
+    gap: var(--space-lg);
+    align-items: center;
+    width: min(100%, 92rem);
+    margin: var(--space-lg) auto 0;
+    padding-inline: var(--page-gutter);
+  }
+
+  /* pulsantiera */
+  .lift {
+    padding: var(--space-sm);
+    border-radius: 18px;
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.85));
+    border: 1px solid var(--line);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+  }
+  .lift__label { margin: 0.2rem 0.4rem 0.6rem; font: 600 0.66rem/1 var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; color: #64748b; }
+  .lift__keys { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+  .lift__key {
+    width: 100%;
+    display: grid; grid-template-columns: 2.4rem 1fr; gap: 0.65rem; align-items: center;
+    padding: 0.42rem 0.5rem;
+    border: 0; border-radius: 10px;
+    background: transparent; color: inherit; text-align: left; cursor: pointer;
+    font: inherit;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .lift__key:hover { background: rgba(59, 130, 246, 0.1); }
+  .lift__key:focus-visible { outline: 2px solid var(--sky); outline-offset: -2px; }
+  .lift__n {
+    display: grid; place-items: center;
+    width: 2.4rem; height: 2.4rem; border-radius: 50%;
+    font: 700 0.78rem/1 var(--font-mono);
+    color: #cbd5e1;
+    background: radial-gradient(circle at 35% 30%, #334155, #0b1222);
+    border: 1px solid rgba(147, 197, 253, 0.28);
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+    transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .lift__n--long { font-size: 0.56rem; letter-spacing: 0.02em; }
+  .lift__txt { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+  .lift__nome { font-size: var(--text-sm); font-weight: 600; color: #e2e8f0; line-height: 1.2; }
+  .lift__area { font-size: 0.72rem; color: #64748b; line-height: 1.2; }
+  .lift__key[aria-pressed="true"] { background: rgba(59, 130, 246, 0.16); }
+  .lift__key[aria-pressed="true"] .lift__n,
+  .lift__key.is-lit .lift__n {
+    color: #0b1222; background: radial-gradient(circle at 35% 30%, #a5f3fc, var(--cyan));
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2), 0 0 18px rgba(34, 211, 238, 0.7);
+  }
+  .lift__key[aria-pressed="true"] .lift__area { color: var(--sky); }
+  .lift__all {
+    width: 100%; margin-top: var(--space-xs);
+    padding: 0.55rem; border-radius: 10px;
+    font: 600 var(--text-xs)/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase;
+    color: #94a3b8; background: rgba(15, 23, 42, 0.6); border: 1px dashed var(--line); cursor: pointer;
+  }
+  .lift__all[aria-pressed="true"] { color: var(--cyan); border-style: solid; border-color: rgba(34, 211, 238, 0.4); }
+
+  /* palazzo */
+  .tower__stage { position: relative; height: clamp(30rem, 74svh, 48rem); min-width: 0; }
+  .tower__canvas {
+    display: none; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y;
+    /* bordi sfumati: il terreno e il pulviscolo non si fermano contro un rettangolo */
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 80%, transparent), linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    mask-composite: intersect;
+  }
+  .tower.is-3d .tower__canvas { display: block; }
+  .tower__tags { display: none; list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .tower.is-3d .tower__tags { display: block; }
+  .tower__tag {
+    position: absolute; left: 0; top: 0;
+    padding: 0.25rem 0.55rem 0.25rem 0.45rem;
+    border-radius: 6px;
+    font-size: 0.7rem; font-weight: 500; white-space: nowrap;
+    color: #cbd5e1;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid var(--line);
+    margin-left: -10px;
+    transition: opacity var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .tower__tag b { font-family: var(--font-mono); color: var(--sky); margin-right: 0.2rem; }
+  .tower__tag::after { content: ""; position: absolute; right: -10px; top: 50%; width: 10px; height: 1px; background: var(--line); }
+  .tower__tag.is-active, .tower__tag.is-lit { color: #fff; border-color: rgba(34, 211, 238, 0.6); background: rgba(8, 47, 73, 0.85); }
+  .tower__tag.is-active b, .tower__tag.is-lit b { color: var(--cyan); }
+  .tower__tag.is-dim { opacity: 0.35; }
+  .tower__hint {
+    position: absolute; left: 50%; bottom: 0.5rem; translate: -50% 0; margin: 0;
+    font: 500 var(--text-xs)/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase;
+    color: #64748b; white-space: nowrap; transition: opacity var(--dur-slow) var(--ease-out);
+  }
+  .tower__hint.is-gone { opacity: 0; }
+  .tower.is-3d .tower__canvas { cursor: grab; }
+  .tower.is-3d .tower__canvas:global(.is-dragging) { cursor: grabbing; }
+  .tower__orbit { display: none; position: absolute; right: 0.5rem; bottom: 0.25rem; gap: 0.4rem; }
+  .tower.is-3d .tower__orbit { display: flex; }
+  .tower__rot {
+    display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; cursor: pointer;
+    font-size: 1.15rem; line-height: 1; color: #e2e8f0;
+    background: rgba(15, 23, 42, 0.8); border: 1px solid var(--line);
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .tower__rot:hover { background: var(--color-accent); border-color: var(--color-accent); }
+  .tower__rot:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; }
+
+  /* sezione 2D (senza 3D) */
+  .section2d { display: none; list-style: none; margin: 0 auto; padding: 0; height: 100%; max-width: 22rem; flex-direction: column; justify-content: center; gap: 4px; }
+  .tower.is-2d .section2d { display: flex; }
+  .section2d__floor button {
+    width: 100%; display: grid; grid-template-columns: 3rem 1fr; grid-template-rows: auto auto; column-gap: 0.75rem; align-items: center;
+    padding: 0.55rem 0.8rem; border-radius: 6px; text-align: left; cursor: pointer; font: inherit; color: inherit;
+    background: rgba(59, 130, 246, 0.1); border: 1px solid var(--line);
+    transition: background var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .section2d__floor[data-kind="osservatorio"] button { border-style: dashed; background: transparent; }
+  .section2d__floor[data-kind="impianti"] { margin-top: 10px; position: relative; }
+  .section2d__floor[data-kind="impianti"]::before { content: ""; position: absolute; left: -1rem; right: -1rem; top: -7px; height: 2px; background: repeating-linear-gradient(90deg, var(--sky) 0 6px, transparent 6px 12px); opacity: 0.5; }
+  .section2d__n { grid-row: span 2; font: 700 var(--text-md)/1 var(--font-mono); color: var(--sky); }
+  .section2d__nome { font-size: var(--text-sm); font-weight: 600; color: #fff; }
+  .section2d__area { font-size: 0.72rem; color: #94a3b8; }
+  .section2d__floor.is-active button, .section2d__floor.is-lit button { background: rgba(34, 211, 238, 0.18); border-color: rgba(34, 211, 238, 0.6); }
+  .section2d__floor.is-dim button { opacity: 0.4; }
+  .tower.is-2d .tower__hint { display: none; }
+
+  /* ── dentro un piano: riquadro a tutto schermo ── */
+  .tower.is-inside, .tower.is-diving { z-index: 300; }
+  :global(html.tower-lock), :global(html.tower-lock body) { overflow: hidden; }
+  .tower.is-inside .tower__stage { position: fixed; inset: 0; height: 100vh; height: 100dvh; z-index: 10; background: #0b1222; }
+  .tower.is-inside .tower__canvas { mask-image: none; touch-action: none; }
+  /* dentro un piano si trascina in orizzontale per guardarsi intorno: niente "indietro" del
+     browser con lo swipe né pull-to-refresh (lo swipe verticale serve a uscire) */
+  :global(html:has(.tower.is-inside)) { overscroll-behavior: none; }
+  .tower.is-inside .tower__tags, .tower.is-inside .tower__hint { display: none; }
+  .tower.is-inside .tower__orbit { right: 1.25rem; bottom: 1.25rem; }
+  .room { display: none; }
+  .tower.is-inside .room { display: block; position: absolute; inset: 0; pointer-events: none; }
+  .room__floor[hidden] { display: none; }
+  .room__tags { list-style: none; margin: 0; padding: 0; }
+  /* le etichette e il pannello compaiono quando la camera è entrata (classe is-ready, dallo script) */
+  .room__tag { position: absolute; left: 0; top: 0; pointer-events: auto; opacity: 0; transition: opacity 500ms var(--ease-out); }
+  .room.is-ready .room__tag { opacity: 1; }
+  .room.is-ready .room__tag:nth-child(2) { transition-delay: 80ms; }
+  .room.is-ready .room__tag:nth-child(3) { transition-delay: 160ms; }
+  .room.is-ready .room__tag:nth-child(4) { transition-delay: 240ms; }
+  .room.is-ready .room__tag:nth-child(5) { transition-delay: 320ms; }
+  .room.is-ready .room__tag:nth-child(n + 6) { transition-delay: 400ms; }
+  .room__tag > a, .room__tag > span {
+    display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+    max-width: 13rem; padding: 0.45rem 0.75rem; border-radius: 10px; text-align: center;
+    color: #fff; text-decoration: none;
+    background: rgba(11, 18, 34, 0.82); border: 1px solid rgba(147, 197, 253, 0.3);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .room__tag b { font-size: var(--text-sm); font-weight: 600; line-height: 1.25; }
+  .room__tag small { font-size: 0.7rem; color: #94a3b8; line-height: 1.3; }
+  .room__tag i { font-style: normal; font: 600 0.62rem/1 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); }
+  .room__tag > a:hover, .room__tag.is-hover > a { border-color: var(--cyan); background: rgba(8, 47, 73, 0.92); transform: translateY(-2px); text-decoration: none; }
+  .room__tag > a::after { content: ""; position: absolute; left: 50%; bottom: -10px; width: 1px; height: 10px; background: rgba(103, 232, 249, 0.6); }
+  .room__panel {
+    position: absolute; left: 1.5rem; bottom: 1.5rem; max-width: 22rem; pointer-events: auto;
+    padding: 1.1rem 1.25rem; border-radius: 16px;
+    background: rgba(11, 18, 34, 0.82); border: 1px solid rgba(147, 197, 253, 0.25);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    opacity: 0; transform: translateY(-6px);
+    transition: opacity 450ms var(--ease-out), transform 450ms var(--ease-out);
+  }
+  .room.is-ready .room__panel { opacity: 1; transform: none; }
+  .room__label { margin: 0 0 0.4rem; font: 600 0.66rem/1.3 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: #64748b; }
+  .room__label span { color: var(--cyan); }
+  .room__title { margin: 0; font-size: var(--text-2xl); font-weight: 650; letter-spacing: -0.02em; line-height: 1.1; color: #fff; }
+  .room__slogan { margin: 0.25rem 0 0.8rem; color: var(--sky); font-family: var(--font-display); }
+  .room__nums { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin: 0 0 0.8rem; }
+  .room__nums > div { padding: 0.45rem 0.6rem; border-radius: 8px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(147, 197, 253, 0.18); }
+  .room__nums dt { font-family: var(--font-display); font-weight: 700; color: #fff; line-height: 1.1; }
+  .room__nums dd { margin: 0.1rem 0 0; font-size: 0.68rem; color: #94a3b8; line-height: 1.3; }
+  .room__cta { display: inline-flex; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 999px; font-size: var(--text-sm); font-weight: 600; color: #fff; text-decoration: none; background: var(--color-accent); }
+  .room__cta:hover { background: var(--color-accent-hover); text-decoration: none; }
+  .room__exit {
+    position: absolute; right: 1.25rem; top: 1.25rem; pointer-events: auto;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.1rem; border-radius: 999px; cursor: pointer;
+    font: 600 var(--text-sm)/1 var(--font-body); color: #fff;
+    background: rgba(11, 18, 34, 0.85); border: 1px solid rgba(147, 197, 253, 0.4);
+  }
+  .room__exit:hover { background: var(--color-accent); border-color: var(--color-accent); }
+  .room__exit:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+  .room__hint {
+    position: absolute; left: 50%; bottom: 1.4rem; translate: -50% 0; margin: 0; white-space: nowrap;
+    font: 500 var(--text-xs)/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: #94a3b8;
+    padding: 0.55rem 0.9rem; border-radius: 999px; background: rgba(11, 18, 34, 0.7);
+    animation: room-hint 2.4s ease-in-out infinite;
+  }
+  @keyframes room-hint { 50% { transform: translateY(-4px); } }
+  /* lampo di passaggio tra fuori e dentro */
+  .tower__flash {
+    position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0;
+    background: radial-gradient(circle at 50% 50%, #e0f2fe, #60a5fa 45%, #0b1222 100%);
+    transition: opacity 220ms ease-in;
+  }
+  .tower__flash.is-on { opacity: 1; }
+  .card__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: var(--space-md); }
+  .card__actions .card__cta { margin-top: 0; }
+  .card__enter {
+    display: none; align-items: center; gap: 0.45rem;
+    padding: 0.75rem 1.2rem; border-radius: 999px; cursor: pointer;
+    font: 600 var(--text-sm)/1 var(--font-body); color: #0b1222;
+    background: var(--cyan); border: 0;
+  }
+  .tower.is-3d .card__enter { display: inline-flex; }
+  .card__enter:hover { filter: brightness(1.1); }
+
+  /* scheda */
+  .card {
+    position: relative;
+    border-radius: 18px;
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.92));
+    border: 1px solid var(--line);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+  }
+  .card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--color-accent), var(--cyan), transparent); }
+  .card__panel { padding: var(--space-lg); max-height: clamp(30rem, 74svh, 48rem); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+  .card__panel.is-active { animation: card-in 420ms var(--ease-out); }
+  @keyframes card-in { from { opacity: 0; transform: translateY(8px); } }
+  .card__floor { margin: 0 0 var(--space-xs); font: 600 0.68rem/1.3 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: #64748b; }
+  .card__floor span { color: var(--cyan); }
+  .card__title { margin: 0; font-size: var(--text-2xl); font-weight: 650; letter-spacing: -0.02em; line-height: 1.1; color: #fff; }
+  .card__slogan { margin: 0.3rem 0 0; font-family: var(--font-display); font-size: var(--text-lg); color: var(--sky); }
+  .card__desc { margin: var(--space-sm) 0 0; font-size: var(--text-sm); line-height: 1.6; color: #94a3b8; }
+  .card__nums { margin: var(--space-md) 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .card__nums > div { padding: 0.65rem 0.75rem; border-radius: 10px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--line); }
+  .card__nums dt { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: #fff; line-height: 1.1; }
+  .card__nums dd { margin: 0.2rem 0 0; font-size: 0.72rem; color: #94a3b8; line-height: 1.35; }
+  .card__sub { margin: var(--space-md) 0 0.5rem; font: 600 0.66rem/1 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: #64748b; }
+  .card__voci { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .card__voce {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.6rem;
+    padding: 0.55rem 0.7rem; border-radius: 9px;
+    font-size: var(--text-sm); color: #e2e8f0; text-decoration: none;
+    background: rgba(15, 23, 42, 0.55); border: 1px solid var(--line);
+    transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+  }
+  .card__voce small { display: block; margin-top: 0.15rem; font-size: 0.72rem; color: #64748b; line-height: 1.35; }
+  .card__voce i { font-style: normal; color: #475569; transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+  a.card__voce:hover { border-color: rgba(96, 165, 250, 0.55); background: rgba(59, 130, 246, 0.12); color: #fff; text-decoration: none; }
+  a.card__voce:hover i { color: var(--sky); transform: translateX(2px); }
+  .card__cta {
+    display: inline-flex; align-items: center; gap: 0.5rem; margin-top: var(--space-md);
+    padding: 0.75rem 1.3rem; border-radius: 999px;
+    font-size: var(--text-sm); font-weight: 600; color: #fff; text-decoration: none;
+    background: linear-gradient(90deg, var(--color-accent-hover), var(--color-accent));
+    box-shadow: 0 0 0 1px rgba(147, 197, 253, 0.4), 0 10px 30px -12px rgba(59, 130, 246, 0.8);
+  }
+  .card__cta:hover { text-decoration: none; filter: brightness(1.08); }
+
+  /* obiettivi */
+  .tower__goals { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.45rem; margin-top: var(--space-lg); }
+  .tower__goals-label { flex-basis: 100%; text-align: center; margin: 0 0 0.3rem; font: 600 var(--text-xs)/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; }
+  .tower__goal {
+    padding: 0.5rem 0.95rem; border-radius: 999px; cursor: pointer;
+    font: 500 var(--text-sm)/1 var(--font-body); color: #cbd5e1;
+    background: rgba(15, 23, 42, 0.6); border: 1px solid var(--line);
+    transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .tower__goal:hover { border-color: var(--sky); color: #fff; }
+  .tower__goal[aria-pressed="true"] { color: #0b1222; background: var(--cyan); border-color: var(--cyan); }
+
+  /* ── tablet e telefono: palazzo in alto, pulsantiera in riga, scheda sotto ── */
+  @media (max-width: 64rem) {
+    .tower__body { grid-template-columns: minmax(0, 1fr); gap: var(--space-md); }
+    .lift { min-width: 0; }
+    .tower__stage { order: 1; height: clamp(24rem, 58svh, 34rem); }
+    .lift { order: 2; padding: 0.5rem; }
+    .lift__label { display: none; }
+    /* dal basso (−1) a sinistra al Tetto a destra. Con row-reverse i tasti in più sbordavano
+       a destra dal lato che non si scorre e il Tetto era irraggiungibile: riga normale + order. */
+    .lift__keys { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; flex-direction: row; }
+    .lift__keys > li { order: var(--o); flex: none; }
+    .lift__keys::-webkit-scrollbar { display: none; }
+    .lift__key { width: auto; grid-template-columns: auto; padding: 0.3rem; }
+    .lift__txt { display: none; }
+    .lift__all { display: none; }
+    .card { order: 3; }
+    .card__panel { max-height: none; }
+  }
+  @media (max-width: 40rem) {
+    .room__panel { left: 0.75rem; right: 0.75rem; top: auto; bottom: 4.2rem; max-width: none; padding: 0.8rem 1rem; }
+    .room__title { font-size: var(--text-xl); }
+    .room__slogan { margin-bottom: 0.5rem; font-size: var(--text-sm); }
+    .room__exit { top: 0.75rem; right: 0.75rem; padding: 0.55rem 0.9rem; }
+    .room__hint { bottom: 0.9rem; font-size: 0.6rem; }
+    .room__tag > a, .room__tag > span { max-width: 9rem; padding: 0.3rem 0.5rem; }
+    .room__tag b { font-size: 0.72rem; }
+    .room__tag small, .room__tag i { display: none; }
+    .tower.is-inside .tower__orbit { display: none; }
+    .tower__tag { font-size: 0.62rem; padding: 0.2rem 0.4rem; }
+    .tower__tag:not(.is-active):not(.is-lit) { display: none; }
+  }
+  /* tablet: il pannello sale sopra il suggerimento in basso, come sul telefono */
+  @media (min-width: 40.01rem) and (max-width: 64rem) and (min-height: 30.01rem) {
+    .room__panel { bottom: 4.2rem; }
+  }
+  /* telefono in orizzontale: schermo basso, dentro la stanza tutto più compatto
+     (etichette senza descrizione, pannello piccolo a sinistra, niente suggerimento) */
+  @media (max-height: 30rem) and (min-width: 40.01rem) {
+    .room__panel { left: 0.75rem; top: auto; bottom: 0.75rem; max-width: 17rem; padding: 0.7rem 0.9rem; }
+    .room__nums { display: none; }
+    .room__title { font-size: var(--text-xl); }
+    .room__slogan { margin-bottom: 0.5rem; font-size: var(--text-sm); }
+    .room__exit { top: 0.75rem; right: 0.75rem; padding: 0.55rem 0.9rem; }
+    .room__hint { display: none; }
+    .room__tag > a, .room__tag > span { max-width: 9rem; padding: 0.3rem 0.5rem; }
+    .room__tag b { font-size: 0.72rem; }
+    .room__tag small, .room__tag i { display: none; }
+  }
+</style>
