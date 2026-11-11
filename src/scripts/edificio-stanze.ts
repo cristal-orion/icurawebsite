@@ -12,6 +12,7 @@ import {
 } from "three";
 import type { Kind } from "../data/edificio";
 import { arreda, pavimento, popola, soffitto } from "./edificio-persone";
+import { unisciStatici, vivo } from "./edificio-unisci";
 
 export interface Stanza {
   scene: Scene;
@@ -979,7 +980,7 @@ export function creaStanza(kind: Kind, titoloPiano: string, area: string, env: T
     // terrazza: parapetto, radar e cielo stellato
     for (const [w, d, x, z] of [[20, 0.2, 0, -6.5], [0.2, 14, -10, -0.5], [0.2, 14, 10, -0.5]] as const) scene.add(box(w, 0.9, d, M.concrete, x, 0, z));
     skyline(scene, -6.5);
-    const radar = new Group();
+    const radar = vivo(new Group());
     radar.add(cyl(0.15, 3.2, M.steel, 0, 0, 0, 16));
     const dish = new Mesh(new SphereGeometry(1.4, 40, 20, 0, Math.PI * 2, 0, Math.PI / 3), std(0xf1f5f9, 0.35, 0.3, { side: DoubleSide }));
     dish.rotation.x = -Math.PI / 2 - 0.5;
@@ -1006,6 +1007,10 @@ export function creaStanza(kind: Kind, titoloPiano: string, area: string, env: T
     s.position.set(0, tetto ? 4.9 : 3.15, tetto ? -6.0 : -6.3);
     scene.add(s);
   }
+  // fin qui la stanza è ferma (tranne il radar): la si unisce per materiale prima di
+  // aggiungere persone e oggetti in esposizione, che si animano
+  unisciStatici(scene);
+
   // persone sparse, dietro e ai lati degli oggetti
   const persone = popola(scene, kind);
 

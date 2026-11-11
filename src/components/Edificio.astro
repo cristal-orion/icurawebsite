@@ -413,6 +413,7 @@ const info = piani.map((p) => ({ piano: `${nomePiano(p.tasto)} · ${p.nome}`, ar
     new IntersectionObserver(([e]) => (e.isIntersecting ? scene!.start() : scene!.stop())).observe(stage);
     new ResizeObserver(() => scene!.resize()).observe(stage);
     canvas.addEventListener("webglcontextlost", (e) => { e.preventDefault(); scene!.stop(); root.classList.remove("is-3d"); fallback("context-lost"); });
+    scene.onLento(() => { scene!.stop(); root.classList.remove("is-3d"); fallback("slow-fps"); });
 
     function fallback(why?: string) {
       root.classList.add("is-2d");

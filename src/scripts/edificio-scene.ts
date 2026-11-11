@@ -19,6 +19,7 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
 import type { Kind } from "../data/edificio";
 import { creaStanza, type Stanza } from "./edificio-stanze";
+import { unisciStatici, vivo } from "./edificio-unisci";
 
 /** cosa scrivere sull'insegna dentro ogni piano */
 export interface InfoPiano { piano: string; area: string }
@@ -42,6 +43,8 @@ export interface EdificioScene {
   start(): void;
   stop(): void;
   onFrame(fn: () => void): void;
+  /** il 3D resta lento anche con la qualità al minimo: meglio la sezione 2D */
+  onLento(fn: () => void): void;
   /** gira la vista intorno all'edificio (radianti, positivo = verso destra) */
   rotate(delta: number): void;
   /** true se l'ultimo gesto sul canvas è stato un trascinamento (quindi non un clic) */
@@ -60,13 +63,20 @@ export interface EdificioScene {
 }
 
 export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], info: InfoPiano[] = []): EdificioScene {
-  const renderer = new WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  // niente antialias sul canvas: la scena passa dal composer (render target senza MSAA),
+  // quindi sul canvas arriva solo un quadrato a tutto schermo e l'antialias non farebbe nulla
+  const renderer = new WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
+  const PR = Math.min(window.devicePixelRatio, 1.75);
+  renderer.setPixelRatio(PR);
   renderer.toneMapping = ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = PCFSoftShadowMap;
+  // fuori il palazzo è fermo: l'ombra del sole si ricalcola solo quando si muove qualcosa che
+  // la proietta (la cabina dell'ascensore). Dentro le stanze le persone camminano: ogni frame.
+  renderer.shadowMap.autoUpdate = false;
+  renderer.shadowMap.needsUpdate = true;
 
   const scene = new Scene();
   const camera = new PerspectiveCamera(30, 1, 0.1, 120);
@@ -328,7 +338,7 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
     },
     aule(g) {
       // schermo di proiezione e cattedra
-      const tela = new Mesh(new PlaneGeometry(1.3, 0.48), screenMat(0xbfdbfe, 1.3));
+      const tela = new Mesh(new PlaneGeometry(1.3, 0.48), vivo(screenMat(0xbfdbfe, 1.3)));
       tela.position.set(0, 0.48, -ID + 0.01);
       g.add(tela);
       g.add(box(1.36, 0.03, 0.03, M.aluDark, 0, 0.73, -ID + 0.01, false));
@@ -374,7 +384,7 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
         porta.position.set(x, 0.38, z + 0.171);
         g.add(porta);
         for (let l = 0; l < 7; l++) {
-          const mat = glow(l % 3 === 0 ? 0x22c55e : 0x38bdf8, 2);
+          const mat = vivo(glow(l % 3 === 0 ? 0x22c55e : 0x38bdf8, 2));
           leds.push(mat);
           g.add(box(0.26, 0.008, 0.004, mat, x, 0.08 + l * 0.09, z + 0.168, false));
         }
@@ -398,7 +408,7 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
       // grafico a barre in rilievo vicino alla vetrata: le risorse che crescono
       const barre: Mesh[] = [];
       for (let k = 0; k < 5; k++) {
-        const b = new Mesh(new BoxGeometry(0.1, 1, 0.1), glow(k === 4 ? 0x22d3ee : 0x60a5fa, 1.4));
+        const b = vivo(new Mesh(new BoxGeometry(0.1, 1, 0.1), glow(k === 4 ? 0x22d3ee : 0x60a5fa, 1.4)));
         b.geometry.translate(0, 0.5, 0);
         b.position.set(IW - 0.8 + k * 0.15, 0.02, -0.3);
         b.scale.y = 0.1;
@@ -427,11 +437,11 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
       g.add(box(0.4, 0.16, 0.3, M.offwhite, 1.1, 0, 0.6));
       // traliccio con radar che ruota
       g.add(cyl(0.035, 0.85, M.alu, 0.55, 0, -0.15, 10));
-      const radar = new Group();
+      const radar = vivo(new Group());
       radar.position.set(0.55, 0.85, -0.15);
       const dish = new Mesh(new SphereGeometry(0.3, 28, 14, 0, Math.PI * 2, 0, Math.PI / 3), std(0xf1f5f9, 0.35, 0.3, { side: DoubleSide }));
       dish.rotation.x = -Math.PI / 2 - 0.5;
-      dish.castShadow = true;
+      // niente ombra: gira sempre, e costringerebbe a ricalcolare le ombre a ogni frame
       radar.add(dish);
       const feed = cyl(0.012, 0.28, M.aluDark, 0, 0, 0.1);
       feed.rotation.x = 1.0;
@@ -439,13 +449,13 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
       g.add(radar);
       // antenna con luce di segnalazione rossa
       g.add(cyl(0.015, 0.75, M.alu, -0.2, 0, 0.45, 8));
-      const beaconMat = glow(0xff3b30, 4);
+      const beaconMat = vivo(glow(0xff3b30, 4));
       const beacon = new Mesh(new SphereGeometry(0.035, 12, 8), beaconMat);
       beacon.position.set(-0.2, 0.78, 0.45);
       g.add(beacon);
       // onde del radar
       const onde = [0, 1, 2].map(() => {
-        const r = new Mesh(new TorusGeometry(0.3, 0.006, 6, 64), new MeshBasicMaterial({ color: 0x67e8f9, transparent: true, depthWrite: false }));
+        const r = vivo(new Mesh(new TorusGeometry(0.3, 0.006, 6, 64), new MeshBasicMaterial({ color: 0x67e8f9, transparent: true, depthWrite: false })));
         r.position.copy(radar.position);
         r.rotation.x = Math.PI / 2;
         g.add(r);
@@ -491,12 +501,12 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
     for (const x of [W / 2 + 0.04, -W / 2 - 0.04]) g.add(box(0.02, 0.12, D + 0.1, M.spandrel, x, -SLAB - 0.03, 0));
 
     // filo luminoso sul bordo del solaio: segna il piano scelto (spento negli altri)
-    const accent = glow(0x22d3ee, 0);
+    const accent = vivo(glow(0x22d3ee, 0));
     g.add(box(W + 0.16, 0.014, 0.014, accent, 0, -SLAB - 0.04, D / 2 + 0.058, false));
     g.add(box(0.014, 0.014, D + 0.12, accent, W / 2 + 0.058, -SLAB - 0.04, 0, false));
 
     // luci a soffitto (pannelli) e luce del piano
-    const ceil = glow(0xfff1d6, 1.6);
+    const ceil = vivo(glow(0xfff1d6, 1.6));
     const lamp = new PointLight(0xffe2b8, 1.2, 4.2, 1.6);
     if (!tetto) {
       for (const x of [-1.1, 0, 1.1]) for (const z of [-0.5, 0.45]) {
@@ -540,7 +550,7 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
     arredi[kind](g);
 
     // volume invisibile per il clic
-    const hit = new Mesh(new BoxGeometry(W + 0.2, H, D + 0.2), new MeshBasicMaterial({ visible: false }));
+    const hit = vivo(new Mesh(new BoxGeometry(W + 0.2, H, D + 0.2), new MeshBasicMaterial({ visible: false })));
     hit.position.y = H / 2 - SLAB;
     hit.userData.floor = i;
     g.add(hit);
@@ -584,7 +594,7 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
   const vetroVano = new Mesh(new BoxGeometry(0.44, vanoH, 0.44), new MeshPhysicalMaterial({ color: 0xa9c8ef, roughness: 0.05, metalness: 0.1, transparent: true, opacity: 0.12, depthWrite: false, envMapIntensity: 1.4 }));
   vetroVano.position.y = vanoH / 2;
   vano.add(vetroVano);
-  const cabina = new Group();
+  const cabina = vivo(new Group());
   cabina.add(box(0.36, 0.56, 0.36, new MeshPhysicalMaterial({ color: 0xdbeafe, roughness: 0.1, transparent: true, opacity: 0.35, depthWrite: false }), 0, 0, 0, false));
   cabina.add(box(0.37, 0.03, 0.37, M.aluDark, 0, 0, 0));
   cabina.add(box(0.37, 0.03, 0.37, M.aluDark, 0, 0.55, 0));
@@ -604,6 +614,7 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
   const GY = H - SLAB; // quota del piazzale
   const terra: { mat: MeshStandardMaterial; base: number }[] = [];
   const traslucido = (mat: MeshStandardMaterial, base = 1) => {
+    vivo(mat);
     mat.transparent = true;
     mat.opacity = base;
     terra.push({ mat, base });
@@ -658,7 +669,7 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
     }
 
     // ringhiera in vetro sui quattro lati
-    const ringhiera = new MeshPhysicalMaterial({ color: 0xa9c8ef, roughness: 0.05, transparent: true, opacity: 0.18, depthWrite: false, side: DoubleSide });
+    const ringhiera = vivo(new MeshPhysicalMaterial({ color: 0xa9c8ef, roughness: 0.05, transparent: true, opacity: 0.18, depthWrite: false, side: DoubleSide }));
     terra.push({ mat: ringhiera, base: 0.18 });
     const corrimano = traslucido(std(0xb8c0cc, 0.35, 0.85));
     const lato = (w: number, x: number, z: number, ry: number) => {
@@ -742,6 +753,9 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
     geo.setAttribute("position", new Float32BufferAttribute(pos, 3));
     scene.add(new Points(geo, new PointsMaterial({ color: 0x93c5fd, size: 0.018, transparent: true, opacity: 0.35, depthWrite: false })));
   }
+
+  // pezzi fermi uniti per materiale: da ~650 mesh a poche decine (vedi edificio-unisci.ts)
+  unisciStatici(scene);
 
   // ── post-produzione: bagliore sulle luci ──
   const composer = new EffectComposer(renderer);
@@ -848,11 +862,66 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
     });
   }
 
+  // ── QUALITÀ ADATTIVA ──
+  // Se il palazzo resta sotto i ~28 fps si alleggerisce un passo alla volta, senza mai
+  // tornare indietro (niente altalena di qualità). Si guarda la mediana di finestre di 45
+  // frame (un singolo scatto non conta); dopo ogni cambio, o dopo una pausa, si aspetta un
+  // secondo e mezzo prima di ricominciare (shader da compilare, stanze appena create).
+  // Dipende da che cosa frena:
+  //  - la GPU (il frame lascia la CPU quasi libera): si abbassa la risoluzione, poi si
+  //    toglie il bagliore, poi la risoluzione scende ancora;
+  //  - la CPU (il frame la occupa quasi tutto): la risoluzione non aiuterebbe e
+  //    peggiorerebbe l'aspetto, si toglie solo il bagliore.
+  // Quando non resta niente da togliere, sotto i 20 fps per due finestre di fila si passa
+  // alla sezione 2D (mai mentre si è dentro una stanza: si aspetta che il visitatore esca).
+  const RISOLUZIONI = [...new Set([PR, Math.min(PR, 1.25), Math.min(PR, 1), Math.min(PR, 0.75)])];
+  let ris = 0;
+  const LENTO = 1000 / 28, LENTISSIMO = 1000 / 20, FINESTRA = 45;
+  const intervalli: number[] = [];
+  const lavoro: number[] = [];
+  let misuraDa = performance.now();
+  let lentiDiFila = 0;
+  let lento: (() => void) | null = null;
+  const riparti = () => { misuraDa = performance.now(); intervalli.length = lavoro.length = 0; lentiDiFila = 0; };
+  const mediana = (a: number[]) => a.sort((x, y) => x - y)[a.length >> 1];
+  function alleggerisci(cpu: boolean): boolean {
+    const scendi = () => {
+      ris++;
+      renderer.setPixelRatio(RISOLUZIONI[ris]);
+      composer.setPixelRatio(RISOLUZIONI[ris]);
+      resize();
+    };
+    if (!cpu && ris < RISOLUZIONI.length - 1 && RISOLUZIONI[ris + 1] >= 1) scendi();
+    else if (bloom.enabled) bloom.enabled = false;
+    else if (!cpu && ris < RISOLUZIONI.length - 1) scendi();
+    else return false;
+    console.info(`[edificio] qualità ridotta (limite ${cpu ? "CPU" : "GPU"}): risoluzione ${RISOLUZIONI[ris]}×${bloom.enabled ? "" : ", senza bagliore"}`);
+    return true;
+  }
+  function misura(now: number, ms: number, impegno: number) {
+    if (now - misuraDa < 1500 || ms > 250) return; // avvio, o una pausa (scheda in secondo piano)
+    intervalli.push(ms);
+    lavoro.push(impegno);
+    if (intervalli.length < FINESTRA) return;
+    const mi = mediana(intervalli), ml = mediana(lavoro);
+    intervalli.length = lavoro.length = 0;
+    if (mi <= LENTO) { lentiDiFila = 0; return; }
+    if (alleggerisci(ml > mi * 0.6)) { riparti(); return; }
+    lentiDiFila = mi > LENTISSIMO ? lentiDiFila + 1 : 0;
+    if (lentiDiFila >= 2 && modo === "fuori" && lento) { const fn = lento; lento = null; fn(); }
+  }
+
   let raf = 0, last = performance.now(), running = false;
   const t0 = performance.now();
   function frame(now: number) {
     if (!running) return;
     raf = requestAnimationFrame(frame);
+    const ms = now - last;
+    const w0 = performance.now();
+    disegna(now);
+    misura(now, ms, performance.now() - w0);
+  }
+  function disegna(now: number) {
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
     const t = (now - t0) / 1000;
@@ -874,6 +943,7 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
       camera.position.copy(stanza.guarda).add(off);
       camera.lookAt(stanza.guarda);
       stanza.aggiorna(t, hoverSt);
+      renderer.shadowMap.needsUpdate = true;
       composer.render();
       listeners.forEach((fn) => fn());
       return;
@@ -922,7 +992,9 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
 
     // la cabina dell'ascensore va al piano scelto (o resta al piano terra)
     const cy = (selected ?? 1) * H;
-    cabina.position.y += (cy - cabina.position.y) * (1 - Math.exp(-dt * 2.4));
+    const dy = (cy - cabina.position.y) * (1 - Math.exp(-dt * 2.4));
+    cabina.position.y += dy;
+    if (Math.abs(dy) > 1e-5) renderer.shadowMap.needsUpdate = true;
 
     animators.forEach((a) => a.fn(t, light[a.i]));
     composer.render();
@@ -991,9 +1063,10 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
     pick,
     anchors,
     resize,
-    start() { if (running) return; running = true; last = performance.now(); raf = requestAnimationFrame(frame); },
+    start() { if (running) return; running = true; last = performance.now(); riparti(); raf = requestAnimationFrame(frame); },
     stop() { running = false; cancelAnimationFrame(raf); },
     onFrame(fn) { listeners.push(fn); },
+    onLento(fn) { lento = fn; },
     rotate(delta) {
       if (modo === "dentro") { stanzaOrb.azT = Math.min(Math.max(stanzaOrb.azT + delta * 0.6, -limiteGiro()), limiteGiro()); return; }
       orbit.vel = 0; orbit.azT += delta; idleSince = performance.now();
@@ -1018,12 +1091,15 @@ export function createEdificioScene(canvas: HTMLCanvasElement, kinds: Kind[], in
       stanzaOrb.az = stanzaOrb.azT = stanzaOrb.el = stanzaOrb.elT = 0;
       hoverSt = -1;
       stanzaT0 = performance.now();
+      riparti(); // la stanza appena creata compila i suoi shader: non è lentezza
       camera.fov = 44; // dentro, un obiettivo più largo
       camera.updateProjectionMatrix();
       modo = "dentro";
     },
     esci() {
       renderPass.scene = scene;
+      renderer.shadowMap.needsUpdate = true;
+      riparti();
       camera.fov = 30;
       camera.updateProjectionMatrix();
       modo = "fuori";
