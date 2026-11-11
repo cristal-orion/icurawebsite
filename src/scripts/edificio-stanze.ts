@@ -12,7 +12,7 @@ import {
 } from "three";
 import type { Kind } from "../data/edificio";
 import { arreda, pavimento, popola, soffitto } from "./edificio-persone";
-import { unisciStatici, vivo } from "./edificio-unisci";
+import { trovaVivi, unisciStatici, vivo } from "./edificio-unisci";
 
 export interface Stanza {
   scene: Scene;
@@ -1007,10 +1007,6 @@ export function creaStanza(kind: Kind, titoloPiano: string, area: string, env: T
     s.position.set(0, tetto ? 4.9 : 3.15, tetto ? -6.0 : -6.3);
     scene.add(s);
   }
-  // fin qui la stanza è ferma (tranne il radar): la si unisce per materiale prima di
-  // aggiungere persone e oggetti in esposizione, che si animano
-  unisciStatici(scene);
-
   // persone sparse, dietro e ai lati degli oggetti
   const persone = popola(scene, kind);
 
@@ -1026,7 +1022,8 @@ export function creaStanza(kind: Kind, titoloPiano: string, area: string, env: T
   const anime: { a?: Pezzo["anima"]; anello: MeshStandardMaterial; alone: MeshBasicMaterial; g: Group }[] = [];
   nomi.forEach((nome, k) => {
     const th = n === 1 ? 0 : -A + (2 * A * k) / (n - 1);
-    const st = new Group();
+    // ancora per l'unione dei pezzi: il clic risale da qui all'oggetto scelto
+    const st = vivo(new Group());
     st.position.set(centro.x + Math.sin(th) * R, 0, centro.z - Math.cos(th) * R);
     st.lookAt(camA.x, 0, camA.z);
     const ped = piedistallo();
@@ -1042,7 +1039,7 @@ export function creaStanza(kind: Kind, titoloPiano: string, area: string, env: T
     anime.push({ a: pezzo.anima, anello: ped.anello, alone: ped.alone, g: pezzo.g });
   });
 
-  return {
+  const stanza: Stanza = {
     scene,
     stazioni,
     etichette,
@@ -1065,4 +1062,10 @@ export function creaStanza(kind: Kind, titoloPiano: string, area: string, env: T
       if (radar) radar.rotation.y = t * 0.5;
     },
   };
+
+  // pezzi fermi uniti per materiale (vedi edificio-unisci.ts): prima si scopre che cosa si
+  // anima provando le animazioni, anche con ogni oggetto sotto il puntatore
+  trovaVivi(scene, (t, k) => stanza.aggiorna(t, k), [-1, ...nomi.map((_, k) => k)]);
+  unisciStatici(scene);
+  return stanza;
 }
