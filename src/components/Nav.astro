@@ -34,12 +34,17 @@ const agevolazioni = [
 ];
 
 // Voce in evidenza (badge amber). Cambia qui label/href per evidenziare altro.
-// Bando ISI resta raggiungibile dal menu Finanza Agevolata.
+// Bando ISI resta raggiungibile dal menu Finanza Agevolata; /acquista è oscurato
+// (la pagina esiste ancora, ma non è più linkata da menu e footer).
 const promo = {
-  label: "Acquista online",
-  href: "/acquista",
+  label: "DVR AI Specialist",
+  href: "/analizzatore-dvr",
   badge: "Nuovo",
 };
+
+// Spazio utente: porta all'area dell'analizzatore DVR; chi non ha fatto l'accesso
+// viene mandato ad Accedi (da lì può registrarsi).
+const areaUtente = "/analizzatore-dvr/area/";
 
 const serviziActive =
   pathname.startsWith("/servizi") ||
@@ -163,6 +168,10 @@ const serviziActive =
     </ul>
 
     <div class="site-header__actions">
+      <a href={areaUtente} class="site-header__user" aria-label="Spazio utente: accedi o registrati">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+        <span class="site-header__user-label">Spazio utente</span>
+      </a>
       <a
         href={promo.href}
         class={`site-header__promo${isActive(promo.href) ? " is-active" : ""}`}
@@ -231,6 +240,12 @@ const serviziActive =
     </li>
     <li>
       <a href="/contatti" class={isActive("/contatti") ? "is-active" : undefined}>Contatti</a>
+    </li>
+    <li>
+      <a href={areaUtente} class="nav-mobile__user">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+        Spazio utente
+      </a>
     </li>
   </ul>
   <a href="/contatti" class="btn btn--primary nav-mobile__cta">
@@ -622,6 +637,23 @@ const serviziActive =
   }
   .site-header__cta:hover { background: var(--color-accent); text-decoration: none; }
 
+  /* Spazio utente — link testuale con icona, come le voci del menu */
+  .site-header__user {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.2rem;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-ink);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .site-header__user svg { width: 1.15rem; height: 1.15rem; flex: none; }
+  .site-header__user:hover { color: var(--color-accent); text-decoration: none; }
+
   /* Hamburger — solo mobile */
   .site-header__burger {
     display: none;
@@ -658,7 +690,7 @@ const serviziActive =
     background: var(--color-ink);
     border-bottom-color: color-mix(in srgb, var(--color-paper) 8%, transparent);
   }
-  .site-header--dark-top :is(.site-header__wordmark, .site-nav__link, .site-header__promo, .site-header__phone, .site-header__cta, .site-header__burger) {
+  .site-header--dark-top :is(.site-header__wordmark, .site-nav__link, .site-header__user, .site-header__promo, .site-header__phone, .site-header__cta, .site-header__burger) {
     transition: color 0.35s var(--ease-out), background 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
   }
   .site-header--dark-top.is-top .site-header__wordmark,
@@ -669,6 +701,8 @@ const serviziActive =
   .site-header--dark-top.is-top .site-header__promo { color: var(--color-paper); background: color-mix(in srgb, var(--color-highlight) 14%, transparent); }
   .site-header--dark-top.is-top .site-header__phone { color: #93c5fd; border-color: color-mix(in srgb, #93c5fd 35%, transparent); }
   .site-header--dark-top.is-top .site-header__phone:hover { background: color-mix(in srgb, #93c5fd 12%, transparent); }
+  .site-header--dark-top.is-top .site-header__user { color: var(--color-paper); }
+  .site-header--dark-top.is-top .site-header__user:hover { color: #93c5fd; }
   .site-header--dark-top.is-top .site-header__cta { background: var(--color-paper); color: var(--color-ink); }
   .site-header--dark-top.is-top .site-header__cta:hover { background: var(--color-accent); color: #fff; }
 
@@ -724,6 +758,8 @@ const serviziActive =
     border-radius: var(--radius-input);
   }
   .nav-mobile__list a:hover { color: var(--color-accent); text-decoration: none; }
+  .nav-mobile__list a.nav-mobile__user { display: flex; align-items: center; gap: 0.6rem; }
+  .nav-mobile__user svg { width: 1.2rem; height: 1.2rem; flex: none; }
   .nav-mobile__list a.is-active { color: var(--color-accent); }
   .nav-mobile__group { margin-block: 0.4rem; }
   .nav-mobile__group-label {
@@ -751,6 +787,7 @@ const serviziActive =
     .site-nav { display: none; }
     .site-header__cta,
     .site-header__phone,
+    .site-header__user,
     .site-header__promo { display: none; }
     .site-header__burger { display: flex; }
   }
@@ -761,9 +798,25 @@ const serviziActive =
     .site-header__promo { padding-left: 0.8rem; }
     .site-header__promo-badge { display: none; }
     .site-header__cta { padding: 0.55rem 1rem; }
+    /* Spazio utente: solo icona (il testo resta per gli screen reader) */
+    .site-header__user-label {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+    }
   }
-  /* il telefono nella barra solo sugli schermi larghi: sotto i 1280px spingeva fuori la CTA */
-  @media (min-width: 80rem) {
+  /* 1010–1120px: ancora più stretti, se no la CTA tocca il bordo */
+  @media (min-width: 63.0625rem) and (max-width: 69.99rem) {
+    .site-nav { gap: var(--space-sm); }
+    .site-header__actions { gap: var(--space-xs); }
+  }
+  /* 1280–1440px: "Spazio utente" col testo, badge "Nuovo" nascosto per fare spazio */
+  @media (min-width: 80rem) and (max-width: 89.99rem) {
+    .site-header__promo { padding-left: 0.8rem; }
+    .site-header__promo-badge { display: none; }
+  }
+  /* il telefono nella barra solo sugli schermi molto larghi: con "Spazio utente"
+     e il bottone DVR sotto i 1600px spingeva fuori la CTA */
+  @media (min-width: 100rem) {
     .site-header__phone { display: inline-flex; }
   }
   @media (min-width: 63.0625rem) {
