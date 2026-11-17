@@ -1,0 +1,68 @@
+---
+// Accesso all'area analizzatore DVR (email + password). Funziona anche senza JS.
+import Base from "@layouts/Base.astro";
+import DvrAuth from "@components/DvrAuth.astro";
+import { accedi, ipDi, stessaOrigine, troppiTentativi, utenteCorrente } from "@lib/dvr/auth";
+
+export const prerender = false;
+
+if (utenteCorrente(Astro.cookies)) return Astro.redirect("/analizzatore-dvr/area/", 303);
+
+let errore = "";
+let email = "";
+
+if (Astro.request.method === "POST") {
+  const fd = await Astro.request.formData();
+  email = String(fd.get("email") ?? "");
+  const password = String(fd.get("password") ?? "");
+  const ip = ipDi(Astro.request, Astro.clientAddress);
+
+  if (!stessaOrigine(Astro.request)) {
+    errore = "Richiesta non valida: ricarica la pagina e riprova.";
+  } else if (troppiTentativi(`login:${ip}`, 20, 15) || troppiTentativi(`login:${email.toLowerCase()}`, 8, 15)) {
+    errore = "Troppi tentativi. Aspetta 15 minuti e riprova.";
+  } else if (await accedi(email, password, Astro.cookies, Astro.request)) {
+    return Astro.redirect("/analizzatore-dvr/area/", 303);
+  } else {
+    errore = "Email o password non corretti.";
+  }
+  Astro.response.status = 401;
+}
+---
+
+<Base
+  title="Accedi all'analizzatore DVR"
+  description="Accedi alla tua area per usare l'analizzatore DVR di iCuraImpresa."
+  noindex
+  crumb="Accedi"
+>
+  <DvrAuth
+    eyebrow="Analizzatore DVR · area riservata"
+    title="<em>Accedi</em> alla tua area."
+    lede="Entra con l'email e la password che hai scelto alla registrazione e apri l'analizzatore."
+  >
+    <form method="post" novalidate>
+      <h2 class="form-title">Accedi</h2>
+
+      {errore && <p class="alert" role="alert">{errore}</p>}
+
+      <div class="field">
+        <label for="a-email">Email</label>
+        <input id="a-email" name="email" type="email" required autocomplete="email" value={email} />
+      </div>
+      <div class="field">
+        <label for="a-pw">Password</label>
+        <div class="pw">
+          <input id="a-pw" name="password" type="password" required autocomplete="current-password" />
+        </div>
+        <p class="field__hint">Password dimenticata? Scrivi a <a href="mailto:info@icuraimpresa.it">info@icuraimpresa.it</a> e la reimpostiamo.</p>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--cta submit">
+        Accedi
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </button>
+      <p class="switch">Non hai ancora un accesso? <a href="/analizzatore-dvr/registrati/">Registrati gratis</a></p>
+    </form>
+  </DvrAuth>
+</Base>

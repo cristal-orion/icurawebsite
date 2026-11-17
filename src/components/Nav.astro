@@ -10,6 +10,7 @@ const darkTopPages = ["/", "/lavora-con-noi", "/bando-isi", "/zes-unica"];
 const darkTop =
   darkTopPages.includes(pathname.replace(/\/$/, "") || "/") ||
   pathname.startsWith("/acquista") ||
+  pathname.startsWith("/analizzatore-dvr") ||
   pathname.startsWith("/servizi/"); // tutte le pagine servizio hanno PageHero
 const isActive = (path: string) =>
   path === "/" ? pathname === "/" : pathname.startsWith(path);

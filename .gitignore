@@ -41,3 +41,6 @@ proposte/
 src/pages/proposte/
 src/layouts/proposte/
 src/components/proposte/
+
+# database locale dell'area analizzatore DVR (in produzione sta nel volume /data)
+data/

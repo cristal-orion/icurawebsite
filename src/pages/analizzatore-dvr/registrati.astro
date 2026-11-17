@@ -1,0 +1,130 @@
+---
+// Registrazione all'area analizzatore DVR. Il form funziona anche senza JS:
+// POST sulla stessa pagina → validazione → utente nel DB → sessione → area.
+import Base from "@layouts/Base.astro";
+import DvrAuth from "@components/DvrAuth.astro";
+import { ipDi, registra, stessaOrigine, troppiTentativi, utenteCorrente, type Errori } from "@lib/dvr/auth";
+
+export const prerender = false;
+
+if (utenteCorrente(Astro.cookies)) return Astro.redirect("/analizzatore-dvr/area/", 303);
+
+let errori: Errori = {};
+const v = { nome: "", email: "", azienda: "", dipendenti: "", anni_attivita: "", marketing: false };
+
+if (Astro.request.method === "POST") {
+  const fd = await Astro.request.formData();
+  const s = (k: string) => String(fd.get(k) ?? "");
+  Object.assign(v, {
+    nome: s("nome"),
+    email: s("email"),
+    azienda: s("azienda"),
+    dipendenti: s("dipendenti"),
+    anni_attivita: s("anni_attivita"),
+    marketing: fd.get("marketing") === "on",
+  });
+
+  if (!stessaOrigine(Astro.request)) {
+    errori = { form: "Richiesta non valida: ricarica la pagina e riprova." };
+  } else if (s("company_website")) {
+    // Honeypot compilato: è un bot. Fingiamo un errore generico senza scrivere nulla.
+    errori = { form: "Non è stato possibile completare la registrazione." };
+  } else if (troppiTentativi(`reg:${ipDi(Astro.request, Astro.clientAddress)}`, 8, 60)) {
+    errori = { form: "Troppe registrazioni da questa rete. Riprova tra un'ora." };
+  } else {
+    const r = await registra(
+      { ...v, password: s("password"), privacy: fd.get("privacy") === "on" },
+      Astro.cookies,
+      Astro.request,
+    );
+    if (!r) return Astro.redirect("/analizzatore-dvr/area/?benvenuto=1", 303);
+    errori = r;
+  }
+  Astro.response.status = 422;
+}
+
+const inv = (k: keyof Errori) => (errori[k] ? "true" : undefined);
+---
+
+<Base
+  title="Registrati all'analizzatore DVR"
+  description="Crea il tuo accesso gratuito all'analizzatore DVR di iCuraImpresa: carichi il PDF e in meno di un minuto ricevi un riscontro su norme, capitoli e requisiti formali."
+  noindex
+  crumb="Registrati"
+>
+  <DvrAuth
+    eyebrow="Analizzatore DVR · prova gratuita"
+    title="Registrati e <em>valuta</em> il tuo DVR."
+    lede="Ti chiediamo pochi dati sulla tua azienda: servono a leggere il riscontro nel contesto giusto. Poi entri subito nella tua area."
+  >
+    <form method="post" novalidate>
+      <h2 class="form-title">Crea il tuo accesso</h2>
+      <p class="form-sub">Tutti i campi sono obbligatori, tranne gli avvisi via email.</p>
+
+      {errori.form && <p class="alert" role="alert">{errori.form}</p>}
+      {errori.email?.includes("già registrata") && (
+        <p class="alert" role="alert">Questa email è già registrata. <a href="/analizzatore-dvr/accedi/">Accedi</a> con la tua password.</p>
+      )}
+
+      <input type="text" name="company_website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <div class="field">
+        <label for="r-nome">Nome e cognome</label>
+        <input id="r-nome" name="nome" type="text" required autocomplete="name" maxlength="120" value={v.nome} aria-invalid={inv("nome")} aria-describedby={errori.nome ? "r-nome-err" : undefined} />
+        {errori.nome && <p class="field__err" id="r-nome-err">{errori.nome}</p>}
+      </div>
+
+      <div class="field">
+        <label for="r-email">Email</label>
+        <input id="r-email" name="email" type="email" required autocomplete="email" maxlength="254" value={v.email} aria-invalid={inv("email")} aria-describedby={errori.email ? "r-email-err" : undefined} />
+        {errori.email && !errori.email.includes("già registrata") && <p class="field__err" id="r-email-err">{errori.email}</p>}
+      </div>
+
+      <div class="field">
+        <label for="r-azienda">Nome dell'azienda</label>
+        <input id="r-azienda" name="azienda" type="text" required autocomplete="organization" maxlength="160" value={v.azienda} aria-invalid={inv("azienda")} aria-describedby={errori.azienda ? "r-azienda-err" : undefined} />
+        {errori.azienda && <p class="field__err" id="r-azienda-err">{errori.azienda}</p>}
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="r-dip">Numero di dipendenti</label>
+          <input id="r-dip" name="dipendenti" type="number" inputmode="numeric" min="0" max="100000" step="1" required value={v.dipendenti} aria-invalid={inv("dipendenti")} aria-describedby={errori.dipendenti ? "r-dip-err" : undefined} />
+          {errori.dipendenti && <p class="field__err" id="r-dip-err">{errori.dipendenti}</p>}
+        </div>
+        <div class="field">
+          <label for="r-anni">Anni di attività</label>
+          <input id="r-anni" name="anni_attivita" type="number" inputmode="numeric" min="0" max="200" step="1" required value={v.anni_attivita} aria-invalid={inv("anni_attivita")} aria-describedby={errori.anni_attivita ? "r-anni-err" : undefined} />
+          {errori.anni_attivita && <p class="field__err" id="r-anni-err">{errori.anni_attivita}</p>}
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="r-pw">Scegli una password</label>
+        <div class="pw">
+          <input id="r-pw" name="password" type="password" required autocomplete="new-password" minlength="10" maxlength="200" aria-invalid={inv("password")} aria-describedby="r-pw-hint" />
+        </div>
+        {errori.password
+          ? <p class="field__err" id="r-pw-hint">{errori.password}</p>
+          : <p class="field__hint" id="r-pw-hint">Almeno 10 caratteri.</p>}
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" name="privacy" required aria-invalid={inv("privacy")} />
+        <span>Ho letto l'<a href="/privacy" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei miei dati per accedere all'analizzatore DVR.</span>
+      </label>
+      {errori.privacy && <p class="field__err">{errori.privacy}</p>}
+
+      <label class="consent">
+        <input type="checkbox" name="marketing" checked={v.marketing} />
+        <span>Voglio ricevere avvisi su scadenze e novità normative sulla sicurezza (facoltativo, revocabile in ogni momento).</span>
+      </label>
+
+      <button type="submit" class="btn btn--primary btn--cta submit">
+        Registrati e valuta il tuo DVR
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </button>
+      <p class="switch">Hai già un accesso? <a href="/analizzatore-dvr/accedi/">Accedi</a></p>
+    </form>
+  </DvrAuth>
+</Base>
